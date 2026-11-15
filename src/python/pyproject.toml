@@ -1,0 +1,43 @@
+[project]
+name = "ccfinance-workspace"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["apps/*"]
+
+[dependency-groups]
+dev = [
+  "hatchling==1.27.0",
+  "pytest==9.1.1",
+  "pytest-xdist>=3.8,<5",
+  "pytest-testmon>=2.3,<3",
+  "tach==0.35.3",
+  "ruff==0.14.5",
+  "pyrefly==0.64.1",
+  "dvc>=3.63,<4",
+]
+
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM", "RUF", "ANN", "D", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pyrefly]
+preset = "strict"
+project-includes = ["apps"]
+python-version = "3.13"
+
+[tool.pytest.ini_options]
+testpaths = ["apps"]
+addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]

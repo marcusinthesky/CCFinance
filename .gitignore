@@ -1,0 +1,37 @@
+.devenv/
+.direnv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.pyrefly/
+.insitu/
+.lycheecache
+node_modules/
+.lake/
+dist/
+build/
+result
+result-*
+.env
+.env.*
+.DS_Store
+*.bak
+.turbo/
+.next/
+.source/
+*.tsbuildinfo
+web/
+print/
+lean_decls
+*.paux
+
+# Large research payloads are tracked by DVC, not Git.
+/data/**
+!/data/**/
+!/data/**/*.dvc
+!/data/README.md
+
+# Local literature records and source material.
+/.context/reference/

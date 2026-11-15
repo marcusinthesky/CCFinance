@@ -1,0 +1,40 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+set positional-arguments
+
+default:
+    @just --list
+
+# Install exactly the committed workspace and build dependencies.
+setup:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv sync --locked --all-packages
+
+run *args:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --package ccfinance-pipeline pipeline "$@"
+
+lint:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen ruff check .
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen ruff format --check .
+
+typecheck:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --all-packages pyrefly check
+
+# Local impacted-test selection, with a bounded number of workers.
+test-changed:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --all-packages pytest -q -n 2 --testmon
+
+# The test and CI gates never use affected-test selection.
+test:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --all-packages pytest -q -n 2 --no-testmon
+
+# Enforce module dependencies, reject unused declarations and forbid cycles.
+tach:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen tach check
+
+build:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv build --python .venv/bin/python --offline --no-build-isolation --all-packages
+
+check: lint typecheck tach test build
+
+fmt:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen ruff check --fix .
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen ruff format .

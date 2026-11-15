@@ -1,0 +1,75 @@
+default_install_hook_types: [pre-commit]
+default_stages: [pre-commit]
+repos:
+  - repo: builtin
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+        args: [--assume-in-merge]
+      - id: detect-private-key
+      - id: check-case-conflict
+  - repo: local
+    hooks:
+      - id: workflow-lint
+        name: GitHub Actions workflow syntax
+        entry: bash -c 'actionlint .github/workflows/*.yml'
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: shellcheck
+        name: ShellCheck scripts
+        entry: shellcheck
+        language: system
+        types: [shell]
+        files: \.sh$
+      - id: markdown
+        name: Markdown formatting and local links
+        entry: rumdl check .
+        language: system
+        pass_filenames: false
+        types: [markdown]
+      - id: nix-format
+        name: Nix formatting
+        entry: nixfmt --check
+        language: system
+        types: [nix]
+      - id: nix-lint
+        name: Nix anti-patterns
+        entry: statix check infra/nix
+        language: system
+        pass_filenames: false
+        types: [nix]
+      - id: text-check
+        name: Whitespace and final newlines
+        entry: bash infra/nix/check-text.sh
+        language: system
+        types: [text]
+
+      - id: python-quality
+        name: Python lint, strict types and architecture
+        entry: bash -c 'just python::lint python::typecheck python::tach'
+        language: system
+        pass_filenames: false
+        files: ^src/python/
+      - id: dvc-metadata
+        name: DVC metadata
+        entry: just data-check
+        language: system
+        pass_filenames: false
+        files: ^(dvc\.(yaml|lock)|\.dvc/|.*\.dvc$)
+
+      - id: context-documents
+        name: Context schemas and generated views
+        entry: just context-check
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: schema-changelog-document
+        name: Changelog structure and categories
+        entry: just changelog-check
+        language: system
+        pass_filenames: false
+        files: ^(CHANGELOG\.md|infra/schemas/documents/changelog\.document-schema\.yaml)$

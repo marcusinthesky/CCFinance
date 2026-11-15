@@ -1,0 +1,16 @@
+[project]
+name = "ccfinance-pipeline"
+version = "0.1.0"
+description = "Reproducible CCFinance data engineering stages"
+requires-python = ">=3.13,<3.14"
+dependencies = ["typer>=0.16,<1"]
+
+[project.scripts]
+pipeline = "pipeline.cli:app"
+
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pipeline"]

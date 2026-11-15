@@ -1,0 +1,16 @@
+source_roots = ["apps/pipeline/src"]
+exact = true
+ignore_type_checking_imports = false
+forbid_circular_dependencies = true
+
+[[modules]]
+path = "pipeline"
+depends_on = ["pipeline.cli"]
+
+[[modules]]
+path = "pipeline.cli"
+depends_on = ["pipeline.stages"]
+
+[[modules]]
+path = "pipeline.stages"
+depends_on = []

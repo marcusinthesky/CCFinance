@@ -1,0 +1,15 @@
+_commit: v0.1.1-alpha
+_src_path: https://github.com/marcusinthesky/exordio.git
+agents: []
+author: CCFinance contributors
+description: Reproducible filtering and enrichment of Common Crawl news for financial
+    language research.
+languages:
+- python
+- latex
+project_name: CCFinance
+project_slug: ccfinance
+secrets: false
+workflows:
+- planning
+- reference
