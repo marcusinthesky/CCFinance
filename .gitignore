@@ -31,10 +31,12 @@ lean_decls
 /data/**
 !/data/**/
 !/data/**/*.dvc
+!/data/**/.gitignore
 !/data/README.md
 !/data/inputs/fine-news/README.md
 !/data/inputs/fine-news/acquisition.json
 !/data/inputs/fine-news/domains.csv
+!/data/inputs/source-comparison/README.md
 
 # Local literature records and source material.
 /.context/reference/

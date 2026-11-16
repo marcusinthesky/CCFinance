@@ -1,0 +1,18 @@
+# Source comparison: English publisher-filter yield, before research qualification.
+experiments:
+  source_comparison:
+    # Four independent file/group draws with replacement; keep duplicate draws.
+    seed: 42
+    draws: 4
+    domains: data/inputs/fine-news/domains.csv
+    datasets:
+      fine_news:
+        source: hf://datasets/ksolovev/fine-news@7a841090e69f3c58a9e04b0c39213d879af68e8a/data/*/eng_Latn/*.parquet
+      infini_news:
+        source: hf://datasets/ruggsea/infini-news-corpus@7f8fe13b0833c005365b81f1dee7c20b7087769b/data/year=*/month=*/part-*.parquet
+      refinedweb:
+        source: hf://datasets/tiiuae/falcon-refinedweb@c735840575b629292b41da8dde11dcd523d4f91c/data/*.parquet
+      fineweb_hq:
+        source: hf://datasets/epfml/FineWeb-HQ@e58199cdd52438d94405df1a4d8630cc5f13bf84/data/*/*.parquet
+    # DCLM is deferred: original compressed JSONL needs whole-file transfer;
+    # its partial converted Parquet is not a frame for the complete population.

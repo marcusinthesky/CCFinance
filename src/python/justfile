@@ -7,6 +7,7 @@ default:
 # Install exactly the committed workspace and build dependencies.
 setup:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv sync --locked --all-packages
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --package ccfinance-pipeline python -c 'import duckdb; duckdb.connect().execute("INSTALL httpfs")'
 
 run *args:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --package ccfinance-pipeline pipeline "$@"

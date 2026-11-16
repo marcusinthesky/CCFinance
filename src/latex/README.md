@@ -21,4 +21,18 @@ uses ChkTeX. The build gate rejects unresolved citations and references.
 `refs.bib` is authored content. The sample article demonstrates a real citation;
 add your own records and cite them with `\citep{key}`.
 
+The source-comparison research stage generates statsmodels LaTeX fragments
+under `data/research/experiments/source-comparison/`. With `booktabs` in the
+preamble, include the summary and its methods notes from `main.tex` using:
+
+```latex
+\input{../../data/research/experiments/source-comparison/summary.tex}
+```
+
+For individually captioned tables, use `yield.tex` or `population.tex` instead.
+These fragments exist after acquisition and reporting; ordinary manuscript
+checks do not acquire source data. See the
+[comparison guide](../../data/inputs/source-comparison/README.md) for the commands
+and statistical interpretation.
+
 See [ARCHITECTURE.md](ARCHITECTURE.md) for source and artifact ownership.

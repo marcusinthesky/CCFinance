@@ -17,7 +17,7 @@ depends_on = ["pipeline.stages.raw", "pipeline.stages.processed", "pipeline.stag
 
 [[modules]]
 path = "pipeline.stages.raw"
-depends_on = []
+depends_on = ["pipeline.experiments"]
 
 [[modules]]
 path = "pipeline.stages.processed"
@@ -25,4 +25,8 @@ depends_on = []
 
 [[modules]]
 path = "pipeline.stages.research"
+depends_on = ["pipeline.experiments"]
+
+[[modules]]
+path = "pipeline.experiments"
 depends_on = []

@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.raw.fine_news:filter_fine_news",
-  "digest": "sha256:4aa5c17f2a5f0a0e41fcdffd897e9d0f60c30199e1ac32f96c9fce2895a0a294",
+  "digest": "sha256:cdbcab2f420ad9e40b61cdf9f7b5ba3839d4ac872ec6936bc6f45e9dc6c3feb4",
   "entrypoint": "pipeline stages raw filter-fine-news",
   "fallbacks": [
   ],
@@ -9,14 +9,24 @@
     {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:Annotated=typing:Annotated>"},
     {"digest":"sha256:b647117054c1a141c3594c507ab48473989700b5202bfc6136cf3858d402c4cf","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:BaseModel=pydantic:BaseModel>"},
     {"digest":"sha256:b647117054c1a141c3594c507ab48473989700b5202bfc6136cf3858d402c4cf","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:ConfigDict=pydantic:ConfigDict>"},
+    {"digest":"sha256:83e076d69d73c609b4f589680d86f357e49c10c4883295120643bfb7bf277def","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:PUBLISHER_MATCH=pipeline.stages.raw.publishers:PUBLISHER_MATCH>"},
     {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:83e076d69d73c609b4f589680d86f357e49c10c4883295120643bfb7bf277def","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:SOURCES=pipeline.stages.raw.publishers:SOURCES>"},
     {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
     {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:duckdb=duckdb>"},
     {"digest":"sha256:ac3a74d6dd975a8e8fe4b7f85fce794793a9355595b850e3926964913948d386","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:os=os>"},
     {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:typer=typer>"},
+    {"digest":"sha256:83e076d69d73c609b4f589680d86f357e49c10c4883295120643bfb7bf277def","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:write_parquet=pipeline.stages.raw.publishers:write_parquet>"},
     {"digest":"sha256:007ec5e0a67434d492d742519c5fafc7837755ccf450967df9d65f29f9e4e16b","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:FineNewsConfig"},
-    {"digest":"sha256:2f807ac23eae00522a4d356fdfc2846e51f4ae25f4b9a857e9c26f6b01ce8fc8","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:QUERY"},
-    {"digest":"sha256:794d2aa4ef6e1f0142eeee13732059ad4b5c4b32473ea49b78ec2054623ab850","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:filter_fine_news"}
+    {"digest":"sha256:4c965faa82ca2a3a48847f20c75274b7ce0e4b0c87340c142cef0171f8974547","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:filter_fine_news"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:321ed2ed3afceb74be547c9905ed4c676e453b1a68fe7cb2d3e214caeac2624d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:<binding:dataclass=dataclasses:dataclass>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:535a10458a0526f40465b6b173bf8067e3cb51641031a5e9574d209b50ece36e","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:PUBLISHER_MATCH"},
+    {"digest":"sha256:482af94a78456b93d0629473a2391c4a28631d3c2eaf6b72dc9e9c18d42e5a65","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:SOURCES"},
+    {"digest":"sha256:4c4384d4bd29f056a77ef9bb71a247405fee882e209274c9cc75400573ddb359","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:SourceSpec"},
+    {"digest":"sha256:94fb8036152e1a9196d0894d4cd8016244c0dc038a3862f99406d3d1168fc888","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:_hostname"},
+    {"digest":"sha256:77a72a07b98e370071ced8f280d5d3b6f2ae59a2968b99d8d4be1dada68320ff","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/publishers.py","symbol":"pipeline.stages.raw.publishers:write_parquet"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
   "schema_version": 2

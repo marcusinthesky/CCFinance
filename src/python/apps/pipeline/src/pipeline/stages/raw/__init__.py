@@ -2,6 +2,10 @@
 
 import typer
 
+from pipeline.stages.raw.experiments.source_comparison import (
+    prepare_comparison,
+    sample_comparison,
+)
 from pipeline.stages.raw.fine_news import filter_fine_news
 
 app = typer.Typer(no_args_is_help=True, help=__doc__)
@@ -13,3 +17,5 @@ def main() -> None:
 
 
 app.command("filter-fine-news")(filter_fine_news)
+app.command("prepare-comparison")(prepare_comparison)
+app.command("sample-comparison")(sample_comparison)

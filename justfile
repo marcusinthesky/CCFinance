@@ -40,6 +40,8 @@ fmt:
     git ls-files -z --cached --others --exclude-standard | while IFS= read -r -d '' file; do case "$file" in justfile|*/justfile|Justfile|*/Justfile|*.just) just --justfile "$file" --fmt --unstable ;; esac; done
     nixfmt devenv.nix infra/nix/devenv.nix infra/nix/pkgs/schematter.nix infra/nix/pkgs/agentsync.nix
     rumdl fmt .
+    # DVC's YAML emitter can leave trailing spaces when wrapping scalar values.
+    if [[ -f dvc.lock ]]; then sed -i 's/[[:blank:]]*$//' dvc.lock; fi
     just python::fmt
     just latex::fmt
 

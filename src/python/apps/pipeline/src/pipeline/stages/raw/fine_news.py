@@ -1,4 +1,4 @@
-"""Reproduce the historical Fine News publisher filter."""
+"""Preserve the historical Fine News publisher acquisition command."""
 
 import os
 from pathlib import Path
@@ -9,24 +9,7 @@ import duckdb
 import typer
 from pydantic import BaseModel, ConfigDict
 
-QUERY = """
-    COPY (
-        WITH articles AS (
-            SELECT text, id, metadata, lower(rtrim(trim(coalesce(
-                nullif(trim(metadata.url_hostname), ''),
-                regexp_extract(metadata.url, '(?i)^https?://([^/:?#]+)', 1)
-            )), '.')) AS hostname
-            FROM read_parquet($source)
-        )
-        SELECT text, id, metadata FROM articles
-        WHERE EXISTS (
-            SELECT 1 FROM read_csv($domains, header=true) AS d
-            WHERE hostname = lower(rtrim(trim(d.domain), '.'))
-               OR ends_with(hostname, '.' || lower(rtrim(trim(d.domain), '.')))
-        )
-    ) TO $target (FORMAT PARQUET, COMPRESSION ZSTD, COMPRESSION_LEVEL 9,
-                 ROW_GROUP_SIZE 16384)
-"""
+from pipeline.stages.raw.publishers import PUBLISHER_MATCH, SOURCES, write_parquet
 
 
 class FineNewsConfig(BaseModel):
@@ -49,19 +32,18 @@ def filter_fine_news(
     target = settings.output / "articles.parquet"
     if target.exists():
         raise FileExistsError(f"Output exists: {target}")
-    settings.output.mkdir(parents=True, exist_ok=True)
-    with duckdb.connect() as con:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with TemporaryDirectory(dir=target.parent) as staging, duckdb.connect() as con:
         if settings.source.startswith("hf://"):
             con.execute("INSTALL httpfs; LOAD httpfs")
-        with TemporaryDirectory(dir=settings.output) as staging:
-            temporary = Path(staging) / "articles.parquet"
-            con.execute(
-                QUERY,
-                {
-                    "source": settings.source,
-                    "domains": str(settings.domains),
-                    "target": str(temporary),
-                },
-            )
-            os.link(temporary, target)
+        temporary = Path(staging) / "articles.parquet"
+        write_parquet(
+            con,
+            f"""WITH articles AS (
+                SELECT {SOURCES["fine_news"].projection} FROM read_parquet($source)
+            ) SELECT text, id, metadata FROM articles WHERE {PUBLISHER_MATCH}""",  # noqa: S608 - authored projection and predicate.
+            {"source": settings.source, "domains": str(settings.domains)},
+            temporary,
+        )
+        os.link(temporary, target)
     typer.echo(f"Wrote: {settings.source} -> {target}")

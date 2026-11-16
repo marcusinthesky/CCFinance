@@ -47,10 +47,13 @@ stage, run `just semflow-patch` to review its proposed fingerprints, then
 `just semflow-apply` to materialize them. Commit the generated
 `.semflow/hashes/` files with the DVC definition. After semantic source changes,
 run `just semflow-refresh`; `just semflow-check` detects stale fingerprints.
-The frozen [Fine News acquisition stage](data/inputs/fine-news/README.md) documents
-the staging dataset's historical selection. Keep data, configuration and
-environment dependencies explicit
-in DVC: Semflow's static analysis cannot discover string-driven dynamic imports.
+The frozen [Fine News acquisition stage](data/inputs/fine-news/README.md) retains
+the published staging snapshot and its historical selection recipe. DVC verifies
+the restored output during reproduction. The
+[source comparison](data/inputs/source-comparison/README.md) prepares small
+probability samples using Parquet metadata before acquiring article payloads.
+Keep data, configuration and environment dependencies explicit in DVC: Semflow's
+static analysis cannot discover string-driven dynamic imports.
 
 See [Python commands](src/python/README.md), [LaTeX commands](src/latex/README.md)
 and [infrastructure](infra/README.md). The scaffold's Apache-2.0 license covers

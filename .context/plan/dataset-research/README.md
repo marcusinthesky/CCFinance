@@ -28,7 +28,7 @@ template = "children.md.j2"
 | --- | --- | --- |
 | backlog | [Define dataset requirements](tasks/dataset-requirements/README.md) | Establish and validate the functional requirements for research use. |
 
-`1 open; 0 terminal`
+`1 open; 2 terminal`
 
 <!-- insitu:end -->
 

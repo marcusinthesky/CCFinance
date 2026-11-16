@@ -9,6 +9,9 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
+- Source-comparison DVC stages with metadata preparation, selective Parquet reads
+  and exploratory estimates of publisher-filter yield.
+- Statsmodels LaTeX summaries and individual yield and population tables for papers.
 - Frozen Fine News acquisition recipe with the historical publisher filter.
 - Python and LaTeX toolchains generated from Exordio, with locked dependencies.
 - Typer `pipeline` application and a namespace for data processing stages.
@@ -24,5 +27,9 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Changed
 
+- Restored the published Fine News shards with verified checksums and provenance
+  so the frozen acquisition stage has real outputs for DVC to validate.
+- Grouped experiments within each data layer and consolidated source mappings
+  and validated artifact contracts across sampling and research reports.
 - Organized the pipeline into `raw`, `processed` and `research` layers, with
   matching Python modules, CLI groups and proposed data paths.
