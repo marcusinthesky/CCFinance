@@ -23,6 +23,7 @@ check:
     just python::check
     just latex::check
     just data-check
+    just semflow-check
     just changelog-check
 
 
@@ -74,3 +75,19 @@ reference-new key title:
 # Validate the repository changelog structure and change categories.
 changelog-check:
     schematter validate --schema infra/schemas/documents/changelog.document-schema.yaml CHANGELOG.md
+
+# Check semantic fingerprints once DVC has executable stages.
+semflow-check:
+    if env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python -c 'import pathlib, sys, yaml; from semflow.config import load_config; load_config(); doc = yaml.safe_load(pathlib.Path("dvc.yaml").read_text()); sys.exit(0 if isinstance(doc, dict) and doc.get("stages") == {} else 1)'; then echo 'Semflow: no DVC stages to instrument.'; else env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages semflow check; fi
+
+# Preview the semantic dependency changes before applying them.
+semflow-patch:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages semflow patch
+
+# Apply reviewed DVC and semantic fingerprint changes.
+semflow-apply:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages semflow patch --apply
+
+# Refresh existing semantic fingerprints without editing the DVC graph.
+semflow-refresh:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages semflow refresh --apply

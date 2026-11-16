@@ -15,3 +15,10 @@ description: Changes to CCFinance data engineering, research workflows and repos
 - Ruff, strict Pyrefly, Tach, tests and package builds in local checks and CI.
 - Planning and local reference workflows with Schematter validation and Insitu views.
 - A validated changelog with a closed set of change categories.
+- Semflow integration for reviewing and checking semantic DVC fingerprints.
+- pytest-layout-enforcer for source-aligned test paths.
+
+### Changed
+
+- Organized the pipeline into `raw`, `processed` and `research` layers, with
+  matching Python modules, CLI groups and proposed data paths.

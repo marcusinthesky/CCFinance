@@ -1,2 +1,27 @@
-# Real data processing stages will be added in part 2.
+# Pipeline layers: raw -> processed -> research.
+# Each layer will contain independently reproducible DVC sub-stages.
+
+## Raw: source snapshots
+# Ingest versioned article and company-reference snapshots with source manifests.
+# Preserve source content, metadata and provenance for replay and reconciliation.
+# Proposed location: data/raw/.
+
+## Processed: reusable tables
+# Clean, standardize and deduplicate articles; resolve dated company identities
+# and enrich article-company relationships. Retain evidence and quality flags.
+# Produce reusable article, company and relationship tables.
+# Proposed location: data/processed/.
+
+## Research: study datasets
+# Build company-year coverage panels, study cohorts and publication-ready datasets
+# from processed tables. Apply explicit publisher, relevance and K/T coverage policies.
+# Include dataset documentation, provenance and measured quality in each release.
+# Proposed location: data/research/.
+
+## Validation and evaluation
+# Validate contracts and reconcile counts at every layer. Keep method experiments,
+# independent evaluation labels and quality reports as versioned supporting
+# artifacts; they inform promotion between layers rather than forming a data tier.
+
+# Declare commands, dependencies, parameters and outputs as sub-stages are added.
 stages: {}

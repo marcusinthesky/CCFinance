@@ -49,7 +49,7 @@ repos:
 
       - id: python-quality
         name: Python lint, strict types and architecture
-        entry: bash -c 'just python::lint python::typecheck python::tach'
+        entry: bash -c 'just python::lint python::typecheck python::tach python::layout'
         language: system
         pass_filenames: false
         files: ^src/python/
@@ -73,3 +73,10 @@ repos:
         language: system
         pass_filenames: false
         files: ^(CHANGELOG\.md|infra/schemas/documents/changelog\.document-schema\.yaml)$
+
+      - id: semflow-check
+        name: Semflow fingerprints
+        entry: just semflow-check
+        language: system
+        pass_filenames: false
+        always_run: true

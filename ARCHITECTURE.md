@@ -11,6 +11,9 @@ experiment outputs once the actual stages are defined in part 2.
 - `infra/nix` and `devenv.lock` own the reproducible system environment.
 
 Tach enforces module boundaries; Ruff and strict Pyrefly check Python source.
+pytest-layout-enforcer checks test file placement during collection and CI.
+Semflow fingerprints the Python code used by DVC stages, allowing DVC to
+invalidate tracked results when executable behavior changes.
 CI executes those checks, tests and builds through the same just recipes as local
 work. Setup may download dependencies; ordinary checks use cached dependencies
 and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle.

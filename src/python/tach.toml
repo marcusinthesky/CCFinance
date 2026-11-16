@@ -13,4 +13,16 @@ depends_on = ["pipeline.stages"]
 
 [[modules]]
 path = "pipeline.stages"
+depends_on = ["pipeline.stages.raw", "pipeline.stages.processed", "pipeline.stages.research"]
+
+[[modules]]
+path = "pipeline.stages.raw"
+depends_on = []
+
+[[modules]]
+path = "pipeline.stages.processed"
+depends_on = []
+
+[[modules]]
+path = "pipeline.stages.research"
 depends_on = []

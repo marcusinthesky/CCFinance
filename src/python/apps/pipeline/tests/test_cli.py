@@ -1,8 +1,9 @@
-"""Exercise the installed CLI and reserved stages namespace."""
+"""Exercise the installed CLI and data layer command groups."""
 
 import subprocess
 import sys
 
+import pytest
 from pipeline.cli import app
 from typer.testing import CliRunner
 
@@ -16,7 +17,22 @@ def test_version() -> None:
 def test_stages() -> None:
     result = CliRunner().invoke(app, ["stages", "list"])
     assert result.exit_code == 0
-    assert "No data processing stages registered" in result.stdout
+    assert "raw: Preserve versioned source snapshots and provenance." in result.stdout
+    assert "processed: Build cleaned, deduplicated and enriched" in result.stdout
+    assert "research: Curate coverage panels, study cohorts" in result.stdout
+
+
+@pytest.mark.parametrize("layer", ["raw", "processed", "research"])
+def test_layer_help(layer: str) -> None:
+    result = CliRunner().invoke(app, ["stages", layer, "--help"])
+    assert result.exit_code == 0
+    assert layer in result.stdout
+
+
+@pytest.mark.parametrize("layer", ["raw", "processed", "research"])
+def test_unimplemented_layer_command_fails(layer: str) -> None:
+    result = CliRunner().invoke(app, ["stages", layer, "build"])
+    assert result.exit_code != 0
 
 
 def test_unknown_stage_fails() -> None:

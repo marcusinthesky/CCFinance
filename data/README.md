@@ -1,5 +1,11 @@
 # Data workspace
 
-Large raw, intermediate and processed data belong here. Git ignores payloads;
-track reproducible inputs/outputs with DVC in part 2. Keep `.dvc` pointer files
-and documentation in Git. No data has been copied from the exploratory repo.
+Data follows the same layers as `dvc.yaml` and `pipeline.stages`:
+
+- `raw/`: versioned source snapshots and provenance.
+- `processed/`: reusable cleaned, deduplicated and enriched tables.
+- `research/`: coverage panels, study cohorts and release datasets.
+
+Stage commands create their output directories when implemented. Git ignores
+data payloads; track reproducible inputs and outputs with DVC. Keep `.dvc`
+pointer files and documentation in Git.

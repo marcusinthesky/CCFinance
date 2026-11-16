@@ -26,6 +26,10 @@ test-changed:
 test:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --all-packages pytest -q -n 2 --no-testmon
 
+# Check that test paths correspond to source modules.
+layout:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --all-packages pytest-layout-enforcer check
+
 # Enforce module dependencies, reject unused declarations and forbid cycles.
 tach:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen tach check
@@ -33,7 +37,7 @@ tach:
 build:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv build --python .venv/bin/python --offline --no-build-isolation --all-packages
 
-check: lint typecheck tach test build
+check: lint typecheck tach layout test build
 
 fmt:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen ruff check --fix .

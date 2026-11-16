@@ -6,6 +6,10 @@ requires-python = ">=3.13,<3.14"
 [tool.uv]
 package = false
 
+[tool.uv.sources]
+semflow = { git = "https://github.com/marcusinthesky/semflow", rev = "480f5932ff868783fe06a9c42cca6a37c37e086f" }
+pytest-layout-enforcer = { git = "https://github.com/marcusinthesky/pytest-layout-enforcer", rev = "4a1911f444e30328e7e01a0c885f24486807021b" }
+
 [tool.uv.workspace]
 members = ["apps/*"]
 
@@ -19,6 +23,8 @@ dev = [
   "ruff==0.14.5",
   "pyrefly==0.64.1",
   "dvc>=3.63,<4",
+  "semflow",
+  "pytest-layout-enforcer",
 ]
 
 [tool.ruff]
@@ -41,3 +47,14 @@ python-version = "3.13"
 [tool.pytest.ini_options]
 testpaths = ["apps"]
 addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]
+
+[tool.pytest-layout-enforcer]
+enabled = true
+feature-separator = "__"
+require-tests = false
+include-init = false
+include-packages = true
+
+[[tool.pytest-layout-enforcer.layouts]]
+source = "apps/pipeline/src/pipeline"
+tests = "apps/pipeline/tests"

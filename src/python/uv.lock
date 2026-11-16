@@ -189,9 +189,11 @@ dev = [
     { name = "hatchling" },
     { name = "pyrefly" },
     { name = "pytest" },
+    { name = "pytest-layout-enforcer" },
     { name = "pytest-testmon" },
     { name = "pytest-xdist" },
     { name = "ruff" },
+    { name = "semflow" },
     { name = "tach" },
 ]
 
@@ -203,9 +205,11 @@ dev = [
     { name = "hatchling", specifier = "==1.27.0" },
     { name = "pyrefly", specifier = "==0.64.1" },
     { name = "pytest", specifier = "==9.1.1" },
+    { name = "pytest-layout-enforcer", git = "https://github.com/marcusinthesky/pytest-layout-enforcer?rev=4a1911f444e30328e7e01a0c885f24486807021b" },
     { name = "pytest-testmon", specifier = ">=2.3,<3" },
     { name = "pytest-xdist", specifier = ">=3.8,<5" },
     { name = "ruff", specifier = "==0.14.5" },
+    { name = "semflow", git = "https://github.com/marcusinthesky/semflow?rev=480f5932ff868783fe06a9c42cca6a37c37e086f" },
     { name = "tach", specifier = "==0.35.3" },
 ]
 
@@ -1248,6 +1252,14 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-layout-enforcer"
+version = "0.1.0"
+source = { git = "https://github.com/marcusinthesky/pytest-layout-enforcer?rev=4a1911f444e30328e7e01a0c885f24486807021b#4a1911f444e30328e7e01a0c885f24486807021b" }
+dependencies = [
+    { name = "pytest" },
+]
+
+[[package]]
 name = "pytest-testmon"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1403,6 +1415,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/90/d5/62ab01546616c42d05e11fe133ce80e1d5c5c601bfc391de41f52e32ce66/scmrepo-3.6.2.tar.gz", hash = "sha256:750741af151e4c602dbf1456b49c7a1d27844527ba94db1e0c580b167cbd9316", size = 97614, upload-time = "2026-03-31T05:05:12.452Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/16/42/f4bb5e4612681d28fb01335d5faa67e1478adc63077c86555776fe89e584/scmrepo-3.6.2-py3-none-any.whl", hash = "sha256:b6d2a904562d3fc8a1a375234ce6f9a3e47ce83cb67257381fa5dc43c6006d4a", size = 74242, upload-time = "2026-03-31T05:05:10.986Z" },
+]
+
+[[package]]
+name = "semflow"
+version = "0.1.1"
+source = { git = "https://github.com/marcusinthesky/semflow?rev=480f5932ff868783fe06a9c42cca6a37c37e086f#480f5932ff868783fe06a9c42cca6a37c37e086f" }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "typer" },
 ]
 
 [[package]]
