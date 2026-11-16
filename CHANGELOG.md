@@ -17,6 +17,9 @@ description: Changes to CCFinance data engineering, research workflows and repos
 - A validated changelog with a closed set of change categories.
 - Semflow integration for reviewing and checking semantic DVC fingerprints.
 - pytest-layout-enforcer for source-aligned test paths.
+- Justfile formatting and analysis checks in pre-commit and CI.
+- Agent skill schema and validation for metadata, structure and length.
+- AgentSync-managed shared instructions, skills and Codex configuration.
 
 ### Changed
 

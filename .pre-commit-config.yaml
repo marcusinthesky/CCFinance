@@ -41,6 +41,18 @@ repos:
         language: system
         pass_filenames: false
         types: [nix]
+      - id: just-format
+        name: Justfile formatting and syntax
+        entry: >-
+          bash -c 'rc=0; for f; do just --justfile "$f" --fmt --check --unstable || rc=1; done; exit "$rc"' --
+        language: system
+        files: (^|/)([Jj]ustfile|[^/]+\.just)$
+      - id: just-lint
+        name: Justfile analysis
+        entry: >-
+          bash -c 'rc=0; for f; do just-lsp analyze "$f" || rc=1; done; exit "$rc"' --
+        language: system
+        files: (^|/)([Jj]ustfile|[^/]+\.just)$
       - id: text-check
         name: Whitespace and final newlines
         entry: bash infra/nix/check-text.sh
@@ -80,3 +92,10 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+
+      - id: skill-documents
+        name: Agent skill documents
+        entry: just skills-check
+        language: system
+        pass_filenames: false
+        files: (^|/)(SKILL\.md|skill\.document-schema\.yaml)$

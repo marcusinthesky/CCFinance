@@ -1,0 +1,15 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+
+# Preview changes to native agent configuration.
+preview:
+    cd .. && agentsync apply --dry-run
+
+# Apply shared configuration to the selected agents.
+apply:
+    cd .. && agentsync apply
+
+# Check links and configuration.
+check:
+    cd .. && agentsync status
+    cd .. && agentsync apply --dry-run
+    cd .. && agentsync doctor

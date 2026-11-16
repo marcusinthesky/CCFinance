@@ -27,6 +27,7 @@
       ruff
       pyrefly
       (callPackage ./pkgs/schematter.nix { })
+      (callPackage ./pkgs/agentsync.nix { })
       patchelf
       tectonic
       tex-fmt

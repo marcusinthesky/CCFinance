@@ -18,6 +18,14 @@ just python::run stages list
 just check
 ```
 
+Shared agent instructions and Codex configuration are maintained in
+[`.agents/`](.agents/README.md). `just setup` applies them; use
+`just agents::preview` to preview link changes and `just agents::check` to
+verify the generated links.
+
+`just check` validates Justfile syntax and formatting alongside the other
+quality gates. Run `just fmt` to format Justfiles and other source files.
+
 For Python alone, with Python 3.13, uv and just installed:
 
 ```bash

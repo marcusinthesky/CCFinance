@@ -1,6 +1,7 @@
 _commit: v0.1.1-alpha
 _src_path: https://github.com/marcusinthesky/exordio.git
-agents: []
+agents:
+- codex
 author: CCFinance contributors
 description: Reproducible filtering and enrichment of Common Crawl news for financial
     language research.

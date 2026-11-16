@@ -3,6 +3,7 @@ set positional-arguments
 
 mod python 'src/python/justfile'
 mod latex 'src/latex/justfile'
+mod agents '.agents/justfile'
 workflow := "env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --script src/python/scripts/workflow/script.py"
 
 # Discover this project's commands.
@@ -14,6 +15,7 @@ setup:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --frozen --script src/python/scripts/workflow/script.py prepare
     just python::setup
     just latex::setup
+    just agents::apply
     prek install
 
 # Check source, views and selected languages without repairing files.
@@ -25,7 +27,8 @@ check:
     just data-check
     just semflow-check
     just changelog-check
-
+    just skills-check
+    just agents::check
 
 # Run the selected language tests.
 test:
@@ -34,7 +37,8 @@ test:
 
 # Explicitly format sources.
 fmt:
-    nixfmt devenv.nix infra/nix/devenv.nix infra/nix/pkgs/schematter.nix
+    git ls-files -z --cached --others --exclude-standard | while IFS= read -r -d '' file; do case "$file" in justfile|*/justfile|Justfile|*/Justfile|*.just) just --justfile "$file" --fmt --unstable ;; esac; done
+    nixfmt devenv.nix infra/nix/devenv.nix infra/nix/pkgs/schematter.nix infra/nix/pkgs/agentsync.nix
     rumdl fmt .
     just python::fmt
     just latex::fmt
@@ -91,3 +95,7 @@ semflow-apply:
 # Refresh existing semantic fingerprints without editing the DVC graph.
 semflow-refresh:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages semflow refresh --apply
+
+# Validate repository-owned skill documents and their directory names.
+skills-check:
+    git ls-files -z --cached --others --exclude-standard -- ':(glob)**/SKILL.md' 'SKILL.md' | while IFS= read -r -d '' file; do [[ -f "$file" ]] || continue; schematter validate --schema infra/schemas/documents/skill.document-schema.yaml "$file"; awk 'END { if (NR > 500) { print FILENAME ": exceeds 500 lines" > "/dev/stderr"; exit 1 } }' "$file"; env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python -c 'import pathlib, re, sys, yaml; p = pathlib.Path(sys.argv[1]); frontmatter = re.split(r"(?m)^---[ \t]*\r?$", p.read_text(), maxsplit=2)[1]; name = yaml.safe_load(frontmatter)["name"]; sys.exit(0 if name == p.parent.name else f"{p}: name {name!r} must match parent directory {p.parent.name!r}")' "$file"; done
