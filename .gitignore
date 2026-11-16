@@ -35,6 +35,7 @@ lean_decls
 
 # Local literature records and source material.
 /.context/reference/
+/.context/chat/
 
 # AgentSync creates these native links from .agents/.
 /AGENTS.md
