@@ -1,0 +1,5 @@
+{
+  "source": "hf://datasets/ksolovev/fine-news@7a841090e69f3c58a9e04b0c39213d879af68e8a/data/*/eng_Latn/*.parquet",
+  "domains": "data/inputs/fine-news/domains.csv",
+  "output": "data/raw/fine-news"
+}

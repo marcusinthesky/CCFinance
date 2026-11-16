@@ -1,8 +1,8 @@
 # Architecture
 
 CCFinance separates code and research artifacts. Git stores source, configuration,
-locks, provenance definitions and documentation. DVC will track large data and
-experiment outputs once the actual stages are defined in part 2.
+locks, provenance definitions and documentation. DVC defines data dependencies
+and will track large data and experiment outputs once they are materialized.
 
 - `src/python/apps/pipeline` owns the CLI and data stage implementations.
 - `src/python/uv.lock` locks runtime, quality, testing, packaging and DVC tools.
@@ -19,9 +19,9 @@ work. Setup may download dependencies; ordinary checks use cached dependencies
 and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle.
 
 The Hugging Face dataset is staging, and the bucket is intended for intermediate
-and experiment artifacts. Neither is accessed by scaffold commands. Pipeline
-stages, provenance, study parameters, coverage criteria and remote transport are
-part 2 work, rather than implied by this scaffold.
+and experiment artifacts. The frozen raw acquisition stage documents the
+historical selection without fetching its output. Coverage criteria, later stages
+and remote transport remain future work.
 
 Copier answers record the source and tag for future template updates. Review
 update conflicts and preserve project-specific code and configuration. The

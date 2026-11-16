@@ -9,6 +9,7 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
+- Frozen Fine News acquisition recipe with the historical publisher filter.
 - Python and LaTeX toolchains generated from Exordio, with locked dependencies.
 - Typer `pipeline` application and a namespace for data processing stages.
 - DVC repository configuration and a workspace for research data.

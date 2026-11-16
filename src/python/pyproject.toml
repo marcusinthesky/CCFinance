@@ -47,6 +47,14 @@ python-version = "3.13"
 [tool.pytest.ini_options]
 testpaths = ["apps"]
 addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]
+markers = [
+  "unit: isolated behavior",
+  "component: coherent subsystem behavior",
+  "integration: interaction across components or real dependencies",
+  "e2e: complete user-visible workflow",
+  "slow: consistently takes more than two seconds",
+  "external: accesses a live external service",
+]
 
 [tool.pytest-layout-enforcer]
 enabled = true

@@ -21,8 +21,9 @@ Data processing is organized into three layers, matching `dvc.yaml`:
 | `pipeline.stages.processed` / `stages processed` | Build reusable cleaned and enriched tables | `data/processed/` |
 | `pipeline.stages.research` / `stages research` | Curate coverage panels, cohorts and release datasets | `data/research/` |
 
-Each group provides a namespace for future processing sub-stages. No data
-transformations are implemented yet. Add stage commands under their owning layer,
+The raw layer includes the frozen historical Fine News publisher filter described
+in [its acquisition configuration](../../data/inputs/fine-news/README.md). Add other
+stage commands under their owning layer,
 with explicit inputs and outputs, and declare their dependencies in `dvc.yaml`.
 DVC connects layers through artifacts; Python modules need not import earlier
 layers to read their outputs. Importing a module performs no dataset access.

@@ -37,6 +37,7 @@
     UV_PYTHON_DOWNLOADS = "never";
     UV_PYTHON = "${pkgs.python313}/bin/python3";
     PROJECT_RUNTIME_LINKER = pkgs.stdenv.cc.bintools.dynamicLinker;
+    LD_LIBRARY_PATH = lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ];
     PROJECT_RUNTIME_LIBRARIES = lib.makeLibraryPath [
       pkgs.stdenv.cc.cc.lib
       pkgs.glibc

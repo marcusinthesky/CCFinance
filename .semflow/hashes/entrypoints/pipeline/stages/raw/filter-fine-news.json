@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.raw.fine_news:filter_fine_news",
+  "digest": "sha256:4aa5c17f2a5f0a0e41fcdffd897e9d0f60c30199e1ac32f96c9fce2895a0a294",
+  "entrypoint": "pipeline stages raw filter-fine-news",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:b647117054c1a141c3594c507ab48473989700b5202bfc6136cf3858d402c4cf","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:BaseModel=pydantic:BaseModel>"},
+    {"digest":"sha256:b647117054c1a141c3594c507ab48473989700b5202bfc6136cf3858d402c4cf","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:ConfigDict=pydantic:ConfigDict>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:ac3a74d6dd975a8e8fe4b7f85fce794793a9355595b850e3926964913948d386","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:os=os>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:<binding:typer=typer>"},
+    {"digest":"sha256:007ec5e0a67434d492d742519c5fafc7837755ccf450967df9d65f29f9e4e16b","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:FineNewsConfig"},
+    {"digest":"sha256:2f807ac23eae00522a4d356fdfc2846e51f4ae25f4b9a857e9c26f6b01ce8fc8","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:QUERY"},
+    {"digest":"sha256:794d2aa4ef6e1f0142eeee13732059ad4b5c4b32473ea49b78ec2054623ab850","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/fine_news.py","symbol":"pipeline.stages.raw.fine_news:filter_fine_news"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

@@ -47,9 +47,9 @@ stage, run `just semflow-patch` to review its proposed fingerprints, then
 `just semflow-apply` to materialize them. Commit the generated
 `.semflow/hashes/` files with the DVC definition. After semantic source changes,
 run `just semflow-refresh`; `just semflow-check` detects stale fingerprints.
-There are no executable stages to instrument yet. The check skips fingerprint
-comparison only while the stage mapping is empty; any future stage must pass
-Semflow's check. Keep data, configuration and environment dependencies explicit
+The frozen [Fine News acquisition stage](data/inputs/fine-news/README.md) documents
+the staging dataset's historical selection. Keep data, configuration and
+environment dependencies explicit
 in DVC: Semflow's static analysis cannot discover string-driven dynamic imports.
 
 See [Python commands](src/python/README.md), [LaTeX commands](src/latex/README.md)

@@ -23,5 +23,19 @@
 # independent evaluation labels and quality reports as versioned supporting
 # artifacts; they inform promotion between layers rather than forming a data tier.
 
-# Declare commands, dependencies, parameters and outputs as sub-stages are added.
-stages: {}
+stages:
+  filter_fine_news:
+    desc: Reproduce the historical English financial-publisher selection from Fine News.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages raw filter-fine-news
+    frozen: true
+    deps:
+      - data/inputs/fine-news/acquisition.json
+      - data/inputs/fine-news/domains.csv
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/raw/filter-fine-news.json
+    outs:
+      - data/raw/fine-news

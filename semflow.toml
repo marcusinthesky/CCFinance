@@ -8,7 +8,7 @@ pipeline = "pipeline.cli:app"
 
 [hashing]
 ignore-docstrings = true
-ignore-annotations = true
+ignore-annotations = false
 ignore-type-checking-blocks = true
 
 [tracking]
