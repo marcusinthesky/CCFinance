@@ -12,8 +12,9 @@ status: done
 
 Implement a small probability-sampled comparison of English publisher retention
 across four public corpora. Prepare manifests and transfer estimates before
-acquiring article payloads. See [methods](methods.md) and the
-[pipeline guide](../../../../../data/inputs/source-comparison/README.md).
+acquiring article payloads. The
+[pipeline guide](../../../../../data/inputs/source-comparison/README.md)
+records the design, estimators and limits.
 
 ## Acceptance
 

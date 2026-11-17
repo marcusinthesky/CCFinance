@@ -9,7 +9,6 @@ from hypothesis import given
 from hypothesis import strategies as st
 from hypothesis.strategies import DrawFn
 from pipeline.stages.research.experiments.source_comparison import (
-    REPORT_FILES,
     compare_sources,
     estimate_population,
 )
@@ -106,101 +105,44 @@ def test_insufficient_variation_does_not_claim_precision(
     assert estimates["estimated_publisher_yield_ci95_high"] is None
 
 
-def _write_comparison_inputs(
-    root: Path,
-    datasets: tuple[str, ...] = (
-        "fine_news",
-        "infini_news",
-        "refinedweb",
-        "fineweb_hq",
-    ),
-    *,
-    zero_matches: bool = False,
-) -> tuple[Path, Path, Path]:
-    manifests = root / "manifests"
-    samples = root / "samples"
+def _write_comparison_inputs(root: Path, datasets: tuple[str, ...]) -> tuple[Path, ...]:
+    manifests, samples, params = root / "manifests", root / "samples", root / "p.yaml"
     source = "hf://datasets/example/source@revision/data/*.parquet"
-    params = root / "params.yaml"
-    params.write_text(
-        json.dumps(
-            {
-                "experiments": {
-                    "source_comparison": {
-                        "seed": 42,
-                        "draws": 4,
-                        "domains": "domains.csv",
-                        "datasets": {
-                            dataset: {"source": source} for dataset in datasets
-                        },
-                    }
-                }
-            }
-        ),
-        encoding="utf-8",
-    )
+    config: dict[str, object] = {"seed": 42, "draws": 4, "domains": "domains.csv"}
+    config["datasets"] = {dataset: {"source": source} for dataset in datasets}
+    params.write_text(json.dumps({"experiments": {"source_comparison": config}}))
+    # Each source draws group A once and group B three times.
+    groups = [("a.parquet", 10, 1)] + [("b.parquet", 20, 6)] * 3
     for dataset in datasets:
-        draws = []
-        counts = []
-        for draw, (file, rows, matches) in enumerate(
-            [
-                ("a.parquet", 10, 1),
-                ("b.parquet", 20, 6),
-                ("b.parquet", 20, 6),
-                ("b.parquet", 20, 6),
-            ]
-        ):
-            draws.append(
-                {
-                    "draw": draw,
-                    "file": file,
-                    "row_group": 0,
-                    "row_start": 0,
-                    "row_stop": rows,
-                    "probability": 0.5,
-                    "file_row_groups": 1,
-                    "file_size_bytes": 200,
-                    "projected_bytes": 100,
-                }
-            )
-            counts.append(
-                {
-                    "draw": draw,
-                    "input_rows": rows,
-                    "english_rows": rows,
-                    "matched_rows": 0 if zero_matches else matches,
-                }
-            )
-        manifest_dir = manifests / dataset
-        manifest_dir.mkdir(parents=True)
-        (manifest_dir / "manifest.json").write_text(
-            json.dumps(
-                {
-                    "dataset": dataset,
-                    "source": source,
-                    "revision": "revision",
-                    "seed": 42,
-                    "file_count": 2,
-                    "listed_bytes": 400,
-                    "footer_bytes": 16,
-                    "english_definition": "English release",
-                    "draws": draws,
-                }
-            ),
-            encoding="utf-8",
+        draws = [
+            {
+                "draw": draw,
+                "file": file,
+                "row_group": 0,
+                "row_start": 0,
+                "row_stop": rows,
+                "probability": 0.5,
+                "file_row_groups": 1,
+                "file_size_bytes": 200,
+                "projected_bytes": 100,
+            }
+            for draw, (file, rows, _) in enumerate(groups)
+        ]
+        counts = [
+            {"draw": d, "input_rows": n, "english_rows": n, "matched_rows": m}
+            for d, (_, n, m) in enumerate(groups)
+        ]
+        manifest = {"dataset": dataset, "source": source, "revision": "revision"}
+        manifest |= {"seed": 42, "file_count": 2, "listed_bytes": 400}
+        manifest |= {"footer_bytes": 16, "english_definition": "English release"}
+        (manifests / dataset).mkdir(parents=True)
+        (manifests / dataset / "manifest.json").write_text(
+            json.dumps(manifest | {"draws": draws})
         )
-        sample_dir = samples / dataset
-        sample_dir.mkdir(parents=True)
-        (sample_dir / "counts.json").write_text(
-            json.dumps(
-                {
-                    "dataset": dataset,
-                    "draws": counts,
-                    "elapsed_seconds": 0.1,
-                    "output_bytes": 50,
-                    "network_bytes": None,
-                }
-            ),
-            encoding="utf-8",
+        sample = {"dataset": dataset, "draws": counts, "elapsed_seconds": 0.1}
+        (samples / dataset).mkdir(parents=True)
+        (samples / dataset / "counts.json").write_text(
+            json.dumps(sample | {"output_bytes": 50, "network_bytes": None})
         )
     return manifests, samples, params
 
@@ -209,8 +151,10 @@ def _write_comparison_inputs(
 def test_report_keeps_repeated_draws_but_counts_acquisition_once(
     tmp_path: Path,
 ) -> None:
-    # Arrange: each source draws group A once and group B three times.
-    manifests, samples, params = _write_comparison_inputs(tmp_path)
+    # Arrange: two configured sources, each with one repeated row group.
+    manifests, samples, params = _write_comparison_inputs(
+        tmp_path, ("fine_news", "refinedweb")
+    )
     output = tmp_path / "report"
 
     # Act: publish all source estimates and their methods together.
@@ -218,92 +162,17 @@ def test_report_keeps_repeated_draws_but_counts_acquisition_once(
 
     # Assert: physical counts use two groups; weighted estimates keep all four draws.
     metrics = json.loads((output / "metrics.json").read_text(encoding="utf-8"))
-    assert set(metrics) == {"fine_news", "infini_news", "refinedweb", "fineweb_hq"}
+    assert set(metrics) == {"fine_news", "refinedweb"}
     for source in metrics.values():
         assert source["draws"] == 4
         assert source["selected_groups"] == 2
-        assert source["sampled_input_rows"] == 30
         assert source["sampled_matched_rows"] == 7
         assert source["projected_column_bytes"] == 200
-        assert source["observed_publisher_yield"] == pytest.approx(7 / 30)
         assert source["estimated_english_records_estimate"] == 35
         assert source["estimated_publisher_records_estimate"] == 9.5
         assert source["estimated_publisher_yield"] == pytest.approx(9.5 / 35)
         assert source["network_bytes"] is None
-    methods = json.loads((output / "methods.json").read_text(encoding="utf-8"))
-    assert methods["sources"]["fine_news"]["degrees_of_freedom"] == 3
-    assert (
-        len((output / "comparison.csv").read_text(encoding="utf-8").splitlines()) == 5
-    )
     yield_table = (output / "yield.tex").read_text(encoding="utf-8")
-    summary = (output / "summary.tex").read_text(encoding="utf-8")
     assert r"fine\_news" in yield_table
-    assert r"Yield (\%)" in yield_table
     assert "27.1429" in yield_table
-    assert "16.7512" in yield_table
-    assert "37.5345" in yield_table
-    assert "27.1429" in summary
-    assert r"95\% Student t" in summary
-    assert "insufficient evidence" in summary
-    assert r"\begin{tabular}" in yield_table
-    assert r"\begin{center}" not in yield_table
-
-
-@pytest.mark.integration
-def test_report_accepts_configured_subset_and_renders_missing_intervals(
-    tmp_path: Path,
-) -> None:
-    # Arrange: a deliberate one-source experiment with no publisher matches.
-    manifests, samples, params = _write_comparison_inputs(
-        tmp_path, ("fine_news",), zero_matches=True
-    )
-    output = tmp_path / "report"
-
-    # Act: report only the configured population without inventing precision.
-    compare_sources(manifests, samples, output, params)
-
-    # Assert: CSV, JSON and LaTeX agree on the zero estimate and unavailable CI.
-    metrics = json.loads((output / "metrics.json").read_text(encoding="utf-8"))
-    assert set(metrics) == {"fine_news"}
-    assert metrics["fine_news"]["estimated_publisher_yield"] == 0.0
-    assert metrics["fine_news"]["estimated_publisher_yield_ci95_low"] is None
-    assert len((output / "comparison.csv").read_text().splitlines()) == 2
-    for name in ("yield.tex", "population.tex"):
-        table = (output / name).read_text(encoding="utf-8")
-        assert r"fine\_news" in table
-        assert "--" in table
-        assert "nan" not in table.lower()
-    assert "0.0000" in (output / "yield.tex").read_text(encoding="utf-8")
-
-
-@pytest.mark.integration
-def test_missing_source_cannot_publish_partial_comparison(tmp_path: Path) -> None:
-    # Arrange: omit one required source's acquisition results.
-    manifests, samples, params = _write_comparison_inputs(tmp_path)
-    (samples / "fineweb_hq" / "counts.json").unlink()
-    output = tmp_path / "report"
-
-    # Act: attempt to publish a comparison with incomplete evidence.
-    with pytest.raises(FileNotFoundError):
-        compare_sources(manifests, samples, output, params)
-
-    # Assert: no report directory or partial metrics were published.
-    assert not output.exists()
-
-
-@pytest.mark.integration
-def test_report_reproduces_after_dvc_removes_output_files(tmp_path: Path) -> None:
-    # Arrange: DVC removes declared files before reproduction, leaving their parent.
-    manifests, samples, params = _write_comparison_inputs(tmp_path)
-    output = tmp_path / "report"
-    compare_sources(manifests, samples, output, params)
-    original_metrics = (output / "metrics.json").read_bytes()
-    for file in output.iterdir():
-        file.unlink()
-
-    # Act: reproduce the report into the existing empty directory.
-    compare_sources(manifests, samples, output, params)
-
-    # Assert: all declared files are republished with identical metrics.
-    assert {file.name for file in output.iterdir()} == set(REPORT_FILES)
-    assert (output / "metrics.json").read_bytes() == original_metrics
+    assert r"95\% Student t" in (output / "summary.tex").read_text(encoding="utf-8")

@@ -31,27 +31,11 @@ def test_prepared_groups_drive_acquisition_without_duplicate_payloads(
     domains = tmp_path / "domains.csv"
     domains.write_text("domain\nexample.com\n", encoding="utf-8")
     params = tmp_path / "params.yaml"
-    params.write_text(
-        yaml.safe_dump(
-            {
-                "experiments": {
-                    "source_comparison": {
-                        "seed": 42,
-                        "draws": 4,
-                        "domains": str(domains),
-                        "datasets": {
-                            "fine_news": {
-                                "source": "hf://datasets/example/source@"
-                                + "0" * 40
-                                + "/data/*.parquet"
-                            }
-                        },
-                    }
-                }
-            }
-        ),
-        encoding="utf-8",
-    )
+    revision = "0" * 40
+    dataset = {"source": f"hf://datasets/example/source@{revision}/data/*.parquet"}
+    config: dict[str, object] = {"seed": 42, "draws": 4, "domains": str(domains)}
+    config["datasets"] = {"fine_news": dataset}
+    params.write_text(yaml.safe_dump({"experiments": {"source_comparison": config}}))
     monkeypatch.setattr(
         source_comparison,
         "source_files",
@@ -65,35 +49,18 @@ def test_prepared_groups_drive_acquisition_without_duplicate_payloads(
     runner = CliRunner()
 
     # Act: prepare through the public CLI, then acquire only its planned intervals.
+    common = ("--dataset", "fine_news", "--params", str(params))
     prepared = runner.invoke(
         app,
-        [
-            "stages",
-            "raw",
-            "prepare-comparison",
-            "--dataset",
-            "fine_news",
-            "--params",
-            str(params),
-            "--output",
-            str(manifests),
-        ],
+        ["stages", "raw", "prepare-comparison", *common, "--output", str(manifests)],
     )
     assert prepared.exit_code == 0, prepared.output
     acquired = runner.invoke(
         app,
         [
-            "stages",
-            "raw",
-            "sample-comparison",
-            "--dataset",
-            "fine_news",
-            "--params",
-            str(params),
-            "--manifest",
-            str(manifests / "manifest.json"),
-            "--output",
-            str(samples),
+            *("stages", "raw", "sample-comparison", *common),
+            *("--manifest", str(manifests / "manifest.json")),
+            *("--output", str(samples)),
         ],
     )
 
