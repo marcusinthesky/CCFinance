@@ -20,8 +20,8 @@ and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle
 
 The Hugging Face dataset is staging, and the bucket is intended for intermediate
 and experiment artifacts. The frozen raw acquisition stage documents the
-historical selection without fetching its output. Company-level coverage,
-enrichment and remote artifact transport remain future work. The raw comparison stages prepare
+historical selection without fetching its output. Company identity linking,
+coverage panels and remote artifact transport remain future work. The raw comparison stages prepare
 sampling manifests from Hub listings and Parquet footers, then acquire only the
 selected row groups through the shared publisher filter. Research aggregation
 reads those artifacts without importing raw-stage modules. DVC connects these
@@ -36,6 +36,14 @@ another. Raw publisher extraction owns one source-field registry, deriving both
 SQL projections and projected column sizes from it. DVC supplies artifact paths
 explicitly. Research uses statsmodels for survey-estimate summaries and LaTeX
 tables; it preserves the probability-sampling design.
+
+Article metadata extraction runs GLiNER2.5 in a pinned GPU container from
+`infra/inference`, outside the locked workspace and its static checks. The same
+extractor writes the processed benchmark and the full corpus tables; the
+pipeline draws the benchmark sample and reports it. The extractor processes row
+groups in seeded random order and resumes from atomically written outputs. It
+retains complete, uncalibrated score vectors, so filtering policy stays a
+downstream research decision.
 
 Copier answers record the source and tag for future template updates. Review
 update conflicts and preserve project-specific code and configuration. The

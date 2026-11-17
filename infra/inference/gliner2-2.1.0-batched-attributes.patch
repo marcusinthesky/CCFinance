@@ -1,0 +1,78 @@
+--- a/gliner2/models/boundary/engine.py
++++ b/gliner2/models/boundary/engine.py
+@@ -251,0 +252,6 @@
++        prepare = getattr(self, "_prepare_batched_attributes", None)
++        if prepare is not None:
++            core["_batched_attribute_logits"] = prepare(
++                batch, core, metadata_list, grouped_candidates, null_probs
++            )
++
+@@ -543,0 +550,4 @@
++        pending = core.get("_pending_attribute_inputs")
++        if pending is not None:
++            pending.append((sample_index, specs, metadata, decoded, token_coordinates))
++            return
+@@ -572,28 +582,35 @@
+-        device = core["query_states"].device
+-        query_ids = torch.tensor(
+-            [query_id for _, query_id in attribute_rows],
+-            dtype=torch.long,
+-            device=device,
+-        )
+-        pair_tensor = torch.tensor(
+-            unique_pairs, dtype=torch.long, device=device
+-        )
+-        indices = pair_tensor.view(1, 1, len(unique_pairs), 2).expand(
+-            1, len(attribute_rows), len(unique_pairs), 2
+-        )
+-        query_states = core["query_states"][
+-            sample_index:sample_index + 1
+-        ].index_select(1, query_ids)
+-        query_mask = core["query_mask"][
+-            sample_index:sample_index + 1
+-        ].index_select(1, query_ids)
+-        logits = self.boundary_head.score_explicit_spans(
+-            core["text_states"][sample_index:sample_index + 1],
+-            core["text_mask"][sample_index:sample_index + 1],
+-            query_states,
+-            query_mask,
+-            indices,
+-        )[0]
+-        logits = (
+-            logits / self.boundary_settings.pair_temperature
+-        ).float().cpu()
++        cached = core.get("_batched_attribute_logits", {}).get(sample_index)
++        if cached is not None:
++            if cached["labels"] != [label for label, _ in attribute_rows]:
++                raise ValueError("Batched attribute query labels differ")
++            columns = [cached["pairs"][pair] for pair in unique_pairs]
++            logits = cached["logits"][:, columns]
++        else:
++            device = core["query_states"].device
++            query_ids = torch.tensor(
++                [query_id for _, query_id in attribute_rows],
++                dtype=torch.long,
++                device=device,
++            )
++            pair_tensor = torch.tensor(
++                unique_pairs, dtype=torch.long, device=device
++            )
++            indices = pair_tensor.view(1, 1, len(unique_pairs), 2).expand(
++                1, len(attribute_rows), len(unique_pairs), 2
++            )
++            query_states = core["query_states"][
++                sample_index:sample_index + 1
++            ].index_select(1, query_ids)
++            query_mask = core["query_mask"][
++                sample_index:sample_index + 1
++            ].index_select(1, query_ids)
++            logits = self.boundary_head.score_explicit_spans(
++                core["text_states"][sample_index:sample_index + 1],
++                core["text_mask"][sample_index:sample_index + 1],
++                query_states,
++                query_mask,
++                indices,
++            )[0]
++            logits = (
++                logits / self.boundary_settings.pair_temperature
++            ).float().cpu()

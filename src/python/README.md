@@ -25,6 +25,8 @@ The raw layer includes the frozen historical Fine News publisher filter describe
 in [its acquisition configuration](../../data/inputs/fine-news/README.md), alongside
 `prepare-comparison` and `sample-comparison`. The research layer provides
 `compare-sources` for weighted estimates from the resulting manifests and counts.
+`processed sample-articles` and `research report-article-metadata` bracket the
+GPU [metadata benchmark](../../infra/inference/README.md).
 Experimental implementations live under each layer's `experiments` package.
 They share Pydantic artifact contracts through `pipeline.experiments`; the raw
 `publishers` module owns source mappings and extraction. DVC passes artifact
@@ -32,8 +34,7 @@ paths explicitly, while statistical and source parameters live under
 `experiments.source_comparison` in the root parameter file. Reporting follows
 the configured dataset keys and can run a deliberate subset of sources.
 See the [source comparison](../../data/inputs/source-comparison/README.md) before
-running acquisition. Python setup installs DuckDB's `httpfs` extension so the
-local HTTP integration check can run offline. Add other stage commands under their owning layer,
+running acquisition. Add other stage commands under their owning layer,
 with explicit inputs and outputs, and declare their dependencies in `dvc.yaml`.
 DVC connects layers through artifacts; Python modules need not import earlier
 layers to read their outputs. Importing a module performs no dataset access.

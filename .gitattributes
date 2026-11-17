@@ -1,2 +1,6 @@
 * text=auto eol=lf
 *.pdf binary
+# Generated locks and fingerprints; GitHub collapses them in review diffs.
+uv.lock linguist-generated=true
+dvc.lock linguist-generated=true
+.semflow/** linguist-generated=true

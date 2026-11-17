@@ -1,0 +1,27 @@
+--- a/gliner2/inference/chunking.py
++++ b/gliner2/inference/chunking.py
+@@ -98,8 +98,22 @@
+     if isinstance(result, dict):
+         remapped = {key: remap_result_spans(value, original_text, chunk) for key, value in result.items()}
+         if _is_span_dict(remapped):
+-            start = int(remapped["start"]) + chunk.start_char
+-            end = int(remapped["end"]) + chunk.start_char
++            local_start = int(remapped["start"])
++            local_end = int(remapped["end"])
++            # The processor appends a full stop to unpunctuated windows.
++            # Do not map that synthetic character into the source document.
++            if (
++                0 <= local_start < len(chunk.text)
++                and local_end == len(chunk.text) + 1
++                and not chunk.text.endswith((".", "!", "?"))
++                and remapped["text"] == chunk.text[local_start:] + "."
++            ):
++                local_end = len(chunk.text)
++                remapped["synthetic_suffix_removed"] = True
++            elif not (0 <= local_start < local_end <= len(chunk.text)):
++                remapped["invalid_window_span"] = True
++            start = local_start + chunk.start_char
++            end = local_end + chunk.start_char
+             remapped["start"] = start
+             remapped["end"] = end
+             if 0 <= start <= end <= len(original_text):

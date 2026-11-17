@@ -14,6 +14,7 @@ dist/
 build/
 result
 result-*
+.runtime/
 .env
 .env.*
 .DS_Store
@@ -37,6 +38,7 @@ lean_decls
 !/data/inputs/fine-news/acquisition.json
 !/data/inputs/fine-news/domains.csv
 !/data/inputs/source-comparison/README.md
+!/data/inputs/article-metadata/diagnostics.jsonl
 
 # Local literature records and source material.
 /.context/reference/

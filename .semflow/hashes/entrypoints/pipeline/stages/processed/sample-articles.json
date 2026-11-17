@@ -1,0 +1,17 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.experiments.article_metadata:sample_articles",
+  "digest": "sha256:7853c0799b914963c251546c73bc560de796870a93d1d7e7993fd2d32e6251cf",
+  "entrypoint": "pipeline stages processed sample-articles",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/article_metadata.py","symbol":"pipeline.stages.processed.experiments.article_metadata:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/article_metadata.py","symbol":"pipeline.stages.processed.experiments.article_metadata:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/article_metadata.py","symbol":"pipeline.stages.processed.experiments.article_metadata:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/article_metadata.py","symbol":"pipeline.stages.processed.experiments.article_metadata:<binding:typer=typer>"},
+    {"digest":"sha256:35fb1fe741aa0f6d41a6d30e074d1de664c7bb8c391ebba6c73ebb854c699bd5","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/article_metadata.py","symbol":"pipeline.stages.processed.experiments.article_metadata:sample_articles"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

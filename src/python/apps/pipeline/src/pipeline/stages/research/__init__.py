@@ -2,6 +2,9 @@
 
 import typer
 
+from pipeline.stages.research.experiments.article_metadata import (
+    report_article_metadata,
+)
 from pipeline.stages.research.experiments.source_comparison import compare_sources
 
 app = typer.Typer(no_args_is_help=True, help=__doc__)
@@ -13,3 +16,4 @@ def main() -> None:
 
 
 app.command("compare-sources")(compare_sources)
+app.command("report-article-metadata")(report_article_metadata)

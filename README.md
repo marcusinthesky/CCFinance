@@ -52,6 +52,8 @@ the published staging snapshot and its historical selection recipe. DVC verifies
 the restored output during reproduction. The
 [source comparison](data/inputs/source-comparison/README.md) prepares small
 probability samples using Parquet metadata before acquiring article payloads.
+[Article metadata](infra/inference/README.md) is extracted on a local GPU after
+a seeded benchmark; the long run resumes from completed row groups.
 Keep data, configuration and environment dependencies explicit in DVC: Semflow's
 static analysis cannot discover string-driven dynamic imports.
 

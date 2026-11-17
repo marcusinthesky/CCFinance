@@ -9,8 +9,10 @@ Data follows the same layers as `dvc.yaml` and `pipeline.stages`:
 
 Experiments use the same name within each layer. Source-comparison manifests
 and samples live in `raw/experiments/source-comparison/`; estimates and paper
-tables live in `research/experiments/source-comparison/`. Later processing
-experiments can use `processed/experiments/<name>/`. DVC connects these artifacts;
+tables live in `research/experiments/source-comparison/`. The article-metadata
+benchmark lives in `processed/experiments/article-metadata/` and its report in
+`research/experiments/article-metadata/`; the corpus run writes
+`processed/article-metadata/`. DVC connects these artifacts;
 an experimental result does not become a release dataset merely by moving it.
 
 Stage commands create their output directories when implemented. Git ignores

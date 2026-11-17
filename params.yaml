@@ -1,3 +1,13 @@
+# Article metadata: GLiNER2.5 Small extraction, shared by benchmark and corpus runs.
+article_metadata:
+  seed: 42
+  sample_size: 10000
+  batch_size: 128
+  buffer_size: 8192
+  workers: 4
+  chunk_size: 384
+  chunk_overlap: 64
+
 # Source comparison: English publisher-filter yield, before research qualification.
 experiments:
   source_comparison:

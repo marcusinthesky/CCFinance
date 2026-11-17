@@ -1,0 +1,20 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+set positional-arguments
+
+# Install the pinned, patched GLiNER libraries and checkpoint (uses the network).
+setup:
+    cd ../.. && bash infra/inference/gliner-setup.sh
+
+# Extract article metadata on the local GPU; rerun the same command to resume.
+extract source output *args:
+    cd ../.. && bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script infra/inference/gliner_extract.py --source "$1" --output "$2" "${@:3}"
+
+# Lint container Python without installing GPU libraries or loading models.
+lint:
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff check --config src/python/pyproject.toml infra/inference
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff format --config src/python/pyproject.toml --check infra/inference
+
+# Explicitly format container Python with the workspace rules.
+fmt:
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff check --config src/python/pyproject.toml --fix infra/inference
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff format --config src/python/pyproject.toml infra/inference

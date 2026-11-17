@@ -1,0 +1,22 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.article_metadata:report_article_metadata",
+  "digest": "sha256:93844d398847293708c4ed887b498c1d81e8a2600953778d6ca9ddf9cec6390a",
+  "entrypoint": "pipeline stages research report-article-metadata",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:json=json>"},
+    {"digest":"sha256:6ba80822f78d8cfc2f0ed276d77960d797a46e47575a0d7d49923af6c967a5c7","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:proportion_confint=statsmodels.stats.proportion:proportion_confint>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:<binding:typer=typer>"},
+    {"digest":"sha256:1ffc1689db1343f3c1238d58810944c6621c98ade7e0fbed8d2b29f00531beb6","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:ATTRIBUTES"},
+    {"digest":"sha256:53179313a541822d21a44401014db26e764e639e297fb647707baf03d404b8cf","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:DIAGNOSTIC"},
+    {"digest":"sha256:af2481fb11d51963dcc913a0ef88e642d82d603d637075872ed28f83246656e0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:_attribute"},
+    {"digest":"sha256:c52b018cbc31d1b3bb548fa7108026db8eb4f6ad745e71b0f1bf803cec2aaae0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/article_metadata.py","symbol":"pipeline.stages.research.experiments.article_metadata:report_article_metadata"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

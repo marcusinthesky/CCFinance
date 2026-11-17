@@ -9,6 +9,8 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
+- GLiNER2.5 article-metadata extraction with typed mentions, company relevance
+  and sentiment scores, article form and event families, plus a seeded benchmark.
 - Source-comparison DVC stages with metadata preparation, selective Parquet reads
   and exploratory estimates of publisher-filter yield.
 - Statsmodels LaTeX summaries and individual yield and population tables for papers.

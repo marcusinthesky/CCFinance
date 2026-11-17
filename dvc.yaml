@@ -113,3 +113,106 @@ stages:
       - data/research/experiments/source-comparison/population.tex
     metrics:
       - data/research/experiments/source-comparison/metrics.json
+
+  sample_article_metadata:
+    desc: Draw a seeded article sample, plus authored diagnostics, for the benchmark.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      sample-articles --source data/raw/fine-news
+      --diagnostics data/inputs/article-metadata/diagnostics.jsonl
+      --size ${article_metadata.sample_size} --seed ${article_metadata.seed}
+      --output data/processed/experiments/article-metadata/sample
+    params:
+      - article_metadata.sample_size
+      - article_metadata.seed
+    deps:
+      - data/raw/fine-news
+      - data/inputs/article-metadata/diagnostics.jsonl
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/sample-articles.json
+    outs:
+      - data/processed/experiments/article-metadata/sample
+
+  benchmark_article_metadata:
+    desc: Run the production extractor on the sample to gate the full corpus run.
+    cmd: >-
+      bash infra/inference/gliner-run.sh gliner2.5-small-v1
+      --script infra/inference/gliner_extract.py
+      --source data/processed/experiments/article-metadata/sample
+      --output data/processed/experiments/article-metadata/benchmark
+      --seed ${article_metadata.seed} --batch-size ${article_metadata.batch_size}
+      --buffer-size ${article_metadata.buffer_size} --workers ${article_metadata.workers}
+      --chunk-size ${article_metadata.chunk_size}
+      --chunk-overlap ${article_metadata.chunk_overlap}
+    params:
+      - article_metadata
+    deps:
+      - data/processed/experiments/article-metadata/sample
+      - infra/inference/gliner-run.sh
+      - infra/inference/gliner-setup.sh
+      - infra/inference/gliner-requirements.txt
+      - infra/inference/gliner2-2.1.0-cuda-attributes.patch
+      - infra/inference/gliner2-2.1.0-window-offsets.patch
+      - infra/inference/gliner2-2.1.0-batched-attributes.patch
+      - infra/inference/gliner_extract.py
+      - infra/inference/gliner_schema.py
+      - infra/inference/gliner_runtime.py
+      - infra/inference/gliner_attributes.py
+      - infra/inference/gliner_probabilities.py
+    outs:
+      - data/processed/experiments/article-metadata/benchmark
+
+  report_article_metadata:
+    desc: Report benchmark throughput, company coverage and score spread.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-article-metadata --benchmark data/processed/experiments/article-metadata/benchmark
+      --diagnostics data/inputs/article-metadata/diagnostics.jsonl
+      --output data/research/experiments/article-metadata
+    deps:
+      - data/processed/experiments/article-metadata/benchmark
+      - data/inputs/article-metadata/diagnostics.jsonl
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-metadata.json
+    outs:
+      - data/research/experiments/article-metadata/diagnostics.json
+    metrics:
+      - data/research/experiments/article-metadata/metrics.json
+
+  extract_article_metadata:
+    desc: Extract typed mentions, company scores, article form and event families.
+    # Long-running and resumable: launch with `just inference::extract` outside
+    # DVC, rerun it to resume, then record the completed output with `dvc commit`.
+    cmd: >-
+      bash infra/inference/gliner-run.sh gliner2.5-small-v1
+      --script infra/inference/gliner_extract.py
+      --source data/raw/fine-news
+      --output data/processed/article-metadata
+      --seed ${article_metadata.seed} --batch-size ${article_metadata.batch_size}
+      --buffer-size ${article_metadata.buffer_size} --workers ${article_metadata.workers}
+      --chunk-size ${article_metadata.chunk_size}
+      --chunk-overlap ${article_metadata.chunk_overlap}
+    params:
+      - article_metadata
+    deps:
+      - data/raw/fine-news
+      - infra/inference/gliner-run.sh
+      - infra/inference/gliner-setup.sh
+      - infra/inference/gliner-requirements.txt
+      - infra/inference/gliner2-2.1.0-cuda-attributes.patch
+      - infra/inference/gliner2-2.1.0-window-offsets.patch
+      - infra/inference/gliner2-2.1.0-batched-attributes.patch
+      - infra/inference/gliner_extract.py
+      - infra/inference/gliner_schema.py
+      - infra/inference/gliner_runtime.py
+      - infra/inference/gliner_attributes.py
+      - infra/inference/gliner_probabilities.py
+    outs:
+      - data/processed/article-metadata:
+          persist: true
