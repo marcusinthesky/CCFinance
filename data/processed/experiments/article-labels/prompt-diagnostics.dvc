@@ -1,0 +1,6 @@
+outs:
+- md5: 2b85e0d68224b546229712df8d8c6320.dir
+  size: 11306888
+  nfiles: 155
+  hash: md5
+  path: prompt-diagnostics

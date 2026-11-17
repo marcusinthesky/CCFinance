@@ -9,6 +9,11 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
+- Corpus-wide company candidates with dated issuer corrections, source-only
+  audits, provisional native Kev judgments, resumable checkpoints and observed
+  company-year coverage reports, plus source-verified GLiNER benchmarks for
+  extraction speed, numerical stability and source offsets, and joint metadata
+  pilots with complete classification and company-attribute score distributions.
 - Source-comparison DVC stages with metadata preparation, selective Parquet reads
   and exploratory estimates of publisher-filter yield.
 - Statsmodels LaTeX summaries and individual yield and population tables for papers.
@@ -27,6 +32,8 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Changed
 
+- Use current progress when reporting a resumed scoring run, keeping counts,
+  status and timing from the same snapshot.
 - Restored the published Fine News shards with verified checksums and provenance
   so the frozen acquisition stage has real outputs for DVC to validate.
 - Grouped experiments within each data layer and consolidated source mappings

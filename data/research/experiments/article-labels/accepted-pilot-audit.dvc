@@ -1,0 +1,6 @@
+outs:
+- md5: 418ea962fd315a09faba789bccd41483.dir
+  size: 247192
+  nfiles: 8
+  hash: md5
+  path: accepted-pilot-audit

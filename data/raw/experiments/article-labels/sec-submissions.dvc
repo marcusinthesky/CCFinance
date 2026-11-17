@@ -1,0 +1,6 @@
+outs:
+- md5: f762297787cfe2f0e05a59742ff9e27d.dir
+  size: 27945529
+  nfiles: 191
+  hash: md5
+  path: sec-submissions

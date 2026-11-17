@@ -1,0 +1,11 @@
+--- a/gliner2/models/boundary/engine.py
++++ b/gliner2/models/boundary/engine.py
+@@ -619,7 +619,7 @@
+                         continue
+                     labels, rows = zip(*present)
+                     values = logits[
+-                        torch.tensor(rows, dtype=torch.long, device=device),
++                        torch.tensor(rows, dtype=torch.long, device=logits.device),
+                         column,
+                     ]
+                     if group.multi_label:

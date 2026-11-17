@@ -2,7 +2,7 @@
 
 CCFinance separates code and research artifacts. Git stores source, configuration,
 locks, provenance definitions and documentation. DVC defines data dependencies
-and will track large data and experiment outputs once they are materialized.
+and tracks materialized source snapshots and experiment outputs.
 
 - `src/python/apps/pipeline` owns the CLI and data stage implementations.
 - `src/python/uv.lock` locks runtime, quality, testing, packaging and DVC tools.
@@ -20,13 +20,25 @@ and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle
 
 The Hugging Face dataset is staging, and the bucket is intended for intermediate
 and experiment artifacts. The frozen raw acquisition stage documents the
-historical selection without fetching its output. Company-level coverage,
-enrichment and remote artifact transport remain future work. The raw comparison stages prepare
+historical selection without fetching its output. Company labels and coverage
+are provisional experiments; release validation and remote artifact transport
+remain future work. The raw comparison stages prepare
 sampling manifests from Hub listings and Parquet footers, then acquire only the
 selected row groups through the shared publisher filter. Research aggregation
 reads those artifacts without importing raw-stage modules. DVC connects these
 steps; pinned source revisions and recorded draw probabilities define the
 experiment's population and sampling design.
+
+The article-labeling experiment adopts checksum-verified CPU company candidates
+and materializes compact source-linked selections without copying article bodies.
+Native Kev runs in a separately pinned GPU environment; the pipeline communicates
+through typed System One requests. Article-company probabilities and filtering
+policies remain separate, with resumable checkpoints and explicit unresolved
+outcomes. The research layer reconciles candidate and model-scored coverage and
+reports runtime estimates without treating AI agreement as human validation.
+Completed pilots remain frozen. Full scoring uses compressed source-record
+chunks, a resumable request ledger and explicit pending counts. Separate runtime
+profiles preserve GPU memory experiments without overwriting completed evidence.
 
 Each data layer groups experimental artifacts beneath `experiments/<name>/`.
 Experimental stage code follows the same grouping under its owning layer.

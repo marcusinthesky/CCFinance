@@ -1,0 +1,6 @@
+outs:
+- md5: 22e865b75dde33471aa688a275ab37a5.dir
+  size: 4764213
+  nfiles: 63
+  hash: md5
+  path: gliner-metadata

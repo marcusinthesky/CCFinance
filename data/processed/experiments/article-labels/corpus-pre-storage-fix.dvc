@@ -1,0 +1,6 @@
+outs:
+- md5: aee51edf7f130c491906fe0e4a1dfd31.dir
+  size: 19577724
+  nfiles: 8
+  hash: md5
+  path: corpus-pre-storage-fix

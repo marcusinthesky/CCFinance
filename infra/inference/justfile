@@ -1,0 +1,48 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+set positional-arguments
+
+# Prepare the pinned native Kev source and small serving dependencies.
+setup:
+    cd ../.. && bash infra/inference/setup.sh
+
+# Serve cached decision-model weights on the local GPU.
+serve checkpoint hub_cache profile="data/inputs/article-labels/runtime.json":
+    cd ../.. && bash infra/inference/start.sh "$1" "$2" "$3"
+
+# Inspect the local native model and its prefix-cache counters.
+status:
+    curl --fail --silent --show-error http://127.0.0.1:8008/v1/models
+
+# Stop this project's native decision-model server.
+stop:
+    docker stop ccfinance-kev-native
+
+# Install the isolated, pinned GLiNER benchmark environment and checkpoints.
+gliner-setup:
+    cd ../.. && bash infra/inference/gliner-setup.sh
+
+# Verify window offset handling and CPU/CUDA attribute decoding.
+gliner-check:
+    cd ../.. && bash infra/inference/gliner-check.sh
+
+# Prepare a source-verified sample for GLiNER experiments.
+gliner-sample *args:
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen --all-packages python infra/inference/gliner_sample.py "$@"
+
+# Run one local GPU benchmark configuration.
+gliner-run checkpoint *args:
+    cd ../.. && bash infra/inference/gliner-run.sh "$@"
+
+# Inspect joint metadata and score distributions on a small article sample.
+gliner-metadata checkpoint *args:
+    cd ../.. && bash infra/inference/gliner-run.sh "$1" --script infra/inference/gliner_metadata.py "${@:2}"
+
+# Lint experiment Python without installing GPU libraries or loading models.
+lint:
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff check --config src/python/pyproject.toml infra/inference/gliner_*.py
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff format --config src/python/pyproject.toml --check infra/inference/gliner_*.py
+
+# Explicitly format experiment Python with the workspace rules.
+fmt:
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff check --config src/python/pyproject.toml --fix infra/inference/gliner_*.py
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen ruff format --config src/python/pyproject.toml infra/inference/gliner_*.py

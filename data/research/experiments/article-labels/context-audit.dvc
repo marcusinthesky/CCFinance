@@ -1,0 +1,6 @@
+outs:
+- md5: 03f009d9c0fad6451e38069d926dfb8a.dir
+  size: 38298
+  nfiles: 6
+  hash: md5
+  path: context-audit

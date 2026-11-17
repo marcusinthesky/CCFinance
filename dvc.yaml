@@ -24,6 +24,217 @@
 # artifacts; they inform promotion between layers rather than forming a data tier.
 
 stages:
+  prepare_article_labels:
+    desc: Reconcile verified CPU company candidates and retain source-linked article indexes.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-article-labels --source data/raw/fine-news
+      --legacy data/raw/experiments/article-labels/legacy
+      --domains data/inputs/fine-news/domains.csv
+      --output data/processed/experiments/article-labels/cpu
+    deps:
+      - data/raw/fine-news
+      - data/raw/experiments/article-labels/legacy
+      - data/inputs/fine-news/domains.csv
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-article-labels.json
+    outs:
+      - data/processed/experiments/article-labels/cpu:
+          persist: true
+
+  report_cpu_article_labels:
+    desc: Report the full CPU selection, candidate coverage and required inference throughput.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-article-labels --cpu data/processed/experiments/article-labels/cpu
+      --output data/research/experiments/article-labels/cpu
+    params:
+      - experiments.article_labels
+    deps:
+      - data/processed/experiments/article-labels/cpu
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+    outs:
+      - data/research/experiments/article-labels/cpu
+
+  correct_article_candidates:
+    desc: Resolve article-year issuer names and preserve ambiguous lexical evidence.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      correct-article-candidates --input data/processed/experiments/article-labels/cpu
+      --references data/raw/experiments/article-labels/legacy/references
+      --sec-submissions data/raw/experiments/article-labels/sec-submissions
+      --output data/processed/experiments/article-labels/candidates
+    deps:
+      - data/processed/experiments/article-labels/cpu
+      - data/raw/experiments/article-labels/legacy/references
+      - data/raw/experiments/article-labels/sec-submissions
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/correct-article-candidates.json
+    outs:
+      - data/processed/experiments/article-labels/candidates:
+          persist: true
+
+  benchmark_article_labels:
+    desc: Score a fixed 1,000-record CPU-retained sample with native Kev.
+    # Preserve the initial pilot while production code and questions are refined.
+    # Its exact implementation and parameters are archived as DVC source assets.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      benchmark-article-labels --input data/processed/experiments/article-labels/cpu
+      --output data/processed/experiments/article-labels/benchmark-1000
+    params:
+      - experiments.article_labels
+    deps:
+      - data/raw/fine-news
+      - data/processed/experiments/article-labels/cpu
+      - data/inputs/article-labels/runtime.json
+      - infra/inference/setup.sh
+      - infra/inference/start.sh
+      - infra/inference/entrypoint.py
+      - infra/inference/requirements.txt
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/benchmark-article-labels.json
+    outs:
+      - data/processed/experiments/article-labels/benchmark-1000:
+          persist: true
+
+  report_benchmark_article_labels:
+    desc: Reconcile the 1,000-record benchmark against the completed CPU census.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-article-labels --cpu data/processed/experiments/article-labels/cpu
+      --census data/research/experiments/article-labels/cpu
+      --scores data/processed/experiments/article-labels/benchmark-1000
+      --output data/research/experiments/article-labels/benchmark-1000
+    params:
+      - experiments.article_labels
+    deps:
+      - data/processed/experiments/article-labels/cpu
+      - data/research/experiments/article-labels/cpu
+      - data/processed/experiments/article-labels/benchmark-1000
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+    outs:
+      - data/research/experiments/article-labels/benchmark-1000
+
+  benchmark_company_labels:
+    desc: Evaluate the fixed 1,000-record sample after dated identity correction.
+    # Preserve the completed pilot before changing production GPU buffer limits.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      benchmark-article-labels --input data/processed/experiments/article-labels/candidates
+      --source data/raw/fine-news
+      --output data/processed/experiments/article-labels/benchmark-corrected-1000
+    params:
+      - experiments.article_labels
+    deps:
+      - data/raw/fine-news
+      - data/processed/experiments/article-labels/candidates
+      - data/inputs/article-labels/kev-4b.json
+      - infra/inference/setup.sh
+      - infra/inference/start.sh
+      - infra/inference/entrypoint.py
+      - infra/inference/requirements.txt
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/benchmark-article-labels.json
+    outs:
+      - data/processed/experiments/article-labels/benchmark-corrected-1000:
+          persist: true
+
+  score_company_labels:
+    desc: Checkpoint full-population provisional company decisions with explicit pending records.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      score-articles --input data/processed/experiments/article-labels/candidates
+      --source data/raw/fine-news
+      --output data/processed/experiments/article-labels/corpus
+    params:
+      - experiments.article_labels
+    deps:
+      - data/raw/fine-news
+      - data/processed/experiments/article-labels/candidates
+      - ${experiments.article_labels.runtime_manifest}
+      - infra/inference/setup.sh
+      - infra/inference/start.sh
+      - infra/inference/entrypoint.py
+      - infra/inference/requirements.txt
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/score-articles.json
+    outs:
+      - data/processed/experiments/article-labels/corpus:
+          persist: true
+
+  report_company_benchmark:
+    desc: Report the corrected 1,000-record pilot against the complete CPU census.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-article-labels --cpu data/processed/experiments/article-labels/cpu
+      --census data/research/experiments/article-labels/cpu
+      --scores data/processed/experiments/article-labels/benchmark-corrected-1000
+      --output data/research/experiments/article-labels/benchmark-corrected-1000
+    params:
+      - experiments.article_labels
+    deps:
+      - data/processed/experiments/article-labels/cpu
+      - data/research/experiments/article-labels/cpu
+      - data/processed/experiments/article-labels/benchmark-corrected-1000
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+    outs:
+      - data/research/experiments/article-labels/benchmark-corrected-1000
+
+  report_company_labels:
+    desc: Reconcile completed and pending corpus decisions without extrapolating validated coverage.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-article-labels --cpu data/processed/experiments/article-labels/cpu
+      --census data/research/experiments/article-labels/cpu
+      --scores data/processed/experiments/article-labels/corpus
+      --output data/research/experiments/article-labels/corpus
+    params:
+      - experiments.article_labels
+    deps:
+      - data/processed/experiments/article-labels/cpu
+      - data/research/experiments/article-labels/cpu
+      - data/processed/experiments/article-labels/corpus
+      - src/python/uv.lock
+      - devenv.lock
+      - infra/nix/devenv.nix
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+    outs:
+      - data/research/experiments/article-labels/corpus
+
   filter_fine_news:
     desc: Reproduce the historical English financial-publisher selection from Fine News.
     # Published monthly shards are restored here; provenance.json records their

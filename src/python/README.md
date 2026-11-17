@@ -29,7 +29,11 @@ Experimental implementations live under each layer's `experiments` package.
 They share Pydantic artifact contracts through `pipeline.experiments`; the raw
 `publishers` module owns source mappings and extraction. DVC passes artifact
 paths explicitly, while statistical and source parameters live under
-`experiments.source_comparison` in the root parameter file. Reporting follows
+`experiments.source_comparison` in the root parameter file. Article labeling uses
+`experiments.article_labels` and the [labeling guide](../../data/inputs/article-labels/README.md).
+Its processed commands adopt verified company candidates and prepare compact
+source-linked selections; research reports reconcile counts and measured runtime.
+Reporting follows
 the configured dataset keys and can run a deliberate subset of sources.
 See the [source comparison](../../data/inputs/source-comparison/README.md) before
 running acquisition. Python setup installs DuckDB's `httpfs` extension so the

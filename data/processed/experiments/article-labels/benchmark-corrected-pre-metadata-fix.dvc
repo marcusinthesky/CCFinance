@@ -1,0 +1,6 @@
+outs:
+- md5: 24fc61194b11d0268c46965689efdac0.dir
+  size: 1200208
+  nfiles: 8
+  hash: md5
+  path: benchmark-corrected-pre-metadata-fix

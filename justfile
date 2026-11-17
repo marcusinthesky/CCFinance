@@ -4,6 +4,7 @@ set positional-arguments
 mod python 'src/python/justfile'
 mod latex 'src/latex/justfile'
 mod agents '.agents/justfile'
+mod inference 'infra/inference/justfile'
 workflow := "env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --script src/python/scripts/workflow/script.py"
 
 # Discover this project's commands.
@@ -23,6 +24,7 @@ check:
     bash infra/nix/check.sh
     {{ workflow }} check
     just python::check
+    just inference::lint
     just latex::check
     just data-check
     just semflow-check
@@ -43,6 +45,7 @@ fmt:
     # DVC's YAML emitter can leave trailing spaces when wrapping scalar values.
     if [[ -f dvc.lock ]]; then sed -i 's/[[:blank:]]*$//' dvc.lock; fi
     just python::fmt
+    just inference::fmt
     just latex::fmt
 
 # Check external links online.

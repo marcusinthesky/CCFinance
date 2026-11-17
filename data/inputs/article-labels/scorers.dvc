@@ -1,0 +1,6 @@
+outs:
+- md5: 03e3e2d2d4d9e4c497dbcab9063125aa.dir
+  size: 186830
+  nfiles: 4
+  hash: md5
+  path: scorers

@@ -1,0 +1,4 @@
+gliner2==2.1.0
+disentangled-flash==1.1.0
+torchao==0.17.0
+duckdb==1.5.6

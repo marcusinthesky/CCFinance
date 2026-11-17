@@ -1,0 +1,6 @@
+outs:
+- md5: f8639bbe9dd2ca747c5d4821ed8bfa8d.dir
+  size: 3157657
+  nfiles: 16
+  hash: md5
+  path: corpus-progress-20261117T043000Z

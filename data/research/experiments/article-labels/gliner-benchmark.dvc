@@ -1,0 +1,6 @@
+outs:
+- md5: 6d5c426bc65e9179e22a822ee3a8622e.dir
+  size: 75522912
+  nfiles: 215
+  hash: md5
+  path: gliner-benchmark

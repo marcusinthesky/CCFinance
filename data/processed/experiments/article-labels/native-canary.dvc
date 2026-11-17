@@ -1,0 +1,6 @@
+outs:
+- md5: e1a652632be0b5b5488e699d0bdd1a57.dir
+  size: 176801
+  nfiles: 3
+  hash: md5
+  path: native-canary

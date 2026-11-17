@@ -1,0 +1,6 @@
+outs:
+- md5: a2d0bb2387af4c7ba37e1a873abc1c95.dir
+  size: 153269940
+  nfiles: 32
+  hash: md5
+  path: corpus-checkpoint-20261117T043000Z

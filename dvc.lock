@@ -447,3 +447,445 @@ stages:
       md5: 3cd438d50a74f30d54d6eb854642e69b.dir
       size: 20100099064
       nfiles: 169
+  prepare_article_labels:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-article-labels --source data/raw/fine-news --legacy
+      data/raw/experiments/article-labels/legacy --domains
+      data/inputs/fine-news/domains.csv --output
+      data/processed/experiments/article-labels/cpu
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-article-labels.json
+      hash: md5
+      md5: 83273e43e1a275fdf81a4726a73f60bd
+      size: 6696
+    - path: data/inputs/fine-news/domains.csv
+      hash: md5
+      md5: f7eff3ca7ed20410915a079974282d03
+      size: 1837
+    - path: data/raw/experiments/article-labels/legacy
+      hash: md5
+      md5: cd54c173552e8324f2625602547d4a50.dir
+      size: 2750714862
+      nfiles: 2066
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    outs:
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+  report_cpu_article_labels:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-article-labels --cpu
+      data/processed/experiments/article-labels/cpu --output
+      data/research/experiments/article-labels/cpu
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+      hash: md5
+      md5: a4f1f16f5a3c39703d8a245b37e2bf51
+      size: 12694
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    params:
+      params.yaml:
+        experiments.article_labels:
+          seed: 42
+          deadline_utc: '2026-11-17T05:00:00Z'
+          reserve_seconds: 1800
+          server_url: http://127.0.0.1:8008
+          api_model: kev-latest
+          model: jaredpalmer/kev-0.8b
+          model_revision: bf75a6a8848ea6960ff2ed108d9ed44c2941174f
+          base_model: Qwen/Qwen3.5-0.8B-Base
+          base_revision: dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68
+          runtime_manifest: data/inputs/article-labels/runtime.json
+          max_context_tokens: 8192
+          max_candidates_per_request: 32
+          concurrency: 1
+          benchmark_size: 1000
+          request_timeout_seconds: 60
+          min_probability: 0.95
+          precision_target: 0.95
+    outs:
+    - path: data/research/experiments/article-labels/cpu
+      hash: md5
+      md5: 686152bc0ef37cbf850d4ec792c5ebbb.dir
+      size: 1053327
+      nfiles: 10
+  benchmark_article_labels:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed benchmark-article-labels --input
+      data/processed/experiments/article-labels/cpu --output
+      data/processed/experiments/article-labels/benchmark-1000
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/benchmark-article-labels.json
+      hash: md5
+      md5: b5226a16b5e9c5e9d0d2f04c9bda1f48
+      size: 15813
+    - path: data/inputs/article-labels/runtime.json
+      hash: md5
+      md5: 2e4ac556b2d4cb76052dcbb0f4c3271f
+      size: 1103
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/inference/entrypoint.py
+      hash: md5
+      md5: 664694d96fb693c3c84c36ccfa40a09e
+      size: 392
+    - path: infra/inference/requirements.txt
+      hash: md5
+      md5: a0c25bd16129a4b12b64aaac2e48142a
+      size: 59
+    - path: infra/inference/setup.sh
+      hash: md5
+      md5: 49fd79c5cb9e85c0f5f0cfd1aa4b88b4
+      size: 1058
+    - path: infra/inference/start.sh
+      hash: md5
+      md5: aefe37c31c6fd6d8c17e3550dd8a515a
+      size: 1914
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    params:
+      params.yaml:
+        experiments.article_labels:
+          seed: 42
+          deadline_utc: '2026-11-17T05:00:00Z'
+          reserve_seconds: 1800
+          server_url: http://127.0.0.1:8008
+          api_model: kev-latest
+          model: jaredpalmer/kev-0.8b
+          model_revision: bf75a6a8848ea6960ff2ed108d9ed44c2941174f
+          base_model: Qwen/Qwen3.5-0.8B-Base
+          base_revision: dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68
+          runtime_manifest: data/inputs/article-labels/runtime.json
+          max_context_tokens: 8192
+          max_candidates_per_request: 32
+          concurrency: 1
+          benchmark_size: 1000
+          request_timeout_seconds: 60
+          min_probability: 0.95
+          precision_target: 0.95
+    outs:
+    - path: data/processed/experiments/article-labels/benchmark-1000
+      hash: md5
+      md5: ce5c0676a0c27b0c09e09e13a636569c.dir
+      size: 8634860
+      nfiles: 12
+  report_benchmark_article_labels:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-article-labels --cpu
+      data/processed/experiments/article-labels/cpu --census
+      data/research/experiments/article-labels/cpu --scores
+      data/processed/experiments/article-labels/benchmark-1000 --output
+      data/research/experiments/article-labels/benchmark-1000
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+      hash: md5
+      md5: a4f1f16f5a3c39703d8a245b37e2bf51
+      size: 12694
+    - path: data/processed/experiments/article-labels/benchmark-1000
+      hash: md5
+      md5: ce5c0676a0c27b0c09e09e13a636569c.dir
+      size: 8634860
+      nfiles: 12
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+    - path: data/research/experiments/article-labels/cpu
+      hash: md5
+      md5: 686152bc0ef37cbf850d4ec792c5ebbb.dir
+      size: 1053327
+      nfiles: 10
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    params:
+      params.yaml:
+        experiments.article_labels:
+          seed: 42
+          deadline_utc: '2026-11-17T05:00:00Z'
+          reserve_seconds: 1800
+          server_url: http://127.0.0.1:8008
+          api_model: kev-latest
+          model: jaredpalmer/kev-0.8b
+          model_revision: bf75a6a8848ea6960ff2ed108d9ed44c2941174f
+          base_model: Qwen/Qwen3.5-0.8B-Base
+          base_revision: dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68
+          runtime_manifest: data/inputs/article-labels/runtime.json
+          max_context_tokens: 8192
+          max_candidates_per_request: 32
+          concurrency: 1
+          benchmark_size: 1000
+          request_timeout_seconds: 60
+          min_probability: 0.95
+          precision_target: 0.95
+    outs:
+    - path: data/research/experiments/article-labels/benchmark-1000
+      hash: md5
+      md5: 526fef43215968ec91784a46319740ed.dir
+      size: 1054681
+      nfiles: 10
+  correct_article_candidates:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed correct-article-candidates --input
+      data/processed/experiments/article-labels/cpu --references
+      data/raw/experiments/article-labels/legacy/references --sec-submissions
+      data/raw/experiments/article-labels/sec-submissions --output
+      data/processed/experiments/article-labels/candidates
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/correct-article-candidates.json
+      hash: md5
+      md5: 538851229930f80a2112103d2ab6492f
+      size: 9850
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+    - path: data/raw/experiments/article-labels/legacy/references
+      hash: md5
+      md5: 1521a120ae2793f8a52f91d8236452b8.dir
+      size: 87875466
+      nfiles: 3
+    - path: data/raw/experiments/article-labels/sec-submissions
+      hash: md5
+      md5: f762297787cfe2f0e05a59742ff9e27d.dir
+      size: 27945529
+      nfiles: 191
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    outs:
+    - path: data/processed/experiments/article-labels/candidates
+      hash: md5
+      md5: aba06541855bdda8b668165bb4218ddc.dir
+      size: 4030986603
+      nfiles: 339
+  benchmark_company_labels:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed benchmark-article-labels --input
+      data/processed/experiments/article-labels/candidates --source
+      data/raw/fine-news --output
+      data/processed/experiments/article-labels/benchmark-corrected-1000
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/benchmark-article-labels.json
+      hash: md5
+      md5: d6c1368a4891ac4fe0eedbcac92aeadf
+      size: 20101
+    - path: data/inputs/article-labels/kev-4b.json
+      hash: md5
+      md5: 6f83c6ed5de39fc0cb335210635a6875
+      size: 1439
+    - path: data/processed/experiments/article-labels/candidates
+      hash: md5
+      md5: aba06541855bdda8b668165bb4218ddc.dir
+      size: 4030986603
+      nfiles: 339
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/inference/entrypoint.py
+      hash: md5
+      md5: a55f9b6bf9d130ccba14b676f08e462a
+      size: 1935
+    - path: infra/inference/requirements.txt
+      hash: md5
+      md5: a0c25bd16129a4b12b64aaac2e48142a
+      size: 59
+    - path: infra/inference/setup.sh
+      hash: md5
+      md5: 49fd79c5cb9e85c0f5f0cfd1aa4b88b4
+      size: 1058
+    - path: infra/inference/start.sh
+      hash: md5
+      md5: 5d8cd885601de0cb9d006d4b268b6b78
+      size: 2066
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    params:
+      params.yaml:
+        experiments.article_labels:
+          seed: 42
+          deadline_utc: '2026-11-17T05:00:00Z'
+          reserve_seconds: 1800
+          server_url: http://127.0.0.1:8008
+          api_model: kev-latest
+          model: jaredpalmer/kev-4b
+          model_revision: 139fdd94f1b6a6ad80cc15e08fcb99cac885a101
+          base_model: Qwen/Qwen3.5-4B-Base
+          base_revision: 1001bb4d826a52d1f399e183466143f4da7b741b
+          runtime_manifest: data/inputs/article-labels/kev-4b.json
+          max_context_tokens: 8192
+          max_candidates_per_request: 32
+          concurrency: 1
+          benchmark_size: 1000
+          request_timeout_seconds: 60
+          min_probability: 0.95
+          precision_target: 0.95
+    outs:
+    - path: data/processed/experiments/article-labels/benchmark-corrected-1000
+      hash: md5
+      md5: 0dd8b0bc5422124751ae32364dcb416b.dir
+      size: 27222870
+      nfiles: 10
+  report_company_benchmark:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-article-labels --cpu
+      data/processed/experiments/article-labels/cpu --census
+      data/research/experiments/article-labels/cpu --scores
+      data/processed/experiments/article-labels/benchmark-corrected-1000
+      --output data/research/experiments/article-labels/benchmark-corrected-1000
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-article-labels.json
+      hash: md5
+      md5: 11acafd7bed65727f996c75995e23168
+      size: 12978
+    - path: data/processed/experiments/article-labels/benchmark-corrected-1000
+      hash: md5
+      md5: 0dd8b0bc5422124751ae32364dcb416b.dir
+      size: 27222870
+      nfiles: 10
+    - path: data/processed/experiments/article-labels/cpu
+      hash: md5
+      md5: c6bc8b25a22ac09b35d7057037e4c8ae.dir
+      size: 7082233548
+      nfiles: 675
+    - path: data/research/experiments/article-labels/cpu
+      hash: md5
+      md5: 686152bc0ef37cbf850d4ec792c5ebbb.dir
+      size: 1053327
+      nfiles: 10
+    - path: devenv.lock
+      hash: md5
+      md5: 194e494bc3cab17bb20ec00d452477e9
+      size: 1676
+    - path: infra/nix/devenv.nix
+      hash: md5
+      md5: d04ee9e5b7d5f94c6613ce7572560b0a
+      size: 1067
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 730ec441556ca9b29861ce91d0d184fd
+      size: 252827
+    params:
+      params.yaml:
+        experiments.article_labels:
+          seed: 42
+          deadline_utc: '2026-11-17T05:00:00Z'
+          reserve_seconds: 1800
+          server_url: http://127.0.0.1:8008
+          api_model: kev-latest
+          model: jaredpalmer/kev-4b
+          model_revision: 139fdd94f1b6a6ad80cc15e08fcb99cac885a101
+          base_model: Qwen/Qwen3.5-4B-Base
+          base_revision: 1001bb4d826a52d1f399e183466143f4da7b741b
+          runtime_manifest: data/inputs/article-labels/kev-4b.json
+          max_context_tokens: 8192
+          max_candidates_per_request: 32
+          concurrency: 1
+          benchmark_size: 1000
+          request_timeout_seconds: 60
+          min_probability: 0.95
+          precision_target: 0.95
+    outs:
+    - path: data/research/experiments/article-labels/benchmark-corrected-1000
+      hash: md5
+      md5: 9a32475b2b6ebca0cd70182c59ffbddd.dir
+      size: 1055380
+      nfiles: 10
