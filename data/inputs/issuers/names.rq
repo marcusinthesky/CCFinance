@@ -1,0 +1,7 @@
+# English labels and aliases for every item that has an SEC CIK.
+SELECT ?item ?cik ?name ?kind WHERE {
+  ?item wdt:P5531 ?cik .
+  { ?item rdfs:label ?name . BIND("label" AS ?kind) }
+  UNION { ?item skos:altLabel ?name . BIND("alias" AS ?kind) }
+  FILTER(LANG(?name) = "en")
+}

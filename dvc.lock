@@ -509,3 +509,68 @@ stages:
       md5: 0749910591f48caab824923fb492bfd8.dir
       size: 10939808695
       nfiles: 1970
+  snapshot_issuers:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-issuers --queries data/inputs/issuers --output
+      data/raw/issuers
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-issuers.json
+      hash: md5
+      md5: fda45e3945a69c96cb9ae7229cb784b8
+      size: 7343
+    - path: data/inputs/issuers/names.rq
+      hash: md5
+      md5: 798b2dbaff346c2914819791479c1a89
+      size: 276
+    - path: data/inputs/issuers/owners.rq
+      hash: md5
+      md5: d28125cb89436b389c87089b392cd151
+      size: 495
+    - path: data/inputs/issuers/parents.rq
+      hash: md5
+      md5: 0f7fca0f80d5ca9128b6e4520e87ae7f
+      size: 515
+    - path: data/inputs/issuers/tickers.rq
+      hash: md5
+      md5: 719bb9ca5eaa50fa55812ef325c034b4
+      size: 402
+    outs:
+    - path: data/raw/issuers
+      hash: md5
+      md5: 9d358a0735acf11b07022640a4a76978.dir
+      size: 4684279
+      nfiles: 7
+  prepare_issuers:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-issuers --source data/raw/issuers --exchanges
+      data/inputs/issuers/exchanges.csv --since 2016-01-01 --min-sitelinks 10
+      --output data/processed/issuers
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-issuers.json
+      hash: md5
+      md5: e2e2bf4b3e7b19331eb052ac3ead536e
+      size: 3848
+    - path: data/inputs/issuers/exchanges.csv
+      hash: md5
+      md5: 0b737cecfa5888c207469648139bb1eb
+      size: 64
+    - path: data/raw/issuers
+      hash: md5
+      md5: 9d358a0735acf11b07022640a4a76978.dir
+      size: 4684279
+      nfiles: 7
+    params:
+      params.yaml:
+        issuers:
+          since: '2016-01-01'
+          min_sitelinks: 10
+    outs:
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4

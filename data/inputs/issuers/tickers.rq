@@ -1,0 +1,8 @@
+# Exchange listings, with ticker and dates, for every item that has an SEC CIK.
+SELECT ?item ?cik ?exchange ?exchangeLabel ?ticker ?start ?end WHERE {
+  ?item wdt:P5531 ?cik ; p:P414 ?statement .
+  ?statement ps:P414 ?exchange ; pq:P249 ?ticker .
+  OPTIONAL { ?statement pq:P580 ?start . }
+  OPTIONAL { ?statement pq:P582 ?end . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}

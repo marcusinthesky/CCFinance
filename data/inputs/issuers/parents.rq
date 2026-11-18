@@ -1,0 +1,10 @@
+# Items whose parent organization (P749) is an NYSE- or Nasdaq-listed issuer, with five or more sitelinks.
+SELECT ?item ?parent ?name ?start ?end ?sitelinks WHERE {
+  VALUES ?exchange { wd:Q13677 wd:Q82059 }
+  ?parent wdt:P5531 [] ; wdt:P414 ?exchange .
+  ?item p:P749 ?statement . ?statement ps:P749 ?parent .
+  ?item wikibase:sitelinks ?sitelinks . FILTER(?sitelinks >= 5)
+  ?item rdfs:label ?name . FILTER(LANG(?name) = "en")
+  OPTIONAL { ?statement pq:P580 ?start . }
+  OPTIONAL { ?statement pq:P582 ?end . }
+}

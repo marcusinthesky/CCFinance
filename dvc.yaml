@@ -39,6 +39,41 @@ stages:
     outs:
       - data/raw/fine-news
 
+  snapshot_issuers:
+    desc: Snapshot SEC listings and identities, plus Wikidata tickers, names and subsidiaries.
+    # Needs network access and SEC_USER_AGENT ("Name contact@example.org").
+    # Frozen once recorded, so later runs verify the snapshot instead of refetching.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages raw snapshot-issuers
+      --queries data/inputs/issuers --output data/raw/issuers
+    frozen: true
+    deps:
+      - data/inputs/issuers/tickers.rq
+      - data/inputs/issuers/names.rq
+      - data/inputs/issuers/parents.rq
+      - data/inputs/issuers/owners.rq
+      - .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-issuers.json
+    outs:
+      - data/raw/issuers
+
+  prepare_issuers:
+    desc: Resolve listed CIKs, dated tickers and dated aliases for company linking.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-issuers --source data/raw/issuers
+      --exchanges data/inputs/issuers/exchanges.csv --since ${issuers.since}
+      --min-sitelinks ${issuers.min_sitelinks} --output data/processed/issuers
+    params:
+      - issuers
+    deps:
+      - data/raw/issuers
+      - data/inputs/issuers/exchanges.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-issuers.json
+    outs:
+      - data/processed/issuers
+
   prepare_comparison:
     foreach: ${experiments.source_comparison.datasets}
     do:

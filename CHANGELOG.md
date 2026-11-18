@@ -9,11 +9,12 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
+- Issuer reference for US-listed SEC filers: snapshot of SEC and Wikidata sources,
+  and dated tickers and aliases, including subsidiaries, for company linking.
 - GLiNER2.5 article-metadata extraction with typed mentions, company relevance
   and sentiment scores, article form and event families, plus a seeded benchmark.
-- Source-comparison DVC stages with metadata preparation, selective Parquet reads
-  and exploratory estimates of publisher-filter yield.
-- Statsmodels LaTeX summaries and individual yield and population tables for papers.
+- Source-comparison DVC stages with metadata preparation, selective Parquet reads,
+  exploratory publisher-filter yield estimates and statsmodels LaTeX tables.
 - Frozen Fine News acquisition recipe with the historical publisher filter.
 - Python and LaTeX toolchains generated from Exordio, with locked dependencies.
 - Typer `pipeline` application and a namespace for data processing stages.
