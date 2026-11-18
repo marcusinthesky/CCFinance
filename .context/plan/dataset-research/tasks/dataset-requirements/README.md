@@ -29,8 +29,9 @@ co-mention networks and market research.
   original reporting, syndicated material and press releases where possible.
   Deduplicate stories without discarding source records or company links.
 - **Research validity:** Evaluate extraction, deduplication, dates, company links
-  and relevance against human-adjudicated samples. Report precision, recall,
-  uncertainty and coverage gaps across years, publishers and firms.
+  and relevance against model-adjudicated samples with repeat and audit judges,
+  labelled as such. Report precision, recall, judge reliability, uncertainty
+  and coverage gaps across years, publishers and firms.
 - **Reproducibility:** Publish a versioned schema, data dictionary, lineage,
   checksums, methods, coverage reports and examples for firm-year panels and
   co-mention networks. Document article-text access and redistribution conditions.

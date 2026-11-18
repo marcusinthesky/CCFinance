@@ -24,8 +24,8 @@ and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle
 
 The Hugging Face dataset is staging, and the bucket is intended for intermediate
 and experiment artifacts. The frozen raw acquisition stage documents the
-historical selection without fetching its output. Company identity linking,
-coverage panels and remote artifact transport remain future work.
+historical selection without fetching its output. Coverage panels and remote
+artifact transport remain future work.
 
 Each data layer groups experimental artifacts and code beneath
 `experiments/<name>/`. DVC supplies artifact paths explicitly, so layers read
@@ -41,6 +41,12 @@ processed benchmark and the corpus tables, and the pipeline samples and reports
 the benchmark. Row groups run in seeded random order and resume from atomic
 outputs. Complete uncalibrated score vectors are kept, so thresholds remain a
 research decision.
+
+Company linking scores GLiNER company mentions against dated US-listed issuers
+from SEC and Wikidata snapshots. Its evaluation draws a sample without reading
+linker output, so one labelled set evaluates every linker version. PydanticAI
+model judges label the sample, and repeat and audit judges measure their
+reliability. Reports state that labels are model-adjudicated.
 
 Copier answers record the source and tag for future template updates. Review
 update conflicts and preserve project-specific code and configuration. The

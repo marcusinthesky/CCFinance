@@ -227,3 +227,102 @@ stages:
     outs:
       - data/processed/article-metadata:
           persist: true
+
+  link_company_mentions:
+    desc: Link GLiNER company mentions to dated US-listed issuers, with scores.
+    # Resumable by row group. While extraction is partial, run it alone with
+    # `just dvc repro --single-item link_company_mentions`.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      link-companies --extraction data/processed/article-metadata
+      --source data/raw/fine-news --issuers data/processed/issuers
+      --domains data/inputs/fine-news/domains.csv
+      --publishers data/inputs/company-links/publishers.csv
+      --smoothing ${company_links.smoothing} --output data/processed/company-links
+    params:
+      - company_links.smoothing
+    deps:
+      - data/processed/article-metadata
+      - data/raw/fine-news
+      - data/processed/issuers
+      - data/inputs/fine-news/domains.csv
+      - data/inputs/company-links/publishers.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/link-companies.json
+    outs:
+      - data/processed/company-links
+
+  sample_company_links:
+    desc: Draw a linker-independent evaluation sample of company mentions and articles.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      sample-links --extraction data/processed/article-metadata
+      --issuers data/processed/issuers --source data/raw/fine-news
+      --per-stratum ${company_links.per_stratum} --articles ${company_links.articles}
+      --window ${company_links.window} --seed ${company_links.seed}
+      --output data/processed/experiments/company-links/sample
+    params:
+      - company_links.per_stratum
+      - company_links.articles
+      - company_links.window
+      - company_links.seed
+    deps:
+      - data/processed/article-metadata
+      - data/processed/issuers
+      - data/raw/fine-news
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/sample-links.json
+    outs:
+      - data/processed/experiments/company-links/sample
+
+  adjudicate_company_links:
+    desc: Label the sample with primary, repeat and audit models, reusing cached judgements.
+    # Needs `codex login`. Only judgements missing from labels/cache.jsonl call the model.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      adjudicate-links --sample data/processed/experiments/company-links/sample
+      --issuers data/processed/issuers --model ${company_links.model}
+      --audit-model ${company_links.audit_model} --effort ${company_links.effort}
+      --repeat ${company_links.repeat} --audit ${company_links.audit}
+      --concurrency ${company_links.concurrency}
+      --output data/processed/experiments/company-links/labels
+    params:
+      - company_links.model
+      - company_links.audit_model
+      - company_links.effort
+      - company_links.repeat
+      - company_links.audit
+      - company_links.concurrency
+    deps:
+      - data/processed/experiments/company-links/sample
+      - data/processed/issuers
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/adjudicate-links.json
+    outs:
+      - data/processed/experiments/company-links/labels:
+          persist: true
+
+  report_company_links:
+    desc: Estimate link precision, recall and score reliability from the labels.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-company-links --sample data/processed/experiments/company-links/sample
+      --labels data/processed/experiments/company-links/labels
+      --links data/processed/company-links --issuers data/processed/issuers
+      --threshold ${company_links.threshold}
+      --output data/research/experiments/company-links
+    params:
+      - company_links.threshold
+    deps:
+      - data/processed/experiments/company-links/sample
+      - data/processed/experiments/company-links/labels
+      - data/processed/company-links
+      - data/processed/issuers
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-company-links.json
+    outs:
+      - data/research/experiments/company-links/errors.csv
+      - data/research/experiments/company-links/diagnostics.json
+      - data/research/experiments/company-links/summary.tex
+    metrics:
+      - data/research/experiments/company-links/metrics.json

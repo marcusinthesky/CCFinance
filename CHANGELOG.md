@@ -9,8 +9,8 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
-- Issuer reference for US-listed SEC filers: snapshot of SEC and Wikidata sources,
-  and dated tickers and aliases, including subsidiaries, for company linking.
+- Company linking to US-listed SEC issuers: SEC and Wikidata issuer snapshot, dated
+  tickers and aliases, a scored linker and a model-adjudicated evaluation.
 - GLiNER2.5 article-metadata extraction with typed mentions, company relevance
   and sentiment scores, article form and event families, plus a seeded benchmark.
 - Source-comparison DVC stages with metadata preparation, selective Parquet reads,

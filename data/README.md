@@ -13,7 +13,8 @@ tables live in `research/experiments/source-comparison/`. The article-metadata
 benchmark lives in `processed/experiments/article-metadata/` and its report in
 `research/experiments/article-metadata/`; the corpus run writes
 `processed/article-metadata/`. Issuer references live in `raw/issuers/` and
-`processed/issuers/` (see `inputs/issuers/README.md`). DVC connects these artifacts;
+`processed/issuers/` (see `inputs/issuers/README.md`); company links in
+`processed/company-links/`, evaluated under `experiments/company-links/`. DVC connects these artifacts;
 an experimental result does not become a release dataset merely by moving it.
 
 Stage commands create their output directories when implemented. Git ignores

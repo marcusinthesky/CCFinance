@@ -574,3 +574,181 @@ stages:
       md5: bfa9c78837a23511f18cae2d16a20104.dir
       size: 638369
       nfiles: 4
+  link_company_mentions:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed link-companies --extraction data/processed/article-metadata
+      --source data/raw/fine-news --issuers data/processed/issuers --domains
+      data/inputs/fine-news/domains.csv --publishers
+      data/inputs/company-links/publishers.csv --smoothing 1.0 --output
+      data/processed/company-links
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/link-companies.json
+      hash: md5
+      md5: ae9948569c06772f6f7fc60c22ca10d5
+      size: 9272
+    - path: data/inputs/company-links/publishers.csv
+      hash: md5
+      md5: ebd07a0cabd3bb929d6a0471df2d7c86
+      size: 713
+    - path: data/inputs/fine-news/domains.csv
+      hash: md5
+      md5: f7eff3ca7ed20410915a079974282d03
+      size: 1837
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        company_links.smoothing: 1.0
+    outs:
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+  sample_company_links:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed sample-links --extraction data/processed/article-metadata
+      --issuers data/processed/issuers --source data/raw/fine-news --per-stratum
+      200 --articles 400 --window 750 --seed 43 --output
+      data/processed/experiments/company-links/sample
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/sample-links.json
+      hash: md5
+      md5: 8cb53d4e957ae416cb82b9e0722b1fc6
+      size: 6127
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        company_links.articles: 400
+        company_links.per_stratum: 200
+        company_links.seed: 43
+        company_links.window: 750
+    outs:
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+  adjudicate_company_links:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed adjudicate-links --sample
+      data/processed/experiments/company-links/sample --issuers
+      data/processed/issuers --model openai-codex:gpt-6-luna --audit-model
+      openai-codex:gpt-6.1-terra --effort low --repeat 0.1 --audit 0.2
+      --concurrency 8 --output data/processed/experiments/company-links/labels
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/adjudicate-links.json
+      hash: md5
+      md5: 783237d2672249b04a1073e04739ac93
+      size: 16012
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    params:
+      params.yaml:
+        company_links.audit: 0.2
+        company_links.audit_model: openai-codex:gpt-6.1-terra
+        company_links.concurrency: 8
+        company_links.effort: low
+        company_links.model: openai-codex:gpt-6-luna
+        company_links.repeat: 0.1
+    outs:
+    - path: data/processed/experiments/company-links/labels
+      hash: md5
+      md5: 02bcf772f39b6a5f2f975c04c639e634.dir
+      size: 3490033
+      nfiles: 3
+  report_company_links:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-company-links --sample
+      data/processed/experiments/company-links/sample --labels
+      data/processed/experiments/company-links/labels --links
+      data/processed/company-links --issuers data/processed/issuers --threshold
+      0.5 --output data/research/experiments/company-links
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-company-links.json
+      hash: md5
+      md5: 42e1d877766dde9a2d95f6fdd7c2be80
+      size: 9053
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+    - path: data/processed/experiments/company-links/labels
+      hash: md5
+      md5: 02bcf772f39b6a5f2f975c04c639e634.dir
+      size: 3490033
+      nfiles: 3
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    params:
+      params.yaml:
+        company_links.threshold: 0.5
+    outs:
+    - path: data/research/experiments/company-links/diagnostics.json
+      hash: md5
+      md5: b72314a1dd8b749a23b79ba6f8c5382c
+      size: 9409
+    - path: data/research/experiments/company-links/errors.csv
+      hash: md5
+      md5: d6fa6fbdc866c62946e6e32271a1e755
+      size: 9329
+    - path: data/research/experiments/company-links/metrics.json
+      hash: md5
+      md5: 1da312cc3c192c6af971f3bb045001a5
+      size: 38579
+    - path: data/research/experiments/company-links/summary.tex
+      hash: md5
+      md5: 638e09d664d9803d4a26c3f41165a187
+      size: 1298

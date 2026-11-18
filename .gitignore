@@ -42,6 +42,8 @@ lean_decls
 !/data/inputs/issuers/*.rq
 !/data/inputs/issuers/exchanges.csv
 !/data/inputs/issuers/README.md
+!/data/inputs/company-links/publishers.csv
+!/data/inputs/company-links/README.md
 
 # Local literature records and source material.
 /.context/reference/

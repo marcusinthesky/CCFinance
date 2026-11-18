@@ -1,3 +1,20 @@
+# Company links: linker prior smoothing and the adjudicated evaluation sample.
+company_links:
+  smoothing: 1.0
+  # Seed 42 drew the development sample used to choose the rules; seed 43 draws
+  # the confirmation sample, labelled from scratch after the rules were fixed.
+  seed: 43
+  per_stratum: 200
+  articles: 400
+  window: 750
+  model: openai-codex:gpt-6-luna
+  audit_model: openai-codex:gpt-6.1-terra
+  effort: low
+  repeat: 0.1
+  audit: 0.2
+  concurrency: 8
+  threshold: 0.5
+
 # Issuers: US-listed SEC filers with dated tickers and aliases, for company linking.
 issuers:
   since: "2016-01-01"
