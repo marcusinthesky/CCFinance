@@ -3,6 +3,7 @@
 import csv
 import hashlib
 import json
+import re
 import time
 import zipfile
 from datetime import UTC, datetime
@@ -21,6 +22,31 @@ SEC_SUBMISSIONS = (
 WIKIDATA = "https://query.wikidata.org/sparql"
 QUERIES = ("tickers", "names", "parents", "owners")
 RETRIES = 5
+
+
+def pace_sec_request(request: httpx.Request) -> None:
+    """Pace every SEC attempt, including redirects and retries."""
+    if request.url.host == "sec.gov" or request.url.host.endswith(".sec.gov"):
+        time.sleep(0.2)
+
+
+def snapshot_client(user_agent: str, timeout: int) -> httpx.Client:
+    """Validate the contact before beginning either network snapshot."""
+    contact = user_agent.strip()
+    if (
+        not contact.isascii()
+        or not contact.isprintable()
+        or not re.fullmatch(r".+\s+[^\s@]+@[^\s@]+\.[^\s@]+", contact)
+    ):
+        raise typer.BadParameter("SEC_USER_AGENT requires a name and email.")
+    return httpx.Client(
+        headers={"User-Agent": contact},
+        follow_redirects=True,
+        event_hooks={"request": [pace_sec_request]},
+        timeout=timeout,
+    )
+
+
 SUBMISSION_FIELDS = (
     "cik",
     "name",
@@ -144,7 +170,6 @@ def snapshot_issuers(
     ),
 ) -> None:
     """Snapshot SEC listings and identities, plus Wikidata tickers and names."""
-    headers = {"User-Agent": user_agent}
-    with httpx.Client(headers=headers, follow_redirects=True, timeout=300) as client:
+    with snapshot_client(user_agent, timeout=300) as client:
         snapshot(client, queries, output)
     typer.echo(f"Wrote: {output}")

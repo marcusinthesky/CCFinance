@@ -8,7 +8,13 @@ from pathlib import Path
 
 import httpx
 import pytest
-from pipeline.stages.raw.issuers import QUERIES, snapshot
+import typer
+from pipeline.stages.raw.issuers import (
+    QUERIES,
+    pace_sec_request,
+    snapshot,
+    snapshot_client,
+)
 
 
 def _archive(records: dict[int, dict[str, object]]) -> bytes:
@@ -58,7 +64,10 @@ def test_snapshot_keeps_listed_identities_with_provenance(
     output = tmp_path / "issuers"
 
     # Act: snapshot every source through the mocked transport.
-    with httpx.Client(transport=httpx.MockTransport(respond)) as client:
+    with httpx.Client(
+        transport=httpx.MockTransport(respond),
+        event_hooks={"request": [pace_sec_request]},
+    ) as client:
         snapshot(client, queries, output)
 
     # Assert: identities are subset to listed CIKs, without filings or the archive.
@@ -75,6 +84,16 @@ def test_snapshot_keeps_listed_identities_with_provenance(
         expected = record.get("subset_sha256", record["sha256"])
         assert hashlib.sha256(data).hexdigest() == expected
     assert provenance["sec/submissions.jsonl"]["records"] == 2
-    assert waits == [7.0]
+    assert waits == [7.0, 0.2, 0.2]
     with pytest.raises(FileExistsError):
         snapshot(httpx.Client(transport=httpx.MockTransport(respond)), queries, output)
+
+
+@pytest.mark.unit
+def test_missing_contact_fails_before_network_access() -> None:
+    # Arrange: the shell expanded an empty Git email.
+    user_agent = "Example Researcher "
+
+    # Act and assert: both snapshot commands use this client factory.
+    with pytest.raises(typer.BadParameter, match="name and email"):
+        snapshot_client(user_agent, timeout=10)

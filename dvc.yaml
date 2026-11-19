@@ -229,6 +229,7 @@ stages:
           persist: true
 
   snapshot_public_float:
+    frozen: true
     desc: Snapshot SEC public float, the size measure on annual report covers.
     # Needs network access and SEC_USER_AGENT ("Name contact@example.org").
     # Frozen once recorded, so later runs verify the snapshot instead of refetching.

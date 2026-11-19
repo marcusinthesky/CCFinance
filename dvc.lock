@@ -783,3 +783,47 @@ stages:
       md5: 401d21de164386c0e17c667f8b924ae8.dir
       size: 490063112
       nfiles: 2
+  snapshot_public_float:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-public-float --first-year 2015 --last-year 2026 --output
+      data/raw/public-float
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-public-float.json
+      hash: md5
+      md5: dac8531de9a6f1ec85c6e789c6268de0
+      size: 7827
+    params:
+      params.yaml:
+        public_float:
+          first_year: 2015
+          last_year: 2026
+    outs:
+    - path: data/raw/public-float
+      hash: md5
+      md5: 06ff4d587cc2bb10e0c75388369c2502.dir
+      size: 8749602
+      nfiles: 48
+  prepare_public_float:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-public-float --source data/raw/public-float --output
+      data/processed/public-float
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-public-float.json
+      hash: md5
+      md5: 85f9b8726c31a6184c9107851f0336b6
+      size: 2004
+    - path: data/raw/public-float
+      hash: md5
+      md5: 06ff4d587cc2bb10e0c75388369c2502.dir
+      size: 8749602
+      nfiles: 48
+    outs:
+    - path: data/processed/public-float
+      hash: md5
+      md5: e4c2dcc99f1520a3736601cf39fb7de7.dir
+      size: 764212
+      nfiles: 1

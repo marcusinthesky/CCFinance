@@ -5,7 +5,6 @@ from pathlib import Path
 
 import httpx
 import pytest
-from pipeline.stages.raw import public_float
 from pipeline.stages.raw.public_float import periods, snapshot
 
 
@@ -24,10 +23,9 @@ def test_periods_cover_every_quarter_of_each_year() -> None:
 
 @pytest.mark.integration
 def test_snapshot_keeps_published_frames_and_records_missing_ones(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
 ) -> None:
     # Arrange: SEC serves one frame and has not published the next.
-    monkeypatch.setattr(public_float, "PAUSE_SECONDS", 0)
     frame = {"data": [{"cik": 320193, "end": "2019-03-29", "val": 8.7e11}]}
 
     def respond(request: httpx.Request) -> httpx.Response:
@@ -50,11 +48,8 @@ def test_snapshot_keeps_published_frames_and_records_missing_ones(
 
 
 @pytest.mark.integration
-def test_snapshot_fails_on_server_errors(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_snapshot_fails_on_server_errors(tmp_path: Path) -> None:
     # Arrange: SEC refuses the request.
-    monkeypatch.setattr(public_float, "PAUSE_SECONDS", 0)
 
     def respond(request: httpx.Request) -> httpx.Response:
         return httpx.Response(403)

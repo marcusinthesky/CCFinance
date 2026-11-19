@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.raw.issuers:snapshot_issuers",
-  "digest": "sha256:87284d20595b99415055ae079df52d6bde1c6c63a7f817055b19eb7325bb82eb",
+  "digest": "sha256:ce258d3e3829fc777a9d4eeca255d4f0305897af6549cc0c6c19e04aa876c6d6",
   "entrypoint": "pipeline stages raw snapshot-issuers",
   "fallbacks": [
   ],
@@ -19,6 +19,7 @@
     {"digest":"sha256:092cb77ae0770f1627b29bf41b2732722fbcc3a0e1d77a79674801800a2721d1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:hashlib=hashlib>"},
     {"digest":"sha256:31e586300a4870cd0def16b0b4c4ca2ef9d61af0aeb60a10ef8fee7bb8dda6b3","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:httpx=httpx>"},
     {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:json=json>"},
+    {"digest":"sha256:6b81b4ca19c88ec507aad63f1f49291209368a9490113655a68e994c91d092c1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:re=re>"},
     {"digest":"sha256:eac0e708604fa2bcbc06cc788631e836aac5bbd0fa3a9a73da9d79e453cd7192","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:stage_output=pipeline.stages.raw.experiments.source_comparison:stage_output>"},
     {"digest":"sha256:ff05bad0fd9a7212d3cd85fd2726055168be21bc8f6e0d93b29965794b0675d4","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:time=time>"},
     {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:typer=typer>"},
@@ -31,8 +32,10 @@
     {"digest":"sha256:bd995ccd3a4294b4455016ddba995bdfacf5690c27fa4a54eb1e41c1110d23f0","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:WIKIDATA"},
     {"digest":"sha256:6178f6d938965f7917b86f4d7dcc06308676fc04cb5041f9c3a868dbe90ed1bc","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:download"},
     {"digest":"sha256:a223cce1af476341ec2e9cbda9ce6b0870b5ba6a56485213bd7736512ec2b02d","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:listed_ciks"},
+    {"digest":"sha256:e09215f7197d2168b7f98d692c50d922e1bc3e99025cdc6090e77dab7d7f64f0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:pace_sec_request"},
     {"digest":"sha256:d757f789f8b1d521d2ac3fbb68e7a94cd559522fc53d2b96a6e2e3ab878b6294","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:snapshot"},
-    {"digest":"sha256:efb164686318b67ff43975dbf07c9f20a9fc04e6b3164d9ef8e9362769932775","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:snapshot_issuers"},
+    {"digest":"sha256:6fc6835491cb575f015d2d690398fb49ca4399f25cc92ad918237885580e436a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:snapshot_client"},
+    {"digest":"sha256:e0dd6ad01242730603e96baeb69c06882d16c4de63a5d7ecc8dac6d75efe9b4b","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:snapshot_issuers"},
     {"digest":"sha256:245b2f4bfaa6af7e00082ed73ce969a29087c972a02cc0b4d0f251a1bbd9174c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:subset_submissions"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
