@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.processed.company_links:link_companies",
-  "digest": "sha256:15b4b0ddaf06ecffa12f87a7ee36c00f5edb55657da0dde2372a44cd81550d58",
+  "digest": "sha256:f608bcbea08f1a5e74e8e688614e5b45cd67022de7a3aff8a8d8b4f4a88f6d91",
   "entrypoint": "pipeline stages processed link-companies",
   "fallbacks": [
   ],
@@ -28,10 +28,11 @@
     {"digest":"sha256:bb069305348fa26daf7306100835c9b03274c43c8e65adc5d960babe83073d5c","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:SOURCE_WEIGHTS"},
     {"digest":"sha256:ae5302f0e0e99a232fca5ae366cd49065090fb7c633394f25f868998f1c2d3c3","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:TRAILING_TICKER"},
     {"digest":"sha256:0c3f25aeced3cf31d6a710c33f70e440c7ec3e4dc5ea3e9debca1c149a83ea22","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:US_EXCHANGES"},
+    {"digest":"sha256:8d1ad380a613a0d1d6f52a6f4b49850cac1a82960d5a9dc2e264e86bc65838fb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:_recover_names"},
     {"digest":"sha256:c4358838590a879546ad45bfb5e4dbc9aa0572472548498e92e97897c2679448","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:_write"},
     {"digest":"sha256:e84ebd004c73b053ae50e624ad5d10ce8098618a01a03db73ae4c14e254f4d2c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:find_anchors"},
-    {"digest":"sha256:064dbc5be2d5d361a75d99ef9a568def02edf420677b371c837c94f842b521fb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_companies"},
-    {"digest":"sha256:8f711a39f5f64e8bbd0b82864229ec81a39b6348f87e8b4b0cb2f3dc6b59afd0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_unit"},
+    {"digest":"sha256:f22b497b5866e28bf19b757e609f773cebc0e45adaabf28500a9d958fe5bef97","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_companies"},
+    {"digest":"sha256:7cf7ed387610ee94892d79a9de1d07434fdc7dfb1255995046c46d446ef40243","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_unit"},
     {"digest":"sha256:3cb2074fb11aa143448851e69e88113929d15535d9c5dc2905769b1d4ba0a07a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:row_group"},
     {"digest":"sha256:25f6a9cee3fdb26a603ed64e2f415a92c509411fef7aa65f7e20a5e066365097","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:stage_unit"},
     {"digest":"sha256:6b81b4ca19c88ec507aad63f1f49291209368a9490113655a68e994c91d092c1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/issuers.py","symbol":"pipeline.stages.processed.issuers:<binding:re=re>"},

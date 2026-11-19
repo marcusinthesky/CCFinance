@@ -571,14 +571,14 @@ stages:
       processed link-companies --extraction data/processed/article-metadata
       --source data/raw/fine-news --issuers data/processed/issuers --domains
       data/inputs/fine-news/domains.csv --publishers
-      data/inputs/company-links/publishers.csv --smoothing 1.0 --output
-      data/processed/company-links
+      data/inputs/company-links/publishers.csv --smoothing 1.0 --recover-names
+      --output data/processed/company-links
     deps:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/processed/link-companies.json
       hash: md5
-      md5: ae9948569c06772f6f7fc60c22ca10d5
-      size: 9272
+      md5: 29a6207f72723001bdea038c5a947341
+      size: 9527
     - path: data/inputs/company-links/publishers.csv
       hash: md5
       md5: ebd07a0cabd3bb929d6a0471df2d7c86
@@ -608,8 +608,8 @@ stages:
     outs:
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
   sample_company_links:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -705,8 +705,8 @@ stages:
       size: 9053
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
     - path: data/processed/experiments/company-links/labels
       hash: md5
@@ -733,15 +733,15 @@ stages:
       size: 9409
     - path: data/research/experiments/company-links/errors.csv
       hash: md5
-      md5: d6fa6fbdc866c62946e6e32271a1e755
-      size: 9329
+      md5: b47b9ed72d3ab1a49904acce0d51c078
+      size: 9396
     - path: data/research/experiments/company-links/metrics.json
       hash: md5
-      md5: 1da312cc3c192c6af971f3bb045001a5
-      size: 38579
+      md5: 3de04fde362f3361029b5c2f2827365e
+      size: 38566
     - path: data/research/experiments/company-links/summary.tex
       hash: md5
-      md5: 638e09d664d9803d4a26c3f41165a187
+      md5: f496cfac9703ed7b7f4243732a6ed57c
       size: 1298
   prepare_articles:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -835,8 +835,8 @@ stages:
       size: 6719
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
     - path: data/processed/experiments/company-links/labels
       hash: md5
@@ -863,12 +863,12 @@ stages:
     outs:
     - path: data/research/experiments/company-focus/curve.csv
       hash: md5
-      md5: eee3fa91d137c5422b2c5cfb8685bc17
-      size: 3277
+      md5: 3a53794c00bf94a5d1d6cc23a8fd2062
+      size: 3475
     - path: data/research/experiments/company-focus/metrics.json
       hash: md5
-      md5: e87777494d01ef31bc41150356d47220
-      size: 2265
+      md5: fadbace9fb92903f8fb09be9df4a0f9b
+      size: 2291
   build_coverage_panel:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
@@ -896,8 +896,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
     - path: data/processed/issuers
       hash: md5
@@ -924,8 +924,8 @@ stages:
     outs:
     - path: data/research/coverage
       hash: md5
-      md5: dcd1367d33924670cf9c8d278b03f134.dir
-      size: 885933
+      md5: 9762285ead5aedebebf64e1fa9e438e5.dir
+      size: 888379
       nfiles: 3
   report_coverage:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -952,8 +952,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
     - path: data/raw/fine-news
       hash: md5
@@ -962,21 +962,21 @@ stages:
       nfiles: 169
     - path: data/research/coverage
       hash: md5
-      md5: dcd1367d33924670cf9c8d278b03f134.dir
-      size: 885933
+      md5: 9762285ead5aedebebf64e1fa9e438e5.dir
+      size: 888379
       nfiles: 3
     - path: data/research/experiments/company-focus/curve.csv
       hash: md5
-      md5: eee3fa91d137c5422b2c5cfb8685bc17
-      size: 3277
+      md5: 3a53794c00bf94a5d1d6cc23a8fd2062
+      size: 3475
     - path: data/research/experiments/company-focus/metrics.json
       hash: md5
-      md5: e87777494d01ef31bc41150356d47220
-      size: 2265
+      md5: fadbace9fb92903f8fb09be9df4a0f9b
+      size: 2291
     - path: data/research/experiments/company-links/metrics.json
       hash: md5
-      md5: 1da312cc3c192c6af971f3bb045001a5
-      size: 38579
+      md5: 3de04fde362f3361029b5c2f2827365e
+      size: 38566
     params:
       params.yaml:
         company_links.threshold: 0.5
@@ -1002,17 +1002,17 @@ stages:
     outs:
     - path: data/research/experiments/coverage/figures
       hash: md5
-      md5: 5632167467f02cbe2c7b8a1d9e927332.dir
-      size: 13097
+      md5: 584f49c55641cbf97f25ccce168278ab.dir
+      size: 13154
       nfiles: 8
     - path: data/research/experiments/coverage/metrics.json
       hash: md5
-      md5: 756f278370b5aedb15d100c2e51346fd
+      md5: d3b2b6005572bafec11d3ac9951ef017
       size: 1889
     - path: data/research/experiments/coverage/tables
       hash: md5
-      md5: d70c6115901f19d4bdfbb0cb68158719.dir
-      size: 5739
+      md5: 587ee4a02e2f8a84092bf32312c16232.dir
+      size: 5741
       nfiles: 11
   render_coverage_report:
     cmd: cp src/latex/coverage.tex data/research/experiments/coverage/report.tex
@@ -1020,13 +1020,13 @@ stages:
     deps:
     - path: data/research/experiments/coverage/figures
       hash: md5
-      md5: 5632167467f02cbe2c7b8a1d9e927332.dir
-      size: 13097
+      md5: 584f49c55641cbf97f25ccce168278ab.dir
+      size: 13154
       nfiles: 8
     - path: data/research/experiments/coverage/tables
       hash: md5
-      md5: d70c6115901f19d4bdfbb0cb68158719.dir
-      size: 5739
+      md5: 587ee4a02e2f8a84092bf32312c16232.dir
+      size: 5741
       nfiles: 11
     - path: src/latex/coverage.tex
       hash: md5
@@ -1039,8 +1039,8 @@ stages:
     outs:
     - path: data/research/experiments/coverage/report.pdf
       hash: md5
-      md5: 57dde289855fec6ef0c13ca5a1cf0b91
-      size: 69273
+      md5: 9fe7b43a2fca6813da63590d724c2da0
+      size: 69272
   sample_metadata_pilot:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
@@ -1215,8 +1215,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links
       hash: md5
-      md5: 86731bd2364592ce1677d52f0a25723b.dir
-      size: 5429995172
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
       nfiles: 2954
     - path: data/processed/experiments/article-metadata/confirmation.parquet
       hash: md5
@@ -1240,13 +1240,13 @@ stages:
       nfiles: 300
     - path: data/research/coverage
       hash: md5
-      md5: dcd1367d33924670cf9c8d278b03f134.dir
-      size: 885933
+      md5: 9762285ead5aedebebf64e1fa9e438e5.dir
+      size: 888379
       nfiles: 3
     - path: data/research/experiments/company-focus
       hash: md5
-      md5: f5169cd08ca02cecca32a4fe1a30562e.dir
-      size: 5542
+      md5: 458b8b7fd8233ea9b84bc7635d367d66.dir
+      size: 5766
       nfiles: 2
     outs:
     - path: data/research/experiments/article-metadata/validation.csv
@@ -1255,8 +1255,8 @@ stages:
       size: 208862
     - path: data/research/experiments/article-metadata/validation.json
       hash: md5
-      md5: c7b4b702ec4f79a4609aba3ad466f68f
-      size: 67765
+      md5: f8d5692e0dddf0cff1af2bff7e469681
+      size: 67764
     - path: data/research/experiments/article-metadata/validation.tex
       hash: md5
       md5: bc4f637585e804b5d18c4120b72939e1

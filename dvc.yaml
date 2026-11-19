@@ -282,7 +282,7 @@ stages:
       --source data/raw/fine-news --issuers data/processed/issuers
       --domains data/inputs/fine-news/domains.csv
       --publishers data/inputs/company-links/publishers.csv
-      --smoothing ${company_links.smoothing} --output data/processed/company-links
+      --smoothing ${company_links.smoothing} --recover-names --output data/processed/company-links
     params:
       - company_links.smoothing
     deps:

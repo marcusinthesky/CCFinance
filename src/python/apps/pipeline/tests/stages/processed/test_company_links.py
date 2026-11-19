@@ -228,3 +228,49 @@ def test_link_companies_scores_dated_candidates(tmp_path: Path) -> None:
     ]
     assert unresolved == [("a2", "acme", 1)]
     assert not (links / "staged").exists()
+
+
+@pytest.mark.integration
+def test_recovered_names_respect_listing_evidence(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # Arrange: decorate known SEC names, including ambiguous and conflicting cases.
+    spans = [
+        "Facebook FB",
+        "Chegg Inc.",
+        "Chegg CHGG",
+        "Apple Inc. AAPL",
+        "Apple stock",
+        "NASDAQ-traded Apple",
+        "Apple TSLA",
+        "NASDAQ-traded Chegg",
+        "Credit Suisse stock",
+        "Cdns",
+    ]
+    monkeypatch.setitem(COMPANIES, "c1", spans)
+    monkeypatch.setattr(
+        __name__ + ".ARTICLES",
+        [*ARTICLES, ("c1", "2023-01-01", "example.com", "; ".join(spans))],
+    )
+    arguments = _fixture(tmp_path)
+
+    (tmp_path / "publishers.csv").write_text("domain,name\nexample.com,Apple\n")
+
+    # Act: run through the same CLI and output aggregation as production.
+    result = CliRunner().invoke(
+        app, [*arguments, "--recover-names"], catch_exceptions=False
+    )
+
+    # Assert: corroborated mentions add exactly one issuer to this article.
+    assert result.exit_code == 0
+    with duckdb.connect() as con:
+        pairs = con.read_parquet(str(tmp_path / "links/articles/*.parquet"))
+        assert pairs.filter("id='c1'").project("cik,n_mentions,self_publisher").order(
+            "cik"
+        ).fetchall() == [(320193, 3, True), (1364954, 2, False)]
+        recovered = con.read_parquet(str(tmp_path / "links/mentions/*.parquet"))
+        assert recovered.filter("id='c1' AND method='normalized_name'").count(
+            "*"
+        ).fetchone() == (4,)
+    assert CliRunner().invoke(app, [*arguments, "--recover-names"]).exit_code == 0
+    assert CliRunner().invoke(app, arguments).exit_code != 0

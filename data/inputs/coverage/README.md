@@ -36,6 +36,23 @@ whose `data/universe.csv.dvc` records MD5 `fafbf7567127e11985d66621666715c3`.
 
 `pricing-perspective.csv` lists the roster with columns `ticker,name,cik`. `cik` may be blank: tickers map to issuers listed during 2018–2022, preferring Nasdaq listings. An authored CIK overrides the match. `pp_roster.parquet` records each mapping as `matched`, `ambiguous`, `override` or `unmatched`.
 
+## Pricing Perspective article counts after decorated-name recovery
+
+For publication years 2018–2022, 679,662 of 7,161,846 CCFinance article IDs
+(9.49%) have an accepted link to at least one of the 100 roster issuers.
+659,091 (9.20%) are usable and linked. Of these, 234,832 (3.28% of all articles) are focused
+on at least one roster issuer. Count each ID once even if it links to several
+roster issuers. The full-corpus counts are 1,337,391 linked (9.03%), 1,137,506
+usable and linked (7.68%), and 426,186 usable and focused (2.88%) out of
+14,807,287 articles.
+
+For annual counts per issuer, the minimum across all 500 study issuer-years is
+28 raw, 27 usable, and 2 focused. At 47 per issuer per year, 95, 94 and 57
+firms qualify respectively. The highest cutoffs retaining those same sets
+are 48, 59 and 49. Across complete calendar years, all 100 firms clear 47
+raw and usable articles throughout 2019–2025 and 47 focused articles throughout
+2022–2024.
+
 ## Limits
 
 - **Model labels.** Link and focus accuracy comes from model-adjudicated labels, not human ones.

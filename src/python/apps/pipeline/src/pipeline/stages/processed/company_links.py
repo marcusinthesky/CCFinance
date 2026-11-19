@@ -154,12 +154,49 @@ def stage_unit(
     )
 
 
+def _recover_names(con: duckdb.DuckDBPyConnection) -> None:
+    """Resolve one decorated SEC name only when its dated listing corroborates it."""
+    alias_date = COVERS.format(table="a", day="u.day")
+    listing_date = COVERS.format(table="t", day="u.day")
+    con.execute(
+        rf"""WITH forms AS (
+            SELECT *,
+                regexp_extract(text, '\s+([A-Z]{{1,5}}(?:[.-][A-Z])?)$', 1) AS suffix,
+                   starts_with(lower(text), 'nasdaq-traded ') AS nasdaq
+            FROM unit_links WHERE method = 'unresolved'
+        ), names AS (
+            SELECT *, normalize_name(CASE
+                WHEN nasdaq THEN substr(text, 14)
+                WHEN ends_with(lower(text), ' stock') THEN left(text, length(text)-6)
+                WHEN suffix <> '' THEN left(text, length(text)-length(suffix))
+            END) AS clean
+            FROM forms WHERE nasdaq OR ends_with(lower(text), ' stock') OR suffix <> ''
+        ), matched AS (
+            SELECT u.id, u.start, u.clean, any_value(a.cik) AS cik
+            FROM names AS u JOIN aliases AS a ON u.clean = a.key AND {alias_date}
+            JOIN tickers AS t ON t.cik = a.cik AND {listing_date}
+            WHERE a.source IN ('sec_name', 'former_name') AND u.clean <> ''
+            GROUP BY u.id, u.start, u.clean
+            HAVING count(DISTINCT a.cik) = 1 AND bool_or(
+                (u.suffix = '' OR replace(t.ticker,'.','-') = replace(u.suffix,'.','-'))
+                AND (NOT u.nasdaq OR lower(t.exchange) = 'nasdaq'))
+        )
+        UPDATE unit_links AS l SET cik = m.cik, method = 'normalized_name',
+            link_score = 1.0, candidates = [{{'cik': m.cik, 'score': 1.0}}],
+            self_publisher = l.self_publisher OR EXISTS (
+                SELECT 1 FROM publishers p WHERE p.key = m.clean AND
+                (l.host = p.domain OR ends_with(l.host, '.' || p.domain)))
+        FROM matched m WHERE l.id = m.id AND l.start = m.start"""  # noqa: S608
+    )
+
+
 def link_unit(
     con: duckdb.DuckDBPyConnection,
     staged: Path,
     smoothing: float,
     labels: dict[str, list[str]],
     targets: dict[str, Path],
+    recover_names: bool,
 ) -> None:
     """Choose one issuer per mention and aggregate links per article."""
     weight = " ".join(f"WHEN '{s}' THEN {w}" for s, w in SOURCE_WEIGHTS.items())
@@ -234,6 +271,8 @@ def link_unit(
         LEFT JOIN propagated AS p USING (id, start)""",  # noqa: S608 - authored constants.
         {"staged": str(staged), "smoothing": smoothing},
     )
+    if recover_names:
+        _recover_names(con)
     _write(
         con,
         "SELECT id, start, stop, text, key, cik, link_score, method, candidates, "
@@ -293,6 +332,9 @@ def link_companies(
     smoothing: Annotated[
         float, typer.Option(help="Pseudo-count given to the alias weight.")
     ] = 1.0,
+    recover_names: Annotated[
+        bool, typer.Option(help="Recover decorated SEC names.")
+    ] = False,
     output: Annotated[Path, typer.Option(help="Output directory.")] = Path(
         "data/processed/company-links"
     ),
@@ -307,6 +349,8 @@ def link_companies(
         ).hexdigest(),
         "smoothing": smoothing,
     }
+    if recover_names:
+        contract["ruleset"] = "normalized-name-v1"
     output.mkdir(parents=True, exist_ok=True)
     recorded = output / "contract.json"
     if recorded.exists() and json.loads(recorded.read_text()) != contract:
@@ -374,7 +418,12 @@ def link_companies(
             targets = {folder: output / folder / unit.name for folder in folders[1:]}
             if not targets["articles"].exists():
                 link_unit(
-                    con, output / "staged" / unit.name, smoothing, labels, targets
+                    con,
+                    output / "staged" / unit.name,
+                    smoothing,
+                    labels,
+                    targets,
+                    recover_names,
                 )
                 typer.echo(f"linked {unit.name}")
     shutil.rmtree(output / "staged", ignore_errors=True)
