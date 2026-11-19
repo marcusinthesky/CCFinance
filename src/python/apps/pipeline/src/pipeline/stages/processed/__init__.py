@@ -7,8 +7,8 @@ from pipeline.stages.processed.company_links import link_companies
 from pipeline.stages.processed.experiments.article_metadata import sample_articles
 from pipeline.stages.processed.experiments.company_links import (
     adjudicate_links,
-    sample_links,
 )
+from pipeline.stages.processed.experiments.sample_links import sample_links
 from pipeline.stages.processed.issuers import prepare_issuers
 from pipeline.stages.processed.public_float import prepare_public_float
 
