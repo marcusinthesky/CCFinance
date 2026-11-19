@@ -32,5 +32,7 @@ The default DVC remote uses the private Hugging Face bucket
 `marcusinthesky/CCFinance`, under `dvc-store/`. In the pinned devenv shell,
 supply your Hugging Face S3 access key and secret through local DVC settings
 (`access_key_id` and `secret_access_key` on `hf-bucket`) or AWS credentials.
-Use `just dvc push` to back up cached outputs, `just dvc status --cloud` to
+Raw Fine News shards are already published on HF Datasets. The acquisition
+output sets `push: false` so DVC uploads skip that snapshot.
+Use `just dvc push` to back up eligible cached outputs, `just dvc status --cloud` to
 compare them with the bucket, and `just dvc pull` to restore them.

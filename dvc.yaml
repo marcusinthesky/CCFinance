@@ -37,7 +37,8 @@ stages:
       - data/inputs/fine-news/domains.csv
       - .semflow/hashes/entrypoints/pipeline/stages/raw/filter-fine-news.json
     outs:
-      - data/raw/fine-news
+      - data/raw/fine-news:
+          push: false
 
   snapshot_issuers:
     desc: Snapshot SEC listings and identities, plus Wikidata tickers, names and subsidiaries.

@@ -160,3 +160,30 @@ same headline. This checks identity across six records and five issuers.
 Run [the release comparison](check-name-recovery.sql) for each corresponding
 pair of mention shards using the DuckDB variables `baseline_shard` and
 `candidate_shard`. Each comparison must report zero violations.
+
+## Remaining link candidates
+
+An exploratory scan of unresolved GLiNER keys after decorated-name recovery
+found two further sources of coverage. Counts below exclude article–issuer
+pairs that already have an accepted link (score at least 0.5).
+
+| Candidate evidence | All years | Pricing Perspective roster, 2018–2022 |
+| --- | ---: | ---: |
+| Share-class suffix and a unique matching SEC issuer name | 802 | 13 |
+| Google Pay mention without an Alphabet link | 2,813 | 1,692 |
+| Instagram mention without a Meta link | 43,777 | 20,637 |
+
+The share-class scan stripped terminal “class A/B/C”, “cl A/B/C” or
+“A/B/C shares”, then a trailing legal form, and checked the date bounds of
+current and former SEC names. It found 123 issuers across 791 articles.
+A production rule should also corroborate the security class against a dated
+listing. The 396 articles saying “Berkshire Hathaway B shares” without an
+accepted Berkshire link are a concrete validation set.
+
+The brand counts are candidates for an issuer link, not estimates of article
+focus. Among six usable 2018–2022 examples per brand, chosen by ordering
+article IDs by SHA256 of “50:” followed by the ID, Google Pay appeared in
+a Mastercard partnership as well as lists of payment services. Instagram
+appeared in product coverage and in accounts of celebrities posting online.
+Evaluate brand ownership on the article date and score issuer identity and
+subject role separately before using those links in the coverage panel.
