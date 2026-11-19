@@ -1,12 +1,12 @@
 schema: '2.0'
 stages:
   prepare_comparison@infini_news:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw prepare-comparison --dataset infini_news --output
+      raw prepare-comparison --dataset infini_news --output 
       data/raw/experiments/source-comparison/manifests/infini_news
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
@@ -26,7 +26,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.infini_news:
-          source:
+          source: 
             hf://datasets/ruggsea/infini-news-corpus@7f8fe13b0833c005365b81f1dee7c20b7087769b/data/year=*/month=*/part-*.parquet
         experiments.source_comparison.draws: 4
         experiments.source_comparison.seed: 42
@@ -37,12 +37,12 @@ stages:
       size: 13233457
       nfiles: 6
   prepare_comparison@fine_news:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw prepare-comparison --dataset fine_news --output
+      raw prepare-comparison --dataset fine_news --output 
       data/raw/experiments/source-comparison/manifests/fine_news
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
@@ -62,7 +62,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.fine_news:
-          source:
+          source: 
             hf://datasets/ksolovev/fine-news@7a841090e69f3c58a9e04b0c39213d879af68e8a/data/*/eng_Latn/*.parquet
         experiments.source_comparison.draws: 4
         experiments.source_comparison.seed: 42
@@ -73,12 +73,12 @@ stages:
       size: 6025371
       nfiles: 6
   prepare_comparison@fineweb_hq:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw prepare-comparison --dataset fineweb_hq --output
+      raw prepare-comparison --dataset fineweb_hq --output 
       data/raw/experiments/source-comparison/manifests/fineweb_hq
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
@@ -98,7 +98,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.fineweb_hq:
-          source:
+          source: 
             hf://datasets/epfml/FineWeb-HQ@e58199cdd52438d94405df1a4d8630cc5f13bf84/data/*/*.parquet
         experiments.source_comparison.draws: 4
         experiments.source_comparison.seed: 42
@@ -109,12 +109,12 @@ stages:
       size: 4869648
       nfiles: 6
   prepare_comparison@refinedweb:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw prepare-comparison --dataset refinedweb --output
+      raw prepare-comparison --dataset refinedweb --output 
       data/raw/experiments/source-comparison/manifests/refinedweb
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
@@ -134,7 +134,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.refinedweb:
-          source:
+          source: 
             hf://datasets/tiiuae/falcon-refinedweb@c735840575b629292b41da8dde11dcd523d4f91c/data/*.parquet
         experiments.source_comparison.draws: 4
         experiments.source_comparison.seed: 42
@@ -145,13 +145,13 @@ stages:
       size: 2712429
       nfiles: 6
   sample_comparison@fine_news:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw sample-comparison --dataset fine_news --manifest
-      data/raw/experiments/source-comparison/manifests/fine_news/manifest.json
+      raw sample-comparison --dataset fine_news --manifest 
+      data/raw/experiments/source-comparison/manifests/fine_news/manifest.json 
       --output data/raw/experiments/source-comparison/samples/fine_news
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
       md5: 092f68ce8be23d9b6c9b782176a1719d
@@ -180,7 +180,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.fine_news:
-          source:
+          source: 
             hf://datasets/ksolovev/fine-news@7a841090e69f3c58a9e04b0c39213d879af68e8a/data/*/eng_Latn/*.parquet
         experiments.source_comparison.domains: data/inputs/fine-news/domains.csv
         experiments.source_comparison.draws: 4
@@ -192,13 +192,13 @@ stages:
       size: 1503371
       nfiles: 5
   sample_comparison@infini_news:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw sample-comparison --dataset infini_news --manifest
+      raw sample-comparison --dataset infini_news --manifest 
       data/raw/experiments/source-comparison/manifests/infini_news/manifest.json
       --output data/raw/experiments/source-comparison/samples/infini_news
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
       md5: 092f68ce8be23d9b6c9b782176a1719d
@@ -227,7 +227,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.infini_news:
-          source:
+          source: 
             hf://datasets/ruggsea/infini-news-corpus@7f8fe13b0833c005365b81f1dee7c20b7087769b/data/year=*/month=*/part-*.parquet
         experiments.source_comparison.domains: data/inputs/fine-news/domains.csv
         experiments.source_comparison.draws: 4
@@ -239,13 +239,13 @@ stages:
       size: 2504791
       nfiles: 5
   sample_comparison@refinedweb:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw sample-comparison --dataset refinedweb --manifest
-      data/raw/experiments/source-comparison/manifests/refinedweb/manifest.json
+      raw sample-comparison --dataset refinedweb --manifest 
+      data/raw/experiments/source-comparison/manifests/refinedweb/manifest.json 
       --output data/raw/experiments/source-comparison/samples/refinedweb
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
       md5: 092f68ce8be23d9b6c9b782176a1719d
@@ -274,7 +274,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.refinedweb:
-          source:
+          source: 
             hf://datasets/tiiuae/falcon-refinedweb@c735840575b629292b41da8dde11dcd523d4f91c/data/*.parquet
         experiments.source_comparison.domains: data/inputs/fine-news/domains.csv
         experiments.source_comparison.draws: 4
@@ -286,13 +286,13 @@ stages:
       size: 32814
       nfiles: 5
   sample_comparison@fineweb_hq:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      raw sample-comparison --dataset fineweb_hq --manifest
-      data/raw/experiments/source-comparison/manifests/fineweb_hq/manifest.json
+      raw sample-comparison --dataset fineweb_hq --manifest 
+      data/raw/experiments/source-comparison/manifests/fineweb_hq/manifest.json 
       --output data/raw/experiments/source-comparison/samples/fineweb_hq
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
       md5: 092f68ce8be23d9b6c9b782176a1719d
@@ -321,7 +321,7 @@ stages:
     params:
       params.yaml:
         experiments.source_comparison.datasets.fineweb_hq:
-          source:
+          source: 
             hf://datasets/epfml/FineWeb-HQ@e58199cdd52438d94405df1a4d8630cc5f13bf84/data/*/*.parquet
         experiments.source_comparison.domains: data/inputs/fine-news/domains.csv
         experiments.source_comparison.draws: 4
@@ -333,14 +333,14 @@ stages:
       size: 55180
       nfiles: 5
   compare_sources:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      research compare-sources --manifests
-      data/raw/experiments/source-comparison/manifests --samples
-      data/raw/experiments/source-comparison/samples --output
+      research compare-sources --manifests 
+      data/raw/experiments/source-comparison/manifests --samples 
+      data/raw/experiments/source-comparison/samples --output 
       data/research/experiments/source-comparison
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/research/compare-sources.json
       hash: md5
       md5: abac7ad5e562459e13a0326ca3e928d8
@@ -375,16 +375,16 @@ stages:
           domains: data/inputs/fine-news/domains.csv
           datasets:
             fine_news:
-              source:
+              source: 
                 hf://datasets/ksolovev/fine-news@7a841090e69f3c58a9e04b0c39213d879af68e8a/data/*/eng_Latn/*.parquet
             infini_news:
-              source:
+              source: 
                 hf://datasets/ruggsea/infini-news-corpus@7f8fe13b0833c005365b81f1dee7c20b7087769b/data/year=*/month=*/part-*.parquet
             refinedweb:
-              source:
+              source: 
                 hf://datasets/tiiuae/falcon-refinedweb@c735840575b629292b41da8dde11dcd523d4f91c/data/*.parquet
             fineweb_hq:
-              source:
+              source: 
                 hf://datasets/epfml/FineWeb-HQ@e58199cdd52438d94405df1a4d8630cc5f13bf84/data/*/*.parquet
     outs:
     - path: data/research/experiments/source-comparison/comparison.csv
@@ -412,11 +412,11 @@ stages:
       md5: 8f0706f7255629ff17112c8169b64741
       size: 639
   filter_fine_news:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
       raw filter-fine-news
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/raw/filter-fine-news.json
       hash: md5
       md5: 625f28d8c8916788abfdaa657863ee61
@@ -448,13 +448,13 @@ stages:
       size: 20100099064
       nfiles: 169
   sample_article_metadata:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      processed sample-articles --source data/raw/fine-news --diagnostics
-      data/inputs/article-metadata/diagnostics.jsonl --size 10000 --seed 42
+      processed sample-articles --source data/raw/fine-news --diagnostics 
+      data/inputs/article-metadata/diagnostics.jsonl --size 10000 --seed 42 
       --output data/processed/experiments/article-metadata/sample
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/processed/sample-articles.json
       hash: md5
       md5: 88456f6eb054ad08ef1e9f1da383b9f3
@@ -491,11 +491,11 @@ stages:
       size: 22924846
       nfiles: 1
   benchmark_article_metadata:
-    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script
-      infra/inference/gliner_extract.py --source
-      data/processed/experiments/article-metadata/sample --output
-      data/processed/experiments/article-metadata/benchmark --seed 42
-      --batch-size 128 --buffer-size 8192 --workers 4 --chunk-size 384
+    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script 
+      infra/inference/gliner_extract.py --source 
+      data/processed/experiments/article-metadata/sample --output 
+      data/processed/experiments/article-metadata/benchmark --seed 42 
+      --batch-size 128 --buffer-size 8192 --workers 4 --chunk-size 384 
       --chunk-overlap 64
     deps:
     - path: data/processed/experiments/article-metadata/sample
@@ -564,14 +564,14 @@ stages:
       size: 7603289
       nfiles: 4
   report_article_metadata:
-    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project 
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
-      research report-article-metadata --benchmark
-      data/processed/experiments/article-metadata/benchmark --diagnostics
-      data/inputs/article-metadata/diagnostics.jsonl --output
+      research report-article-metadata --benchmark 
+      data/processed/experiments/article-metadata/benchmark --diagnostics 
+      data/inputs/article-metadata/diagnostics.jsonl --output 
       data/research/experiments/article-metadata
     deps:
-    - path:
+    - path: 
         .semflow/hashes/entrypoints/pipeline/stages/research/report-article-metadata.json
       hash: md5
       md5: 1390592b91af18e2c998dcaeb7092e9f
@@ -606,3 +606,74 @@ stages:
       hash: md5
       md5: 728624c66058fd73c83b95151516a56d
       size: 1406
+  extract_article_metadata:
+    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script 
+      infra/inference/gliner_extract.py --source data/raw/fine-news --output 
+      data/processed/article-metadata --seed 42 --batch-size 128 --buffer-size 
+      8192 --workers 4 --chunk-size 384 --chunk-overlap 64
+    deps:
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: infra/inference/gliner-requirements.txt
+      hash: md5
+      md5: cb59b03f49598211831ec33c77c468f5
+      size: 55
+    - path: infra/inference/gliner-run.sh
+      hash: md5
+      md5: 0ae8e80975d9cead875ebcfdae626ef5
+      size: 1122
+    - path: infra/inference/gliner-setup.sh
+      hash: md5
+      md5: ccd651106eecdb194bf57f686ada40ea
+      size: 1241
+    - path: infra/inference/gliner2-2.1.0-batched-attributes.patch
+      hash: md5
+      md5: 440bd213b9a94a8ee49351c53435bb3b
+      size: 3286
+    - path: infra/inference/gliner2-2.1.0-cuda-attributes.patch
+      hash: md5
+      md5: c01fa7d0e53158f1ebababdb34642555
+      size: 484
+    - path: infra/inference/gliner2-2.1.0-window-offsets.patch
+      hash: md5
+      md5: 39337d18cfedb29c3eced24b37e52070
+      size: 1379
+    - path: infra/inference/gliner_attributes.py
+      hash: md5
+      md5: 909742e2678b42452bde1d96128cff09
+      size: 4358
+    - path: infra/inference/gliner_extract.py
+      hash: md5
+      md5: 00cba1260d8628a4965c5b6554a16632
+      size: 11575
+    - path: infra/inference/gliner_probabilities.py
+      hash: md5
+      md5: c1b395eecf74e9738d9b5c8f79b25961
+      size: 3027
+    - path: infra/inference/gliner_runtime.py
+      hash: md5
+      md5: 7fe9434f90ee73c7be0dd925b4a76eba
+      size: 1555
+    - path: infra/inference/gliner_schema.py
+      hash: md5
+      md5: bd4389a3e9fa1c27513f5a316f80413a
+      size: 2927
+    params:
+      params.yaml:
+        article_metadata:
+          seed: 42
+          sample_size: 10000
+          batch_size: 128
+          buffer_size: 8192
+          workers: 4
+          chunk_size: 384
+          chunk_overlap: 64
+    outs:
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
