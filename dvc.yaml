@@ -228,6 +228,52 @@ stages:
       - data/processed/article-metadata:
           persist: true
 
+  snapshot_public_float:
+    desc: Snapshot SEC public float, the size measure on annual report covers.
+    # Needs network access and SEC_USER_AGENT ("Name contact@example.org").
+    # Frozen once recorded, so later runs verify the snapshot instead of refetching.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages raw
+      snapshot-public-float --first-year ${public_float.first_year}
+      --last-year ${public_float.last_year} --output data/raw/public-float
+    params:
+      - public_float
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-public-float.json
+    outs:
+      - data/raw/public-float
+
+  prepare_public_float:
+    desc: Tabulate public float by filer and measurement date.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-public-float --source data/raw/public-float
+      --output data/processed/public-float
+    deps:
+      - data/raw/public-float
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-public-float.json
+    outs:
+      - data/processed/public-float
+
+  prepare_articles:
+    desc: Date-check and deduplicate articles, with article form and syndication copies.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-articles --source data/raw/fine-news
+      --extraction data/processed/article-metadata
+      --max-lag-days ${articles.max_lag_days} --output data/processed/articles
+    params:
+      - articles.max_lag_days
+    deps:
+      - data/raw/fine-news
+      - data/processed/article-metadata
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-articles.json
+    outs:
+      - data/processed/articles
+
   link_company_mentions:
     desc: Link GLiNER company mentions to dated US-listed issuers, with scores.
     # Resumable by row group. While extraction is partial, run it alone with

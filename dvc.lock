@@ -752,3 +752,34 @@ stages:
       hash: md5
       md5: 638e09d664d9803d4a26c3f41165a187
       size: 1298
+  prepare_articles:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-articles --source data/raw/fine-news --extraction
+      data/processed/article-metadata --max-lag-days 7 --output
+      data/processed/articles
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-articles.json
+      hash: md5
+      md5: 61aa3a40d9f3b6018fcd77280a1328c9
+      size: 2677
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        articles.max_lag_days: 7
+    outs:
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2

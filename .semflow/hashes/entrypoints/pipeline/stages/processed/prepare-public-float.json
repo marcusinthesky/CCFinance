@@ -1,0 +1,18 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.public_float:prepare_public_float",
+  "digest": "sha256:8800a515fa81d345a97f1b6d1e0fea5333cd3d960718ffac2204a2bc7b08e85a",
+  "entrypoint": "pipeline stages processed prepare-public-float",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:<binding:json=json>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:<binding:typer=typer>"},
+    {"digest":"sha256:fac68ab6a2761c28d4bbfa5921c0b3d4a08e709ac63de52b246ed4122e0d7aeb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/public_float.py","symbol":"pipeline.stages.processed.public_float:prepare_public_float"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

@@ -14,8 +14,11 @@ benchmark lives in `processed/experiments/article-metadata/` and its report in
 `research/experiments/article-metadata/`; the corpus run writes
 `processed/article-metadata/`. Issuer references live in `raw/issuers/` and
 `processed/issuers/` (see `inputs/issuers/README.md`); company links in
-`processed/company-links/`, evaluated under `experiments/company-links/`. DVC connects these artifacts;
-an experimental result does not become a release dataset merely by moving it.
+`processed/company-links/`, evaluated under `experiments/company-links/`.
+`processed/articles/` dates and deduplicates every article, and SEC public
+float for issuer size lives in `raw/public-float/` and
+`processed/public-float/`. DVC connects these artifacts; an experimental
+result does not become a release dataset merely by moving it.
 
 Stage commands create their output directories when implemented. Git ignores
 large data payloads; track reproducible data with DVC. Keep small input files,

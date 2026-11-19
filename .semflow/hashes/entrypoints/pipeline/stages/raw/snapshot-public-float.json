@@ -1,0 +1,38 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.raw.public_float:snapshot_public_float",
+  "digest": "sha256:485cab75ae5a53bf1e653ff1e19304ff0e882fe26b0f5c09d3c22f4d135b45fb",
+  "entrypoint": "pipeline stages raw snapshot-public-float",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:d6d8775c21b3ac82a3f62a4e90a9a56dd9390fc9ca8ad9692550594b896a2b51","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:Iterator=collections.abc:Iterator>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
+    {"digest":"sha256:a510406c1fa6f159ec004f4ead0d836747696bf4154e0a5daee8abdfbd9829f0","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:contextmanager=contextlib:contextmanager>"},
+    {"digest":"sha256:94467eb4d95eec868d31570f8b732bb06d29a76603d8a6de1879f200d450c40c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:stage_output"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:UTC=datetime:UTC>"},
+    {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:datetime=datetime:datetime>"},
+    {"digest":"sha256:092cb77ae0770f1627b29bf41b2732722fbcc3a0e1d77a79674801800a2721d1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:hashlib=hashlib>"},
+    {"digest":"sha256:31e586300a4870cd0def16b0b4c4ca2ef9d61af0aeb60a10ef8fee7bb8dda6b3","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:httpx=httpx>"},
+    {"digest":"sha256:ff05bad0fd9a7212d3cd85fd2726055168be21bc8f6e0d93b29965794b0675d4","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:time=time>"},
+    {"digest":"sha256:ba89a19e0841405a6353eee934852d79ad82963410b740c6193d6bb465a5c544","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:RETRIES"},
+    {"digest":"sha256:6178f6d938965f7917b86f4d7dcc06308676fc04cb5041f9c3a868dbe90ed1bc","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:download"},
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:6c5df083636009ab8ede7825177c99753bf2e4312f370fb3b50b0bbb1902fe43","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:download=pipeline.stages.raw.issuers:download>"},
+    {"digest":"sha256:31e586300a4870cd0def16b0b4c4ca2ef9d61af0aeb60a10ef8fee7bb8dda6b3","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:httpx=httpx>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:json=json>"},
+    {"digest":"sha256:eac0e708604fa2bcbc06cc788631e836aac5bbd0fa3a9a73da9d79e453cd7192","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:stage_output=pipeline.stages.raw.experiments.source_comparison:stage_output>"},
+    {"digest":"sha256:ff05bad0fd9a7212d3cd85fd2726055168be21bc8f6e0d93b29965794b0675d4","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:time=time>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:typer=typer>"},
+    {"digest":"sha256:a420db2b25aa97f179d8d18666d5d896991384bba6bd20e6c053b1ec8a200e3b","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:FRAMES"},
+    {"digest":"sha256:760671b6f182af1a712842573f6b5c237b459f1bec337793bf3a55f47f8e5e3e","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:PAUSE_SECONDS"},
+    {"digest":"sha256:ee56ae875e8c6d972d2ea9fc6b3a857118f2bda42eaae8a886cf686afe10da82","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:periods"},
+    {"digest":"sha256:a128d62869a627d3cff8ca680e74e070c3e1a0c300fa3e2ff652cb24eeeff2e4","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:snapshot"},
+    {"digest":"sha256:d2b9f7093db499e98cb0664aeb60af4fb38b943f6292b308e7a450b5c051ac0e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:snapshot_public_float"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

@@ -1,0 +1,21 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.articles:prepare_articles",
+  "digest": "sha256:2feb111edc2613f3b8fe9d09431724a82e62a9d39156ce3756c923c3fd732033",
+  "entrypoint": "pipeline stages processed prepare-articles",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:json=json>"},
+    {"digest":"sha256:ac3a74d6dd975a8e8fe4b7f85fce794793a9355595b850e3926964913948d386","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:os=os>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:<binding:typer=typer>"},
+    {"digest":"sha256:9194f6131763e9d21d9af13a2ab1c47d25197a41f2109c2183fbd68f3326b3c0","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:DATE_STATUSES"},
+    {"digest":"sha256:863e8a441d818202cc8e328008a78a62bfc55ff086e92d9f66a6b87b6e6db504","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:FUTURE_TOLERANCE_DAYS"},
+    {"digest":"sha256:dce0350504d8c4976c068f11b8ca446f041c2890978b38d81829f983f30c759e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/articles.py","symbol":"pipeline.stages.processed.articles:prepare_articles"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

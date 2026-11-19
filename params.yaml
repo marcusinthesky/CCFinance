@@ -15,6 +15,16 @@ company_links:
   concurrency: 8
   threshold: 0.5
 
+# Articles: a publication date dates the text only if captured within this many
+# days; the lag distribution has its knee here (63% same day, 2.9M over a year).
+articles:
+  max_lag_days: 7
+
+# Public float: SEC XBRL frames for every quarter of these calendar years.
+public_float:
+  first_year: 2015
+  last_year: 2026
+
 # Issuers: US-listed SEC filers with dated tickers and aliases, for company linking.
 issuers:
   since: "2016-01-01"
