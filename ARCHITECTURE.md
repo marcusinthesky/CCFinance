@@ -22,10 +22,9 @@ CI executes those checks, tests and builds through the same just recipes as loca
 work. Setup may download dependencies; ordinary checks use cached dependencies
 and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle.
 
-The Hugging Face dataset is staging, and the bucket is intended for intermediate
-and experiment artifacts. The frozen raw acquisition stage documents the
-historical selection without fetching its output. Remote artifact transport
-remains future work.
+The Hugging Face dataset is staging. DVC stores intermediate and experiment
+artifacts in the private `marcusinthesky/CCFinance` bucket through its S3 gateway.
+The frozen acquisition stages record their inputs without refetching them.
 
 Each data layer groups experimental artifacts and code beneath
 `experiments/<name>/`. DVC supplies artifact paths explicitly, so layers read

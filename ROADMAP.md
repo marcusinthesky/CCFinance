@@ -13,10 +13,8 @@ model = "children"
 template = "children.md.j2"
 -->
 
-| Status | Item | Description |
-| --- | --- | --- |
-| backlog | [CCFinance dataset research](.context/plan/dataset-research/README.md) | Assess feasibility and define a research-ready financial news dataset. |
+_No open children._
 
-`1 open; 0 terminal`
+`0 open; 1 terminal`
 
 <!-- insitu:end -->

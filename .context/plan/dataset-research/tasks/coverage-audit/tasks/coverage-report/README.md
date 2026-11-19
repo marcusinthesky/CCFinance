@@ -3,7 +3,7 @@ type: task
 title: Report coverage, the PP screen and release targets
 description: Coverage tables, pgfplots figures and a rendered report with release-target candidates.
 links: []
-status: in-progress
+status: done
 ---
 
 # Report coverage, the PP screen and release targets
@@ -18,7 +18,7 @@ rendered report.
 - [x] Tabulate the funnel, dates, size and industry coverage, the Pricing Perspective
   screen, consecutive-year thresholds, publishers and quality.
 - [x] Render pgfplots figures and the report with Tectonic.
-- [ ] Review the report and record release targets in the dataset requirements.
+- [x] Review the report and record release targets in the dataset requirements.
 
 <!-- insitu:begin sql
 id = "planning-children"

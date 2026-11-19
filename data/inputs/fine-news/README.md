@@ -19,8 +19,8 @@ rights and usage restrictions.
 14,807,287 records and 20,100,064,588 bytes. Each shard matches the revision's
 Git LFS SHA256 and size, and `provenance.json` records them. The stage is
 frozen, so `dvc repro` verifies this output rather than re-running acquisition.
-On another checkout, run `just dvc checkout filter_fine_news` to restore it from
-the local cache. It has not been uploaded to a DVC remote.
+On another checkout, run `just dvc pull filter_fine_news` with the private
+bucket credentials to restore the recorded snapshot.
 
 Unfreezing the stage, or passing `--config` with a local glob and a fresh output
 directory, runs the acquisition itself and refuses to overwrite existing output.

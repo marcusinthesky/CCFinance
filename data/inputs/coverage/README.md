@@ -31,6 +31,9 @@ Zero counts are kept for universe members. Linked issuer-years outside the unive
 
 ## Pricing Perspective roster
 
+The 100 symbols and names come from Pricing Perspective commit `02c3ffe36`,
+whose `data/universe.csv.dvc` records MD5 `fafbf7567127e11985d66621666715c3`.
+
 `pricing-perspective.csv` lists the roster with columns `ticker,name,cik`. `cik` may be blank: tickers map to issuers listed during 2018–2022, preferring Nasdaq listings. An authored CIK overrides the match. `pp_roster.parquet` records each mapping as `matched`, `ambiguous`, `override` or `unmatched`.
 
 ## Limits

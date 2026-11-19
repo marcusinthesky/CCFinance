@@ -1,2 +1,7 @@
 [core]
     analytics = false
+    remote = hf-bucket
+['remote "hf-bucket"']
+    url = s3://CCFinance/dvc-store
+    endpointurl = https://s3.hf.co/marcusinthesky
+    region = us-east-1

@@ -3,7 +3,7 @@ type: task
 title: Build the firm-year coverage panel
 description: Raw, dated, usable and focused article counts per listed issuer and year.
 links: []
-status: in-progress
+status: done
 ---
 
 # Build the firm-year coverage panel
@@ -17,7 +17,7 @@ universe, keeping zero counts.
 
 - [x] Count raw, dated, usable and focused articles per issuer and year.
 - [x] Admit issuer-years on dated listings or public-float evidence, keeping zeros.
-- [ ] Map the Pricing Perspective roster and run on the full corpus.
+- [x] Map the Pricing Perspective roster and run on the full corpus.
 
 <!-- insitu:begin sql
 id = "planning-children"

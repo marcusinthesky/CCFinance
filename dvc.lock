@@ -878,3 +878,174 @@ stages:
       hash: md5
       md5: e87777494d01ef31bc41150356d47220
       size: 2265
+  build_coverage_panel:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research build-coverage-panel --articles data/processed/articles --links
+      data/processed/company-links --issuers data/processed/issuers
+      --public-float data/processed/public-float --roster
+      data/inputs/coverage/pricing-perspective.csv --threshold 0.5
+      --min-relevance 0.0 --max-offset 1.0 --min-mentions 3 --first-year 2016
+      --last-year 2026 --complete-from 2017 --complete-through 2025 --size-bands
+      5 --output data/research/coverage
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/build-coverage-panel.json
+      hash: md5
+      md5: 108fb85c28fee9041bb3ae027c25d3df
+      size: 2655
+    - path: data/inputs/coverage/pricing-perspective.csv
+      hash: md5
+      md5: fb4eea3aceac360c9037246c8804e4ca
+      size: 2775
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/processed/public-float
+      hash: md5
+      md5: e4c2dcc99f1520a3736601cf39fb7de7.dir
+      size: 764212
+      nfiles: 1
+    params:
+      params.yaml:
+        company_links.threshold: 0.5
+        coverage.complete_from: 2017
+        coverage.complete_through: 2025
+        coverage.first_year: 2016
+        coverage.focus:
+          min_relevance: 0.0
+          max_offset: 1.0
+          min_mentions: 3
+        coverage.last_year: 2026
+        coverage.size_bands: 5
+    outs:
+    - path: data/research/coverage
+      hash: md5
+      md5: dcd1367d33924670cf9c8d278b03f134.dir
+      size: 885933
+      nfiles: 3
+  report_coverage:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-coverage --panel data/research/coverage --articles
+      data/processed/articles --links data/processed/company-links --source
+      data/raw/fine-news --link-metrics
+      data/research/experiments/company-links/metrics.json --focus
+      data/research/experiments/company-focus --threshold 0.5 --min-relevance
+      0.0 --max-offset 1.0 --min-mentions 3 --complete-from 2017
+      --complete-through 2025 --thresholds 1,12,47,100,250 --spans 1,3,5,9
+      --seed 43 --months 6 --sample-size 1000 --window-days 1 --max-candidates
+      100 --jaccard 0.8 --output data/research/experiments/coverage
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-coverage.json
+      hash: md5
+      md5: 0a8e0d1ddfcd91bdbe995c698f534592
+      size: 12119
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: data/research/coverage
+      hash: md5
+      md5: dcd1367d33924670cf9c8d278b03f134.dir
+      size: 885933
+      nfiles: 3
+    - path: data/research/experiments/company-focus/curve.csv
+      hash: md5
+      md5: eee3fa91d137c5422b2c5cfb8685bc17
+      size: 3277
+    - path: data/research/experiments/company-focus/metrics.json
+      hash: md5
+      md5: e87777494d01ef31bc41150356d47220
+      size: 2265
+    - path: data/research/experiments/company-links/metrics.json
+      hash: md5
+      md5: 1da312cc3c192c6af971f3bb045001a5
+      size: 38579
+    params:
+      params.yaml:
+        company_links.threshold: 0.5
+        coverage:
+          focus:
+            min_relevance: 0.0
+            max_offset: 1.0
+            min_mentions: 3
+          first_year: 2016
+          last_year: 2026
+          complete_from: 2017
+          complete_through: 2025
+          size_bands: 5
+          thresholds: 1,12,47,100,250
+          spans: 1,3,5,9
+          near_duplicates:
+            seed: 43
+            months: 6
+            articles: 1000
+            window_days: 1
+            max_candidates: 100
+            jaccard: 0.8
+    outs:
+    - path: data/research/experiments/coverage/figures
+      hash: md5
+      md5: aeedb50a58ecf71945139205dd239203.dir
+      size: 17287
+      nfiles: 15
+    - path: data/research/experiments/coverage/metrics.json
+      hash: md5
+      md5: 756f278370b5aedb15d100c2e51346fd
+      size: 1889
+    - path: data/research/experiments/coverage/report.tex
+      hash: md5
+      md5: ec0389ac73c6b6007ab7460abc46e173
+      size: 4012
+    - path: data/research/experiments/coverage/tables
+      hash: md5
+      md5: 635d4270fc7a36f5dd416d820c43b588.dir
+      size: 5976
+      nfiles: 11
+  render_coverage_report:
+    cmd: just latex::render data/research/experiments/coverage/report.tex
+    deps:
+    - path: data/research/experiments/coverage/figures
+      hash: md5
+      md5: aeedb50a58ecf71945139205dd239203.dir
+      size: 17287
+      nfiles: 15
+    - path: data/research/experiments/coverage/report.tex
+      hash: md5
+      md5: ec0389ac73c6b6007ab7460abc46e173
+      size: 4012
+    - path: data/research/experiments/coverage/tables
+      hash: md5
+      md5: 635d4270fc7a36f5dd416d820c43b588.dir
+      size: 5976
+      nfiles: 11
+    outs:
+    - path: data/research/experiments/coverage/report.pdf
+      hash: md5
+      md5: 487a265e3fee47dde751755740bbf711
+      size: 69739

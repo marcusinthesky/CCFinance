@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.research.experiments.coverage:report_coverage",
-  "digest": "sha256:af5b033d7ddf7324874747e3b7e43168f3e37edd4a4e46845b9fb5655b704429",
+  "digest": "sha256:9d378aae1a2d34bd1ed1ea18dde1e0ff3701a034889b67e98a3276d53ce1f724",
   "entrypoint": "pipeline stages research report-coverage",
   "fallbacks": [
   ],
@@ -44,7 +44,7 @@
     {"digest":"sha256:3a095d502b4b04ae2293db21997eed510d1c9e4c20a5a4f17ba09186ae6d6786","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:funnel"},
     {"digest":"sha256:210e0d9f756036f70988571b67b535f990517cfb5cdad984c3aaa45e3dc42374","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:near_duplicates"},
     {"digest":"sha256:54fd63cf7e2e7d8f2786edbab4b8a96880a109f09bd6296d519154fcc3a87619","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:publishers"},
-    {"digest":"sha256:2767987e79fa8b1b76c10258b65a495091c890e5d8c4e55dbfd43ba0e079855e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:report_coverage"},
+    {"digest":"sha256:f4ffb110b466c0c19de531d91f864cfd4e4d944b3e5890f6cccc18ea9c2a9491","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:report_coverage"},
     {"digest":"sha256:ca906b3dfd92ac81155eadb9343e78d80e836cfa0535c0a60ee17c84bb034c9a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:report_tex"},
     {"digest":"sha256:8e96e3d3426890276fc6f9a2bdf3c2b3eea64fa4cc3a2c45b4c1dbf3d1db4b49","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:screen"},
     {"digest":"sha256:bfc877415a1606acafd81d48686a8f9525ee8e88669b51d979e7f223ad6fed61","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/coverage.py","symbol":"pipeline.stages.research.experiments.coverage:sections"},

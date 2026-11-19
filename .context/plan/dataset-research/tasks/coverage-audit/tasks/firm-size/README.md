@@ -3,7 +3,7 @@ type: task
 title: Snapshot SEC public float for issuer size
 description: SEC public float by filer and measurement date.
 links: []
-status: in-progress
+status: done
 ---
 
 # Snapshot SEC public float for issuer size
@@ -15,7 +15,7 @@ Give every issuer-year a public, dated size measure from SEC annual report cover
 ## Acceptance
 
 - [x] Snapshot SEC public-float frames with provenance and tabulate them by filer and date.
-- [ ] Record the snapshot with `SEC_USER_AGENT` and freeze the stage.
+- [x] Record the snapshot with `SEC_USER_AGENT` and freeze the stage.
 
 <!-- insitu:begin sql
 id = "planning-children"

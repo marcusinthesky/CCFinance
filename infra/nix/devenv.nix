@@ -34,6 +34,8 @@
       (texliveInfraOnly.withPackages (ps: [ ps.chktex ]))
     ];
   env = {
+    AWS_REQUEST_CHECKSUM_CALCULATION = "when_required";
+    AWS_RESPONSE_CHECKSUM_VALIDATION = "when_required";
     UV_PYTHON_DOWNLOADS = "never";
     UV_PYTHON = "${pkgs.python313}/bin/python3";
     PROJECT_RUNTIME_LINKER = pkgs.stdenv.cc.bintools.dynamicLinker;

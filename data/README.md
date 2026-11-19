@@ -25,3 +25,12 @@ result does not become a release dataset merely by moving it.
 Stage commands create their output directories when implemented. Git ignores
 large data payloads; track reproducible data with DVC. Keep small input files,
 `.dvc` pointer files and documentation in Git.
+
+## Backup and restore
+
+The default DVC remote uses the private Hugging Face bucket
+`marcusinthesky/CCFinance`, under `dvc-store/`. In the pinned devenv shell,
+supply your Hugging Face S3 access key and secret through local DVC settings
+(`access_key_id` and `secret_access_key` on `hf-bucket`) or AWS credentials.
+Use `just dvc push` to back up cached outputs, `just dvc status --cloud` to
+compare them with the bucket, and `just dvc pull` to restore them.

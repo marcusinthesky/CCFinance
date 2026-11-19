@@ -1051,6 +1051,8 @@ def report_coverage(
         rf"Across all listed issuers, {_number(comparison['all_raw']['passing'])}, "
         rf"{_number(comparison['all_usable']['passing'])} and "
         rf"{_number(comparison['all_focused']['passing'])} issuers pass."
+        " Match Group shares its historical CIK with IAC, so 2018--2019 counts "
+        "may include coverage of IAC before the separation."
     )
     (output / "report.tex").write_text(report_tex(headline))
     metrics = {

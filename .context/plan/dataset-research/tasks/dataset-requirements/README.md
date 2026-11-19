@@ -3,7 +3,7 @@ type: task
 title: Define dataset requirements
 description: Establish and validate the functional requirements for research use.
 links: []
-status: backlog
+status: done
 ---
 
 # Define dataset requirements
@@ -38,15 +38,24 @@ co-mention networks and market research.
 - **Extensions:** Treat company-specific sentiment and events, article topics and
   novelty as separately versioned, evaluated enrichments.
 
-Numerical coverage and quality targets remain provisional until the staging audit.
+For the first release, screen firms on at least 47 usable articles in **each**
+year from 2018 through 2022. Staging supports this cohort for 94 of the 100
+Pricing Perspective firms (95 on raw links). For studies that require company
+focus, apply the same threshold to focused articles: 57 roster firms qualify.
+Publish both cohort lists with annual counts, retaining zero counts for the
+broader evidenced universe. The focus classifier has about 66% test precision
+and 57% recall against model labels; report those estimates with uncertainty.
+Keep the 98% ticker-agreement gate open: the current result is 19 of 20.
+Re-evaluate that gate on a fresh sample before declaring release readiness.
+See the [coverage audit](../coverage-audit/README.md).
 Publication dates before CC-News began do not establish when text was observable.
 See the [Pricing Perspective comparison](https://arxiv.org/html/2410.23447v3#Sx1)
 for the baseline and its limitations.
 
 ## Acceptance
 
-- [ ] Review these requirements against staging evidence and intended studies.
-- [ ] Set evidence-based coverage and quality targets for a first release.
+- [x] Review these requirements against staging evidence and intended studies.
+- [x] Set evidence-based coverage and quality targets for a first release.
 
 <!-- insitu:begin sql
 id = "planning-children"
