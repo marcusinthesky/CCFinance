@@ -15,8 +15,8 @@ from typing import Annotated
 import httpx
 import typer
 
-from pipeline.stages.raw.experiments.source_comparison import stage_output
 from pipeline.stages.raw.issuers import download, snapshot_client
+from pipeline.stages.raw.staging import stage_output
 
 FRAMES = "https://data.sec.gov/api/xbrl/frames/dei/EntityPublicFloat/USD/{period}.json"
 

@@ -3,11 +3,8 @@
 import json
 import random
 import re
-from collections.abc import Iterator
-from contextlib import contextmanager
 from fnmatch import fnmatchcase
 from pathlib import Path
-from tempfile import TemporaryDirectory
 from time import perf_counter
 from typing import Annotated
 
@@ -25,19 +22,7 @@ from pipeline.experiments.source_comparison import (
     load_config,
 )
 from pipeline.stages.raw.publishers import SOURCES, extract_group
-
-
-@contextmanager
-def stage_output(output: Path) -> Iterator[Path]:
-    """Publish a complete stage directory once, preserving existing outputs."""
-    if output.exists():
-        raise FileExistsError(f"Output exists: {output}")
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with TemporaryDirectory(dir=output.parent) as temporary:
-        staging = Path(temporary) / "output"
-        staging.mkdir()
-        yield staging
-        staging.rename(output)
+from pipeline.stages.raw.staging import stage_output
 
 
 def hub_path(source: str) -> tuple[str, str, str]:

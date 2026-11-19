@@ -1,16 +1,11 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.raw.public_float:snapshot_public_float",
-  "digest": "sha256:7718530e1098755e85af8defd68125934c9e95ee64754b96319cde62e2972fed",
+  "digest": "sha256:8190ce74c9641dc9aa4d8c414f390ed3a5301d2c7c780bf3b775fe4a8e0be8c3",
   "entrypoint": "pipeline stages raw snapshot-public-float",
   "fallbacks": [
   ],
   "members": [
-    {"digest":"sha256:d6d8775c21b3ac82a3f62a4e90a9a56dd9390fc9ca8ad9692550594b896a2b51","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:Iterator=collections.abc:Iterator>"},
-    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:Path=pathlib:Path>"},
-    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
-    {"digest":"sha256:a510406c1fa6f159ec004f4ead0d836747696bf4154e0a5daee8abdfbd9829f0","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:<binding:contextmanager=contextlib:contextmanager>"},
-    {"digest":"sha256:94467eb4d95eec868d31570f8b732bb06d29a76603d8a6de1879f200d450c40c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/source_comparison.py","symbol":"pipeline.stages.raw.experiments.source_comparison:stage_output"},
     {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:Path=pathlib:Path>"},
     {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:UTC=datetime:UTC>"},
     {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/issuers.py","symbol":"pipeline.stages.raw.issuers:<binding:datetime=datetime:datetime>"},
@@ -29,12 +24,17 @@
     {"digest":"sha256:31e586300a4870cd0def16b0b4c4ca2ef9d61af0aeb60a10ef8fee7bb8dda6b3","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:httpx=httpx>"},
     {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:json=json>"},
     {"digest":"sha256:42c6d2a409be741c686b8e2f42eb1365bbdd52daaaf28c31639ef61e135963ad","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:snapshot_client=pipeline.stages.raw.issuers:snapshot_client>"},
-    {"digest":"sha256:eac0e708604fa2bcbc06cc788631e836aac5bbd0fa3a9a73da9d79e453cd7192","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:stage_output=pipeline.stages.raw.experiments.source_comparison:stage_output>"},
+    {"digest":"sha256:503042d8d2919d2453953a071588131b0ce5fc50a40d9b8239124ea04d8e24a4","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:stage_output=pipeline.stages.raw.staging:stage_output>"},
     {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:<binding:typer=typer>"},
     {"digest":"sha256:a420db2b25aa97f179d8d18666d5d896991384bba6bd20e6c053b1ec8a200e3b","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:FRAMES"},
     {"digest":"sha256:ee56ae875e8c6d972d2ea9fc6b3a857118f2bda42eaae8a886cf686afe10da82","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:periods"},
     {"digest":"sha256:56143c754b65cb4c177b548eb9b66b02e83a506aa98ee0585ba2b1f0b0a3002d","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:snapshot"},
-    {"digest":"sha256:77278c5d37d9c6167ef0adc6f59718e8f625d86e19d7b907a8a37e3549f39cc7","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:snapshot_public_float"}
+    {"digest":"sha256:77278c5d37d9c6167ef0adc6f59718e8f625d86e19d7b907a8a37e3549f39cc7","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/public_float.py","symbol":"pipeline.stages.raw.public_float:snapshot_public_float"},
+    {"digest":"sha256:d6d8775c21b3ac82a3f62a4e90a9a56dd9390fc9ca8ad9692550594b896a2b51","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/staging.py","symbol":"pipeline.stages.raw.staging:<binding:Iterator=collections.abc:Iterator>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/staging.py","symbol":"pipeline.stages.raw.staging:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/staging.py","symbol":"pipeline.stages.raw.staging:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
+    {"digest":"sha256:a510406c1fa6f159ec004f4ead0d836747696bf4154e0a5daee8abdfbd9829f0","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/staging.py","symbol":"pipeline.stages.raw.staging:<binding:contextmanager=contextlib:contextmanager>"},
+    {"digest":"sha256:94467eb4d95eec868d31570f8b732bb06d29a76603d8a6de1879f200d450c40c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/staging.py","symbol":"pipeline.stages.raw.staging:stage_output"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
   "schema_version": 2

@@ -9,8 +9,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
-      md5: 65e9bbe283979b97be310850446e0e16
-      size: 12103
+      md5: 333acbe53f19327cb0c17225a9eb1f29
+      size: 12493
     params:
       params.yaml:
         experiments.source_comparison.datasets.infini_news:
@@ -33,8 +33,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
-      md5: 65e9bbe283979b97be310850446e0e16
-      size: 12103
+      md5: 333acbe53f19327cb0c17225a9eb1f29
+      size: 12493
     params:
       params.yaml:
         experiments.source_comparison.datasets.fine_news:
@@ -57,8 +57,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
-      md5: 65e9bbe283979b97be310850446e0e16
-      size: 12103
+      md5: 333acbe53f19327cb0c17225a9eb1f29
+      size: 12493
     params:
       params.yaml:
         experiments.source_comparison.datasets.fineweb_hq:
@@ -81,8 +81,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       hash: md5
-      md5: 65e9bbe283979b97be310850446e0e16
-      size: 12103
+      md5: 333acbe53f19327cb0c17225a9eb1f29
+      size: 12493
     params:
       params.yaml:
         experiments.source_comparison.datasets.refinedweb:
@@ -106,8 +106,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
-      md5: 092f68ce8be23d9b6c9b782176a1719d
-      size: 13021
+      md5: 6cd155669a9d3f479bac1398f61e4ed3
+      size: 13411
     - path: data/inputs/fine-news/domains.csv
       hash: md5
       md5: f7eff3ca7ed20410915a079974282d03
@@ -141,8 +141,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
-      md5: 092f68ce8be23d9b6c9b782176a1719d
-      size: 13021
+      md5: 6cd155669a9d3f479bac1398f61e4ed3
+      size: 13411
     - path: data/inputs/fine-news/domains.csv
       hash: md5
       md5: f7eff3ca7ed20410915a079974282d03
@@ -176,8 +176,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
-      md5: 092f68ce8be23d9b6c9b782176a1719d
-      size: 13021
+      md5: 6cd155669a9d3f479bac1398f61e4ed3
+      size: 13411
     - path: data/inputs/fine-news/domains.csv
       hash: md5
       md5: f7eff3ca7ed20410915a079974282d03
@@ -211,8 +211,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       hash: md5
-      md5: 092f68ce8be23d9b6c9b782176a1719d
-      size: 13021
+      md5: 6cd155669a9d3f479bac1398f61e4ed3
+      size: 13411
     - path: data/inputs/fine-news/domains.csv
       hash: md5
       md5: f7eff3ca7ed20410915a079974282d03
@@ -351,8 +351,7 @@ stages:
       size: 22924846
       nfiles: 1
   benchmark_article_metadata:
-    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script
-      infra/inference/gliner_extract.py --source
+    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --source
       data/processed/experiments/article-metadata/sample --output
       data/processed/experiments/article-metadata/benchmark --seed 42
       --batch-size 128 --buffer-size 8192 --workers 4 --chunk-size 384
@@ -443,10 +442,10 @@ stages:
       md5: 728624c66058fd73c83b95151516a56d
       size: 1406
   extract_article_metadata:
-    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script
-      infra/inference/gliner_extract.py --source data/raw/fine-news --output
-      data/processed/article-metadata --seed 42 --batch-size 128 --buffer-size
-      8192 --workers 4 --chunk-size 384 --chunk-overlap 64
+    cmd: bash infra/inference/gliner-run.sh gliner2.5-small-v1 --source
+      data/raw/fine-news --output data/processed/article-metadata --seed 42
+      --batch-size 128 --buffer-size 8192 --workers 4 --chunk-size 384
+      --chunk-overlap 64
     deps:
     - path: data/raw/fine-news
       hash: md5
@@ -510,8 +509,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-issuers.json
       hash: md5
-      md5: fda45e3945a69c96cb9ae7229cb784b8
-      size: 7343
+      md5: f164827ef39dc0357ab6439c3953b1f1
+      size: 7797
     - path: data/inputs/issuers/names.rq
       hash: md5
       md5: 798b2dbaff346c2914819791479c1a89
@@ -784,8 +783,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-public-float.json
       hash: md5
-      md5: dac8531de9a6f1ec85c6e789c6268de0
-      size: 7827
+      md5: 0b2b2ed46dd170531912954809b3acb4
+      size: 7585
     params:
       params.yaml:
         public_float:

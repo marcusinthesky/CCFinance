@@ -7,7 +7,7 @@ setup:
 
 # Extract article metadata on the local GPU; rerun the same command to resume.
 extract source output *args:
-    cd ../.. && bash infra/inference/gliner-run.sh gliner2.5-small-v1 --script infra/inference/gliner_extract.py --source "$1" --output "$2" "${@:3}"
+    cd ../.. && bash infra/inference/gliner-run.sh gliner2.5-small-v1 --source "$1" --output "$2" "${@:3}"
 
 # Lint container Python without installing GPU libraries or loading models.
 lint:

@@ -13,7 +13,7 @@ from typing import Annotated
 import httpx
 import typer
 
-from pipeline.stages.raw.experiments.source_comparison import stage_output
+from pipeline.stages.raw.staging import stage_output
 
 SEC_TICKERS = "https://www.sec.gov/files/company_tickers_exchange.json"
 SEC_SUBMISSIONS = (

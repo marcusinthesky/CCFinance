@@ -158,7 +158,6 @@ stages:
     desc: Run the production extractor on the sample to gate the full corpus run.
     cmd: >-
       bash infra/inference/gliner-run.sh gliner2.5-small-v1
-      --script infra/inference/gliner_extract.py
       --source data/processed/experiments/article-metadata/sample
       --output data/processed/experiments/article-metadata/benchmark
       --seed ${article_metadata.seed} --batch-size ${article_metadata.batch_size}
@@ -203,7 +202,6 @@ stages:
     # DVC, rerun it to resume, then record the completed output with `dvc commit`.
     cmd: >-
       bash infra/inference/gliner-run.sh gliner2.5-small-v1
-      --script infra/inference/gliner_extract.py
       --source data/raw/fine-news
       --output data/processed/article-metadata
       --seed ${article_metadata.seed} --batch-size ${article_metadata.batch_size}

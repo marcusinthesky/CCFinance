@@ -32,5 +32,5 @@ just inference::extract data/raw/fine-news data/processed/article-metadata
 - **`schema.json` and `progress.json`.** The label orders and model and code
   checksums, plus throughput and the remaining time.
 
-Scores are uncalibrated, and company mentions are not yet linked to issuers.
+Scores are uncalibrated. The downstream company linker resolves mentions to dated issuers.
 Keep the score vectors and choose thresholds downstream.
