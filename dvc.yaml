@@ -487,3 +487,96 @@ stages:
       - data/research/experiments/coverage/figures
     outs:
       - data/research/experiments/coverage/report.pdf
+
+  sample_metadata_pilot:
+    desc: Draw development articles, company mentions and windows from the usable corpus.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      sample-metadata-pilot --articles data/processed/articles/articles.parquet
+      --extraction data/processed/article-metadata
+      --output data/processed/experiments/article-metadata/pilot.parquet
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/sample-metadata-pilot.json
+      - data/processed/articles/articles.parquet
+      - data/processed/article-metadata
+    outs:
+      - data/processed/experiments/article-metadata/pilot.parquet
+
+  sample_metadata_confirmation:
+    desc: Draw blinded confirmation units and record stratum weights and audit membership.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      sample-metadata-confirmation --articles data/processed/articles/articles.parquet
+      --extraction data/processed/article-metadata
+      --pilot data/processed/experiments/article-metadata/pilot.parquet
+      --output data/processed/experiments/article-metadata/confirmation.parquet
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/sample-metadata-confirmation.json
+      - data/processed/articles/articles.parquet
+      - data/processed/article-metadata
+      - data/processed/experiments/article-metadata/pilot.parquet
+    outs:
+      - data/processed/experiments/article-metadata/confirmation.parquet
+
+  judge_metadata_confirmation:
+    foreach: ${metadata_judges}
+    do:
+      cmd: >-
+        env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+        --offline --frozen --package ccfinance-pipeline pipeline stages processed
+        judge-metadata --sample data/processed/experiments/article-metadata/confirmation.parquet
+        --source data/raw/fine-news --role ${key} --model ${item}
+        --output data/processed/experiments/article-metadata/validation-labels/${key}
+      deps:
+        - .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+        - data/processed/experiments/article-metadata/confirmation.parquet
+        - data/raw/fine-news
+      outs:
+        - data/processed/experiments/article-metadata/validation-labels/${key}:
+            persist: true
+
+  report_metadata_validation:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-metadata-validation --sample data/processed/experiments/article-metadata/confirmation.parquet
+      --extraction data/processed/article-metadata
+      --links data/processed/company-links --quality data/processed/articles/articles.parquet
+      --focus data/research/experiments/company-focus --panel data/research/coverage
+      --threshold ${company_links.threshold}
+      --labels data/processed/experiments/article-metadata/validation-labels
+      --output data/research/experiments/article-metadata/validation.json
+    deps:
+      - data/processed/company-links
+      - data/processed/articles/articles.parquet
+      - data/research/experiments/company-focus
+      - data/research/coverage
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-metadata-validation.json
+      - data/processed/experiments/article-metadata/confirmation.parquet
+      - data/processed/article-metadata
+      - data/processed/experiments/article-metadata/validation-labels/primary
+      - data/processed/experiments/article-metadata/validation-labels/repeat
+      - data/processed/experiments/article-metadata/validation-labels/audit
+    outs:
+      - data/research/experiments/article-metadata/validation.tex
+      - data/research/experiments/article-metadata/validation.csv
+    metrics:
+      - data/research/experiments/article-metadata/validation.json
+
+  judge_metadata_pilot:
+    desc: Record the 90 development judgments separately from confirmation.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      judge-metadata --sample data/processed/experiments/article-metadata/pilot.parquet
+      --source data/raw/fine-news --role primary --model ${metadata_judges.primary}
+      --output data/processed/experiments/article-metadata/pilot-labels
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+      - data/processed/experiments/article-metadata/pilot.parquet
+      - data/raw/fine-news
+    outs:
+      - data/processed/experiments/article-metadata/pilot-labels:
+          persist: true

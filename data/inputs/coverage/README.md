@@ -39,6 +39,7 @@ whose `data/universe.csv.dvc` records MD5 `fafbf7567127e11985d66621666715c3`.
 ## Limits
 
 - **Model labels.** Link and focus accuracy comes from model-adjudicated labels, not human ones.
+- **Press releases.** GLiNER press-release counts substantially exceed the [blinded metadata audit](../article-metadata/README.md#confirmation-findings) estimate.
 - **Focus rule.** The rule is moderate: on test articles it finds about 57% of company-focused issuers, and about two thirds of its predictions are correct.
 - **Near-duplicates.** The rate is measured within seeded capture months, so pairs that straddle months are missed. The rate is therefore a lower bound.
 - **Undated listings.** Firms that listed and delisted within the window without a dated listing or a float are absent from the universe.

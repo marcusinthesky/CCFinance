@@ -1,0 +1,27 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.experiments.metadata_judges:judge_metadata",
+  "digest": "sha256:91e215f2f2a01fe62d1d84cf0fe2058eb13563a6a6b4082d52b92a3492412bdb",
+  "entrypoint": "pipeline stages processed judge-metadata",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:4ef182ab7d0063b04d16a1f03b767c6815c009f0f2fe50e728a318b8be674bef","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:Agent=pydantic_ai:Agent>"},
+    {"digest":"sha256:23d076ea9d1ab419b82159266bcf23ef0cd76a98fb45b8ee03c205ec383bde47","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:d77d90ca447c52c1ea07e05f4c54a59422db3c435fefe9402079418b955acd93","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:BaseModel=pydantic:BaseModel>"},
+    {"digest":"sha256:23d076ea9d1ab419b82159266bcf23ef0cd76a98fb45b8ee03c205ec383bde47","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:Literal=typing:Literal>"},
+    {"digest":"sha256:8257a59cc9239655f8e59425dea13c3c7e30d9410dff75ddab4ea67c40174c82","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:OpenAIResponsesModelSettings=pydantic_ai.models.openai:OpenAIResponsesModelSettings>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:f58f2ea673fa2a5627654ed695deb2cb35329421a039e6485db604bafb90b572","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:ThreadPoolExecutor=concurrent.futures:ThreadPoolExecutor>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:092cb77ae0770f1627b29bf41b2732722fbcc3a0e1d77a79674801800a2721d1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:hashlib=hashlib>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:json=json>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:<binding:typer=typer>"},
+    {"digest":"sha256:e996e82014ab38014a1139de1f02b4914d006287ec9668693bae6f308d256688","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:Events"},
+    {"digest":"sha256:03e0486b351bc02fb72bb0266a9f3c9d0e69d5bc93497ad0317f643319443d82","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:Form"},
+    {"digest":"sha256:c1c9a2656c926e465a1fc7e11e85c96646a687a95885614c065872bdd27433de","kind":"class","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:Mention"},
+    {"digest":"sha256:f2aa2f4d74b279889348a0b78fb99adc570f716bd2d410316e4869da3451ea63","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/metadata_judges.py","symbol":"pipeline.stages.processed.experiments.metadata_judges:judge_metadata"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

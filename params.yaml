@@ -81,3 +81,8 @@ experiments:
         source: hf://datasets/epfml/FineWeb-HQ@e58199cdd52438d94405df1a4d8630cc5f13bf84/data/*/*.parquet
     # DCLM is deferred: original compressed JSONL needs whole-file transfer;
     # its partial converted Parquet is not a frame for the complete population.
+
+metadata_judges:
+  primary: openai-codex:gpt-6-luna
+  repeat: openai-codex:gpt-6-luna
+  audit: openai-codex:gpt-6.1-terra

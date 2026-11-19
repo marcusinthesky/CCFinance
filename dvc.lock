@@ -1041,3 +1041,251 @@ stages:
       hash: md5
       md5: 57dde289855fec6ef0c13ca5a1cf0b91
       size: 69273
+  sample_metadata_pilot:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed sample-metadata-pilot --articles
+      data/processed/articles/articles.parquet --extraction
+      data/processed/article-metadata --output
+      data/processed/experiments/article-metadata/pilot.parquet
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/sample-metadata-pilot.json
+      hash: md5
+      md5: 25ffc215c0f82c18de8a5f618e3b66ad
+      size: 1959
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    outs:
+    - path: data/processed/experiments/article-metadata/pilot.parquet
+      hash: md5
+      md5: 6ee390b2bff1ca49f60f4d9d91f592e9
+      size: 4873
+  sample_metadata_confirmation:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed sample-metadata-confirmation --articles
+      data/processed/articles/articles.parquet --extraction
+      data/processed/article-metadata --pilot
+      data/processed/experiments/article-metadata/pilot.parquet --output
+      data/processed/experiments/article-metadata/confirmation.parquet
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/sample-metadata-confirmation.json
+      hash: md5
+      md5: d632aed2d2ab594ae5af771bce3efb62
+      size: 2268
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/experiments/article-metadata/pilot.parquet
+      hash: md5
+      md5: 6ee390b2bff1ca49f60f4d9d91f592e9
+      size: 4873
+    outs:
+    - path: data/processed/experiments/article-metadata/confirmation.parquet
+      hash: md5
+      md5: ea152b9799dc4e9524ef551586f213b5
+      size: 54567
+  judge_metadata_confirmation@primary:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed judge-metadata --sample
+      data/processed/experiments/article-metadata/confirmation.parquet --source
+      data/raw/fine-news --role primary --model openai-codex:gpt-6-luna --output
+      data/processed/experiments/article-metadata/validation-labels/primary
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+      hash: md5
+      md5: 597cb51392292370cae427fbd471a320
+      size: 4891
+    - path: data/processed/experiments/article-metadata/confirmation.parquet
+      hash: md5
+      md5: ea152b9799dc4e9524ef551586f213b5
+      size: 54567
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path:
+        data/processed/experiments/article-metadata/validation-labels/primary
+      hash: md5
+      md5: 78c7678706e8bd238d2b2a09ad258d08.dir
+      size: 521845
+      nfiles: 1200
+  judge_metadata_confirmation@repeat:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed judge-metadata --sample
+      data/processed/experiments/article-metadata/confirmation.parquet --source
+      data/raw/fine-news --role repeat --model openai-codex:gpt-6-luna --output
+      data/processed/experiments/article-metadata/validation-labels/repeat
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+      hash: md5
+      md5: 597cb51392292370cae427fbd471a320
+      size: 4891
+    - path: data/processed/experiments/article-metadata/confirmation.parquet
+      hash: md5
+      md5: ea152b9799dc4e9524ef551586f213b5
+      size: 54567
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/experiments/article-metadata/validation-labels/repeat
+      hash: md5
+      md5: 6242e10ffe6e68a8aab9b853eeea791a.dir
+      size: 130904
+      nfiles: 300
+  judge_metadata_confirmation@audit:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed judge-metadata --sample
+      data/processed/experiments/article-metadata/confirmation.parquet --source
+      data/raw/fine-news --role audit --model openai-codex:gpt-6.1-terra
+      --output
+      data/processed/experiments/article-metadata/validation-labels/audit
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+      hash: md5
+      md5: 597cb51392292370cae427fbd471a320
+      size: 4891
+    - path: data/processed/experiments/article-metadata/confirmation.parquet
+      hash: md5
+      md5: ea152b9799dc4e9524ef551586f213b5
+      size: 54567
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/experiments/article-metadata/validation-labels/audit
+      hash: md5
+      md5: 057b129f17f8687632ecbd5128a48270.dir
+      size: 111332
+      nfiles: 300
+  report_metadata_validation:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-metadata-validation --sample
+      data/processed/experiments/article-metadata/confirmation.parquet
+      --extraction data/processed/article-metadata --links
+      data/processed/company-links --quality
+      data/processed/articles/articles.parquet --focus
+      data/research/experiments/company-focus --panel data/research/coverage
+      --threshold 0.5 --labels
+      data/processed/experiments/article-metadata/validation-labels --output
+      data/research/experiments/article-metadata/validation.json
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-metadata-validation.json
+      hash: md5
+      md5: a02094bccc872b34a98da5242e30121c
+      size: 4028
+    - path: data/processed/article-metadata
+      hash: md5
+      md5: 0749910591f48caab824923fb492bfd8.dir
+      size: 10939808695
+      nfiles: 1970
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+    - path: data/processed/experiments/article-metadata/confirmation.parquet
+      hash: md5
+      md5: ea152b9799dc4e9524ef551586f213b5
+      size: 54567
+    - path: data/processed/experiments/article-metadata/validation-labels/audit
+      hash: md5
+      md5: 057b129f17f8687632ecbd5128a48270.dir
+      size: 111332
+      nfiles: 300
+    - path:
+        data/processed/experiments/article-metadata/validation-labels/primary
+      hash: md5
+      md5: 78c7678706e8bd238d2b2a09ad258d08.dir
+      size: 521845
+      nfiles: 1200
+    - path: data/processed/experiments/article-metadata/validation-labels/repeat
+      hash: md5
+      md5: 6242e10ffe6e68a8aab9b853eeea791a.dir
+      size: 130904
+      nfiles: 300
+    - path: data/research/coverage
+      hash: md5
+      md5: dcd1367d33924670cf9c8d278b03f134.dir
+      size: 885933
+      nfiles: 3
+    - path: data/research/experiments/company-focus
+      hash: md5
+      md5: f5169cd08ca02cecca32a4fe1a30562e.dir
+      size: 5542
+      nfiles: 2
+    outs:
+    - path: data/research/experiments/article-metadata/validation.csv
+      hash: md5
+      md5: 5690c9b85cd638d1c6d7dbf4a9be4dbf
+      size: 208862
+    - path: data/research/experiments/article-metadata/validation.json
+      hash: md5
+      md5: c7b4b702ec4f79a4609aba3ad466f68f
+      size: 67765
+    - path: data/research/experiments/article-metadata/validation.tex
+      hash: md5
+      md5: bc4f637585e804b5d18c4120b72939e1
+      size: 1897
+  judge_metadata_pilot:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed judge-metadata --sample
+      data/processed/experiments/article-metadata/pilot.parquet --source
+      data/raw/fine-news --role primary --model openai-codex:gpt-6-luna --output
+      data/processed/experiments/article-metadata/pilot-labels
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-metadata.json
+      hash: md5
+      md5: 597cb51392292370cae427fbd471a320
+      size: 4891
+    - path: data/processed/experiments/article-metadata/pilot.parquet
+      hash: md5
+      md5: 6ee390b2bff1ca49f60f4d9d91f592e9
+      size: 4873
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/experiments/article-metadata/pilot-labels
+      hash: md5
+      md5: 92ff1edf1e8677e3a91ac32f0e9925c2.dir
+      size: 38950
+      nfiles: 90
