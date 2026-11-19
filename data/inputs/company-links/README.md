@@ -60,3 +60,33 @@ These are model-adjudicated labels, not human ones. The report gives the judge-r
 - **Brand coverage.** Product and brand mentions ("Shark Tank", "Snapdragon") resolve only through Wikidata subsidiaries with at least ten Wikipedia editions.
 - **Note-issuing filers.** Filers that list only notes (Credit Suisse AG) can compete with their group's equity. These mentions are usually left `ambiguous`.
 - **Context homonyms.** Head keys with a non-company sense, such as KKR the cricket team or Vulcan the rocket, link on name alone. They account for most of the remaining precision loss.
+
+## Explicit-ticker confirmation audit
+
+On the production links at commit `a1b4b9a`, draw 300 mentions whose method is
+`anchor`, excluding all article IDs in either seed-43 sample table. Order by
+`sha256('44:' || id || ':' || start), id, start` and take the first 300.
+The draw covers 300 articles, 215 proposed issuer CIKs and 21 publisher domains.
+The primary judge used the existing mention prompt, 750-character context on
+each side, neutral issuer search and the configured low-effort GPT-6 Luna model.
+Every judgment returned a decision. The operating threshold and dated-security
+equivalence rule match the production report.
+
+Agreement was 294/300 (98.0%, exact two-sided 95% interval 95.70%–99.26%).
+The fresh sample meets the 98% point-estimate target. The interval includes
+agreement below 98%. The earlier 19/20 remains the result for the general
+seed-43 sample's anchor subset. These estimates apply to anchor mentions.
+
+Review of the six disagreements found:
+
+- Three links to SentinelOne (S) for mentions of Sprint Nextel, China Bird
+  Centro America S.A. and Play Finance 2 S.A. The Sprint excerpt explicitly
+  uses the historical ticker S.N for Sprint.
+- Two judge lookup misses. The text and reference agree on BJRI for BJ's
+  Restaurants and KSS for Kohl's; the judge returned no CIK for either.
+- One historical identity disagreement. A 2012 Apache Corp article gives
+  APA.N. The linker selected APA Corp, and the judge identified Apache but
+  returned no historical CIK.
+
+The [scored mentions](../../../.context/plan/dataset-research/tasks/dataset-requirements/ticker-agreement-seed44.csv)
+record the two CIKs and original judgments. All six count as disagreements.

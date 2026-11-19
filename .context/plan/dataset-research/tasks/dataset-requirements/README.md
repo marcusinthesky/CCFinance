@@ -45,8 +45,9 @@ focus, apply the same threshold to focused articles: 57 roster firms qualify.
 Publish both cohort lists with annual counts, retaining zero counts for the
 broader evidenced universe. The focus classifier has about 66% test precision
 and 57% recall against model labels; report those estimates with uncertainty.
-Keep the 98% ticker-agreement gate open: the current result is 19 of 20.
-Re-evaluate that gate on a fresh sample before declaring release readiness.
+The original seed-43 ticker-agreement check scored 19/20. The fresh seed-44
+anchor audit scored 294/300 (98.0%, exact 95% interval 95.70%–99.26%), meeting
+the point-estimate target. See the [methods and disagreements](../../../../../data/inputs/company-links/README.md#explicit-ticker-confirmation-audit).
 See the [coverage audit](../coverage-audit/README.md).
 Publication dates before CC-News began do not establish when text was observable.
 See the [Pricing Perspective comparison](https://arxiv.org/html/2410.23447v3#Sx1)
