@@ -43,8 +43,8 @@ def run() -> None:
     engine = sgl.Engine(
         model_path=MODEL,
         is_embedding=True,
-        dtype="float16",
-        context_length=LIMIT,
+        dtype="bfloat16",
+        context_length=LIMIT + 1,  # SGLang reserves a token even on encode requests.
         disable_radix_cache=True,
         chunked_prefill_size=-1,
         disable_cuda_graph=True,
