@@ -22,8 +22,6 @@ REPORT_FILES = (
     "methods.json",
     "comparison.csv",
     "summary.tex",
-    "yield.tex",
-    "population.tex",
 )
 type Metric = int | float | None
 
@@ -210,10 +208,7 @@ def _latex_reports(metrics: dict[str, dict[str, Metric]]) -> dict[str, str]:
             "Records do not establish unique articles or research eligibility.",
         ]
     )
-    return {"summary.tex": summary.as_latex()} | {
-        f"{name}.tex": table.as_latex_tabular(center=False)
-        for (name, *_), table in zip(tables, summary.tables, strict=True)
-    }
+    return {"summary.tex": summary.as_latex()}
 
 
 def compare_sources(

@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.research.experiments.source_comparison:compare_sources",
-  "digest": "sha256:526fd84db8a533e339b35315a88949ca082c78984d199a075e60740582449f6c",
+  "digest": "sha256:41578fdf43e4e76f5ccc582e34a89815291231665e6e8f6542561fd913c1c467",
   "entrypoint": "pipeline stages research compare-sources",
   "fallbacks": [
   ],
@@ -37,9 +37,9 @@
     {"digest":"sha256:f329650e2c61a07a1bab85b32296a6d93760e313e108904819fa27d09cf3954d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:<binding:math=math>"},
     {"digest":"sha256:ac3a74d6dd975a8e8fe4b7f85fce794793a9355595b850e3926964913948d386","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:<binding:os=os>"},
     {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:<binding:typer=typer>"},
-    {"digest":"sha256:6a27f3f3d1ea7505bcf09ef3c1f61be1b9f9f63c30fd7bfa8172d72b1f2f3cc8","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:REPORT_FILES"},
+    {"digest":"sha256:c8c3dac7b53395faecd86248a35a378fc1169956e0fe8df17df1e366c2be74a4","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:REPORT_FILES"},
     {"digest":"sha256:ac2e84e3aa340bf1ffcf3ddcf479f0fca6e9281034ccd06ffdee49aa3d65c477","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:_estimate"},
-    {"digest":"sha256:5c31118128f8444dbdc9b09ad5ebaf738b7093b7853270f421bcd1ba45e8fa7e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:_latex_reports"},
+    {"digest":"sha256:9516c1a6c3e6abb6588729e3a79cadaf800c53db61f24e7e8dd601ca8aab69c4","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:_latex_reports"},
     {"digest":"sha256:a55bfb7829bb971bdef4a95ad7df6f3749c7cb2d555e383b72e8e8168170ce93","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:_summarize"},
     {"digest":"sha256:99d38c980d1ec1b795feccf60af253a9ab30a6c91dabce3eae8a4074d3bbfa95","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:compare_sources"},
     {"digest":"sha256:93e93535d0cb6a003025d252517a3c5b1a4a31ae807cefe9cfb6f95b40564ff6","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/source_comparison.py","symbol":"pipeline.stages.research.experiments.source_comparison:estimate_population"}

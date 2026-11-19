@@ -172,7 +172,7 @@ def test_report_keeps_repeated_draws_but_counts_acquisition_once(
         assert source["estimated_publisher_records_estimate"] == 9.5
         assert source["estimated_publisher_yield"] == pytest.approx(9.5 / 35)
         assert source["network_bytes"] is None
-    yield_table = (output / "yield.tex").read_text(encoding="utf-8")
+    yield_table = (output / "summary.tex").read_text(encoding="utf-8")
     assert r"fine\_news" in yield_table
     assert "27.1429" in yield_table
     assert r"95\% Student t" in (output / "summary.tex").read_text(encoding="utf-8")

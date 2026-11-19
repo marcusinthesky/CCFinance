@@ -44,7 +44,7 @@ variation between draws leave the uncertainty null rather than zero-width.
 ## Outputs and limits
 
 `compare_sources` writes `comparison.csv`, `metrics.json`, `methods.json`,
-`summary.tex`, `yield.tex` and `population.tex` beneath
+and `summary.tex` beneath
 `data/research/experiments/source-comparison/`. A paper can `\input` a table
 fragment and add its own caption. Missing sources or inconsistent counts stop
 the report, so a partial comparison is never published.

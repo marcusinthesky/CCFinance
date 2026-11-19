@@ -132,8 +132,6 @@ stages:
       - data/research/experiments/source-comparison/comparison.csv
       - data/research/experiments/source-comparison/methods.json
       - data/research/experiments/source-comparison/summary.tex
-      - data/research/experiments/source-comparison/yield.tex
-      - data/research/experiments/source-comparison/population.tex
     metrics:
       - data/research/experiments/source-comparison/metrics.json
 

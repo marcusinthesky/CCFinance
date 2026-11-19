@@ -29,7 +29,6 @@ preamble, include the summary and its methods notes from `main.tex` using:
 \input{../../data/research/experiments/source-comparison/summary.tex}
 ```
 
-For individually captioned tables, use `yield.tex` or `population.tex` instead.
 These fragments exist after acquisition and reporting; ordinary manuscript
 checks do not acquire source data. See the
 [comparison guide](../../data/inputs/source-comparison/README.md) for the commands

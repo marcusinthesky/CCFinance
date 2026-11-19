@@ -247,7 +247,7 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/compare-sources.json
       hash: md5
-      md5: abac7ad5e562459e13a0326ca3e928d8
+      md5: a9213465705cec65c806ac722e90a758
       size: 11006
     - path: data/raw/experiments/source-comparison/manifests
       hash: md5
@@ -291,18 +291,10 @@ stages:
       hash: md5
       md5: 2e291cb97bbb8610ff602772d4d96e55
       size: 4757
-    - path: data/research/experiments/source-comparison/population.tex
-      hash: md5
-      md5: 7e8f9c94a371169d986b47cad5d37a84
-      size: 677
     - path: data/research/experiments/source-comparison/summary.tex
       hash: md5
       md5: e77d82ceb9209c28b4fbbdaf29339474
       size: 1642
-    - path: data/research/experiments/source-comparison/yield.tex
-      hash: md5
-      md5: 8f0706f7255629ff17112c8169b64741
-      size: 639
   filter_fine_news:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages

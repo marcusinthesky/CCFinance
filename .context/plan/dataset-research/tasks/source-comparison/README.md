@@ -23,9 +23,7 @@ records the design, estimators and limits.
 - [x] Verify weighting, row-group pruning and the full repository quality gates.
 - [x] Document the acquisition commands and limits on population inference.
 
-The four metadata preparation stages are recorded in `dvc.lock`; article
-acquisition and research estimates have not run. `devenv shell -- just check`
-passed, including 27 Python tests. The pipeline guide records the selected sizes.
+The DVC lock records the four source samples and their comparison report.
 
 <!-- insitu:begin sql
 id = "planning-children"
