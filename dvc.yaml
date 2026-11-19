@@ -35,9 +35,6 @@ stages:
     deps:
       - data/inputs/fine-news/acquisition.json
       - data/inputs/fine-news/domains.csv
-      - src/python/uv.lock
-      - devenv.lock
-      - infra/nix/devenv.nix
       - .semflow/hashes/entrypoints/pipeline/stages/raw/filter-fine-news.json
     outs:
       - data/raw/fine-news
@@ -56,9 +53,6 @@ stages:
         - experiments.source_comparison.draws
         - experiments.source_comparison.datasets.${key}
       deps:
-        - src/python/uv.lock
-        - devenv.lock
-        - infra/nix/devenv.nix
         - .semflow/hashes/entrypoints/pipeline/stages/raw/prepare-comparison.json
       outs:
         - data/raw/experiments/source-comparison/manifests/${key}
@@ -81,9 +75,6 @@ stages:
       deps:
         - data/raw/experiments/source-comparison/manifests/${key}
         - ${experiments.source_comparison.domains}
-        - src/python/uv.lock
-        - devenv.lock
-        - infra/nix/devenv.nix
         - .semflow/hashes/entrypoints/pipeline/stages/raw/sample-comparison.json
       outs:
         - data/raw/experiments/source-comparison/samples/${key}
@@ -99,9 +90,6 @@ stages:
     deps:
       - data/raw/experiments/source-comparison/manifests
       - data/raw/experiments/source-comparison/samples
-      - src/python/uv.lock
-      - devenv.lock
-      - infra/nix/devenv.nix
       - .semflow/hashes/entrypoints/pipeline/stages/research/compare-sources.json
     params:
       - experiments.source_comparison
@@ -129,9 +117,6 @@ stages:
     deps:
       - data/raw/fine-news
       - data/inputs/article-metadata/diagnostics.jsonl
-      - src/python/uv.lock
-      - devenv.lock
-      - infra/nix/devenv.nix
       - .semflow/hashes/entrypoints/pipeline/stages/processed/sample-articles.json
     outs:
       - data/processed/experiments/article-metadata/sample
@@ -151,9 +136,6 @@ stages:
       - article_metadata
     deps:
       - data/processed/experiments/article-metadata/sample
-      - infra/inference/gliner-run.sh
-      - infra/inference/gliner-setup.sh
-      - infra/inference/gliner-requirements.txt
       - infra/inference/gliner2-2.1.0-cuda-attributes.patch
       - infra/inference/gliner2-2.1.0-window-offsets.patch
       - infra/inference/gliner2-2.1.0-batched-attributes.patch
@@ -176,9 +158,6 @@ stages:
     deps:
       - data/processed/experiments/article-metadata/benchmark
       - data/inputs/article-metadata/diagnostics.jsonl
-      - src/python/uv.lock
-      - devenv.lock
-      - infra/nix/devenv.nix
       - .semflow/hashes/entrypoints/pipeline/stages/research/report-article-metadata.json
     outs:
       - data/research/experiments/article-metadata/diagnostics.json
@@ -202,9 +181,6 @@ stages:
       - article_metadata
     deps:
       - data/raw/fine-news
-      - infra/inference/gliner-run.sh
-      - infra/inference/gliner-setup.sh
-      - infra/inference/gliner-requirements.txt
       - infra/inference/gliner2-2.1.0-cuda-attributes.patch
       - infra/inference/gliner2-2.1.0-window-offsets.patch
       - infra/inference/gliner2-2.1.0-batched-attributes.patch

@@ -11,18 +11,6 @@ stages:
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
       size: 12103
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.infini_news:
@@ -47,18 +35,6 @@ stages:
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
       size: 12103
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.fine_news:
@@ -83,18 +59,6 @@ stages:
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
       size: 12103
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.fineweb_hq:
@@ -119,18 +83,6 @@ stages:
       hash: md5
       md5: 65e9bbe283979b97be310850446e0e16
       size: 12103
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.refinedweb:
@@ -165,18 +117,6 @@ stages:
       md5: 3c49837a16b68451e717ddad4785e9ec.dir
       size: 6025371
       nfiles: 6
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.fine_news:
@@ -212,18 +152,6 @@ stages:
       md5: 56913cbacc6d7423a35130d6d42ab65f.dir
       size: 13233457
       nfiles: 6
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.infini_news:
@@ -259,18 +187,6 @@ stages:
       md5: 6b0db157c792f1c98b146c7287f6ed02.dir
       size: 2712429
       nfiles: 6
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.refinedweb:
@@ -306,18 +222,6 @@ stages:
       md5: ddd10a7bbe8c9da25c3f3bdf5e2fcfc1.dir
       size: 4869648
       nfiles: 6
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison.datasets.fineweb_hq:
@@ -355,18 +259,6 @@ stages:
       md5: 2d9f87877fa19e026cec0f8b97c4ee12.dir
       size: 4096204
       nfiles: 21
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         experiments.source_comparison:
@@ -429,18 +321,6 @@ stages:
       hash: md5
       md5: f7eff3ca7ed20410915a079974282d03
       size: 1837
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     outs:
     - path: data/raw/fine-news
       hash: md5
@@ -468,18 +348,6 @@ stages:
       md5: 3cd438d50a74f30d54d6eb854642e69b.dir
       size: 20100099064
       nfiles: 169
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     params:
       params.yaml:
         article_metadata.sample_size: 10000
@@ -503,18 +371,6 @@ stages:
       md5: c2201811d5795b4fb3aa7c1b581cc92f.dir
       size: 22924846
       nfiles: 1
-    - path: infra/inference/gliner-requirements.txt
-      hash: md5
-      md5: cb59b03f49598211831ec33c77c468f5
-      size: 55
-    - path: infra/inference/gliner-run.sh
-      hash: md5
-      md5: 0ae8e80975d9cead875ebcfdae626ef5
-      size: 1122
-    - path: infra/inference/gliner-setup.sh
-      hash: md5
-      md5: ccd651106eecdb194bf57f686ada40ea
-      size: 1241
     - path: infra/inference/gliner2-2.1.0-batched-attributes.patch
       hash: md5
       md5: 440bd213b9a94a8ee49351c53435bb3b
@@ -585,18 +441,6 @@ stages:
       md5: 5f401dc42e01ca5d94d27510b49021cc.dir
       size: 7603289
       nfiles: 4
-    - path: devenv.lock
-      hash: md5
-      md5: 194e494bc3cab17bb20ec00d452477e9
-      size: 1676
-    - path: infra/nix/devenv.nix
-      hash: md5
-      md5: d04ee9e5b7d5f94c6613ce7572560b0a
-      size: 1067
-    - path: src/python/uv.lock
-      hash: md5
-      md5: e792e7cce083208282af671112e99fba
-      size: 244759
     outs:
     - path: data/research/experiments/article-metadata/diagnostics.json
       hash: md5
@@ -617,18 +461,6 @@ stages:
       md5: 3cd438d50a74f30d54d6eb854642e69b.dir
       size: 20100099064
       nfiles: 169
-    - path: infra/inference/gliner-requirements.txt
-      hash: md5
-      md5: cb59b03f49598211831ec33c77c468f5
-      size: 55
-    - path: infra/inference/gliner-run.sh
-      hash: md5
-      md5: 0ae8e80975d9cead875ebcfdae626ef5
-      size: 1122
-    - path: infra/inference/gliner-setup.sh
-      hash: md5
-      md5: ccd651106eecdb194bf57f686ada40ea
-      size: 1241
     - path: infra/inference/gliner2-2.1.0-batched-attributes.patch
       hash: md5
       md5: 440bd213b9a94a8ee49351c53435bb3b

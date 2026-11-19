@@ -29,6 +29,8 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Changed
 
+- DVC stages no longer depend on environment locks, only on Semflow fingerprints
+  or extractor code, data and parameters, so dependency updates keep results current.
 - Restored the published Fine News shards with verified checksums and provenance
   so the frozen acquisition stage has real outputs for DVC to validate.
 - Grouped experiments within each data layer and consolidated source mappings

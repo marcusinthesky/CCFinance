@@ -13,7 +13,11 @@ and will track large data and experiment outputs once they are materialized.
 Tach enforces module boundaries; Ruff and strict Pyrefly check Python source.
 pytest-layout-enforcer checks test file placement during collection and CI.
 Semflow fingerprints the Python code used by DVC stages, allowing DVC to
-invalidate tracked results when executable behavior changes.
+invalidate tracked results when executable behavior changes. Stages depend
+only on these fingerprints, data and parameters. They do not depend on
+environment locks such as `uv.lock`, `devenv.lock` or the GLiNER requirements,
+so dependency updates leave results current. Semflow cannot trace the GLiNER
+stages, so they depend on their extractor modules and patches instead.
 CI executes those checks, tests and builds through the same just recipes as local
 work. Setup may download dependencies; ordinary checks use cached dependencies
 and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle.
