@@ -1,0 +1,34 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.company_focus:report_company_focus",
+  "digest": "sha256:dcde611840d28c39de27b85a0f25dfba3e34f1ff7856628185b2b86e0dc28140",
+  "entrypoint": "pipeline stages research report-company-focus",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:9386b51cc955cdbe9d3b4d03c7def79b2bd5ce1cffece4e8e4490e04ab91b7a8","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:b8535b515e02448bbb5987988dbc40f3d87cf7291e8d3552a5a84b7afd0c8d2b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:SECURITY=pipeline.stages.research.experiments.company_links:SECURITY>"},
+    {"digest":"sha256:cd368e1323ca66ef47b1c160f651ef9ed6c513861bc160b5c01c36eb7136e49d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:csv=csv>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:9d2cc8ebc4feb4ea6bfbe3c8706b6a00c7386308c531d8f8124555057d24e30f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:itertools=itertools>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:json=json>"},
+    {"digest":"sha256:b8535b515e02448bbb5987988dbc40f3d87cf7291e8d3552a5a84b7afd0c8d2b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:ratio=pipeline.stages.research.experiments.company_links:ratio>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:<binding:typer=typer>"},
+    {"digest":"sha256:fbacd281a73de71ac27d5265eb63fd68798854f6b9d449668c779d7f7f2caf41","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:MENTIONS"},
+    {"digest":"sha256:821a955ea8ebc2390d19161ea0c2958ffceba22bf39cd0536157271cadbada88","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:OFFSETS"},
+    {"digest":"sha256:83b3c4ad540972236b05d070529ea883e21971b91aff2e0d448ded12271e08e8","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:RELEVANCE"},
+    {"digest":"sha256:9ebe27bee0d8adb2fc42c47054421f5d920904be3a9bf7710e3fbda09e9cfd63","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:_articles"},
+    {"digest":"sha256:f8cdb6a330c0e41790416c67dd3887794b294fd5549c62b84e6b55d56c14f6fd","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:_focused"},
+    {"digest":"sha256:7c7de6384fbbe9b6eb6ee72d3c03d7157691593174aa31dc612bf0112511371b","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:evaluate"},
+    {"digest":"sha256:3888439c6dcde7194194c181d04decd47996d21fc187b2631a435061208bef8f","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:report_company_focus"},
+    {"digest":"sha256:83b3c4ad540972236b05d070529ea883e21971b91aff2e0d448ded12271e08e8","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_focus.py","symbol":"pipeline.stages.research.experiments.company_focus:step"},
+    {"digest":"sha256:42107e8af63adf1bc76c87c421d48f22e48f0f0d94ea1fb131e02954b828bf8d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_links.py","symbol":"pipeline.stages.research.experiments.company_links:<binding:Sequence=collections.abc:Sequence>"},
+    {"digest":"sha256:faa9956a812f71638fe3d1f211b627659202baa6a9e4e5ca7b2a8fc450dc71e1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_links.py","symbol":"pipeline.stages.research.experiments.company_links:<binding:defaultdict=collections:defaultdict>"},
+    {"digest":"sha256:f329650e2c61a07a1bab85b32296a6d93760e313e108904819fa27d09cf3954d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_links.py","symbol":"pipeline.stages.research.experiments.company_links:<binding:math=math>"},
+    {"digest":"sha256:80c39d18f24ec863dee9a246f9d4160cf824fbd106b6f16e8a607b46fbee080f","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_links.py","symbol":"pipeline.stages.research.experiments.company_links:SECURITY"},
+    {"digest":"sha256:e5557919f288ac4d2226728e678af7d7b0f0882d9e461d6b14a32475780f3d6a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/company_links.py","symbol":"pipeline.stages.research.experiments.company_links:ratio"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

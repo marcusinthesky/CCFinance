@@ -9,8 +9,9 @@ description: Changes to CCFinance data engineering, research workflows and repos
 
 ### Added
 
-- Article quality table (date status, residual duplicates, article form and
-  syndication copies) and an SEC public-float snapshot for issuer size.
+- Coverage audit: article quality table (date status, residual duplicates, form,
+  syndication copies), SEC public float, a company-focus rule, a firm-year panel
+  and a rendered pgfplots report with the Pricing Perspective screen.
 - Company linking to US-listed SEC issuers: SEC and Wikidata issuer snapshot, dated
   tickers and aliases, a scored linker and a model-adjudicated evaluation.
 - GLiNER2.5 article-metadata extraction with typed mentions, company relevance

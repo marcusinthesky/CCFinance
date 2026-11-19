@@ -10,11 +10,16 @@ default:
 setup:
     mkdir -p build
     bash ../../infra/nix/retry-tex-setup.sh tectonic --untrusted --bundle "{{ bundle }}" --keep-logs --outdir build main.tex
+    bash ../../infra/nix/retry-tex-setup.sh tectonic --untrusted --bundle "{{ bundle }}" --outdir build reports.tex
 
 build:
     mkdir -p build
     tectonic --untrusted --only-cached --bundle "{{ bundle }}" --keep-logs --outdir build main.tex
     if rg -n 'Citation.+undefined|Reference.+undefined|There were undefined|multiply-defined|Multiply defined' build/main.log; then echo 'Unresolved citations, references or duplicate labels' >&2; exit 1; fi
+
+# Render a generated report beside its source from cached TeX resources only.
+render file:
+    file='{{ file }}'; [[ "$file" = /* ]] || file='{{ invocation_directory() }}'/"$file"; cd "$(dirname "$file")" && tectonic --untrusted --only-cached --bundle "{{ bundle }}" --outdir . "$(basename "$file")"
 
 lint:
     tex-fmt --check main.tex

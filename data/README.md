@@ -17,7 +17,9 @@ benchmark lives in `processed/experiments/article-metadata/` and its report in
 `processed/company-links/`, evaluated under `experiments/company-links/`.
 `processed/articles/` dates and deduplicates every article, and SEC public
 float for issuer size lives in `raw/public-float/` and
-`processed/public-float/`. DVC connects these artifacts; an experimental
+`processed/public-float/`. The firm-year coverage panel lives in
+`research/coverage/` and its audit in `research/experiments/coverage/` (see
+`inputs/coverage/README.md`). DVC connects these artifacts; an experimental
 result does not become a release dataset merely by moving it.
 
 Stage commands create their output directories when implemented. Git ignores

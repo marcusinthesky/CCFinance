@@ -24,8 +24,8 @@ and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle
 
 The Hugging Face dataset is staging, and the bucket is intended for intermediate
 and experiment artifacts. The frozen raw acquisition stage documents the
-historical selection without fetching its output. Coverage panels and remote
-artifact transport remain future work.
+historical selection without fetching its output. Remote artifact transport
+remains future work.
 
 Each data layer groups experimental artifacts and code beneath
 `experiments/<name>/`. DVC supplies artifact paths explicitly, so layers read
@@ -47,6 +47,11 @@ from SEC and Wikidata snapshots. Its evaluation draws a sample without reading
 linker output, so one labelled set evaluates every linker version. PydanticAI
 model judges label the sample, and repeat and audit judges measure their
 reliability. Reports state that labels are model-adjudicated.
+
+The coverage audit dates and deduplicates articles, then counts each listed
+issuer's raw, dated, usable and company-focused articles by year. Research
+stages write pgfplots figures as CSV data and LaTeX, and Tectonic renders the
+report from cached TeX resources.
 
 Copier answers record the source and tag for future template updates. Review
 update conflicts and preserve project-specific code and configuration. The

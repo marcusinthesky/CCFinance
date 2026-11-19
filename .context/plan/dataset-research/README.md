@@ -26,9 +26,10 @@ template = "children.md.j2"
 
 | Status | Item | Description |
 | --- | --- | --- |
+| in-progress | [Audit staging coverage and quality](tasks/coverage-audit/README.md) | Measure usable, company-focused coverage per listed issuer-year against the Pricing Perspective screen. |
 | backlog | [Define dataset requirements](tasks/dataset-requirements/README.md) | Establish and validate the functional requirements for research use. |
 
-`1 open; 1 terminal`
+`2 open; 1 terminal`
 
 <!-- insitu:end -->
 

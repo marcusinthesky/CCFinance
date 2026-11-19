@@ -373,3 +373,119 @@ stages:
       - data/research/experiments/company-links/summary.tex
     metrics:
       - data/research/experiments/company-links/metrics.json
+
+  report_company_focus:
+    desc: Choose the company-focus rule on development articles and score it on test.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-company-focus --sample data/processed/experiments/company-links/sample
+      --labels data/processed/experiments/company-links/labels
+      --links data/processed/company-links --issuers data/processed/issuers
+      --threshold ${company_links.threshold}
+      --min-relevance ${coverage.focus.min_relevance}
+      --max-offset ${coverage.focus.max_offset}
+      --min-mentions ${coverage.focus.min_mentions}
+      --output data/research/experiments/company-focus
+    params:
+      - company_links.threshold
+      - coverage.focus
+    deps:
+      - data/processed/experiments/company-links/sample
+      - data/processed/experiments/company-links/labels
+      - data/processed/company-links
+      - data/processed/issuers
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-company-focus.json
+    outs:
+      - data/research/experiments/company-focus/curve.csv
+    metrics:
+      - data/research/experiments/company-focus/metrics.json
+
+  build_coverage_panel:
+    desc: Count each listed issuer's articles by year through the article funnel.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      build-coverage-panel --articles data/processed/articles
+      --links data/processed/company-links --issuers data/processed/issuers
+      --public-float data/processed/public-float
+      --roster data/inputs/coverage/pricing-perspective.csv
+      --threshold ${company_links.threshold}
+      --min-relevance ${coverage.focus.min_relevance}
+      --max-offset ${coverage.focus.max_offset}
+      --min-mentions ${coverage.focus.min_mentions}
+      --first-year ${coverage.first_year} --last-year ${coverage.last_year}
+      --complete-from ${coverage.complete_from}
+      --complete-through ${coverage.complete_through}
+      --size-bands ${coverage.size_bands} --output data/research/coverage
+    params:
+      - company_links.threshold
+      - coverage.focus
+      - coverage.first_year
+      - coverage.last_year
+      - coverage.complete_from
+      - coverage.complete_through
+      - coverage.size_bands
+    deps:
+      - data/processed/articles
+      - data/processed/company-links
+      - data/processed/issuers
+      - data/processed/public-float
+      - data/inputs/coverage/pricing-perspective.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/build-coverage-panel.json
+    outs:
+      - data/research/coverage
+
+  report_coverage:
+    desc: Tabulate and chart coverage, dates, the Pricing Perspective screen and quality.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-coverage --panel data/research/coverage
+      --articles data/processed/articles --links data/processed/company-links
+      --source data/raw/fine-news
+      --link-metrics data/research/experiments/company-links/metrics.json
+      --focus data/research/experiments/company-focus
+      --threshold ${company_links.threshold}
+      --min-relevance ${coverage.focus.min_relevance}
+      --max-offset ${coverage.focus.max_offset}
+      --min-mentions ${coverage.focus.min_mentions}
+      --complete-from ${coverage.complete_from}
+      --complete-through ${coverage.complete_through}
+      --thresholds ${coverage.thresholds} --spans ${coverage.spans}
+      --seed ${coverage.near_duplicates.seed}
+      --months ${coverage.near_duplicates.months}
+      --sample-size ${coverage.near_duplicates.articles}
+      --window-days ${coverage.near_duplicates.window_days}
+      --max-candidates ${coverage.near_duplicates.max_candidates}
+      --jaccard ${coverage.near_duplicates.jaccard}
+      --output data/research/experiments/coverage
+    params:
+      - company_links.threshold
+      - coverage
+    deps:
+      - data/research/coverage
+      - data/processed/articles
+      - data/processed/company-links
+      - data/raw/fine-news
+      - data/research/experiments/company-links/metrics.json
+      - data/research/experiments/company-focus/metrics.json
+      - data/research/experiments/company-focus/curve.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-coverage.json
+    outs:
+      - data/research/experiments/coverage/tables
+      - data/research/experiments/coverage/figures
+      - data/research/experiments/coverage/report.tex
+    metrics:
+      - data/research/experiments/coverage/metrics.json
+
+  render_coverage_report:
+    desc: Build the coverage report PDF with Tectonic from cached TeX resources.
+    # Run `just latex::setup` once to cache the report's TeX packages and fonts.
+    cmd: just latex::render data/research/experiments/coverage/report.tex
+    deps:
+      - data/research/experiments/coverage/tables
+      - data/research/experiments/coverage/figures
+      - data/research/experiments/coverage/report.tex
+    outs:
+      - data/research/experiments/coverage/report.pdf

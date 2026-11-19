@@ -827,3 +827,54 @@ stages:
       md5: e4c2dcc99f1520a3736601cf39fb7de7.dir
       size: 764212
       nfiles: 1
+  report_company_focus:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-company-focus --sample
+      data/processed/experiments/company-links/sample --labels
+      data/processed/experiments/company-links/labels --links
+      data/processed/company-links --issuers data/processed/issuers --threshold
+      0.5 --min-relevance 0.0 --max-offset 1.0 --min-mentions 3 --output
+      data/research/experiments/company-focus
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-company-focus.json
+      hash: md5
+      md5: c7cc2d3c42d5b102e9adb22d621e403d
+      size: 6719
+    - path: data/processed/company-links
+      hash: md5
+      md5: 86731bd2364592ce1677d52f0a25723b.dir
+      size: 5429995172
+      nfiles: 2954
+    - path: data/processed/experiments/company-links/labels
+      hash: md5
+      md5: 02bcf772f39b6a5f2f975c04c639e634.dir
+      size: 3490033
+      nfiles: 3
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    params:
+      params.yaml:
+        company_links.threshold: 0.5
+        coverage.focus:
+          min_relevance: 0.0
+          max_offset: 1.0
+          min_mentions: 3
+    outs:
+    - path: data/research/experiments/company-focus/curve.csv
+      hash: md5
+      md5: eee3fa91d137c5422b2c5cfb8685bc17
+      size: 3277
+    - path: data/research/experiments/company-focus/metrics.json
+      hash: md5
+      md5: e87777494d01ef31bc41150356d47220
+      size: 2265

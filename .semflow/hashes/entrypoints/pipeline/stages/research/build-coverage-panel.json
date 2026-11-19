@@ -1,0 +1,21 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.coverage:build_coverage_panel",
+  "digest": "sha256:543d588fa56c5406d13ca0ab3d660fb54dd9e15ae22baad2499e9c5a17ce90c5",
+  "entrypoint": "pipeline stages research build-coverage-panel",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:<binding:json=json>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:<binding:typer=typer>"},
+    {"digest":"sha256:28701847da42efcd69f326813ad561ed0a508d9916eb4185474eb66d439423c1","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:DIVISIONS"},
+    {"digest":"sha256:ad86193bf918d808a47f26c5a0a18a4a24e96118100029ddae0ec45301b61e91","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:ROSTER_YEARS"},
+    {"digest":"sha256:da40c4c35b881432e809f5da52030c869ead7676bde33be07877d128d4140cb9","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:_division_sql"},
+    {"digest":"sha256:a37ff278ef956d0f8e7e7d19891076ccfc2401733e57536f8161f891cfb0d05c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/coverage.py","symbol":"pipeline.stages.research.coverage:build_coverage_panel"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

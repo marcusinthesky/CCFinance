@@ -43,6 +43,8 @@ lean_decls
 !/data/inputs/issuers/exchanges.csv
 !/data/inputs/issuers/README.md
 !/data/inputs/company-links/publishers.csv
+!/data/inputs/coverage/README.md
+!/data/inputs/coverage/pricing-perspective.csv
 !/data/inputs/company-links/README.md
 
 # Local literature records and source material.

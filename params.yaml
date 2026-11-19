@@ -15,6 +15,29 @@ company_links:
   concurrency: 8
   threshold: 0.5
 
+# Coverage: the company-focus rule, chosen as the best development-split F1 of
+# report_company_focus on the seed-43 sample (test articles score it).
+coverage:
+  focus:
+    min_relevance: 0.0
+    max_offset: 1.0
+    min_mentions: 3
+  # Captures run from 2016-08 to 2026-04, so only 2017-2025 are complete years.
+  first_year: 2016
+  last_year: 2026
+  complete_from: 2017
+  complete_through: 2025
+  size_bands: 5
+  thresholds: "1,12,47,100,250"
+  spans: "1,3,5,9"
+  near_duplicates:
+    seed: 43
+    months: 6
+    articles: 1000
+    window_days: 1
+    max_candidates: 100
+    jaccard: 0.8
+
 # Articles: a publication date dates the text only if captured within this many
 # days; the lag distribution has its knee here (63% same day, 2.9M over a year).
 articles:
