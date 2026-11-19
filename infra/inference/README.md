@@ -34,3 +34,20 @@ just inference::extract data/raw/fine-news data/processed/article-metadata
 
 Scores are uncalibrated. The downstream company linker resolves mentions to dated issuers.
 Keep the score vectors and choose thresholds downstream.
+
+## OpenSearch article embeddings
+
+Run `bash infra/inference/opensearch-run.sh [output-directory]` from the root
+with the OpenSearch checkpoint at revision
+`d558088abac35e8932772965a85e927aedfe49c7` in `.runtime/opensearch-v1`
+(config, tokenizer JSON files, backbone and `2_Dense/model.safetensors`).
+The local SGLang image runs without network access. The runner uses the raw
+article text, up to 8,192 tokens, with no query prompt. It mean-pools the
+backbone states in FP32, applies the learned projection, L2-normalizes and
+saves 2,048 FP16 components with each source id. Empty text gets a zero vector
+and a false `has_text` flag. A startup probe compares against Transformers.
+
+Each completed source row group becomes one atomic Parquet file under the
+corresponding input shard path. Rerun against the same frozen input and output
+to resume. Use a fresh output directory for a different corpus or model. Allow
+at least 61 GiB free for outputs, including the 3 GiB filesystem reserve.
