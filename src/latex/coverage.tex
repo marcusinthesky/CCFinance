@@ -1,0 +1,161 @@
+\documentclass[10pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\title{Staging coverage audit}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\input{tables/headline.tex} Match Group shares its historical CIK with IAC, so 2018--2019 counts may include coverage of IAC before the separation.
+\section{Article funnel}
+Articles by capture year. \emph{Dated} articles were captured within the maximum lag of their publication date; \emph{usable} articles are dated and canonical; \emph{linked} and \emph{focused} articles carry at least one issuer link, or one link meeting the company-focus rule.
+\begin{table}[!htbp]\centering\small
+\input{tables/funnel.tex}
+\caption{Article funnel.}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, stack plots=y, area style, xlabel={Capture month}, ylabel={Articles (thousands)}, xticklabel style={/pgf/number format/1000 sep={}}, legend pos=north east, enlarge x limits=false]
+\addplot+[draw=none] table[x=x, y=consistent, col sep=comma] {figures/volume.csv} \closedcycle;
+\addlegendentry{Consistent date}
+\addplot+[draw=none] table[x=x, y=archival, col sep=comma] {figures/volume.csv} \closedcycle;
+\addlegendentry{Archival date}
+\addplot+[draw=none] table[x=x, y=other, col sep=comma] {figures/volume.csv} \closedcycle;
+\addlegendentry{Future or missing}
+\end{axis}
+\end{tikzpicture}
+\caption{Monthly captures by date status.}
+\end{figure}
+\clearpage
+\section{Publication dates}
+
+\begin{table}[!htbp]\centering\small
+\input{tables/dates.tex}
+\caption{Date status by capture year.}
+\end{table}
+\begin{table}[!htbp]\centering\small
+\input{tables/lag.tex}
+\caption{Consistent share by maximum lag.}
+\end{table}
+\begin{table}[!htbp]\centering\small
+\input{tables/archival_publishers.tex}
+\caption{Publishers with the highest archival shares (at least 10,000 articles).}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xmode=log, xlabel={Capture lag in days, plus one}, ylabel={Cumulative share}, legend pos=south east]
+\addplot+ table[x=lag, y=share, col sep=comma] {figures/lag.csv};
+\addlegendentry{Articles, lag of at least $-1$ day}
+\draw[dashed] (axis cs:8,0) -- (axis cs:8,1);
+\end{axis}
+\end{tikzpicture}
+\caption{Cumulative capture lag; the dashed line is the maximum lag.}
+\end{figure}
+\clearpage
+\section{Firm-year coverage}
+Issuer-years in the universe over complete years, by public-float band (1 is smallest) and by SIC division.
+\begin{table}[!htbp]\centering\small
+\input{tables/size.tex}
+\caption{Coverage by public-float band.}
+\end{table}
+\begin{table}[!htbp]\centering\small
+\input{tables/division.tex}
+\caption{Coverage by SIC division.}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xmode=log, ymode=log, unbounded coords=discard, xlabel={Articles in the issuer-year, at least}, ylabel={Share of issuer-years}, legend pos=south west]
+\addplot+ table[x=threshold, y=usable, col sep=comma] {figures/ccdf.csv};
+\addlegendentry{Usable}
+\addplot+ table[x=threshold, y=focused, col sep=comma] {figures/ccdf.csv};
+\addlegendentry{Focused}
+\draw[dashed] (axis cs:47,1e-4) -- (axis cs:47,1);
+\end{axis}
+\end{tikzpicture}
+\caption{Share of universe issuer-years with at least a given number of articles.}
+\end{figure}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xmode=log, ymode=log, unbounded coords=discard, xlabel={Public float, US\$ millions (bin median)}, ylabel={Median articles per issuer-year}, legend pos=north west]
+\addplot+ table[x=float, y=usable, col sep=comma] {figures/size.csv};
+\addlegendentry{Usable}
+\addplot+ table[x=float, y=focused, col sep=comma] {figures/size.csv};
+\addlegendentry{Focused}
+\end{axis}
+\end{tikzpicture}
+\caption{Median articles per issuer-year by public float.}
+\end{figure}
+\clearpage
+\section{Pricing Perspective screen}
+The Pricing Perspective frame keeps firms with at least 47 raw articles in every year from 2018 to 2022. Here \emph{raw} counts every linked article by its linker date, so it is closest to that screen.
+\begin{table}[!htbp]\centering\small
+\input{tables/screen.tex}
+\caption{Issuers passing the screen.}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xmode=log, ymode=log, unbounded coords=discard, xlabel={Articles in every year 2018--2022, at least}, ylabel={Issuers}, legend columns=3, legend style={at={(0.5,-0.22)}, anchor=north}]
+\addplot+ table[x=threshold, y=all_raw, col sep=comma] {figures/survival.csv};
+\addlegendentry{Listed, raw}
+\addplot+ table[x=threshold, y=all_usable, col sep=comma] {figures/survival.csv};
+\addlegendentry{Listed, usable}
+\addplot+ table[x=threshold, y=all_focused, col sep=comma] {figures/survival.csv};
+\addlegendentry{Listed, focused}
+\addplot+[dashed] table[x=threshold, y=roster_raw, col sep=comma] {figures/survival.csv};
+\addlegendentry{PP roster, raw}
+\addplot+[dashed] table[x=threshold, y=roster_usable, col sep=comma] {figures/survival.csv};
+\addlegendentry{PP roster, usable}
+\addplot+[dashed] table[x=threshold, y=roster_focused, col sep=comma] {figures/survival.csv};
+\addlegendentry{PP roster, focused}
+\draw[dotted] (axis cs:47,1) -- (axis cs:47,1e4);
+\end{axis}
+\end{tikzpicture}
+\caption{Issuers meeting each threshold in every year 2018--2022.}
+\end{figure}
+\clearpage
+\section{Consecutive-year thresholds}
+
+\begin{table}[!htbp]\centering\small
+\input{tables/consecutive.tex}
+\caption{Issuers with at least a given number of articles in at least $n$ consecutive complete years.}
+\end{table}
+\clearpage
+\section{Publishers}
+
+\begin{table}[!htbp]\centering\small
+\input{tables/publishers.tex}
+\caption{Largest publishers of usable linked articles.}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xlabel={Share of publishers}, ylabel={Share of focused articles}, legend pos=north west, xmin=0, xmax=1, ymin=0, ymax=1]
+\addplot+[mark=none] table[x=publishers, y=articles, col sep=comma] {figures/lorenz.csv};
+\addlegendentry{Publishers by focused articles}
+\addplot[dashed, domain=0:1] {x};
+\end{axis}
+\end{tikzpicture}
+\caption{Concentration of focused articles across publishers.}
+\end{figure}
+\clearpage
+\section{Measurement quality}
+Link and focus estimates come from model-adjudicated samples (seed 43), not human labels. The near-duplicate rate is a lower bound from seeded capture months.
+\begin{table}[!htbp]\centering\small
+\input{tables/quality.tex}
+\caption{Measurement quality.}
+\end{table}
+\begin{figure}[!htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=6.2cm, grid=major, legend cell align=left, xlabel={Recall}, ylabel={Precision}, xmin=0, xmax=1, ymin=0, ymax=1, legend pos=south west, nodes near coords, point meta=explicit symbolic]
+\addplot+ table[x=recall, y=precision, meta=mentions, col sep=comma] {figures/focus_dev.csv};
+\addlegendentry{Development, at least $k$ mentions}
+\addplot+ table[x=recall, y=precision, meta=mentions, col sep=comma] {figures/focus_test.csv};
+\addlegendentry{Test, at least $k$ mentions}
+\end{axis}
+\end{tikzpicture}
+\caption{Company-focus precision and recall by minimum mentions.}
+\end{figure}
+\end{document}

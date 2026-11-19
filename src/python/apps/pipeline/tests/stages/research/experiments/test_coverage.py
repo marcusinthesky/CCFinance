@@ -111,12 +111,6 @@ def test_report_screens_issuers_and_finds_same_issuer_near_duplicates(
     near = metrics["near_duplicates"]
     assert (near["sampled"], near["with_near_duplicate"]) == (4, 2)
     assert metrics["funnel"]["focused"] == 3
-    report = (tmp_path / "out/report.tex").read_text()
-    for name in ("funnel", "screen", "survival", "consecutive", "quality"):
-        assert rf"\input{{tables/{name}.tex}}" in report
-        assert (tmp_path / f"out/tables/{name}.tex").exists()
-    for name in ("volume", "lag", "ccdf", "survival", "size", "lorenz", "focus"):
-        assert rf"\input{{figures/{name}.tex}}" in report
     assert (
         (tmp_path / "out/figures/survival.csv")
         .read_text()

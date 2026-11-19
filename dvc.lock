@@ -952,8 +952,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/report-coverage.json
       hash: md5
-      md5: 0a8e0d1ddfcd91bdbe995c698f534592
-      size: 12119
+      md5: 688304afa4a6b17afcac2ecad1eac5ff
+      size: 10563
     - path: data/processed/articles
       hash: md5
       md5: 401d21de164386c0e17c667f8b924ae8.dir
@@ -1011,41 +1011,42 @@ stages:
     outs:
     - path: data/research/experiments/coverage/figures
       hash: md5
-      md5: aeedb50a58ecf71945139205dd239203.dir
-      size: 17287
-      nfiles: 15
+      md5: 5632167467f02cbe2c7b8a1d9e927332.dir
+      size: 13097
+      nfiles: 8
     - path: data/research/experiments/coverage/metrics.json
       hash: md5
       md5: 756f278370b5aedb15d100c2e51346fd
       size: 1889
-    - path: data/research/experiments/coverage/report.tex
-      hash: md5
-      md5: ec0389ac73c6b6007ab7460abc46e173
-      size: 4012
     - path: data/research/experiments/coverage/tables
       hash: md5
-      md5: 635d4270fc7a36f5dd416d820c43b588.dir
-      size: 5976
+      md5: d70c6115901f19d4bdfbb0cb68158719.dir
+      size: 5739
       nfiles: 11
   render_coverage_report:
-    cmd: just latex::render data/research/experiments/coverage/report.tex
+    cmd: cp src/latex/coverage.tex data/research/experiments/coverage/report.tex
+      && just latex::render data/research/experiments/coverage/report.tex
     deps:
     - path: data/research/experiments/coverage/figures
       hash: md5
-      md5: aeedb50a58ecf71945139205dd239203.dir
-      size: 17287
-      nfiles: 15
-    - path: data/research/experiments/coverage/report.tex
-      hash: md5
-      md5: ec0389ac73c6b6007ab7460abc46e173
-      size: 4012
+      md5: 5632167467f02cbe2c7b8a1d9e927332.dir
+      size: 13097
+      nfiles: 8
     - path: data/research/experiments/coverage/tables
       hash: md5
-      md5: 635d4270fc7a36f5dd416d820c43b588.dir
-      size: 5976
+      md5: d70c6115901f19d4bdfbb0cb68158719.dir
+      size: 5739
       nfiles: 11
+    - path: src/latex/coverage.tex
+      hash: md5
+      md5: fcecd6d6698c3bca20c378f2a336ac6c
+      size: 7664
+    - path: src/latex/justfile
+      hash: md5
+      md5: 149e6f35dca12f73d342a4e998965777
+      size: 1320
     outs:
     - path: data/research/experiments/coverage/report.pdf
       hash: md5
-      md5: 487a265e3fee47dde751755740bbf711
-      size: 69739
+      md5: 57dde289855fec6ef0c13ca5a1cf0b91
+      size: 69273

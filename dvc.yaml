@@ -475,17 +475,19 @@ stages:
     outs:
       - data/research/experiments/coverage/tables
       - data/research/experiments/coverage/figures
-      - data/research/experiments/coverage/report.tex
     metrics:
       - data/research/experiments/coverage/metrics.json
 
   render_coverage_report:
     desc: Build the coverage report PDF with Tectonic from cached TeX resources.
     # Run `just latex::setup` once to cache the report's TeX packages and fonts.
-    cmd: just latex::render data/research/experiments/coverage/report.tex
+    cmd: >-
+      cp src/latex/coverage.tex data/research/experiments/coverage/report.tex
+      && just latex::render data/research/experiments/coverage/report.tex
     deps:
+      - src/latex/coverage.tex
+      - src/latex/justfile
       - data/research/experiments/coverage/tables
       - data/research/experiments/coverage/figures
-      - data/research/experiments/coverage/report.tex
     outs:
       - data/research/experiments/coverage/report.pdf

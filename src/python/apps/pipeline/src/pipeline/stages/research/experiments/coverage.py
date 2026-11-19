@@ -376,30 +376,8 @@ def near_duplicates(con: duckdb.DuckDBPyConnection, source: Path, settings: Row)
     }
 
 
-AXIS = "width=0.92\\linewidth, height=6.2cm, grid=major, legend cell align=left"
-
-
-def _figure(name: str, axis: str, plots: Sequence[str]) -> str:
-    """A pgfplots axis whose plots read figures/<name>.csv."""
-    lines = [r"\begin{tikzpicture}", rf"\begin{{axis}}[{AXIS}, {axis}]"]
-    lines += list(plots)
-    return "\n".join([*lines, r"\end{axis}", r"\end{tikzpicture}"]) + "\n"
-
-
-def _plot(
-    name: str, x: str, y: str, legend: str, style: str = "", suffix: str = ""
-) -> str:
-    options = f"[{style}]" if style else ""
-    source = rf"table[x={x}, y={y}, col sep=comma] {{figures/{name}.csv}}"
-    return (
-        rf"\addplot+{options} {source}{suffix};"
-        + "\n"
-        + rf"\addlegendentry{{{legend}}}"
-    )
-
-
-def figures(output: Path, data: Row, focus_curve: Path) -> dict[str, str]:
-    """Write figure CSVs and return their pgfplots definitions."""
+def figures(output: Path, data: Row, focus_curve: Path) -> None:
+    """Write figure CSVs."""
     folder = output / "figures"
     folder.mkdir(exist_ok=True)
     monthly = data["dates"]["monthly"]
@@ -459,118 +437,6 @@ def figures(output: Path, data: Row, focus_curve: Path) -> dict[str, str]:
                 if row["split"] == split and row["precision"]
             ],
         )
-    log_axes = "xmode=log, ymode=log, unbounded coords=discard"
-    return {
-        "volume": _figure(
-            "volume",
-            "stack plots=y, area style, xlabel={Capture month}, "
-            "ylabel={Articles (thousands)}, "
-            "xticklabel style={/pgf/number format/1000 sep={}}, "
-            "legend pos=north east, enlarge x limits=false",
-            [
-                _plot(
-                    "volume",
-                    "x",
-                    "consistent",
-                    "Consistent date",
-                    "draw=none",
-                    r" \closedcycle",
-                ),
-                _plot(
-                    "volume",
-                    "x",
-                    "archival",
-                    "Archival date",
-                    "draw=none",
-                    r" \closedcycle",
-                ),
-                _plot(
-                    "volume",
-                    "x",
-                    "other",
-                    "Future or missing",
-                    "draw=none",
-                    r" \closedcycle",
-                ),
-            ],
-        ),
-        "lag": _figure(
-            "lag",
-            "xmode=log, xlabel={Capture lag in days, plus one}, "
-            "ylabel={Cumulative share}, legend pos=south east",
-            [
-                _plot("lag", "lag", "share", "Articles, lag of at least $-1$ day"),
-                r"\draw[dashed] (axis cs:8,0) -- (axis cs:8,1);",
-            ],
-        ),
-        "ccdf": _figure(
-            "ccdf",
-            f"{log_axes}, xlabel={{Articles in the issuer-year, at least}}, "
-            "ylabel={Share of issuer-years}, legend pos=south west",
-            [
-                _plot("ccdf", "threshold", "usable", "Usable"),
-                _plot("ccdf", "threshold", "focused", "Focused"),
-                rf"\draw[dashed] (axis cs:{PP_SCREEN},1e-4) -- "
-                rf"(axis cs:{PP_SCREEN},1);",
-            ],
-        ),
-        "survival": _figure(
-            "survival",
-            f"{log_axes}, xlabel={{Articles in every year 2018--2022, at least}}, "
-            "ylabel={Issuers}, legend columns=3, "
-            "legend style={at={(0.5,-0.22)}, anchor=north}",
-            [
-                _plot("survival", "threshold", f"all_{measure}", f"Listed, {measure}")
-                for measure in MEASURES
-            ]
-            + [
-                _plot(
-                    "survival",
-                    "threshold",
-                    f"roster_{measure}",
-                    f"PP roster, {measure}",
-                    "dashed",
-                )
-                for measure in MEASURES
-            ]
-            + [rf"\draw[dotted] (axis cs:{PP_SCREEN},1) -- (axis cs:{PP_SCREEN},1e4);"],
-        ),
-        "size": _figure(
-            "size",
-            f"{log_axes}, xlabel={{Public float, US\\$ millions (bin median)}}, "
-            "ylabel={Median articles per issuer-year}, legend pos=north west",
-            [
-                _plot("size", "float", "usable", "Usable"),
-                _plot("size", "float", "focused", "Focused"),
-            ],
-        ),
-        "lorenz": _figure(
-            "lorenz",
-            "xlabel={Share of publishers}, ylabel={Share of focused articles}, "
-            "legend pos=north west, xmin=0, xmax=1, ymin=0, ymax=1",
-            [
-                _plot(
-                    "lorenz",
-                    "publishers",
-                    "articles",
-                    "Publishers by focused articles",
-                    "mark=none",
-                ),
-                r"\addplot[dashed, domain=0:1] {x};",
-            ],
-        ),
-        "focus": _figure(
-            "focus",
-            "xlabel={Recall}, ylabel={Precision}, xmin=0, xmax=1, ymin=0, ymax=1, "
-            "legend pos=south west, nodes near coords, point meta=explicit symbolic",
-            [
-                r"\addplot+ table[x=recall, y=precision, meta=mentions, "
-                rf"col sep=comma] {{figures/focus_{split}.csv}};"
-                "\n" + rf"\addlegendentry{{{name}, at least $k$ mentions}}"
-                for split, name in (("dev", "Development"), ("test", "Test"))
-            ],
-        ),
-    }
 
 
 def _estimate(value: Row | None) -> list[str]:
@@ -662,11 +528,6 @@ def tables(data: Row, quality: Row) -> dict[str, str]:
             _number(status["articles"]),
         ],
     ]
-    survival_rows = [
-        [str(row["threshold"]), *(_number(row[key]) for key in list(row)[1:])]
-        for row in data["screen"]["survival"]
-        if row["threshold"] in (1, 12, PP_SCREEN, 100, 250)
-    ]
     return {
         "funnel": table(
             ["Capture year", "Articles", "Dated", "Usable", "Linked", "Focused"],
@@ -720,19 +581,6 @@ def tables(data: Row, quality: Row) -> dict[str, str]:
             screen_rows,
             "llrrrr",
         ),
-        "survival": table(
-            [
-                "At least",
-                *(
-                    k.split("_")[1].capitalize()
-                    for k in list(data["screen"]["survival"][0])[1:]
-                ),
-            ],
-            survival_rows,
-            "r" * 7,
-            r" & \multicolumn{3}{c}{Listed issuers} & \multicolumn{3}{c}{PP roster} \\"
-            "\n" + r"\cmidrule(lr){2-4}\cmidrule(lr){5-7}",
-        ),
         "consecutive": table(
             ["Measure", "At least", *(f"{k.split('_')[1]}+ years" for k in spans)],
             [
@@ -772,162 +620,6 @@ def tables(data: Row, quality: Row) -> dict[str, str]:
             ["Measure", "Estimate", r"95\% CI", "$n$"], quality_rows, "lrrr"
         ),
     }
-
-
-def _float(kind: str, name: str, caption: str) -> str:
-    """A table or figure float that inputs a generated file."""
-    folder = "tables" if kind == "table" else "figures"
-    size = r"\small" if kind == "table" else ""
-    return "\n".join(
-        [
-            rf"\begin{{{kind}}}[!htbp]\centering{size}",
-            rf"\input{{{folder}/{name}.tex}}",
-            rf"\caption{{{caption}}}",
-            rf"\end{{{kind}}}",
-        ]
-    )
-
-
-def sections() -> str:
-    """Report sections, each starting a page, with their prose and floats."""
-    parts = [
-        (
-            "Article funnel",
-            r"Articles by capture year. \emph{Dated} articles were captured within "
-            r"the maximum lag of their publication date; \emph{usable} articles are "
-            r"dated and canonical; \emph{linked} and \emph{focused} articles carry at "
-            "least one issuer link, or one link meeting the company-focus rule.",
-            [
-                _float("table", "funnel", "Article funnel."),
-                _float("figure", "volume", "Monthly captures by date status."),
-            ],
-        ),
-        (
-            "Publication dates",
-            "",
-            [
-                _float("table", "dates", "Date status by capture year."),
-                _float("table", "lag", "Consistent share by maximum lag."),
-                _float(
-                    "table",
-                    "archival_publishers",
-                    "Publishers with the highest archival shares "
-                    "(at least 10,000 articles).",
-                ),
-                _float(
-                    "figure",
-                    "lag",
-                    "Cumulative capture lag; the dashed line is the maximum lag.",
-                ),
-            ],
-        ),
-        (
-            "Firm-year coverage",
-            "Issuer-years in the universe over complete years, by public-float "
-            "band (1 is smallest) and by SIC division.",
-            [
-                _float("table", "size", "Coverage by public-float band."),
-                _float("table", "division", "Coverage by SIC division."),
-                _float(
-                    "figure",
-                    "ccdf",
-                    "Share of universe issuer-years with at least a given number "
-                    "of articles.",
-                ),
-                _float(
-                    "figure", "size", "Median articles per issuer-year by public float."
-                ),
-            ],
-        ),
-        (
-            "Pricing Perspective screen",
-            f"The Pricing Perspective frame keeps firms with at least {PP_SCREEN} "
-            r"raw articles in every year from 2018 to 2022. Here \emph{raw} counts "
-            "every linked article by its linker date, so it is closest to that "
-            "screen.",
-            [
-                _float("table", "screen", "Issuers passing the screen."),
-                _float(
-                    "table",
-                    "survival",
-                    "Issuers with at least a given number of articles in every "
-                    "year 2018--2022.",
-                ),
-                _float(
-                    "figure",
-                    "survival",
-                    "Issuers meeting each threshold in every year 2018--2022.",
-                ),
-            ],
-        ),
-        (
-            "Consecutive-year thresholds",
-            "",
-            [
-                _float(
-                    "table",
-                    "consecutive",
-                    "Issuers with at least a given number of articles in at least "
-                    "$n$ consecutive complete years.",
-                )
-            ],
-        ),
-        (
-            "Publishers",
-            "",
-            [
-                _float(
-                    "table",
-                    "publishers",
-                    "Largest publishers of usable linked articles.",
-                ),
-                _float(
-                    "figure",
-                    "lorenz",
-                    "Concentration of focused articles across publishers.",
-                ),
-            ],
-        ),
-        (
-            "Measurement quality",
-            "Link and focus estimates come from model-adjudicated samples (seed 43), "
-            "not human labels. The near-duplicate rate is a lower bound from seeded "
-            "capture months.",
-            [
-                _float("table", "quality", "Measurement quality."),
-                _float(
-                    "figure",
-                    "focus",
-                    "Company-focus precision and recall by minimum mentions.",
-                ),
-            ],
-        ),
-    ]
-    return "\n\\clearpage\n".join(
-        "\n".join([rf"\section{{{title}}}", prose, *floats])
-        for title, prose, floats in parts
-    )
-
-
-def report_tex(headline: str) -> str:
-    """The standalone report document."""
-    preamble = "\n".join(
-        [
-            r"\documentclass[10pt]{article}",
-            r"\usepackage[margin=2cm]{geometry}",
-            r"\usepackage[T1]{fontenc}",
-            r"\usepackage{lmodern}",
-            r"\usepackage{booktabs}",
-            r"\usepackage{pgfplots}",
-            r"\pgfplotsset{compat=1.18}",
-            r"\title{Staging coverage audit}",
-            r"\author{}",
-            r"\date{}",
-            r"\begin{document}",
-            r"\maketitle",
-        ]
-    )
-    return f"{preamble}\n{headline}\n{sections()}\n\\end{{document}}\n"
 
 
 def _ccdf(panel: list[Row], years: range) -> list[Row]:
@@ -985,7 +677,7 @@ def report_coverage(
         "data/research/experiments/coverage"
     ),
 ) -> None:
-    """Write coverage tables, figure data, headline metrics and report.tex."""
+    """Write coverage tables, figure data and headline metrics."""
     output.mkdir(parents=True, exist_ok=True)
     (output / "tables").mkdir(exist_ok=True)
     complete = range(complete_from, complete_through + 1)
@@ -1039,8 +731,7 @@ def report_coverage(
     }
     for name, body in tables(data, quality).items():
         (output / "tables" / f"{name}.tex").write_text(body)
-    for name, body in figures(output, data, focus / "curve.csv").items():
-        (output / "figures" / f"{name}.tex").write_text(body)
+    figures(output, data, focus / "curve.csv")
     comparison = data["screen"]["comparison"]
     headline = (
         rf"Of {_number(comparison['roster_raw']['firms'])} Pricing Perspective roster "
@@ -1051,10 +742,8 @@ def report_coverage(
         rf"Across all listed issuers, {_number(comparison['all_raw']['passing'])}, "
         rf"{_number(comparison['all_usable']['passing'])} and "
         rf"{_number(comparison['all_focused']['passing'])} issuers pass."
-        " Match Group shares its historical CIK with IAC, so 2018--2019 counts "
-        "may include coverage of IAC before the separation."
     )
-    (output / "report.tex").write_text(report_tex(headline))
+    (output / "tables/headline.tex").write_text(headline + "\n")
     metrics = {
         "funnel": {
             key: sum(row[key] for row in data["funnel"])

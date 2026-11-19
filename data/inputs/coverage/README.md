@@ -18,7 +18,7 @@ The audit measures how much usable, company-focused coverage the staging corpus 
    - dated;
    - usable;
    - focused.
-5. **`report_coverage`** writes tables, figure data, `metrics.json` and `report.tex`. **`render_coverage_report`** builds `report.pdf` with Tectonic from cached resources (run `just latex::setup` once).
+5. **`report_coverage`** writes tables, figure data and `metrics.json`. **`render_coverage_report`** builds `report.pdf` with Tectonic from cached resources (run `just latex::setup` once).
 
 ## Universe
 
