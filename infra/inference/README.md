@@ -35,19 +35,19 @@ just inference::extract data/raw/fine-news data/processed/article-metadata
 Scores are uncalibrated. The downstream company linker resolves mentions to dated issuers.
 Keep the score vectors and choose thresholds downstream.
 
-## OpenSearch article embeddings
+## Whole-article embeddings
 
-Run `bash infra/inference/opensearch-run.sh [output-directory]` from the root
-with the OpenSearch checkpoint at revision
-`d558088abac35e8932772965a85e927aedfe49c7` in `.runtime/opensearch-v1`
-(config, tokenizer JSON files, backbone and `2_Dense/model.safetensors`).
-The local SGLang image runs without network access. The runner uses the raw
-article text, up to 8,192 tokens, with no query prompt. It mean-pools the
-backbone states in FP32, applies the learned projection, L2-normalizes and
-saves 2,048 FP16 components with each source id. Empty text gets a zero vector
-and a false `has_text` flag. A startup probe compares against Transformers.
+From the repository root, run `bash infra/inference/gemma-run.sh`. The offline
+GPU container reads the frozen Fine News shards and the Google EmbeddingGemma-300M
+snapshot at revision `57c266a740f537b4dc058e1b0cda161fd15afa75` in
+`.runtime/embeddinggemma-300m`. Each input receives the document prefix
+`title: none | text:` followed by a space and up to 2,048 tokens including the prefix. SGLang
+uses BF16 eager FlashAttention-4, FP32 mean accumulation, the model's two dense
+heads, and FP32 normalization. Two requests of up to 32 articles run concurrently.
 
-Each completed source row group becomes one atomic Parquet file under the
-corresponding input shard path. Rerun against the same frozen input and output
-to resume. Use a fresh output directory for a different corpus or model. Allow
-at least 61 GiB free for outputs, including the 3 GiB filesystem reserve.
+Each source row group produces one atomic Parquet file in
+`data/processed/embeddinggemma-embeddings`, with source IDs in order and 768
+FP16 coordinates. Blank text receives a zero vector and false `has_text`.
+Rerun the command to resume against the same frozen corpus. The worker checks
+two native FP32 probes on startup and reserves 3 GiB of free disk space.
+Use a fresh directory for a different model or input snapshot.
