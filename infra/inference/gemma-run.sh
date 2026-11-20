@@ -7,7 +7,7 @@ docker run --rm --network none --device nvidia.com/gpu=all --shm-size=1g \
     -v "$PWD/${ARTICLE_SOURCE:-data/raw/fine-news}:/articles:ro" \
     -v "$(realpath "$output"):/output" \
     -v "$PWD/infra/inference:/workers:ro" \
-    -e SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1 -e "WORKER_UID=$(id -u)" -e "WORKER_GID=$(id -g)" -e HOME=/tmp \
+    -e BENCHMARK -e SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1 -e "WORKER_UID=$(id -u)" -e "WORKER_GID=$(id -g)" -e HOME=/tmp \
     -e HF_HUB_OFFLINE=1 -e TOKENIZERS_PARALLELISM=false \
     --entrypoint bash sha256:f7876bef696ccf9cf75a2bf7ccb82970f5fac577f082fb8ca95c9a59d2160eb5 \
     -ec '

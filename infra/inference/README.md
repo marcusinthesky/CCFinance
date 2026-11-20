@@ -51,3 +51,24 @@ FP16 coordinates. Blank text receives a zero vector and false `has_text`.
 Rerun the command to resume against the same frozen corpus. The worker checks
 two native FP32 probes on startup and reserves 3 GiB of free disk space.
 Use a fresh directory for a different model or input snapshot.
+
+### Throughput and fidelity
+
+Run `BENCHMARK=1 bash infra/inference/gemma-run.sh .runtime/gemma-benchmark`
+for two passes through 2,304 articles on six frozen shards. Each pass times the
+production writer from reading through Parquet close. The benchmark checks IDs
+in source order and compares 48 length-stratified vectors to native FP32,
+including the learned dense projections. The acceptance floor is 0.999 minimum
+cosine and 127.11 articles/s on the second pass on the RTX 5060 Ti.
+
+The [repeat measurements](embedding-throughput.csv) use the image digest in the
+launcher. Reference cosines apply to the final saved output per configuration.
+BF16 FA4 sustained 133.8 articles/s. FlashInfer and TensorRT-LLM MHA reached
+140.0 and 140.3 but their minimum cosines fell below 0.62. The pinned prefill
+paths apply causal masking to Gemma's bidirectional layer marker. Breakable
+graphs replayed 139 times on the warm pass and reached 117.9 articles/s.
+FA4 dynamic FP8 also missed the fidelity floor (0.99636).
+
+The retained writer reached 134.4 articles/s on the warm pass. It initializes
+the engine before setting the native reference model's CPU thread count and
+warms a production-sized request before checking the short probes.

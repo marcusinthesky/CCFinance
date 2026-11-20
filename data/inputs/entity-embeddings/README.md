@@ -12,6 +12,12 @@ Of 150 held-out stories, Luna found 18 distinguishable company accounts and 16 p
 | OpenSearch neural embed v1 | 2/16 | 2/16 | 9/16 |
 | Qwen3-Embedding-0.6B | 2/16 | 3/16 | 10/16 |
 
+For the paper, report eligibility alongside these paired counts. Sentence
+selection is the candidate for independent confirmation. The pilot is too
+small to establish a model ranking. A follow-up should freeze the Gemma
+header, instruction and sentence arms before drawing fresh stories, and
+report how often the two companies share their supporting sentences.
+
 ## Appendix evidence
 
 - Across-story acquisition retrieval yielded 38 directional stories among 80 sampled. Each condition used 76 comparisons across 19 independent deal pairs. Terra agreed with Luna on 16 of 20 audited stories. The primary gain was −6.6 percentage points (paired 95% interval −18.4 to +5.3). The prespecified decision was inconclusive. The [grounding audit](grounding-audit.csv) records the score-blinded source checks.
