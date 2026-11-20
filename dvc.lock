@@ -1729,3 +1729,34 @@ stages:
       md5: 4fb2dc2aca7aa79ed7949f8956dafa50.dir
       size: 67835
       nfiles: 4
+  entity_embedding_tables:
+    cmd: mkdir -p data/research/experiments/entity-paper && duckdb -bail <
+      src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+    deps:
+    - path: data/research/experiments/acquisition-roles/comparisons.parquet
+      hash: md5
+      md5: 87d6ab51be117c076d20def4b1ed1580
+      size: 11994
+    - path: data/research/experiments/entity-focus/comparison.csv
+      hash: md5
+      md5: ff38ae9010ff0eaf88a6016960cdd5a2
+      size: 16688
+    - path: data/research/experiments/entity-focus/decision.json
+      hash: md5
+      md5: 9c364109badd47c839b09346677eac74
+      size: 2129
+    - path: data/research/experiments/entity-pooling/report.parquet
+      hash: md5
+      md5: 0026e81ce1d5fe467eba7ee81c17de40
+      size: 3739
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+      hash: md5
+      md5: 50aefa14aac334724baa52ad64bc99cf
+      size: 1081
+    outs:
+    - path: data/research/experiments/entity-paper
+      hash: md5
+      md5: ff94295f3dc5a416d1c64a5dc2dae68e.dir
+      size: 2349
+      nfiles: 3

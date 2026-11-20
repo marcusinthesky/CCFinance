@@ -52,7 +52,6 @@ lean_decls
 !/data/inputs/company-links/normalized-name-confirmation.csv
 !/data/inputs/entity-embeddings/README.md
 !/data/inputs/entity-embeddings/entity-focus.md
-!/data/inputs/entity-embeddings/sample-acquisitions.sql
 !/data/inputs/entity-embeddings/grounding-audit.csv
 
 # Local literature records and source material.

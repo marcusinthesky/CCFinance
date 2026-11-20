@@ -687,3 +687,16 @@ stages:
     outs:
       - data/research/experiments/entity-focus:
           push: false
+
+  entity_embedding_tables:
+    desc: Rebuild the main entity-focus table and both appendix tables from local scores.
+    cmd: mkdir -p data/research/experiments/entity-paper && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+      - data/research/experiments/entity-focus/comparison.csv
+      - data/research/experiments/entity-focus/decision.json
+      - data/research/experiments/acquisition-roles/comparisons.parquet
+      - data/research/experiments/entity-pooling/report.parquet
+    outs:
+      - data/research/experiments/entity-paper:
+          push: false
