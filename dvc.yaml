@@ -581,3 +581,217 @@ stages:
     outs:
       - data/processed/experiments/article-metadata/pilot-labels:
           persist: true
+
+  acquisition_role_sample:
+    cmd: >-
+      mkdir -p data/processed/experiments/entity-embeddings &&
+      duckdb -bail < data/inputs/entity-embeddings/sample-acquisitions.sql &&
+      duckdb -bail < src/python/scripts/acquisition_roles/verify.sql
+    deps:
+      - data/inputs/entity-embeddings/sample-acquisitions.sql
+      - src/python/scripts/acquisition_roles/verify.sql
+      - data/raw/fine-news
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/processed/experiments/company-links/sample/articles.parquet
+    outs:
+      - data/processed/experiments/entity-embeddings/acquisition-screen.parquet:
+          push: false
+
+  acquisition_role_reference:
+    cmd: >-
+      uv run --offline --frozen --project src/python python src/python/scripts/acquisition_roles/judge.py
+      data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      data/processed/experiments/entity-embeddings/labels.json
+    deps:
+      - src/python/scripts/acquisition_roles/judge.py
+      - data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+    outs:
+      - data/processed/experiments/entity-embeddings/labels.json:
+          push: false
+
+  acquisition_role_facts:
+    cmd: >-
+      uv run --offline --frozen --project src/python python src/python/scripts/acquisition_roles/judge.py
+      data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      data/processed/experiments/entity-embeddings/facts.json
+      --labels data/processed/experiments/entity-embeddings/labels.json
+    deps:
+      - src/python/scripts/acquisition_roles/judge.py
+      - data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      - data/processed/experiments/entity-embeddings/labels.json
+    outs:
+      - data/processed/experiments/entity-embeddings/facts.json:
+          push: false
+
+  acquisition_role_encode:
+    foreach: [open, qwen, gemma]
+    do:
+      cmd: bash src/python/scripts/acquisition_roles/run-encoder.sh ${item}
+      deps:
+        - src/python/scripts/acquisition_roles/run-encoder.sh
+        - src/python/scripts/acquisition_roles/setup.sh
+        - src/python/scripts/acquisition_roles/encode.py
+        - src/python/scripts/acquisition_roles/segments.py
+        - data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+        - data/processed/experiments/entity-embeddings/facts.json
+      outs:
+        - data/processed/experiments/entity-embeddings/${item}.parquet:
+            push: false
+
+  acquisition_role_report:
+    cmd: >-
+      duckdb -bail < src/python/scripts/acquisition_roles/check-vectors.sql &&
+      uv run --offline --frozen --project src/python python src/python/scripts/acquisition_roles/report.py
+      data/processed/experiments/entity-embeddings data/research/experiments/acquisition-roles
+    deps:
+      - src/python/scripts/acquisition_roles/report.py
+      - src/python/scripts/acquisition_roles/check-vectors.sql
+      - data/processed/experiments/entity-embeddings/facts.json
+      - data/processed/experiments/entity-embeddings/labels.json
+      - data/processed/experiments/entity-embeddings/open.parquet
+      - data/processed/experiments/entity-embeddings/qwen.parquet
+      - data/processed/experiments/entity-embeddings/gemma.parquet
+    outs:
+      - data/research/experiments/acquisition-roles:
+          push: false
+
+  acquisition_role_grounding:
+    cmd: duckdb -bail < src/python/scripts/acquisition_roles/grounding.sql
+    deps:
+      - src/python/scripts/acquisition_roles/grounding.sql
+      - data/processed/experiments/entity-embeddings/facts.json
+      - data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+    outs:
+      - data/processed/experiments/entity-embeddings/grounding-review.parquet:
+          push: false
+
+  entity_focus_sample:
+    cmd: mkdir -p data/processed/experiments/entity-focus && duckdb -bail < src/python/scripts/entity_focus/sample.sql
+    deps:
+      - src/python/scripts/entity_focus/sample.sql
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/research/coverage/pp_roster.parquet
+      - data/processed/experiments/company-links/sample
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+    outs:
+      - data/processed/experiments/entity-focus/sample.parquet:
+          push: false
+      - data/processed/experiments/entity-focus/manifest.csv:
+          push: false
+      - data/processed/experiments/entity-focus/frame.csv:
+          push: false
+
+  entity_focus_dev_references:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project src/python python -m scripts.entity_focus.references dev
+    deps:
+      - src/python/scripts/entity_focus/references.py
+      - src/python/scripts/acquisition_roles/judge.py
+      - data/processed/experiments/entity-focus/sample.parquet
+    outs:
+      - data/processed/experiments/entity-focus/dev-references.json:
+          push: false
+
+  entity_focus_dev_vectors:
+    foreach: [open, qwen, gemma]
+    do:
+      cmd: bash src/python/scripts/entity_focus/encode.sh ${item} dev
+      deps:
+        - src/python/scripts/entity_focus/encode.sh
+        - src/python/scripts/entity_focus/vectors.py
+        - src/python/scripts/entity_focus/templates.py
+        - src/python/scripts/acquisition_roles/encode.py
+        - src/python/scripts/acquisition_roles/segments.py
+        - src/python/scripts/acquisition_roles/setup.sh
+        - data/processed/experiments/entity-focus/sample.parquet
+        - data/processed/experiments/entity-focus/dev-references.json
+      outs:
+        - data/processed/experiments/entity-focus/dev-${item}:
+            push: false
+
+  entity_focus_dev_score:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project src/python python -m scripts.entity_focus.score dev
+    deps:
+      - src/python/scripts/entity_focus/score.py
+      - src/python/scripts/entity_focus/templates.py
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/dev-references.json
+      - data/processed/experiments/entity-focus/dev-open
+      - data/processed/experiments/entity-focus/dev-qwen
+      - data/processed/experiments/entity-focus/dev-gemma
+    outs:
+      - data/processed/experiments/entity-focus/selection.json:
+          push: false
+      - data/processed/experiments/entity-focus/dev-margins.parquet:
+          push: false
+      - data/processed/experiments/entity-focus/dev-coverage.csv:
+          push: false
+
+  entity_focus_test_references:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project src/python python -m scripts.entity_focus.references test
+    deps:
+      - src/python/scripts/entity_focus/references.py
+      - src/python/scripts/acquisition_roles/judge.py
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/selection.json
+    outs:
+      - data/processed/experiments/entity-focus/test-references.json:
+          push: false
+
+  entity_focus_test_vectors:
+    foreach: [open, qwen, gemma]
+    do:
+      cmd: bash src/python/scripts/entity_focus/encode.sh ${item} test
+      deps:
+        - src/python/scripts/entity_focus/encode.sh
+        - src/python/scripts/entity_focus/vectors.py
+        - src/python/scripts/entity_focus/templates.py
+        - src/python/scripts/acquisition_roles/encode.py
+        - src/python/scripts/acquisition_roles/segments.py
+        - src/python/scripts/acquisition_roles/setup.sh
+        - data/processed/experiments/entity-focus/sample.parquet
+        - data/processed/experiments/entity-focus/test-references.json
+        - data/processed/experiments/entity-focus/selection.json
+      outs:
+        - data/processed/experiments/entity-focus/test-${item}:
+            push: false
+
+  entity_focus_test_score:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project src/python python -m scripts.entity_focus.score test
+    deps:
+      - src/python/scripts/entity_focus/score.py
+      - src/python/scripts/entity_focus/templates.py
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/test-references.json
+      - data/processed/experiments/entity-focus/test-open
+      - data/processed/experiments/entity-focus/test-qwen
+      - data/processed/experiments/entity-focus/test-gemma
+      - data/processed/experiments/entity-focus/selection.json
+    outs:
+      - data/research/experiments/entity-focus:
+          push: false
+
+  entity_focus_pooling:
+    cmd: bash src/python/scripts/entity_focus/pooling.sh
+    deps:
+      - src/python/scripts/entity_focus/pooling.py
+      - src/python/scripts/entity_focus/pooling.sh
+      - src/python/scripts/entity_focus/pooling.sql
+      - src/python/scripts/entity_focus/templates.py
+      - src/python/scripts/acquisition_roles/encode.py
+      - src/python/scripts/acquisition_roles/segments.py
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/dev-coverage.csv
+      - data/research/experiments/entity-focus/test-coverage.csv
+      - data/processed/experiments/entity-focus/dev-open
+      - data/processed/experiments/entity-focus/dev-gemma
+      - data/processed/experiments/entity-focus/dev-qwen
+      - data/processed/experiments/entity-focus/test-open
+      - data/processed/experiments/entity-focus/test-gemma
+      - data/processed/experiments/entity-focus/test-qwen
+    outs:
+      - data/research/experiments/entity-pooling:
+          push: false

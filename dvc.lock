@@ -1289,3 +1289,771 @@ stages:
       md5: 92ff1edf1e8677e3a91ac32f0e9925c2.dir
       size: 38950
       nfiles: 90
+  acquisition_role_sample:
+    cmd: mkdir -p data/processed/experiments/entity-embeddings && duckdb -bail <
+      data/inputs/entity-embeddings/sample-acquisitions.sql && duckdb -bail <
+      src/python/scripts/acquisition_roles/verify.sql
+    deps:
+    - path: data/inputs/entity-embeddings/sample-acquisitions.sql
+      hash: md5
+      md5: 1c80d603ca9b118adc77dc7d8d23ff28
+      size: 3373
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/experiments/company-links/sample/articles.parquet
+      hash: md5
+      md5: 8a4f46e4f68f664a64b15ffddb40b7cb
+      size: 864735
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: src/python/scripts/acquisition_roles/verify.sql
+      hash: md5
+      md5: 2308e4ce94f9bd60ff1dff51821113a2
+      size: 368
+    outs:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+  acquisition_role_reference:
+    cmd: uv run --offline --frozen --project src/python python
+      src/python/scripts/acquisition_roles/judge.py
+      data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      data/processed/experiments/entity-embeddings/labels.json
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: src/python/scripts/acquisition_roles/judge.py
+      hash: md5
+      md5: a0781e5bc80edd0363f544ca90f52403
+      size: 6077
+    outs:
+    - path: data/processed/experiments/entity-embeddings/labels.json
+      hash: md5
+      md5: 08d10b1496fadbd5fafcd16966eefa77
+      size: 51108
+  acquisition_role_facts:
+    cmd: uv run --offline --frozen --project src/python python
+      src/python/scripts/acquisition_roles/judge.py
+      data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      data/processed/experiments/entity-embeddings/facts.json --labels
+      data/processed/experiments/entity-embeddings/labels.json
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: data/processed/experiments/entity-embeddings/labels.json
+      hash: md5
+      md5: 08d10b1496fadbd5fafcd16966eefa77
+      size: 51108
+    - path: src/python/scripts/acquisition_roles/judge.py
+      hash: md5
+      md5: a0781e5bc80edd0363f544ca90f52403
+      size: 6077
+    outs:
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+  acquisition_role_grounding:
+    cmd: duckdb -bail < src/python/scripts/acquisition_roles/grounding.sql
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+    - path: src/python/scripts/acquisition_roles/grounding.sql
+      hash: md5
+      md5: 2ea0c7dba82486bb0ab9e70d3d7dba30
+      size: 523
+    outs:
+    - path:
+        data/processed/experiments/entity-embeddings/grounding-review.parquet
+      hash: md5
+      md5: dd6a9f3478035a0c815ff10b2b33b94d
+      size: 7462
+  acquisition_role_encode@open:
+    cmd: bash src/python/scripts/acquisition_roles/run-encoder.sh open
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/run-encoder.sh
+      hash: md5
+      md5: 9064d42f5796e831d209b8b1012b8276
+      size: 896
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    outs:
+    - path: data/processed/experiments/entity-embeddings/open.parquet
+      hash: md5
+      md5: b95cbabe654c00f10692548f2fa461a7
+      size: 3628250
+  acquisition_role_encode@qwen:
+    cmd: bash src/python/scripts/acquisition_roles/run-encoder.sh qwen
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/run-encoder.sh
+      hash: md5
+      md5: 9064d42f5796e831d209b8b1012b8276
+      size: 896
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    outs:
+    - path: data/processed/experiments/entity-embeddings/qwen.parquet
+      hash: md5
+      md5: 9efb57cf0020356fdf102dec2e36b93a
+      size: 1488703
+  acquisition_role_encode@gemma:
+    cmd: bash src/python/scripts/acquisition_roles/run-encoder.sh gemma
+    deps:
+    - path:
+        data/processed/experiments/entity-embeddings/acquisition-screen.parquet
+      hash: md5
+      md5: 62d2f9100b07137d29e875a9451f742e
+      size: 103581
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/run-encoder.sh
+      hash: md5
+      md5: 9064d42f5796e831d209b8b1012b8276
+      size: 896
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    outs:
+    - path: data/processed/experiments/entity-embeddings/gemma.parquet
+      hash: md5
+      md5: 3f83dd572fd2d97267f4af2f747acdb3
+      size: 1831672
+  acquisition_role_report:
+    cmd: duckdb -bail < src/python/scripts/acquisition_roles/check-vectors.sql
+      && uv run --offline --frozen --project src/python python
+      src/python/scripts/acquisition_roles/report.py
+      data/processed/experiments/entity-embeddings
+      data/research/experiments/acquisition-roles
+    deps:
+    - path: data/processed/experiments/entity-embeddings/facts.json
+      hash: md5
+      md5: 490f02f83a301928abf44c38e39aa941
+      size: 40953
+    - path: data/processed/experiments/entity-embeddings/gemma.parquet
+      hash: md5
+      md5: 3f83dd572fd2d97267f4af2f747acdb3
+      size: 1831672
+    - path: data/processed/experiments/entity-embeddings/labels.json
+      hash: md5
+      md5: 08d10b1496fadbd5fafcd16966eefa77
+      size: 51108
+    - path: data/processed/experiments/entity-embeddings/open.parquet
+      hash: md5
+      md5: b95cbabe654c00f10692548f2fa461a7
+      size: 3628250
+    - path: data/processed/experiments/entity-embeddings/qwen.parquet
+      hash: md5
+      md5: 9efb57cf0020356fdf102dec2e36b93a
+      size: 1488703
+    - path: src/python/scripts/acquisition_roles/check-vectors.sql
+      hash: md5
+      md5: 7a88455bf1766d55ccb625eb61366a4a
+      size: 1383
+    - path: src/python/scripts/acquisition_roles/report.py
+      hash: md5
+      md5: 4918f50adabd27f10c7c989a0d6a9b44
+      size: 8379
+    outs:
+    - path: data/research/experiments/acquisition-roles
+      hash: md5
+      md5: 465ff83b8ff22e584df3e35200fc7ad5.dir
+      size: 17075
+      nfiles: 3
+  entity_focus_sample:
+    cmd: mkdir -p data/processed/experiments/entity-focus && duckdb -bail <
+      src/python/scripts/entity_focus/sample.sql
+    deps:
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: data/research/coverage/pp_roster.parquet
+      hash: md5
+      md5: 4379b85e94cf06a7e965f8b724ad77a5
+      size: 2612
+    - path: src/python/scripts/entity_focus/sample.sql
+      hash: md5
+      md5: 3d9f78f2718b13726ca0739ead57d79f
+      size: 3646
+    outs:
+    - path: data/processed/experiments/entity-focus/frame.csv
+      hash: md5
+      md5: b93c0e5cd231b4c9dcd724887cc53223
+      size: 217
+    - path: data/processed/experiments/entity-focus/manifest.csv
+      hash: md5
+      md5: 17cd83120088867ec09670dedff49685
+      size: 29266
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+  entity_focus_dev_references:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project
+      src/python python -m scripts.entity_focus.references dev
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: src/python/scripts/acquisition_roles/judge.py
+      hash: md5
+      md5: a0781e5bc80edd0363f544ca90f52403
+      size: 6077
+    - path: src/python/scripts/entity_focus/references.py
+      hash: md5
+      md5: e3889a4b2addf3de6caef503f7272ee6
+      size: 6442
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+  entity_focus_dev_vectors@gemma:
+    cmd: bash src/python/scripts/entity_focus/encode.sh gemma dev
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-gemma
+      hash: md5
+      md5: 27f3cf50acafac104d1ccea23433caf9.dir
+      size: 1148841
+      nfiles: 100
+  entity_focus_dev_vectors@open:
+    cmd: bash src/python/scripts/entity_focus/encode.sh open dev
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-open
+      hash: md5
+      md5: 2defd0e33cf617d9c318bc5100d99b56.dir
+      size: 2802442
+      nfiles: 100
+  entity_focus_dev_vectors@qwen:
+    cmd: bash src/python/scripts/entity_focus/encode.sh qwen dev
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-qwen
+      hash: md5
+      md5: 25e0ddeb6224bb162e742d7d80f44c7d.dir
+      size: 1483466
+      nfiles: 100
+  entity_focus_dev_score:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project
+      src/python python -m scripts.entity_focus.score dev
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-gemma
+      hash: md5
+      md5: 27f3cf50acafac104d1ccea23433caf9.dir
+      size: 1148841
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-open
+      hash: md5
+      md5: 2defd0e33cf617d9c318bc5100d99b56.dir
+      size: 2802442
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-qwen
+      hash: md5
+      md5: 25e0ddeb6224bb162e742d7d80f44c7d.dir
+      size: 1483466
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: src/python/scripts/entity_focus/score.py
+      hash: md5
+      md5: 1657a49f8e3d4003a627749fe2a7338b
+      size: 8246
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-coverage.csv
+      hash: md5
+      md5: 1126a51bf371aafde9934a97eafc31ae
+      size: 9102
+    - path: data/processed/experiments/entity-focus/dev-margins.parquet
+      hash: md5
+      md5: 8ad997ac1e098820a30734c154443524
+      size: 17390
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+  entity_focus_test_references:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project
+      src/python python -m scripts.entity_focus.references test
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: src/python/scripts/acquisition_roles/judge.py
+      hash: md5
+      md5: a0781e5bc80edd0363f544ca90f52403
+      size: 6077
+    - path: src/python/scripts/entity_focus/references.py
+      hash: md5
+      md5: e3889a4b2addf3de6caef503f7272ee6
+      size: 6442
+    outs:
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+  entity_focus_test_vectors@open:
+    cmd: bash src/python/scripts/entity_focus/encode.sh open test
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/test-open
+      hash: md5
+      md5: 62ebf9193f47a39384061a1b34c1e74b.dir
+      size: 5459158
+      nfiles: 150
+  entity_focus_test_vectors@qwen:
+    cmd: bash src/python/scripts/entity_focus/encode.sh qwen test
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/test-qwen
+      hash: md5
+      md5: b927a60960cdcaae29e8a965b21eea33.dir
+      size: 2841630
+      nfiles: 150
+  entity_focus_test_vectors@gemma:
+    cmd: bash src/python/scripts/entity_focus/encode.sh gemma test
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/acquisition_roles/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: src/python/scripts/entity_focus/encode.sh
+      hash: md5
+      md5: 3ec8652da4f23ee911c1071579c9b39b
+      size: 883
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    - path: src/python/scripts/entity_focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    outs:
+    - path: data/processed/experiments/entity-focus/test-gemma
+      hash: md5
+      md5: 880c360e682c401a53a57101011ebc91.dir
+      size: 2471197
+      nfiles: 150
+  entity_focus_test_score:
+    cmd: env PYTHONPATH=src/python uv run --offline --frozen --project
+      src/python python -m scripts.entity_focus.score test
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-gemma
+      hash: md5
+      md5: 880c360e682c401a53a57101011ebc91.dir
+      size: 2471197
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-open
+      hash: md5
+      md5: 62ebf9193f47a39384061a1b34c1e74b.dir
+      size: 5459158
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-qwen
+      hash: md5
+      md5: b927a60960cdcaae29e8a965b21eea33.dir
+      size: 2841630
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: src/python/scripts/entity_focus/score.py
+      hash: md5
+      md5: 1657a49f8e3d4003a627749fe2a7338b
+      size: 8246
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/research/experiments/entity-focus
+      hash: md5
+      md5: 4fb2dc2aca7aa79ed7949f8956dafa50.dir
+      size: 67835
+      nfiles: 4
+  entity_focus_pooling:
+    cmd: bash src/python/scripts/entity_focus/pooling.sh
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-coverage.csv
+      hash: md5
+      md5: 1126a51bf371aafde9934a97eafc31ae
+      size: 9102
+    - path: data/processed/experiments/entity-focus/dev-gemma
+      hash: md5
+      md5: 27f3cf50acafac104d1ccea23433caf9.dir
+      size: 1148841
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-open
+      hash: md5
+      md5: 2defd0e33cf617d9c318bc5100d99b56.dir
+      size: 2802442
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-qwen
+      hash: md5
+      md5: 25e0ddeb6224bb162e742d7d80f44c7d.dir
+      size: 1483466
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/test-gemma
+      hash: md5
+      md5: 880c360e682c401a53a57101011ebc91.dir
+      size: 2471197
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-open
+      hash: md5
+      md5: 62ebf9193f47a39384061a1b34c1e74b.dir
+      size: 5459158
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-qwen
+      hash: md5
+      md5: b927a60960cdcaae29e8a965b21eea33.dir
+      size: 2841630
+      nfiles: 150
+    - path: data/research/experiments/entity-focus/test-coverage.csv
+      hash: md5
+      md5: 832bff28d690252588a141816e583b7b
+      size: 14072
+    - path: src/python/scripts/acquisition_roles/encode.py
+      hash: md5
+      md5: 62ffd75526c343f849955b17455f89b6
+      size: 6519
+    - path: src/python/scripts/acquisition_roles/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: src/python/scripts/entity_focus/pooling.py
+      hash: md5
+      md5: 836b3e3ea8f797f8d811079ee91632d3
+      size: 9532
+    - path: src/python/scripts/entity_focus/pooling.sh
+      hash: md5
+      md5: 25c2e6bc07fc81255dfcb696c6106c27
+      size: 1141
+    - path: src/python/scripts/entity_focus/pooling.sql
+      hash: md5
+      md5: 49ad423700287d0e9c1ab9d911843c5e
+      size: 2155
+    - path: src/python/scripts/entity_focus/templates.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/research/experiments/entity-pooling
+      hash: md5
+      md5: 6b05ae445a53aaa5d6ea0664dd8d363f.dir
+      size: 130029
+      nfiles: 5

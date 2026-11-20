@@ -50,6 +50,10 @@ lean_decls
 !/data/inputs/company-links/normalized-name-audit.sql
 !/data/inputs/company-links/check-name-recovery.sql
 !/data/inputs/company-links/normalized-name-confirmation.csv
+!/data/inputs/entity-embeddings/README.md
+!/data/inputs/entity-embeddings/entity-focus.md
+!/data/inputs/entity-embeddings/sample-acquisitions.sql
+!/data/inputs/entity-embeddings/grounding-audit.csv
 
 # Local literature records and source material.
 /.context/reference/

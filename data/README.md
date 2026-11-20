@@ -22,6 +22,9 @@ float for issuer size lives in `raw/public-float/` and
 `inputs/coverage/README.md`). DVC connects these artifacts; an experimental
 result does not become a release dataset merely by moving it.
 
+The [company-embedding validation protocol](inputs/entity-embeddings/README.md)
+defines a blinded buyer-versus-target retrieval test and its fixed sample.
+
 Stage commands create their output directories when implemented. Git ignores
 large data payloads; track reproducible data with DVC. Keep small input files,
 `.dvc` pointer files and documentation in Git.
