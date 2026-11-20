@@ -1,0 +1,27 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.entity_focus:score_entity_focus",
+  "digest": "sha256:d69c9e8d01f037281bce1230e9d4a6190b1e5a2409c319f658c0c9e78158e64b",
+  "entrypoint": "pipeline stages research score-entity-focus",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:e158848bd080588f6b88c722ffd3df7085f5b6cba974b8767e03d2228c5a4c24","kind":"global","path":"src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py","symbol":"pipeline.experiments.entity_focus:CANDIDATES"},
+    {"digest":"sha256:5034cdd9af8598b5c94f06d4a2d6fa3e7837ff48bb732af990dce54a7a069c1c","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:CANDIDATES=pipeline.experiments.entity_focus:CANDIDATES>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:json=json>"},
+    {"digest":"sha256:271fc31378e1108a9784c29c3c4768de571ce080301b4ad9721ba767fcf5842b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:np=numpy>"},
+    {"digest":"sha256:60fcc889a4e32eb808ed5945c1f3f5cfd931e5d740f69b7594a25ac097690f16","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:pd=pandas>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:<binding:typer=typer>"},
+    {"digest":"sha256:d9eaad1f320d3c40e0d057401bdfcc13916b5c1ca5ecae049b097ee2003036bf","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:MODELS"},
+    {"digest":"sha256:ddd9a3584e8e6929c0afe7d7fec3a73bf6a572c2eb0d41d8b637a5cb90fc3377","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:REPORT"},
+    {"digest":"sha256:5eaa9a6edbc5b1faa6d3aee8d85b5946471b7fe94328cd30689abbcf29f96054","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:ROOT"},
+    {"digest":"sha256:13a44c8b2296ae82ce1439c5a9d8b571a40f6d0754d239489a9960b36948e5b1","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:gain"},
+    {"digest":"sha256:64ad1b0e06b6f2012ca6f52bbe126d5cbf3bac721d17e38c2848ae3a0ddbc370","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:measure"},
+    {"digest":"sha256:54e6326b77aa3b4f835e391cf517b93ac4de26308d18c90afbe4a5aa7cd5cd4b","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:records"},
+    {"digest":"sha256:5adc7dc3762185e70ab3531eacdb32eac14d651b300d1f28005811f497caccfe","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_focus.py","symbol":"pipeline.stages.research.experiments.entity_focus:score_entity_focus"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

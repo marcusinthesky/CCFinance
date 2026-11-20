@@ -46,7 +46,7 @@ project-includes = ["apps"]
 python-version = "3.13"
 
 [tool.pytest.ini_options]
-testpaths = ["apps", "scripts/acquisition_roles/tests", "scripts/entity_focus/tests"]
+testpaths = ["apps"]
 addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]
 markers = [
   "unit: isolated behavior",

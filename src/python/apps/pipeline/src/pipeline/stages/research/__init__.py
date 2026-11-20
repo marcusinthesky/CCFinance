@@ -9,6 +9,7 @@ from pipeline.stages.research.experiments.article_metadata import (
 from pipeline.stages.research.experiments.company_focus import report_company_focus
 from pipeline.stages.research.experiments.company_links import report_company_links
 from pipeline.stages.research.experiments.coverage import report_coverage
+from pipeline.stages.research.experiments.entity_focus import score_entity_focus
 from pipeline.stages.research.experiments.metadata_validation import (
     report_metadata_validation,
 )
@@ -29,3 +30,5 @@ app.command("report-company-links")(report_company_links)
 app.command("report-company-focus")(report_company_focus)
 app.command("report-coverage")(report_coverage)
 app.command("report-metadata-validation")(report_metadata_validation)
+
+app.command("score-entity-focus")(score_entity_focus)

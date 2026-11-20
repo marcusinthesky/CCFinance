@@ -4,11 +4,10 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from pipeline.experiments.entity_focus import render, visible
+from pipeline.stages.processed.experiments.entity_focus import Summary, validate_summary
+from pipeline.stages.research.experiments.entity_focus import measure
 from pydantic_ai import ModelRetry
-
-from scripts.entity_focus.references import Summary, validate_summary
-from scripts.entity_focus.score import measure
-from scripts.entity_focus.templates import render, visible
 
 
 @pytest.mark.component
@@ -71,13 +70,11 @@ def test_selection_and_confirmation(
 ) -> None:
     """Freeze template winners and recover known accuracy from vector shards."""
     import json
-    import sys
 
     import duckdb
     import pandas as pd
-
-    from scripts.entity_focus import score
-    from scripts.entity_focus.templates import ARMS
+    from pipeline.experiments.entity_focus import ARMS
+    from pipeline.stages.research.experiments import entity_focus as score
 
     monkeypatch.setattr(score, "ROOT", tmp_path)
     monkeypatch.setattr(score, "REPORT", tmp_path / "report")
@@ -123,8 +120,7 @@ def test_selection_and_confirmation(
                     str(folder / (key[10:-1] + ".parquet"))
                 )
         (tmp_path / f"{split}-references.json").write_text(json.dumps(labels))
-        monkeypatch.setattr(sys, "argv", ["score", split])
-        score.main()
+        score.score_entity_focus(split)
     result = json.loads((tmp_path / "report" / "decision.json").read_text())
     assert set(result["selection"].values()) == {"marked"}
     assert all(r["gain"] == 1 for r in result["paired"])

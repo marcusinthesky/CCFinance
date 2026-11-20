@@ -8,6 +8,7 @@ from pipeline.stages.processed.experiments.article_metadata import sample_articl
 from pipeline.stages.processed.experiments.company_links import (
     adjudicate_links,
 )
+from pipeline.stages.processed.experiments.entity_focus import judge_entity_focus
 from pipeline.stages.processed.experiments.metadata_judges import judge_metadata
 from pipeline.stages.processed.experiments.metadata_validation import (
     sample_metadata_confirmation,
@@ -35,3 +36,5 @@ app.command("adjudicate-links")(adjudicate_links)
 app.command("sample-metadata-pilot")(sample_metadata_pilot)
 app.command("judge-metadata")(judge_metadata)
 app.command("sample-metadata-confirmation")(sample_metadata_confirmation)
+
+app.command("judge-entity-focus")(judge_entity_focus)

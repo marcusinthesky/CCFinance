@@ -1,14 +1,14 @@
 """Choose templates on development, then estimate paired held-out gains."""
 
-import argparse
 import json
 from pathlib import Path
 
 import duckdb
 import numpy as np
 import pandas as pd
+import typer
 
-from scripts.entity_focus.templates import CANDIDATES
+from pipeline.experiments.entity_focus import CANDIDATES
 
 ROOT = Path("data/processed/experiments/entity-focus")
 REPORT = Path("data/research/experiments/entity-focus")
@@ -125,11 +125,10 @@ def gain(left: pd.DataFrame, right: pd.DataFrame, alpha: float = 0.05) -> dict:
     }
 
 
-def main() -> None:
+def score_entity_focus(split: str = typer.Option(...)) -> None:
     """Materialize the independent development and confirmation outputs."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument("split", choices=["dev", "test"])
-    split = parser.parse_args().split
+    if split not in ("dev", "test"):
+        raise ValueError("Expected dev or test")
     data, diag = records(split)
     directory = ROOT if split == "dev" else REPORT
     directory.mkdir(exist_ok=True, parents=True)
@@ -220,7 +219,3 @@ def main() -> None:
         )
         + "\n"
     )
-
-
-if __name__ == "__main__":
-    main()
