@@ -1,0 +1,35 @@
+bank_order,bank,bank_group,bank_name
+1,BofA,Big 6,Bank of America
+2,Citi,Big 6,Citigroup
+3,GS,Big 6,Goldman Sachs
+4,JPMC,Big 6,JPMorgan Chase
+5,MS,Big 6,Morgan Stanley
+6,WFC,Big 6,Wells Fargo
+7,BNY,Trusts,Bank of New York Mellon
+8,NTRS,Trusts,Northern Trust
+9,STT,Trusts,State Street
+10,Amex,Credit Card,American Express
+11,COF,Credit Card,Capital One
+12,DFS,Credit Card,Discover Financial
+13,Ally,Regionals,Ally Financial
+14,CFG,Regionals,Citizens Financial Group
+15,FITB,Regionals,Fifth Third Bank
+16,HBAN,Regionals,Huntington Bank
+17,KEY,Regionals,KeyCorp
+18,MTB,Regionals,M&T Bank
+19,PNC,Regionals,PNC Group
+20,RF,Regionals,Regions Financial
+21,TFC,Regionals,Truist
+22,USBC,Regionals,US Bancorp
+23,BBVA,IHC,BBVA Compass
+24,BMO,IHC,Bank of Montreal
+25,BNP,IHC,BNP Paribas
+26,BCS,IHC,Barclays Bank
+27,CS,IHC,Credit Suisse
+28,DB,IHC,Deutsche Bank
+29,HSBC,IHC,HSBC Bank
+30,MUFG,IHC,MUFG Union
+31,RBC,IHC,Royal Bank of Canada
+32,SAN,IHC,Santander Bank
+33,TD,IHC,TD Bank
+34,UBS,IHC,UBS Group

@@ -13,8 +13,10 @@ model = "children"
 template = "children.md.j2"
 -->
 
-_No open children._
+| Status | Item | Description |
+| --- | --- | --- |
+| blocked | [Replicate three finance studies with CCFinance](.context/plan/replication/README.md) | Independent DVC targets for aggregate volatility, bank networks and overnight return probes. |
 
-`0 open; 1 terminal`
+`1 open; 1 terminal`
 
 <!-- insitu:end -->

@@ -60,3 +60,23 @@ static analysis cannot discover string-driven dynamic imports.
 See [Python commands](src/python/README.md), [LaTeX commands](src/latex/README.md)
 and [infrastructure](infra/README.md). The scaffold's Apache-2.0 license covers
 code; it does not grant rights to upstream article content.
+
+## Replication studies
+
+With the source snapshots and processed corpus restored, run a study from
+the pinned environment.
+
+```bash
+just dvc repro report_baker_emv
+just dvc repro report_kazinnik_banks
+just dvc repro report_lopez_portfolios
+```
+
+The [replication plan](.context/plan/replication/README.md) records the study
+populations, targets and verification criteria. The [comparison with the
+reference papers](.context/plan/replication/comparison.md) gives estimates and
+uncertainty for all three studies. The
+[EMV tracker](data/inputs/baker-emv/README.md) uses publisher-month article
+counts. The [bank networks](data/inputs/kazinnik-banks/README.md) use dated
+bank co-mentions. The [overnight probes](data/inputs/lopez-lira-tang/README.md)
+use fixed embeddings of article bodies available before the market cutoff.

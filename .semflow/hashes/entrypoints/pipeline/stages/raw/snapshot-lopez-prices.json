@@ -1,0 +1,27 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.raw.experiments.lopez_prices:snapshot_lopez_prices",
+  "digest": "sha256:795deaafaae3261209801bc750f021412f6649ab923fdbcc0e08f9c9e3117fbe",
+  "entrypoint": "pipeline stages raw snapshot-lopez-prices",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:5e952600f015901eea4ba47c76be7b5f6504307f05c42aac05b2136713b5eb0e","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:HTTPError=urllib.error:HTTPError>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:87d24f2596e75bac33aa4fe859c7e490e7896a9b1e45c8f9ec3b1e0f2599ffe7","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:Request=urllib.request:Request>"},
+    {"digest":"sha256:5e952600f015901eea4ba47c76be7b5f6504307f05c42aac05b2136713b5eb0e","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:URLError=urllib.error:URLError>"},
+    {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:UTC=datetime:UTC>"},
+    {"digest":"sha256:cd368e1323ca66ef47b1c160f651ef9ed6c513861bc160b5c01c36eb7136e49d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:csv=csv>"},
+    {"digest":"sha256:60840c5d7efc43df87d3f87087f40eb6bd57d46840110b3b50f65012a4353347","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:datetime=datetime:datetime>"},
+    {"digest":"sha256:092cb77ae0770f1627b29bf41b2732722fbcc3a0e1d77a79674801800a2721d1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:hashlib=hashlib>"},
+    {"digest":"sha256:6b81b4ca19c88ec507aad63f1f49291209368a9490113655a68e994c91d092c1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:re=re>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:typer=typer>"},
+    {"digest":"sha256:87d24f2596e75bac33aa4fe859c7e490e7896a9b1e45c8f9ec3b1e0f2599ffe7","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:<binding:urlopen=urllib.request:urlopen>"},
+    {"digest":"sha256:1c4ca0dfd47cb2cfcc589b79464e0876525253a7610eb1cf108daa3a76c16c95","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:ENDPOINT"},
+    {"digest":"sha256:2b4ee7b92b32ad62965aa6c0b3c0cd76cc855ec01757a30dfabae40ba8a4b606","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:QUERY"},
+    {"digest":"sha256:921e6d85fbe4c82fb856b8ed2aa6a2715cad411bd4da1dc9119c9633ed804bb1","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/raw/experiments/lopez_prices.py","symbol":"pipeline.stages.raw.experiments.lopez_prices:snapshot_lopez_prices"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

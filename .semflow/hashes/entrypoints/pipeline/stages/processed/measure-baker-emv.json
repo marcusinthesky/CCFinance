@@ -1,0 +1,21 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.experiments.baker_emv:measure_baker_emv",
+  "digest": "sha256:4f49b0222f4c9ccc0c1f744ccc51c391baf2e0b29c68325eb03b4473d6058fc9",
+  "entrypoint": "pipeline stages processed measure-baker-emv",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:json=json>"},
+    {"digest":"sha256:ac3a74d6dd975a8e8fe4b7f85fce794793a9355595b850e3926964913948d386","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:os=os>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:<binding:typer=typer>"},
+    {"digest":"sha256:ee586e304a40aa40e843b37f41d5241ba311257555f14e3fa025775561c198d6","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:INPUTS"},
+    {"digest":"sha256:87d466f98a096a88a26e168cdd34c79fa83351faba6841a62c980e51c5a78384","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:ROOT"},
+    {"digest":"sha256:fe8df04dae5bbf8d6a72099ba57d22b91ac61b11253db081e325fa2eb00249e3","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/baker_emv.py","symbol":"pipeline.stages.processed.experiments.baker_emv:measure_baker_emv"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

@@ -1760,3 +1760,481 @@ stages:
       md5: ff94295f3dc5a416d1c64a5dc2dae68e.dir
       size: 2349
       nfiles: 3
+  embed_article_bodies:
+    cmd: bash infra/inference/gemma-run.sh
+      data/processed/embeddinggemma-embeddings
+    deps:
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: infra/inference/gemma-run.sh
+      hash: md5
+      md5: 0a883c31dc86a261d615d6ed3241f750
+      size: 1241
+      isexec: true
+    - path: infra/inference/gemma_embed.py
+      hash: md5
+      md5: b92e61358bf6fa7a400619af4c912abd
+      size: 8060
+    outs:
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+  verify_body_vectors:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed verify-body-vectors --source data/raw/fine-news --vectors
+      data/processed/embeddinggemma-embeddings --output
+      data/processed/body-vector-audit/summary.json
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/verify-body-vectors.json
+      hash: md5
+      md5: b7a051cebfc188ea1ed85794cbc0db7e
+      size: 2243
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/body-vector-audit/summary.json
+      hash: md5
+      md5: 9aad2ae4529ba857c36f1c0b5db646b5
+      size: 344
+  snapshot_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-baker-emv --window data/inputs/baker-emv/window.json --output
+      data/raw/experiments/baker-emv
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-baker-emv.json
+      hash: md5
+      md5: 6d898cc55af83fb89b7fb71769c2f0f6
+      size: 7334
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/raw/experiments/baker-emv
+      hash: md5
+      md5: 9dca11ae3fd93206d7cc4a283528dc9a.dir
+      size: 212175138
+      nfiles: 3
+  snapshot_lopez_prices:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-lopez-prices --symbols
+      data/inputs/lopez-lira-tang/price-symbols.csv --output
+      data/raw/experiments/lopez-lira-tang
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-lopez-prices.json
+      hash: md5
+      md5: a605685cc0252f046b9170a324c04fa8
+      size: 4579
+    - path: data/inputs/lopez-lira-tang/price-symbols.csv
+      hash: md5
+      md5: a7d98ba677d1df97aa6eeace72a3caf7
+      size: 1491
+    outs:
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+  measure_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed measure-baker-emv --source data/raw/fine-news --articles
+      data/processed/articles/articles.parquet --hosts
+      data/inputs/baker-emv/hosts.csv --dictionary
+      data/inputs/baker-emv/dictionary.json --window
+      data/inputs/baker-emv/window.json --output
+      data/processed/experiments/baker-emv/news
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/measure-baker-emv.json
+      hash: md5
+      md5: 7fdc06b47c97c4abdbefc73daa079619
+      size: 2923
+    - path: data/inputs/baker-emv/dictionary.json
+      hash: md5
+      md5: 1dba39ff7807f1313639ec137f9c7897
+      size: 262
+    - path: data/inputs/baker-emv/hosts.csv
+      hash: md5
+      md5: 2278fdc2b537ebe3cae09ae85e55e858
+      size: 115
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/processed/experiments/baker-emv/news
+      hash: md5
+      md5: 94cdb55146c309ab205bc4b4c03c6183.dir
+      size: 16524204
+      nfiles: 2
+  prepare_baker_emv_market:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-baker-emv-market --source
+      data/raw/experiments/baker-emv/market.csv --window
+      data/inputs/baker-emv/window.json --output
+      data/processed/experiments/baker-emv/market
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-baker-emv-market.json
+      hash: md5
+      md5: ef4267cde99046ac533d218e7133815b
+      size: 2944
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/raw/experiments/baker-emv/market.csv
+      hash: md5
+      md5: 718728be0eb51561d407ca6c5fcd8ead
+      size: 56778
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/processed/experiments/baker-emv/market
+      hash: md5
+      md5: 3ebe4136be6b1c7465e294793b21ff8f.dir
+      size: 25090
+      nfiles: 2
+  build_baker_emv_panel:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research build-baker-emv-panel --news
+      data/processed/experiments/baker-emv/news/publisher_month.parquet --market
+      data/processed/experiments/baker-emv/market/monthly_market.parquet
+      --window data/inputs/baker-emv/window.json --output
+      data/research/experiments/baker-emv/panel
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/build-baker-emv-panel.json
+      hash: md5
+      md5: 3d583a61c832862853368f004574e20c
+      size: 3177
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/processed/experiments/baker-emv/market/monthly_market.parquet
+      hash: md5
+      md5: 06f69fb3e90c3f766f82348410e585cc
+      size: 2205
+    - path: data/processed/experiments/baker-emv/news/publisher_month.parquet
+      hash: md5
+      md5: 3fd7e3447ef060298c975db36d52d914
+      size: 3965
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/research/experiments/baker-emv/panel
+      hash: md5
+      md5: 3235dd063ffdef1e5eb10cc0c57aa192.dir
+      size: 16315
+      nfiles: 2
+  report_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-baker-emv --panel
+      data/research/experiments/baker-emv/panel --output
+      data/research/experiments/baker-emv/report && SOURCE_DATE_EPOCH=0 just
+      latex::render data/research/experiments/baker-emv/report/vix.tex &&
+      SOURCE_DATE_EPOCH=0 just latex::render
+      data/research/experiments/baker-emv/report/realized_volatility.tex
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-baker-emv.json
+      hash: md5
+      md5: ac7914e52f5e680947703bf669765293
+      size: 6553
+    - path: data/research/experiments/baker-emv/panel
+      hash: md5
+      md5: 3235dd063ffdef1e5eb10cc0c57aa192.dir
+      size: 16315
+      nfiles: 2
+    - path: src/latex/justfile
+      hash: md5
+      md5: 149e6f35dca12f73d342a4e998965777
+      size: 1320
+    outs:
+    - path: data/research/experiments/baker-emv/report
+      hash: md5
+      md5: 0040ed9744692a0ca72bfacbfbbd1126.dir
+      size: 92171
+      nfiles: 9
+  prepare_kazinnik_banks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-kazinnik-banks --articles
+      data/processed/articles/articles.parquet --links
+      data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet --inputs
+      data/inputs/kazinnik-banks --output
+      data/processed/experiments/kazinnik-banks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+      hash: md5
+      md5: 4c6bec7774d342f1e1fa5bcdb3f4b925
+      size: 1907
+    - path: data/inputs/kazinnik-banks/crosswalk.csv
+      hash: md5
+      md5: a27357553c7b3ab0143141f23d7c8d8b
+      size: 2935
+    - path: data/inputs/kazinnik-banks/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/windows.csv
+      hash: md5
+      md5: 05c8369651f9d07398a485ab822aa1ab
+      size: 186
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/processed/experiments/kazinnik-banks
+      hash: md5
+      md5: b553a62059cbb71408e12952ba0c0510.dir
+      size: 3467137
+      nfiles: 2
+  report_kazinnik_banks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-kazinnik-banks --source
+      data/processed/experiments/kazinnik-banks --inputs
+      data/inputs/kazinnik-banks --output
+      data/research/experiments/kazinnik-banks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-banks.json
+      hash: md5
+      md5: cb0832b3496852d9c2611fe290cf0d87
+      size: 4423
+    - path: data/inputs/kazinnik-banks/crosswalk.csv
+      hash: md5
+      md5: a27357553c7b3ab0143141f23d7c8d8b
+      size: 2935
+    - path: data/inputs/kazinnik-banks/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/windows.csv
+      hash: md5
+      md5: 05c8369651f9d07398a485ab822aa1ab
+      size: 186
+    - path: data/processed/experiments/kazinnik-banks
+      hash: md5
+      md5: b553a62059cbb71408e12952ba0c0510.dir
+      size: 3467137
+      nfiles: 2
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/research/experiments/kazinnik-banks
+      hash: md5
+      md5: 3fc81ac793b7323d897a4dafdf252f24.dir
+      size: 12367056
+      nfiles: 18
+  prepare_lopez_events:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-events --raw data/raw/fine-news --articles
+      data/processed/articles --links data/processed/company-links --issuers
+      data/processed/issuers --calendar data/inputs/lopez-lira-tang/sessions.csv
+      --output data/processed/experiments/lopez-lira-tang-events
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-events.json
+      hash: md5
+      md5: b7741c01a0d30966a922d1870c5bd4eb
+      size: 11424
+    - path: data/inputs/lopez-lira-tang/sessions.csv
+      hash: md5
+      md5: e0c9a357fe2667daec5d9bd123cada41
+      size: 17199
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
+      nfiles: 2954
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.lopez_lira_tang.calendar:
+          data/inputs/lopez-lira-tang/sessions.csv
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+  prepare_lopez_sample:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-sample --events
+      data/processed/experiments/lopez-lira-tang-events --prices
+      data/raw/experiments/lopez-lira-tang --vectors
+      data/processed/embeddinggemma-embeddings --output
+      data/processed/experiments/lopez-lira-tang-sample
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-sample.json
+      hash: md5
+      md5: 28c21fc13dad1f91b81f0d1f3bcc08ed
+      size: 6728
+    - path: data/processed/body-vector-audit/summary.json
+      hash: md5
+      md5: 9aad2ae4529ba857c36f1c0b5db646b5
+      size: 344
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+  fit_lopez_probes:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen --package
+      ccfinance-pipeline pipeline stages research fit-lopez-probes --sample
+      data/processed/experiments/lopez-lira-tang-sample --output
+      data/research/experiments/lopez-lira-tang-probes
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/fit-lopez-probes.json
+      hash: md5
+      md5: a7942b306c7d55706e74a889ef1d3c5a
+      size: 7388
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 68cb180fe4785dd8410b69b153542c8b
+      size: 279778
+    outs:
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+  report_lopez_portfolios:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-lopez-portfolios --sample
+      data/processed/experiments/lopez-lira-tang-sample --probes
+      data/research/experiments/lopez-lira-tang-probes --output
+      data/research/experiments/lopez-lira-tang && SOURCE_DATE_EPOCH=0 just
+      latex::render
+      data/research/experiments/lopez-lira-tang/portfolio_figure.tex
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-portfolios.json
+      hash: md5
+      md5: 1a9be747a20c3c5d21a08b41bb33cf25
+      size: 3612
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+    - path: src/latex/justfile
+      hash: md5
+      md5: 149e6f35dca12f73d342a4e998965777
+      size: 1320
+    outs:
+    - path: data/research/experiments/lopez-lira-tang
+      hash: md5
+      md5: 12e2675614f30e00060f1b05406da55a.dir
+      size: 405690
+      nfiles: 11

@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.lopez_lira_tang:report_lopez_portfolios",
+  "digest": "sha256:15719c618e231a99c3739da0bc6bde1efa98a6b28c5dd002313f237e060da3a7",
+  "entrypoint": "pipeline stages research report-lopez-portfolios",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:json=json>"},
+    {"digest":"sha256:b461ae95c16c1e73a466fdd306ad6da693ead3a324e5d33627958cc4a2f47e36","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:shutil=shutil>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:<binding:typer=typer>"},
+    {"digest":"sha256:ac2e7be6c077ac46ca163a083a1baecc88882273781dff68e2a561f7c2ce406c","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:TARGETS"},
+    {"digest":"sha256:eb7bdde91de85a2ec845757952068337f2f7acc342c212fb9f8b0429fe2d8605","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:_portfolio_days"},
+    {"digest":"sha256:933e39bd13ec811345653479b067c5a34de1dac5efe25d8a7f96bdbdb548a39a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:_portfolio_metrics"},
+    {"digest":"sha256:541bf0c10eb86a369ad1747c6eee7e933676114b4557e0d8750ecf75df02bcd8","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:_write_portfolio_figure"},
+    {"digest":"sha256:c34d292753e4d912f563b0d63a868cf8b01e1ecf7497840152a08cf1b4d73f4d","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:report_lopez_portfolios"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

@@ -1,0 +1,26 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.kazinnik_banks:report_kazinnik_banks",
+  "digest": "sha256:a2dd1794d59a5715843c49830673bff556361f53316a5739d731e3e2991f3945",
+  "entrypoint": "pipeline stages research report-kazinnik-banks",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:cd368e1323ca66ef47b1c160f651ef9ed6c513861bc160b5c01c36eb7136e49d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:csv=csv>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:c5309c0736bfcc7f9fac5b9cbacdc321bfe0c6bc9fbc4fd718bdf2be2884c002","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:escape=html:escape>"},
+    {"digest":"sha256:271fc31378e1108a9784c29c3c4768de571ce080301b4ad9721ba767fcf5842b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:np=numpy>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:<binding:typer=typer>"},
+    {"digest":"sha256:0d43fe7b1435b6539cb410aaedecf45e154c1c565a2860b5ceadbb157b3ea32f","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:_paired_heatmap"},
+    {"digest":"sha256:c446bc9a344915275fc8ac3c99b6cad5d27549741f7e7abf71b11ef511ac0e7a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:_summarize_pairs"},
+    {"digest":"sha256:391b7fca8c0f1770dc2bce1b1897e266b8a6322d11af67d837bb5c88023358cb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:_weight_color"},
+    {"digest":"sha256:16439525d403e54e6f60dd57d6490b6345475e85532c6a5051432559cc38ab80","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:_write_matrices"},
+    {"digest":"sha256:d60cbc6b269cf1171b06ad6cda5ace7cc049f12b14e904a9dfa2ffe1f8090028","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:_write_tables"},
+    {"digest":"sha256:2bf3e59156d85ba55640fa2c9e6e7d7dd55cc2e6c84d6716243b771b2d8d003a","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:build_networks"},
+    {"digest":"sha256:5ca6fc9fe69eb1b74d19d10d1fc03e3feb27d2b0a477488f08439276ab4a4bc2","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_banks.py","symbol":"pipeline.stages.research.experiments.kazinnik_banks:report_kazinnik_banks"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

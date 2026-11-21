@@ -52,6 +52,12 @@ Rerun the command to resume against the same frozen corpus. The worker checks
 two native FP32 probes on startup and reserves 3 GiB of free disk space.
 Use a fresh directory for a different model or input snapshot.
 
+The DVC stage `embed_article_bodies` owns the completed corpus. After an
+out-of-band GPU run, `just dvc commit embed_article_bodies` records the
+artifact in place. Run `just dvc repro verify_body_vectors` to reconcile
+source IDs, row order, text flags, dimensions and norms across every group.
+The Lopez-Lira–Tang study reads the verified vectors by article ID.
+
 ### Throughput and fidelity
 
 Run `BENCHMARK=1 bash infra/inference/gemma-run.sh .runtime/gemma-benchmark`
