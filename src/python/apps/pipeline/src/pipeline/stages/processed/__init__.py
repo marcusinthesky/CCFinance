@@ -15,9 +15,13 @@ from pipeline.stages.processed.experiments.company_links import (
 )
 from pipeline.stages.processed.experiments.entity_focus import judge_entity_focus
 from pipeline.stages.processed.experiments.kazinnik_banks import prepare_kazinnik_banks
+from pipeline.stages.processed.experiments.kazinnik_matched_weeks import (
+    prepare_kazinnik_matched_weeks,
+)
 from pipeline.stages.processed.experiments.lopez_events import (
     prepare_lopez_events,
     prepare_lopez_sample,
+    project_lopez_titles,
 )
 from pipeline.stages.processed.experiments.metadata_judges import judge_metadata
 from pipeline.stages.processed.experiments.metadata_validation import (
@@ -33,8 +37,10 @@ app = typer.Typer(no_args_is_help=True, help=__doc__)
 app.command("measure-baker-emv")(measure_baker_emv)
 app.command("prepare-baker-emv-market")(prepare_baker_emv_market)
 app.command("prepare-kazinnik-banks")(prepare_kazinnik_banks)
+app.command("prepare-kazinnik-matched-weeks")(prepare_kazinnik_matched_weeks)
 app.command("prepare-lopez-events")(prepare_lopez_events)
 app.command("prepare-lopez-sample")(prepare_lopez_sample)
+app.command("project-lopez-titles")(project_lopez_titles)
 
 
 @app.callback()

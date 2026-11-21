@@ -5,6 +5,11 @@ description: Published benchmarks, common-period comparisons and uncertainty in 
 
 # Replication estimates and inference
 
+The follow-up runs cover [tracking sensitivity on the shared calendar](tasks/baker-emv/tasks/paired-tracking/results.md),
+[matched bank earnings weeks](tasks/kazinnik-banks/tasks/matched-weeks/results.md),
+[paired title and body probes](tasks/lopez-lira-tang/tasks/fixed-title-probes/README.md)
+and [recoverable publication times](tasks/lopez-lira-tang/tasks/publisher-support/results.md).
+
 ## Baker, Bloom, Davis and Kost
 
 The original eleven-newspaper EMV tracker explains more contemporaneous
@@ -65,7 +70,10 @@ appendix remain unverified. [Manuscript, Table 2][banks] · [Journal article][jo
 **Inference.** January and April supply one earnings week each. A single
 multi-bank article generates many related edges, and the same syndicated
 story can appear on several hosts. An independent-pairs test would understate
-uncertainty. Keep the two-week result descriptive. To test a broader stress
+uncertainty. The follow-up equalized publisher counts across six earnings weeks and found an
+average rise of 56.3 connections for January–April 2020, compared with declines
+of 9.8 and 21.8 in the two comparison periods. Two reference changes give
+little resolution for formal inference. To test a broader stress
 effect, predefine other earnings weeks, match article volume and publisher
 composition, and rebuild networks under a week-level placebo or resampling
 design. Group syndications when resampling stories. This would estimate how
@@ -98,9 +106,9 @@ for reaction and [−0.252%, +0.042%] for drift. With five-session blocks the
 intervals are [−0.617%, −0.038%] and [−0.243%, +0.036%]. Drift is compatible
 with zero. These intervals measure uncertainty in this portfolio series.
 Attributing a gap to the text or encoder requires a paired experiment on
-identical stories, issuers, sessions, returns and exposure rules. Run the
-same encoder on titles and bodies first. Compare encoders on the same text
-separately. Predefine mean drift as the primary endpoint, report trading
+identical stories, issuers, sessions, returns and exposure rules. On the frozen 996 articles, Gemma title minus Gemma body mean daily drift
+was +5.72 basis points (paired 21-session 95% interval −10.67 to +21.39).
+MiniLM title minus Gemma title was −0.26 basis points (−18.32 to +17.47). Predefine mean drift as the primary endpoint, report trading
 costs and paired-leg support, and block-resample daily return differences.
 Treat reaction, hit rate, Sharpe and additional subgroup tests as secondary.
 

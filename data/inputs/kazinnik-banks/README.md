@@ -103,3 +103,52 @@ The research stage writes group comparisons, bank activity and centrality,
 pair counts and matrices, two paired SVG heatmaps, coverage by publisher and
 bank count, and article IDs for the largest edges and repeated headlines.
 See the [results record](../../../.context/plan/replication/tasks/kazinnik-banks/results.md).
+
+## Matched earnings weeks
+
+[matched-weeks.csv](matched-weeks.csv) fixes six Monday–Sunday windows around
+JPMorgan Chase earnings releases. It preserves the manuscript's January and
+April 2020 dates and pairs the next four releases as July to October 2020 and
+January to April 2021. The latter repeats the quarter-of-year comparison.
+The dated investor records identify the release in every week.
+[JPMorgan Chase 2019–2020 events][jpm-2020] ·
+[January 2021][jpm-jan-2021] · [April 2021][jpm-apr-2021]
+
+The follow-up retains all 34 nodes and the same dated links for the 33 covered
+nodes. It extends crosswalk entries with an April 30, 2020 end date through
+April 30, 2021, only in the follow-up. This treats the issuer-to-node identities,
+including foreign-parent proxies, as fixed for these six windows. PNC and BBVA
+announced their agreement in November 2020 and closed on June 1, 2021, after
+the last window. HSBC announced its US retail divestitures in May 2021, and US
+Bancorp completed its Union Bank acquisition in December 2022. Morgan Stanley
+closed its E*TRADE and Eaton Vance deals during the follow-up, changing the
+business covered by the same listed issuer. The fixed mapping continues to use
+the original roster CIKs, without adding those acquired names as aliases. Merger
+news can still contribute to co-mentions.
+[PNC agreement][pnc-agreement] · [BBVA disposition][bbva-close] ·
+[HSBC US announcement][hsbc-retail] · [US Bancorp annual report][mufg-close] ·
+[Morgan Stanley strategic update][ms-acquisitions]
+
+Within each week, connect bank articles that share an upstream MinHash cluster,
+an exact text hash, or a nonempty normalized headline. Take the earliest
+published copy, breaking same-date ties by article ID, as each connected
+component's representative. Use its publisher and bank mentions. Within each
+publisher host, retain its minimum count of representative stories over all six
+weeks. Sample that many stories uniformly without replacement in every week
+for 1,000 draws with seed 42. Compare after-minus-before changes in connected
+pairs and total pair weight. The sampling ranges describe sensitivity to
+subsampling the observed stories. The two non-overlapping placebo changes
+provide an empirical rank with limited resolution.
+
+Run `just dvc repro report_kazinnik_matched_weeks`. The report includes
+weekly support and network measures, publisher quotas, change distributions
+summarized by their means and percentiles, and placebo ranks.
+
+[jpm-2020]: https://www.jpmorganchase.com/ir/events
+[jpm-jan-2021]: https://www.jpmorganchase.com/ir/news/2021/jpmc-to-host-fourth-quarter-and-full-year-2020-earnings-call
+[jpm-apr-2021]: https://www.jpmorganchase.com/ir/news/2021/jpmorgan-chase-to-host-first-quarter-2021-earnings-call
+[pnc-agreement]: https://investor.pnc.com/sec-filings/all-sec-filings/content/0000713676-20-000142/a20201116rlspncbbvausafi.htm
+[bbva-close]: https://www.sec.gov/Archives/edgar/data/842180/000084218024000007/R12.htm
+[hsbc-retail]: https://www.about.us.hsbc.com/newsroom/press-releases/hsbc-exits-us-mass-market-retail-banking
+[mufg-close]: https://www.usbank.com/dam/usbank-2024/en/documents/pdfs/common/2023-USB_Annual_Report.pdf
+[ms-acquisitions]: https://www.morganstanley.com/content/dam/msdotcom/en/about-us-ir/shareholder/4q2021-strategic-update.pdf

@@ -30,7 +30,7 @@ template = "children.md.j2"
 
 _No open children._
 
-`0 open; 5 terminal`
+`0 open; 7 terminal`
 
 <!-- insitu:end -->
 

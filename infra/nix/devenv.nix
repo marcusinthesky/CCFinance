@@ -22,6 +22,7 @@
       tombi
       just-lsp
       ripgrep
+      libarchive
       python313
       uv
       ruff

@@ -926,3 +926,125 @@ stages:
       - .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-lopez-prices.json
     outs:
       - data/raw/experiments/lopez-lira-tang
+
+  audit_lopez_publisher_support:
+    desc: Screen publisher opportunities within the fixed issuer universe and inspect first-publication evidence.
+    cmd: mkdir -p data/research/experiments/lopez-publisher-support && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_publisher_support.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_publisher_support.sql
+      - data/processed/experiments/lopez-lira-tang-events
+      - data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/raw/fine-news
+    outs:
+      - data/research/experiments/lopez-publisher-support
+
+  compare_baker_tracking:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research compare-baker-tracking
+      --panel data/research/experiments/baker-emv/panel
+      --archive data/raw/experiments/baker-emv/replication.rar
+      --output data/research/experiments/baker-emv/paired-tracking
+    deps:
+      - data/research/experiments/baker-emv/panel/monthly_panel.parquet
+      - data/research/experiments/baker-emv/panel/coverage.parquet
+      - data/raw/experiments/baker-emv/replication.rar
+      - .semflow/hashes/entrypoints/pipeline/stages/research/compare-baker-tracking.json
+    outs:
+      - data/research/experiments/baker-emv/paired-tracking
+
+  prepare_kazinnik_matched_weeks:
+    desc: Join the frozen bank roster to articles in predefined earnings weeks.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-kazinnik-matched-weeks --articles data/processed/articles/articles.parquet
+      --links data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/processed/experiments/kazinnik-matched-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+      - ${experiments.kazinnik_banks.protocol}/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-matched-weeks.json
+    outs:
+      - data/processed/experiments/kazinnik-matched-weeks
+
+  report_kazinnik_matched_weeks:
+    desc: Compare publisher- and volume-matched bank networks and placebo changes.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-kazinnik-matched-weeks --source data/processed/experiments/kazinnik-matched-weeks
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/research/experiments/kazinnik-matched-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/experiments/kazinnik-matched-weeks
+      - ${experiments.kazinnik_banks.protocol}/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+    outs:
+      - data/research/experiments/kazinnik-matched-weeks
+  project_lopez_titles:
+    desc: Project the captured title of each fixed López-Lira–Tang sample article.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed project-lopez-titles
+      --sample data/processed/experiments/lopez-lira-tang-sample --output data/processed/experiments/lopez-lira-tang-titles
+    deps:
+      - data/processed/experiments/lopez-lira-tang-sample
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/project-lopez-titles.json
+    outs:
+      - data/processed/experiments/lopez-lira-tang-titles
+
+  embed_lopez_gemma_titles:
+    desc: Encode the fixed captured titles with the same GPU worker and model as the bodies.
+    cmd: >-
+      ARTICLE_SOURCE=data/processed/experiments/lopez-lira-tang-titles
+      bash infra/inference/gemma-run.sh data/processed/experiments/lopez-lira-tang-title-gemma
+    deps:
+      - data/processed/experiments/lopez-lira-tang-titles
+      - infra/inference/gemma-run.sh
+      - infra/inference/gemma_embed.py
+    outs:
+      - data/processed/experiments/lopez-lira-tang-title-gemma
+
+  embed_lopez_minilm_titles:
+    desc: Encode the same captured titles with the published MiniLM encoder.
+    cmd: >-
+      bash infra/inference/minilm-run.sh data/processed/experiments/lopez-lira-tang-titles
+      data/processed/experiments/lopez-lira-tang-title-minilm
+    deps:
+      - data/processed/experiments/lopez-lira-tang-titles
+      - infra/inference/minilm-run.sh
+      - infra/inference/minilm-model.sha256
+      - infra/inference/minilm_embed.py
+    outs:
+      - data/processed/experiments/lopez-lira-tang-title-minilm
+
+  report_lopez_title_probes:
+    desc: Compare title and body rolling probes on identical article, security and session support.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      uv run --project src/python --offline --frozen --package ccfinance-pipeline
+      pipeline stages research report-lopez-title-probes
+      --sample data/processed/experiments/lopez-lira-tang-sample
+      --gemma data/processed/experiments/lopez-lira-tang-title-gemma
+      --minilm data/processed/experiments/lopez-lira-tang-title-minilm
+      --output data/research/experiments/lopez-lira-tang-title-probes
+    deps:
+      - src/python/uv.lock
+      - data/processed/experiments/lopez-lira-tang-sample
+      - data/processed/experiments/lopez-lira-tang-title-gemma
+      - data/processed/experiments/lopez-lira-tang-title-minilm
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-title-probes.json
+    outs:
+      - data/research/experiments/lopez-lira-tang-title-probes

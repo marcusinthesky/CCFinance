@@ -1,0 +1,25 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.research.experiments.kazinnik_matched_weeks:report_kazinnik_matched_weeks",
+  "digest": "sha256:11d3294a1fb874fdd950efde332cd32d646b5ddef1612418cb8c688c3873bf11",
+  "entrypoint": "pipeline stages research report-kazinnik-matched-weeks",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:cd368e1323ca66ef47b1c160f651ef9ed6c513861bc160b5c01c36eb7136e49d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:csv=csv>"},
+    {"digest":"sha256:faa9956a812f71638fe3d1f211b627659202baa6a9e4e5ca7b2a8fc450dc71e1","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:defaultdict=collections:defaultdict>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:271fc31378e1108a9784c29c3c4768de571ce080301b4ad9721ba767fcf5842b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:np=numpy>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:<binding:typer=typer>"},
+    {"digest":"sha256:c6e718a2da0e22c3111cf13bf32b450c536fdb4d35898e73fdf9494b69223aa2","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_DRAWS"},
+    {"digest":"sha256:a1c13960b730167ff199ee5c509abcef2380efc4dc1135da5ab42d151f6a18bb","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_SEED"},
+    {"digest":"sha256:64e98542b465f4f7427200882f67632f886bcbbd2936444c4515348298dae5cb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_network"},
+    {"digest":"sha256:68d029b5436060470df3ee239862404194c4cc280203802ddccce445ec498f7b","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_representatives"},
+    {"digest":"sha256:3cc0c73cf79032f8552992334d2f91ef3e31a9407745bf9679979061402298a8","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_write_csv"},
+    {"digest":"sha256:071e309e3adcfb50e18ab1eff9a549216aa2facfd1c205464a74620d755f20b0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:report_kazinnik_matched_weeks"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

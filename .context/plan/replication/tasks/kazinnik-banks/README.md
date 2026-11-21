@@ -35,7 +35,7 @@ template = "children.md.j2"
 | --- | --- | --- |
 | blocked | [Reconcile the historical bank roster](tasks/roster/README.md) | Map the published bank universe to dated legal entities and document omitted nodes. |
 
-`1 open; 2 terminal`
+`1 open; 3 terminal`
 
 <!-- insitu:end -->
 

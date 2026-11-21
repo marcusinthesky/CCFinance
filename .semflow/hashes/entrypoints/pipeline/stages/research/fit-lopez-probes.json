@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.research.experiments.lopez_lira_tang:fit_lopez_probes",
-  "digest": "sha256:288fb708483d8ad5aae8be62024467f9d6b8de38141f31776d08f891d9a5761f",
+  "digest": "sha256:7ce05e850ce44016c34476fd0a9e9d70d07779a87d9c35af994aeb7e2644cfa0",
   "entrypoint": "pipeline stages research fit-lopez-probes",
   "fallbacks": [
   ],
@@ -23,12 +23,12 @@
     {"digest":"sha256:532d2a04d6c3572ffed1c40ab516c3af4a1d3078f560c359f6b30a3d4035ef31","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:FEATURES"},
     {"digest":"sha256:a50fa8b5d1a2d090fbd3798da85c0d4d5a261fb67b13c54d71a92b35201a9be4","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:MAX_ITER"},
     {"digest":"sha256:dbb2630079a121733a1f88f416518199cc4ac46e92a43dbfc40f410fa0aa188b","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:MIN_ROWS"},
-    {"digest":"sha256:ae027ae7d1b3180363e659cc4c5f9c1cb313ef5457f798a2c5a6617d71a1f9f0","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:SAMPLES"},
     {"digest":"sha256:c0c4a82d878dd76b1a84c9dc23a5702fdfaa7a6854a6ed9b435f5c39cfe051c4","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:SEED"},
     {"digest":"sha256:ac2e7be6c077ac46ca163a083a1baecc88882273781dff68e2a561f7c2ce406c","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:TARGETS"},
+    {"digest":"sha256:ae7c6f55cebbffbe0c1a0133885091aa3751866c3a1dd242873ab2b2998279f4","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:_fit_probes"},
     {"digest":"sha256:439e3d8a80f12ea095e2a418cd844567d29e6796cd61637be49abb2cad9940ec","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:_shift_month"},
     {"digest":"sha256:33a25752d736787c29f31581fa9ed91f2a7fa083c708db0504fde90baef1ec66","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:fit_disposition"},
-    {"digest":"sha256:1f3d4950ee73cba2abb433dd5cbcd6b4185c711fa824a7a0c0463ea0015cd8f5","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:fit_lopez_probes"},
+    {"digest":"sha256:1f8ba9c370119041ffac5c7e7ce1dac38c1ac6aea954eb84346f3b6bfa525bb2","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:fit_lopez_probes"},
     {"digest":"sha256:146f7d69275bdf04038c2a7e6914af9d92482754f42265927e162da5491fe315","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang.py","symbol":"pipeline.stages.research.experiments.lopez_lira_tang:training_start"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},

@@ -1,0 +1,25 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.experiments.kazinnik_matched_weeks:prepare_kazinnik_matched_weeks",
+  "digest": "sha256:0eba47c369c1c7b41133affe488ee38909361b95e43a3c33b06d1d36f7761220",
+  "entrypoint": "pipeline stages processed prepare-kazinnik-matched-weeks",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_banks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_banks:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_banks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_banks:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_banks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_banks:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_banks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_banks:<binding:typer=typer>"},
+    {"digest":"sha256:00a5952306ee28279446bff7186a03805c1d849b73dd58839a13a4a108a0b02c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_banks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_banks:prepare_kazinnik_banks"},
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:bdfe35b0d971f7a0fb8627d579896c8cd3aa16830579665e505e09082fbd9b80","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:TemporaryDirectory=tempfile:TemporaryDirectory>"},
+    {"digest":"sha256:40725d06a981f01143bd409f12bedcbbd426691c529c292d0ea6847df19c7f36","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:copyfile=shutil:copyfile>"},
+    {"digest":"sha256:cd368e1323ca66ef47b1c160f651ef9ed6c513861bc160b5c01c36eb7136e49d","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:csv=csv>"},
+    {"digest":"sha256:1fcdad87317eb2d698e9ee4d52004e76ec8d52ac2af9ca8c16e91a9fc735da51","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:prepare_kazinnik_banks=pipeline.stages.processed.experiments.kazinnik_banks:prepare_kazinnik_banks>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:<binding:typer=typer>"},
+    {"digest":"sha256:cc52cca2fbedafd8628421bc43dc775e65a74b1b9903645276ce97f6cc9c6fee","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.processed.experiments.kazinnik_matched_weeks:prepare_kazinnik_matched_weeks"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}

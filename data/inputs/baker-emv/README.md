@@ -115,7 +115,13 @@ Baker processed directory, and find `monthly_panel.parquet`, `table.md`,
 figures under `data/research/experiments/baker-emv/`. The report stage renders both PDFs from the saved
 PGFPlots sources and `tracking.csv` using the pinned TeX bundle.
 
+Run `just dvc repro compare_baker_tracking` for the paired comparison with
+the authors’ tracker. The [common-period results][paired] report the 49-month
+R² differences, paired block intervals, calibration sensitivities and the
+influence of the early pandemic months.
+
 [paper]: https://static1.squarespace.com/static/5e2ea3a8097ed30c779bd707/t/688847f536b2b31218aeefab/1753761782006/Policy%2BNews%2Band%2BStock%2BMarket%2BVolatility%2BJuly%2B2025.pdf
 [archive]: https://data.mendeley.com/datasets/rmhtcwnvrk/1
 [vix]: https://fred.stlouisfed.org/series/VIXCLS
 [sp500]: https://fred.stlouisfed.org/series/SP500
+[paired]: ../../../.context/plan/replication/tasks/baker-emv/tasks/paired-tracking/results.md

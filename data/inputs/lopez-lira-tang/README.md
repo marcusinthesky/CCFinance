@@ -182,6 +182,84 @@ daily figures have no trading costs or short-borrow charges. The reaction
 measures an overnight move that begins before the strategy observes the
 article. [Novavax release](https://ir.novavax.com/press-releases/2024-05-10-Novavax-and-Sanofi-Announce-Co-exclusive-Licensing-Agreement-to-Co-commercialize-COVID-19-Vaccine-and-Develop-Novel-COVID-19-Influenza-Combination-Vaccines).
 
+## Fixed-sample title probes
+
+We encoded the captured titles of all 996 articles in the fixed panel of
+1,104 article–security rows. The title projection kept one title per article
+with its original ID. Both title encoders returned one valid vector for
+every ID. We reused the same 670-session calendar, labels, fit windows,
+eligibility rules and portfolio construction. The refit reproduced every
+saved body prediction and monthly fit row. Each of the three main
+representations produced 20 fits, 846 out-of-sample story predictions,
+738 chosen security–session signals and 277 evaluated sessions per target.
+
+Gemma titles used the body encoder's pinned revision, prompt prefix,
+2,048-token cap, BF16 GPU build and FP16 storage. The RTX 5060 Ti worker
+passed its two startup comparisons with native FP32, with minimum cosine
+0.999947. For MiniLM we used the authors' 384-coordinate
+`sentence-transformers/all-MiniLM-L6-v2` with an independently pinned
+checkpoint. The offline worker reproduces the model's 256-token limit, masked
+mean pooling and L2 normalization in FP32. The archive's
+`02_MatchPermno.R` removes the literal `Press Release:` and its trailing space, and the pattern
+`-[[:digit:]]-` with a leading space before trimming whitespace and passing `clean_headline`
+to `03_Generate_MiniLM_Embeddings.py`. Neither pattern appeared in any of
+our captured titles and trimming changed none. [Version-two replication archive](https://data.mendeley.com/datasets/f39x226htv/2),
+[pinned MiniLM checkpoint](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/tree/1110a243fdf4706b3f48f1d95db1a4f5529b4d41).
+
+| Representation | Target | Convergence warnings out of 20 | Long-leg days | Short-leg days | Both-leg days | Positive days | Mean return (bp) | Drift Sharpe |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Gemma body | Drift | 16 | 118 | 78 | 42 | 26.71% | −10.15 | −1.35 |
+| Gemma title | Drift | 16 | 117 | 67 | 31 | 25.63% | −4.43 | −0.54 |
+| MiniLM title | Drift | 17 | 121 | 65 | 34 | 25.27% | −4.69 | −0.66 |
+| Gemma body | Reaction | 15 | 58 | 121 | 29 | 23.10% | −26.10 | |
+| Gemma title | Reaction | 16 | 58 | 120 | 31 | 22.02% | −22.35 | |
+| MiniLM title | Reaction | 16 | 70 | 122 | 40 | 24.91% | −29.01 | |
+
+| Drift contrast | Mean difference (bp) | 95% interval, 21 sessions (bp) | 95% interval, 5 sessions (bp) | Chosen signals reversed out of 738 | Long / short leg availability changed (days) | Daily portfolio sign reversed (days) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Gemma title − Gemma body | +5.72 | [−10.67, +21.39] | [−11.05, +22.82] | 190 | 39 / 49 | 47 |
+| MiniLM title − Gemma body | +5.46 | [−9.82, +19.90] | [−9.43, +20.58] | 244 | 37 / 53 | 47 |
+| MiniLM title − Gemma title | −0.26 | [−18.32, +17.47] | [−17.29, +16.83] | 206 | 32 / 54 | 41 |
+
+Intervals use 10,000 paired circular block draws with seed 42 over the 438
+exchange sessions spanning September 2, 2022 through May 31, 2024. Each draw
+preserves zero-leg days as zeros, leaves unevaluated sessions missing, and
+averages observed daily differences. The intervals describe this fixed
+sample conditional on the fitted models. All three drift means are negative
+and every paired interval spans zero. Changing the text or encoder often
+changed signals and leg coverage, with limited precision on the mean return
+differences. For reaction, Gemma titles changed the mean by +3.76 bp
+and reversed 199 of 738 chosen signals versus bodies. MiniLM titles
+changed it by −2.91 bp and reversed 263 signals versus bodies. The two
+title encoders differed by −6.66 bp (MiniLM minus Gemma) and reversed
+226 signals. The published MiniLM strategy reports an overnight reaction mean of +112 bp and hit rate
+of 80.15%, and a drift mean of +11 bp, hit rate of 56.57% and Sharpe of 1.42,
+on its broader RavenPack/CRSP universe. [Paper Table 8](https://arxiv.org/html/2304.07619v6#S7.T8).
+
+Restore the pinned EmbeddingGemma snapshot described in the
+[inference README](../../../infra/inference/README.md). From the repository
+root in the pinned environment, download the MiniLM snapshot and run the
+report. The launcher checks every listed model file against a committed
+SHA-256 manifest before GPU inference.
+
+```bash
+HF_HUB_DISABLE_IMPLICIT_TOKEN=1 uvx --from huggingface-hub==1.30.0 hf download \
+  sentence-transformers/all-MiniLM-L6-v2 \
+  config.json model.safetensors tokenizer.json tokenizer_config.json \
+  special_tokens_map.json vocab.txt 1_Pooling/config.json modules.json \
+  sentence_bert_config.json \
+  --revision 1110a243fdf4706b3f48f1d95db1a4f5529b4d41 \
+  --local-dir .runtime/all-MiniLM-L6-v2
+just dvc repro report_lopez_title_probes
+```
+
+The study report at `data/research/experiments/lopez-lira-tang-title-probes/`
+writes model fits, predictions, the paired story and session ledgers, the
+summary tables and drift intervals. Changes in long and short legs are
+recorded separately. A daily sign reversal requires two nonzero returns of
+opposite signs. The portfolio spread subtracts the shorted securities'
+return. CSV return units are decimals.
+
 ## Reproduction and artifacts
 
 After restoring the frozen sources and body vectors with DVC, run

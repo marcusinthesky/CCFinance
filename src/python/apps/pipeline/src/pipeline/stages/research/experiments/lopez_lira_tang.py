@@ -16,11 +16,15 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.linear_model import LogisticRegression
 
 TARGETS = ("reaction", "drift")
-SAMPLES = ("body", "title_named_body")
 MIN_ROWS = 100
 MAX_ITER = 10
 SEED = 42
 FEATURES = 768
+TITLE_CONTRASTS = (
+    ("gemma_title", "body"),
+    ("minilm_title", "body"),
+    ("minilm_title", "gemma_title"),
+)
 
 
 def _shift_month(day: date, months: int) -> date:
@@ -53,6 +57,16 @@ def fit_lopez_probes(
     prediction_end: str = "2024-05-31",
 ) -> None:
     """Fit both sign classifiers and write predictions and a monthly audit."""
+    _fit_probes(sample, output, prediction_start, prediction_end)
+
+
+def _fit_probes(
+    sample: Path,
+    output: Path,
+    prediction_start: str = "2021-10-01",
+    prediction_end: str = "2024-05-31",
+    title_vectors: dict[str, tuple[Path, int]] | None = None,
+) -> None:
     first = date.fromisoformat(prediction_start)
     last = date.fromisoformat(prediction_end)
     if first.day != 1 or last < first:
@@ -72,14 +86,38 @@ def fit_lopez_probes(
             """,
             [str(sample / "sample.parquet")],
         ).fetchall()
-    x = np.asarray([row[10] for row in rows], dtype=np.float64).reshape(-1, FEATURES)
+        title_features = {}
+        if title_vectors:
+            required_ids = {row[0] for row in rows}
+            for name, (path, dimensions) in title_vectors.items():
+                vectors = (
+                    con.read_parquet(str(path / "**/*.parquet"))
+                    .project("id, embedding, has_text")
+                    .fetchall()
+                )
+                by_id = {article_id: embedding for article_id, embedding, _ in vectors}
+                if (
+                    len(vectors) != len(by_id)
+                    or set(by_id) != required_ids
+                    or not all(has_text for _, _, has_text in vectors)
+                ):
+                    msg = f"{name} vectors must match the fixed article IDs exactly"
+                    raise ValueError(msg)
+                matrix = np.asarray([by_id[row[0]] for row in rows], dtype=np.float64)
+                if matrix.shape != (len(rows), dimensions) or not np.allclose(
+                    np.linalg.norm(matrix, axis=1), 1.0, atol=1e-3
+                ):
+                    msg = f"Invalid {name} vector coordinates"
+                    raise ValueError(msg)
+                title_features[name] = matrix
+    body = np.asarray([row[10] for row in rows], dtype=np.float64).reshape(-1, FEATURES)
     y = np.sign(
         np.asarray([[row[8], row[9]] for row in rows], dtype=np.float64).reshape(-1, 2)
     ).astype(np.int8)
     sessions = np.asarray([row[3] for row in rows], dtype="datetime64[D]")
     observable = np.asarray([row[6] for row in rows], dtype="datetime64[s]")
     named = np.asarray([row[7] for row in rows], dtype=np.bool_)
-    if not np.all(np.isfinite(x)):
+    if not np.all(np.isfinite(body)):
         msg = "Nonfinite body embedding coordinates"
         raise ValueError(msg)
 
@@ -134,7 +172,8 @@ def fit_lopez_probes(
                 "convergence_warning",
             )
         )
-        for cohort in SAMPLES:
+        features = {"body": body, "title_named_body": body, **title_features}
+        for cohort, x in features.items():
             selected = (
                 named
                 if cohort == "title_named_body"
@@ -220,7 +259,7 @@ def fit_lopez_probes(
                             int(np.sum(labels == 0)),
                             int(np.sum(labels == 1)),
                             len(test),
-                            FEATURES,
+                            x.shape[1],
                             "lbfgs",
                             MAX_ITER,
                             SEED,
@@ -349,6 +388,25 @@ def _write_portfolio_figure(con: duckdb.DuckDBPyConnection, output: Path) -> Non
     )
 
 
+def _load_portfolio_inputs(
+    con: duckdb.DuckDBPyConnection, sample: Path, probes: Path
+) -> None:
+    con.read_parquet(str(sample / "sessions.parquet")).create("sessions")
+    # Preserve the output schema when every fit is skipped.
+    con.execute(
+        """
+        CREATE TABLE predictions AS SELECT * FROM read_csv(?, types={
+            'sample':'VARCHAR','target':'VARCHAR','month':'DATE','id':'VARCHAR','cik':'BIGINT',
+            'ticker':'VARCHAR','session':'DATE','published_at':'TIMESTAMP','captured_at':'TIMESTAMP',
+            'label_observed_at':'TIMESTAMP','realized_return':'DOUBLE','realized_sign':'INTEGER',
+            'predicted_sign':'INTEGER','positive_probability':'DOUBLE','training_rows':'INTEGER'
+        });
+        """,
+        [str(probes / "predictions.csv")],
+    )
+    con.read_csv(str(probes / "windows.csv"), header=True).create("windows")
+
+
 def report_lopez_portfolios(
     sample: Annotated[Path, typer.Option()],
     probes: Annotated[Path, typer.Option()],
@@ -357,20 +415,7 @@ def report_lopez_portfolios(
     """Write reaction and drift metrics, daily legs, stories and support."""
     output.mkdir(parents=True, exist_ok=True)
     with duckdb.connect(config={"threads": "1"}) as con:
-        con.read_parquet(str(sample / "sessions.parquet")).create("sessions")
-        # Preserve the output schema when every fit is skipped.
-        con.execute(
-            """
-            CREATE TABLE predictions AS SELECT * FROM read_csv(?, types={
-                'sample':'VARCHAR','target':'VARCHAR','month':'DATE','id':'VARCHAR','cik':'BIGINT',
-                'ticker':'VARCHAR','session':'DATE','published_at':'TIMESTAMP','captured_at':'TIMESTAMP',
-                'label_observed_at':'TIMESTAMP','realized_return':'DOUBLE','realized_sign':'INTEGER',
-                'predicted_sign':'INTEGER','positive_probability':'DOUBLE','training_rows':'INTEGER'
-            });
-            """,
-            [str(probes / "predictions.csv")],
-        )
-        con.read_csv(str(probes / "windows.csv"), header=True).create("windows")
+        _load_portfolio_inputs(con, sample, probes)
         _portfolio_days(con)
         con.sql("FROM daily ORDER BY target,sample,session").write_csv(
             str(output / "daily_portfolios.csv"), header=True
@@ -431,3 +476,171 @@ def report_lopez_portfolios(
         )
         + "\n"
     )
+
+
+def _paired_drift_interval(
+    con: duckdb.DuckDBPyConnection, variant: str, reference: str, block_size: int
+) -> tuple[float, float]:
+    # Keep missing sessions in the calendar so gaps retain their original spacing.
+    pairs = con.execute(
+        """SELECT portfolio_delta FROM paired_days
+           WHERE target='drift' AND variant=? AND reference=? ORDER BY session""",
+        [variant, reference],
+    ).fetchall()
+    values = np.asarray([row[0] for row in pairs], dtype=np.float64)
+    evaluated = np.flatnonzero(np.isfinite(values))
+    if not len(evaluated):
+        msg = "No evaluated sessions for the paired drift interval"
+        raise ValueError(msg)
+    values = values[evaluated[0] : evaluated[-1] + 1]
+    repetitions = 10_000
+    rng = np.random.default_rng(SEED)
+    n_sessions = len(values)
+    n_blocks = (n_sessions + block_size - 1) // block_size
+    starts = rng.integers(n_sessions, size=(repetitions, n_blocks))
+    indices = (starts[:, :, None] + np.arange(block_size)) % n_sessions
+    replicates = values[indices.reshape(repetitions, -1)[:, :n_sessions]]
+    denominators = np.isfinite(replicates).sum(axis=1)
+    valid = denominators > 0
+    limits = np.quantile(
+        np.nansum(replicates[valid], axis=1) / denominators[valid], [0.025, 0.975]
+    )
+    return float(limits[0]), float(limits[1])
+
+
+def _compare_title_predictions(con: duckdb.DuckDBPyConnection) -> None:
+    con.execute(
+        """
+        CREATE TABLE paired_positions AS
+        SELECT t.sample AS variant,b.sample AS reference,t.target,t.session,t.cik,
+               t.ticker,t.id,t.month,
+               b.predicted_sign AS reference_sign,t.predicted_sign AS variant_sign,
+               t.realized_sign,
+               b.positive_probability AS reference_probability,
+               t.positive_probability AS variant_probability,t.source_rank
+        FROM positions t
+        JOIN positions b USING(target,session,cik,ticker,id,month,source_rank,
+                               training_rows,realized_return,realized_sign)
+        WHERE (t.sample,b.sample) IN (
+            ('gemma_title','body'),('minilm_title','body'),('minilm_title','gemma_title')
+        );
+
+        CREATE TABLE paired_days AS
+        SELECT t.sample AS variant,b.sample AS reference,t.target,t.session,
+               t.month,t.evaluated,
+               b.positions,
+               b.long_exposure AS reference_long_leg,
+               t.long_exposure AS variant_long_leg,
+               b.short_exposure AS reference_short_leg,
+               t.short_exposure AS variant_short_leg,
+               b.long_return AS reference_long_return,
+               t.long_return AS variant_long_return,
+               b.short_security_return AS reference_short_return,
+               t.short_security_return AS variant_short_return,
+               b.portfolio_return AS reference_return,
+               t.portfolio_return AS variant_return,
+               t.portfolio_return-b.portfolio_return AS portfolio_delta
+        FROM daily t JOIN daily b
+            USING(target,session,month,evaluated,positions,disposition)
+        WHERE (t.sample,b.sample) IN (
+            ('gemma_title','body'),('minilm_title','body'),('minilm_title','gemma_title')
+        );
+        """
+    )
+    for table, matched in (("positions", "paired_positions"), ("daily", "paired_days")):
+        counts = dict(
+            con.table(table)
+            .filter("sample IN ('body','gemma_title','minilm_title')")
+            .aggregate("sample, count(*)")
+            .fetchall()
+        )
+        matching = con.table(matched).aggregate("variant, reference, count(*)")
+        expected = {
+            (variant, reference, counts.get(variant))
+            for variant, reference in TITLE_CONTRASTS
+        }
+        if (
+            len(counts) != 3
+            or len(set(counts.values())) != 1
+            or set(matching.fetchall()) != expected
+        ):
+            msg = f"Title {table} do not match the fixed body prediction support"
+            raise ValueError(msg)
+
+
+def report_lopez_title_probes(
+    sample: Annotated[Path, typer.Option()],
+    gemma: Annotated[Path, typer.Option()],
+    minilm: Annotated[Path, typer.Option()],
+    output: Annotated[Path, typer.Option()],
+) -> None:
+    """Compare title and body vectors on the same rolling probe and sessions."""
+    variants = {"gemma_title": (gemma, 768), "minilm_title": (minilm, 384)}
+    _fit_probes(sample, output, title_vectors=variants)
+    with duckdb.connect(config={"threads": "1"}) as con:
+        _load_portfolio_inputs(con, sample, output)
+        _portfolio_days(con)
+        _compare_title_predictions(con)
+        for table in ("paired_positions", "paired_days"):
+            con.sql(f"FROM {table} ORDER BY ALL").write_csv(
+                str(output / f"{table}.csv"), header=True
+            )
+        _portfolio_metrics(con).write_csv(str(output / "portfolios.csv"), header=True)
+        con.sql(
+            """SELECT sample,target,count_if(disposition='fit') AS fits,
+                      count_if(convergence_warning IS NOT NULL) AS convergence_warnings
+               FROM windows GROUP BY sample,target ORDER BY sample,target"""
+        ).write_csv(str(output / "fits.csv"), header=True)
+        con.sql(
+            """SELECT variant,reference,target,count(*) AS predictions,
+                      count_if(reference_sign<>variant_sign) AS changed_sign,
+                      count_if(reference_sign=-variant_sign AND variant_sign<>0)
+                          AS reversed_sign,
+                      count_if(source_rank=1) AS chosen_predictions,
+                      count_if(source_rank=1 AND reference_sign<>variant_sign)
+                          AS changed_chosen_sign,
+                      count_if(source_rank=1 AND reference_sign=-variant_sign
+                               AND variant_sign<>0)
+                          AS reversed_chosen_sign,
+                      avg((reference_sign=realized_sign)::DOUBLE) AS reference_accuracy,
+                      avg((variant_sign=realized_sign)::DOUBLE) AS variant_accuracy
+               FROM paired_positions GROUP BY ALL ORDER BY variant,reference,target"""
+        ).write_csv(str(output / "prediction_changes.csv"), header=True)
+        con.sql(
+            """SELECT variant,reference,target,count(*) AS scheduled_sessions,
+                      count_if(evaluated) AS evaluated_sessions,
+                      count_if(reference_long_leg<>variant_long_leg)
+                          AS changed_long_leg,
+                      count_if(reference_short_leg<>variant_short_leg)
+                          AS changed_short_leg,
+                      count_if(sign(reference_return)<>sign(variant_return))
+                          AS changed_return_sign,
+                      count_if(reference_return*variant_return<0)
+                          AS reversed_return_sign,
+                      avg(variant_long_return-reference_long_return) AS mean_long_delta,
+                      avg(variant_short_return-reference_short_return)
+                          AS mean_short_security_delta,
+                      avg(portfolio_delta) AS mean_portfolio_delta
+               FROM paired_days GROUP BY ALL ORDER BY variant,reference,target"""
+        ).write_csv(str(output / "portfolio_changes.csv"), header=True)
+        with (output / "paired_drift_intervals.csv").open("w", newline="") as intervals:
+            writer = csv.writer(intervals)
+            writer.writerow(
+                (
+                    "variant",
+                    "reference",
+                    "block_sessions",
+                    "replicates",
+                    "seed",
+                    "lower",
+                    "upper",
+                )
+            )
+            for variant, reference in TITLE_CONTRASTS:
+                for block_size in (21, 5):
+                    interval = _paired_drift_interval(
+                        con, variant, reference, block_size
+                    )
+                    writer.writerow(
+                        (variant, reference, block_size, 10_000, SEED, *interval)
+                    )
