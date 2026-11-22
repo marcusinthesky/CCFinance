@@ -16,7 +16,6 @@ Give each of the eight section files a question and a specific job.
 
 - [ ] Make a section map from abstract through appendices, covering access, prior corpora, construction, validation, coverage and replications. Assign the abstract and conclusion their own takeaways.
 - [ ] Place each proposed table or figure beside the question it answers. Record its source, unit and denominator, and decide which supporting detail belongs in the appendix.
-
 - [ ] Before paragraph outlining, record the overall length target and any venue limits, citing the rules for what counts toward each limit. Label editorial targets as provisional wherever a venue leaves length open.
 - [ ] Give each of the eight sections a target prose word count and an estimated page allocation in each layout (fractional pages are fine). Include space for exhibits, captions, front matter and references. Show main-text and appendix totals separately and reconcile each layout to its budget.
 

@@ -16,7 +16,6 @@ Turn the section map into a readable argument before drafting prose.
 
 - [ ] Use the academic-manuscript section-outline template. Write one substantive claim per planned paragraph in reading order and attach evidence or reasoning to each.
 - [ ] State why the next paragraph follows. Flag changes of unit, especially from captured records to articles, issuer links and trading sessions. Save the outline beside this task.
-
 - [ ] Give each paragraph bullet a target word count and a pacing cue where needed. Allow room to explain an unfamiliar sample rule or interpret an exhibit, and compress routine setup. Sum the paragraph targets by section and compare them with the section plan.
 - [ ] Before scoring, resolve each section overrun by tightening, merging, relocating material or explicitly reallocating space between sections. Update the estimated pages for each affected layout.
 
