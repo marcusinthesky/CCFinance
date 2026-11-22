@@ -29,14 +29,13 @@ template = "children.md.j2"
 
 | Status | Item | Description |
 | --- | --- | --- |
-| backlog | [04. Outline one bullet per paragraph](tasks/step-04-paragraphs/README.md) | Turn the section map into a readable argument before drafting prose. |
 | backlog | [05. Score and revise the paragraph outline](tasks/step-05-score/README.md) | Decide where readers need preparation, explanation or emphasis. |
 | backlog | [06. Draft the shared manuscript](tasks/step-06-draft/README.md) | Translate the scored outline into the shared LaTeX sections. |
 | backlog | [07. Review the argument and audit the evidence](tasks/step-07-review/README.md) | Read the draft as a new reader and check its empirical claims against the sources. |
 | backlog | [08. Refine the prose in context](tasks/step-08-style/README.md) | Make the revised manuscript easier to read while preserving the verified claims. |
 | backlog | [09. Proof both layouts and verify reproduction instructions](tasks/step-09-proof/README.md) | Prepare a checked manuscript candidate for circulation. |
 
-`6 open; 3 terminal`
+`5 open; 4 terminal`
 
 <!-- insitu:end -->
 
