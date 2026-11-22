@@ -10,8 +10,8 @@ individual record enters on its hostname. We preserve its article ID,
 body, source URL and available capture and publisher metadata. The
 recorded upstream revision and a separate checksum-verified staging
 revision identify 14,807,287 distinct IDs in 168 staged Parquet shards.
-Appendix Table~\ref{tab:app-source} records both revisions and the
-separate source-comparison frames.
+The appendix records both revisions and the separate
+source-comparison frames (Table~\ref{tab:app-source}).
 
 A retrospective comparison applies the same hostname rule in four
 pinned source frames, including FineWeb-HQ \citep{messmer2025}.
@@ -79,9 +79,9 @@ article. The anchor disagreement audit includes this case.
 \citet{schwenkler2020} use Stanford CoreNLP to identify organizations
 before linking firms in a news-derived network. Appendix
 Table~\ref{tab:app-spans} compares GLiNER2.5 Small with Stanza, a
-separate Stanford toolkit, on exact company spans in financial leads.
-FiNER-ORD also documents the difficulty of transferring named-entity
-recognition to financial text \citep{shah2024}.
+separate Stanford toolkit, on exact company spans in leads from the
+publisher-filtered sample. FiNER-ORD also documents the difficulty of
+transferring named-entity recognition to financial text \citep{shah2024}.
 
 Because a single story can name several firms, the article--issuer
 table records one row for each accepted pair and retains the support

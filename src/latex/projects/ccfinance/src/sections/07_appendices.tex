@@ -29,6 +29,18 @@ has its own upstream filtering and deduplication, so the comparison
 concerns physical rows. Estimating unique stories, overlap or financial
 coverage outside the registry would require separate sampling.
 
+The additional Hub revisions are listed below.
+
+\begin{flushleft}
+  \small
+  Infini-News\\
+  \texttt{7f8fe13b0833c005365b81f1dee7c20b7087769b}\\
+  RefinedWeb\\
+  \texttt{c735840575b629292b41da8dde11dcd523d4f91c}\\
+  FineWeb-HQ\\
+  \texttt{e58199cdd52438d94405df1a4d8630cc5f13bf84}
+\end{flushleft}
+
 \begin{table*}[t]
   \centering
   \small
@@ -313,6 +325,7 @@ pooling scored 4/24. The production vectors support the fixed-encoder
 exercise while these issuer-specific experiments remain exploratory.
 
 \section{Study details and sensitivities}
+\label{sec:app-studies}
 
 \paragraph{Equity market volatility.}
 The July 2025 manuscript and archive v1 supply the reference tracker
@@ -435,8 +448,9 @@ break-even would require a rebate in these scenarios
 \begin{table*}[t]
   \centering
   \small
-  \caption{Gross and scenario-net open-to-close drift in basis points per
-    unit of strategy capital across 277 evaluated sessions. Cost columns
+  \caption{Gross and scenario-net open-to-close drift across 277 evaluated
+    sessions, in basis points of the unit notional assigned to each
+    active leg. Cost columns
   give the assumed one-way cost. Zero-leg sessions enter all means.}
   \label{tab:app-drift}
   \begin{tabular}{lrrrrrr}
@@ -474,6 +488,15 @@ predictions where available. Rebuilding extraction requires the
 configured runtime and model cache, and new adjudication requires access
 to the relevant models. Codex assisted with outlining, drafting,
 editing, and consistency checks.
+
+The exact-span benchmark uses this command.
+
+\begin{flushleft}
+  \small
+  \texttt{uv run --project src/python \textbackslash}\\
+  \texttt{\quad --offline --frozen python \textbackslash}\\
+  \texttt{src/python/scripts/}\allowbreak\texttt{stanza\_microbench/score.py}
+\end{flushleft}
 
 \begin{table*}[t]
   \centering

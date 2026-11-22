@@ -40,9 +40,11 @@
 \section{Financial Applications}
 \label{sec:results}
 
-Table~\ref{tab:studies} compares the measurements supported by the
-three study samples and shows how they change under alternative
-publisher and timing rules.
+Table~\ref{tab:studies} shows where the benchmarks are sensitive to
+sample construction. The volatility fit gap narrows outside two
+crisis months, the change in bank co-mentions reverses sign in the
+Reuters subset, and additional publication clocks increase portfolio
+support while the mean drift remains negative.
 
 \subsection{Publisher-Month Volatility}
 
@@ -87,11 +89,11 @@ for the Factiva tags. The reconstructed networks recover a complete core
 among the six largest institutions. The number of connected pairs rises
 from 177 to 242, whereas the July 2023 manuscript reports a decline
 from 210 to 172. Restricting CCFinance to Reuters hosts yields 50 to 35.
-The comparison therefore depends on which bank relationships a
-publisher mix brings into the week.
+That restriction changes both the publisher mix and the supply of
+stories from which pairs can be formed.
 
-To examine that dependence, we collapse syndicated copies and compare
-weeks after equating the number of stories from each publisher. Over
+To compare weeks at fixed publisher quotas, we collapse syndicated
+copies and match the number of stories drawn from each publisher. Over
 six weeks with 682 matched stories per week, the mean January--April
 2020 increase is 56.3 connected pairs, with a central 95\% subsampling
 range of [5, 83]. Extending the calendar to fourteen weeks restricts the
@@ -114,8 +116,9 @@ CRSP prices. Following the authors' archive, we fit separate rolling
 logistic regressions using prior return signs from six-month windows
 \citep{lopez2026archive}. The earliest eligible predicted article for a
 security supplies its session signal, and each qualifying portfolio leg
-weights the securities within that leg equally. The session spread
-subtracts the shorted securities' mean return from the long return.
+weights the securities within that leg equally. Session drift adds the
+active legs' signed returns, assigning one unit of notional to each
+active leg. An inactive leg contributes zero.
 Of 670 possible sessions from
 October 2021 through May 2024, the fixed-sample probes evaluate 277.
 Of these, 42 have two active legs and 123 have neither. The mean open-to-close
@@ -134,6 +137,6 @@ to evaluate both portfolio legs on the archived sample. The difference
 from the reference estimate also reflects changes to texts, the
 issuer universe, representation and price coverage. On the fixed
 sample, the paired title and body comparisons leave substantial
-uncertainty about which representation produces a higher mean drift,
-and charging for entry and exit reduces the portfolio means further.
-Appendix Table~\ref{tab:app-drift} reports both sensitivities.
+uncertainty about which representation produces a higher mean drift
+(Appendix~\ref{sec:app-studies}). Charging for entry and exit reduces
+the portfolio means further (Appendix Table~\ref{tab:app-drift}).

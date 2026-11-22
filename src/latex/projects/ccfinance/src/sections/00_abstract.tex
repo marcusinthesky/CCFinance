@@ -1,17 +1,17 @@
-A financial news study can be reconstructed when the observed text,
-issuer and eligibility rule behind each observation are recoverable.
-We construct CCFinance from a frozen selection of Common Crawl News
-and trace archived article versions through publication-date checks,
-deduplication and dated issuer linking. Among 100 reference firms,
-94 have at least 47 usable linked articles in each year from 2018
-through 2022, and 57 meet the same threshold when counted articles
-must also satisfy a company-focus screen. Model-adjudicated audits measure the
-change in subject precision and recall that accompanies this loss of
-coverage. Three financial applications show how the evidence changes
-with the observation. A publisher-month volatility index supports a
-common-calendar tracking comparison, bank co-mentions reveal sensitivity
-to publisher mix, and additional publication clocks expand the number
-of sessions on which both legs of an overnight return strategy can
-be evaluated. Public archives supply source material, while exact
-reconstruction of the reported samples requires access to the frozen
-inputs and derived artifacts.
+Rules for turning archived news into financial observations change
+which firms, dates and estimates a study can support. We construct
+CCFinance from a frozen selection of Common Crawl News and trace
+article versions through publication-date checks, deduplication and
+dated issuer linking. Among 100 reference firms, 94 have at least 47
+usable linked articles in each year from 2018 through 2022. Requiring
+three mentions of the issuer reduces that count to 57. In a held-out
+model-adjudicated audit, the rule raises subject precision and lowers
+subject recall. On a shared calendar, a volatility tracker built from
+archived articles has lower point-estimate fit than the reference
+tracker, with a paired interval spanning zero for the difference.
+The January--April 2020 change in distinct co-mentioned bank pairs
+reverses sign in the Reuters subset. Recovering publication clocks
+raises the number of sessions with both portfolio legs from 42 to
+110, and mean open-to-close drift stays negative after refitting.
+Exact reconstruction requires access to the frozen inputs and
+derived artifacts.
