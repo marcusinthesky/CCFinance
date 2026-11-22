@@ -56,6 +56,7 @@ repos:
       - id: text-check
         name: Whitespace and final newlines
         entry: bash infra/nix/check-text.sh
+        exclude: ^src/latex/projects/ccfinance/src/vendor/aaai2027\.(bst|sty)$
         language: system
         types: [text]
 

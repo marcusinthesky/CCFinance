@@ -1,33 +1,80 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
-# The versioned bundle is shared by setup and cached builds.
+project := "projects/ccfinance"
 bundle := "https://data1.fullyjustified.net/tlextras-2022.0r0.tar"
+prose_lint := ".agents/skills/academic-manuscript/scripts/prose_lint.py"
 
 default:
     @just --list
 
-# Explicit network step: fetch TeX resources needed by the current manuscript.
+# Explicit network preparation of the pinned TeX asset closure.
 setup:
     mkdir -p build
-    bash ../../infra/nix/retry-tex-setup.sh tectonic --untrusted --bundle "{{ bundle }}" --keep-logs --outdir build main.tex
     bash ../../infra/nix/retry-tex-setup.sh tectonic --untrusted --bundle "{{ bundle }}" --outdir build reports.tex
+    cd {{ project }} && bash ../../../../infra/nix/retry-tex-setup.sh tectonic -X build --untrusted --target arxiv
+    cd ../.. && env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv sync --frozen --script {{ prose_lint }}
 
-build:
-    mkdir -p build
-    tectonic --untrusted --only-cached --bundle "{{ bundle }}" --keep-logs --outdir build main.tex
-    if rg -n 'Citation.+undefined|Reference.+undefined|There were undefined|multiply-defined|Multiply defined' build/main.log; then echo 'Unresolved citations, references or duplicate labels' >&2; exit 1; fi
+# Review selected authored sections. Matches are advisory.
+[positional-arguments]
+prose-lint *sections:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cd {{ quote(invocation_directory()) }}
+    script={{ quote(module_directory() / "../.." / prose_lint) }}
+    if (( $# == 0 )); then
+      set -- {{ quote(module_directory() / project / "src/sections") }}/*.tex
+    fi
+    exec env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --offline --frozen --script "$script" "$@"
 
+# Build one target from the same shared body and appendix.
+build target="arxiv":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{ target }}" in
+      arxiv)
+        cd {{ project }}
+        tectonic -X build --untrusted --only-cached --keep-logs --target arxiv
+        cd ../..
+        ;;
+      finfm)
+        cd {{ project }}/src
+        mkdir -p ../build/finfm
+        pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../build/finfm -jobname=finfm targets/finfm.tex > /dev/null
+        if rg -q '\\citation' ../build/finfm/finfm.aux; then
+          (cd ../build/finfm && BIBINPUTS="../../src:" BSTINPUTS="../../src/vendor:" bibtex finfm > /dev/null)
+        fi
+        pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../build/finfm -jobname=finfm targets/finfm.tex > /dev/null
+        pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../build/finfm -jobname=finfm targets/finfm.tex > /dev/null
+        cd ../../..
+        ;;
+      *) echo 'target must be arxiv or finfm' >&2; exit 2 ;;
+    esac
+    log="{{ project }}/build/{{ target }}/{{ target }}.log"
+    if rg -n 'Citation.+undefined|Reference.+undefined|There were undefined|multiply-defined|Multiply defined' "$log"; then
+      echo 'Unresolved citation, reference or duplicate label' >&2
+      exit 1
+    fi
+
+count target="arxiv":
+    mkdir -p {{ project }}/build/{{ target }}
+    cd {{ project }}/src && texcount -merge -sub=section targets/{{ target }}.tex > ../build/{{ target }}/word-count.txt
+    cat {{ project }}/build/{{ target }}/word-count.txt
+
+lint:
+    find {{ project }}/src -name '*.tex' -type f -size +0c ! -path '*/vendor/*' ! -path '*/generated/*' -print0 | xargs -0 -r tex-fmt --check
+    chktex -q -I0 -n 1 -n 8 -n 46 {{ project }}/src/targets/arxiv.tex
+    chktex -q -I0 -n 1 -n 8 -n 46 {{ project }}/src/targets/finfm.tex
+
+check: lint
+    just build arxiv
+    just build finfm
+
+test:
+    just build arxiv
+    just build finfm
+
+fmt:
+    find {{ project }}/src -name '*.tex' -type f -size +0c ! -path '*/vendor/*' ! -path '*/generated/*' -print0 | xargs -0 -r tex-fmt
 # Render a generated report beside its source from cached TeX resources only.
 render file:
     file='{{ file }}'; [[ "$file" = /* ]] || file='{{ invocation_directory() }}'/"$file"; cd "$(dirname "$file")" && tectonic --untrusted --only-cached --bundle "{{ bundle }}" --outdir . "$(basename "$file")"
-
-lint:
-    tex-fmt --check main.tex
-    chktex -q -n 1 -n 8 -n 46 main.tex
-
-check: lint build
-
-test: build
-
-fmt:
-    tex-fmt main.tex

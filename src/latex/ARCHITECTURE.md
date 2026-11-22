@@ -1,18 +1,15 @@
 ---
-description: Why one Tectonic engine builds manuscripts and setup owns asset downloads.
+description: One CCFinance manuscript with arXiv and anonymous AAAI-27 layouts.
 ---
 
 # Manuscript build
 
-Tectonic is the single PDF engine. The versioned asset bundle fixes the TeX
-package generation, while devenv pins the renderer, tex-fmt and ChkTeX. Setup
-downloads the manuscript's asset closure into Tectonic's cache; builds use
-`--only-cached` so a normal check does not depend on a TeX service.
+The project under `projects/ccfinance` owns its section sources, metadata and
+authored bibliography. Its `body.tex` and `appendix.tex` define the reading
+order. The two target files own the document class, title block, abstract
+environment and bibliography style. Shared packages live under `templates/`.
 
-The starter uses a generic article class and natbib/plainnat. Publisher templates
-and additional rendering engines belong in explicitly adopted project tooling.
-PDF and intermediate output live under ignored `build/`; canonical manuscript
-text remains directly readable and reviewable in Git.
-
-The standalone manuscript owns `refs.bib`. Adopting a separate canonical reference
-corpus later requires a reviewed bibliography migration.
+The arXiv target uses the pinned Tectonic bundle. The FinFM target uses the
+vendored AAAI-27 author kit with pdfLaTeX and BibTeX from the pinned Nix shell.
+Each build writes to its own ignored output directory. Generated research
+reports continue to use the separate cached Tectonic render command.

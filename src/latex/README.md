@@ -1,37 +1,30 @@
 ---
-description: A small LaTeX manuscript built with a versioned Tectonic asset bundle.
+description: Build the shared CCFinance manuscript for arXiv or anonymous AAAI submission.
 ---
 
-# LaTeX
+# CCFinance manuscript
 
-`main.tex` is the manuscript. Tectonic produces `build/main.pdf`; its output and
-intermediate files are ignored. Edit the source, and use:
+Edit the eight files in [projects/ccfinance/src/sections](projects/ccfinance/src/sections/).
+Put abstract text directly in `00_abstract.tex`. Add section headings and text
+to the other files when drafting. Both targets read the same abstract, body,
+appendix and project-local bibliography. Edit the title and arXiv byline in
+[metadata.tex](projects/ccfinance/src/metadata.tex).
 
-```bash
-just latex::setup
-just latex::build
-just latex::check
+Run from the repository root in the pinned devenv shell.
+
+```sh
+just latex::setup        # Prime the TeX cache and install the locked prose linter
+just latex::build arxiv  # Tectonic, single-column preprint
+just latex::build finfm  # pdfLaTeX and BibTeX, anonymous AAAI-27 layout
+just latex::check        # Lint and build both targets
+just latex::prose-lint   # Optional editorial suggestions for the sections
 ```
 
-Setup is an explicit network step that primes the Tectonic cache using the
-versioned `tlextras-2022.0r0` bundle. Ordinary builds use only cached assets. After
-adding an uncached TeX package, run setup again. Formatting uses tex-fmt and lint
-uses ChkTeX. The build gate rejects unresolved citations and references.
+PDFs are written to `projects/ccfinance/build/<target>/<target>.pdf`
+beneath this directory. The academic-manuscript skill also supports outlines
+and editorial review. Its prose linter accepts individual section paths.
 
-`refs.bib` is authored content. The sample article demonstrates a real citation;
-add your own records and cite them with `\citep{key}`.
-
-The source-comparison research stage generates statsmodels LaTeX fragments
-under `data/research/experiments/source-comparison/`. With `booktabs` in the
-preamble, include the summary and its methods notes from `main.tex` using:
-
-```latex
-\input{../../data/research/experiments/source-comparison/summary.tex}
-```
-
-These fragments exist after acquisition and reporting; ordinary manuscript
-checks do not acquire source data. See the
-[comparison guide](../../data/inputs/source-comparison/README.md) for the commands
-and statistical interpretation.
-
-See [ARCHITECTURE.md](ARCHITECTURE.md) for source and artifact ownership.
+The coverage report uses `coverage.tex`. DVC stages render standalone figures
+with `just latex::render <file>`. The source-comparison stage also produces a
+table fragment. See the [source comparison guide](../../data/inputs/source-comparison/README.md)
+for its inputs and interpretation.

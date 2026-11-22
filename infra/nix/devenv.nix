@@ -32,7 +32,47 @@
       patchelf
       tectonic
       tex-fmt
-      (texliveInfraOnly.withPackages (ps: [ ps.chktex ]))
+      vale
+      (texliveInfraOnly.withPackages (ps: [
+        ps.chktex
+        ps.kpathsea
+        ps.texcount
+        ps.latex-bin
+        ps.graphics
+        ps.epstopdf-pkg
+        ps.underscore
+        ps.lm
+        # AAAI-27 submission template and bibliography.
+        ps.bibtex
+        ps.iftex
+        ps.newtx
+        ps.fontaxes
+        ps.xkeyval
+        ps.xstring
+        ps.etoolbox
+        ps.kastrup
+        ps.psnfss
+        ps.helvetic
+        ps.courier
+        ps.placeins
+        ps.xcolor
+        ps.url
+        ps.natbib
+        ps.caption
+        ps.booktabs
+        ps.amsmath
+        ps.amsfonts
+        ps.amscls
+        ps.tools
+        ps.cm-super
+        ps.ec
+        ps.xpatch
+        ps.carlisle
+        ps.oberdiek
+        ps.kvoptions
+        ps.l3packages
+        ps.dvips
+      ]))
     ];
   env = {
     AWS_REQUEST_CHECKSUM_CALCULATION = "when_required";
