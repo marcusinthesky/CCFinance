@@ -88,6 +88,7 @@ high-bank-count sensitivities were explored during the
 | `exclude_roundups` | Drop upstream article form `roundup`. |
 | `reporting` | Keep upstream article form `reporting`. |
 | `reuters_host` | Keep Reuters.com and its subdomains. Republishing on other domains is outside this variant. |
+| `exclude_nasdaq` | Exclude Nasdaq.com and its subdomains before counting distinct pairs and their weights. |
 | `direct_only` | Keep domestic holding-company and US IHC links, excluding foreign-parent proxies. |
 
 A normalized-headline match can merge distinct editions or recurring generic

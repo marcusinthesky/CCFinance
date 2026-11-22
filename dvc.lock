@@ -2062,7 +2062,7 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-banks.json
       hash: md5
-      md5: 035ed59cae341c0903655ffed1866d3c
+      md5: 5ada6ca3be9128a5c8b80e2886a18dc9
       size: 4684
     - path: data/inputs/kazinnik-banks/crosswalk.csv
       hash: md5
@@ -2087,8 +2087,8 @@ stages:
     outs:
     - path: data/research/experiments/kazinnik-banks
       hash: md5
-      md5: 3fc81ac793b7323d897a4dafdf252f24.dir
-      size: 12367056
+      md5: 7a319e94f50ac97360135c04362c3a0a.dir
+      size: 12429752
       nfiles: 18
   prepare_lopez_events:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -2288,7 +2288,7 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/compare-baker-tracking.json
       hash: md5
-      md5: f3f15446ecc6b029433d0108d628ca57
+      md5: a2bc136002d922e55ee48e2a4257ea0c
       size: 9193
     - path: data/raw/experiments/baker-emv/replication.rar
       hash: md5
@@ -2305,8 +2305,8 @@ stages:
     outs:
     - path: data/research/experiments/baker-emv/paired-tracking
       hash: md5
-      md5: 25963ec7d2eb09b7d30d4489e2ec2201.dir
-      size: 26536
+      md5: d746e35f65f865938b962a19ac56d6e0.dir
+      size: 29991
       nfiles: 5
   prepare_kazinnik_matched_weeks:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project

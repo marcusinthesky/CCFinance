@@ -32,8 +32,14 @@ linked issuer three times and another once, it supplies one usable article
 to each issuer and one focused article to the first issuer. Although
 Fine News retains
 representatives of upstream duplicate clusters, the staged records
-still contain exact-text and normalized-URL repeats. The rule uses the
-earliest capture in each group. Because a repeated URL can contain
+still contain exact-text and normalized-URL repeats. Each capture
+competes separately on exact text and normalized URL,
+with the earliest capture winning each group and the ID breaking ties.
+A usable copy must win both comparisons and pass the date check. When
+both comparisons identify a duplicate, the ledger records the text match.
+An earlier copy with an invalid date still takes precedence. In the
+Monday example, Thursday is the first observable date for a signal
+using this body. Because a repeated URL can contain
 revised text, the canonical ID identifies the selected archived body.
 
 To identify firms in the captured text, we use GLiNER2.5 Small
@@ -63,15 +69,11 @@ the linked issuer, with no additional relevance threshold. Each article
 still counts once in the corpus and can count toward the coverage of
 more than one issuer.
 
-The pipeline also records article form, local relevance and investor-facing
+In one joint schema, GLiNER processes 384-word windows with 64 words of
+overlap. The pipeline records article form, local relevance and investor-facing
 sentiment for extracted mentions, and event scores for model input windows.
 The overnight probe uses fixed 768-coordinate EmbeddingGemma body vectors,
 whose alignment and norms we check against the frozen article IDs
-\citep{embeddinggemma2025}. To examine whether a representation can
-distinguish two company accounts in one story, we run a separate
-pilot on 16 model-adjudicated stories with distinguishable accounts
-and inputs that fit every encoder. EmbeddingGemma retrieves both
-accounts correctly in 10 cases with issuer sentences and in two cases
-each with a company header or a selected instruction. The pilot
-motivates a larger issuer-sentence evaluation on that retrieval task
-(Appendix Table~\ref{tab:app-vectors}).
+\citep{embeddinggemma2025}. The body encoder reads up to 2,048 tokens per story.
+Appendix Table~\ref{tab:app-vectors} examines company-specific
+representations in a separate exploratory retrieval task.

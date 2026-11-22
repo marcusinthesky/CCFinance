@@ -3,19 +3,12 @@
 
 \section{Corpus lineage and source pilot}
 
-The historical filter selects English Fine News records from revision
-\texttt{7a841090e69f3c58a9e04}\allowbreak\texttt{b0c39213d879af68e8a}.
-It reads the normalized hostname from metadata and falls back to the
-URL when that field is blank.
-A host qualifies if it exactly matches one of the 115 registry entries or
-is a dot-delimited subdomain of one. The frozen downstream input is the
-staging revision
-\texttt{3168f32f57107eac95a2}\allowbreak\texttt{c53f024e5e340c91ef2e}, with
-14,807,287 distinct IDs in 984 row groups across 168 capture-month
-shards. Each shard's size and SHA-256 are recorded in the restoration
-manifest. The frozen stage verifies that snapshot. A fresh execution of
-the historical query writes a consolidated file, and its selected rows
-have yet to be compared with the snapshot row for row.
+The historical publisher list selects English-language Fine News records
+using the hostname in metadata, with the URL as fallback, and includes
+dot-delimited subdomains. The frozen input contains 14,807,287 distinct
+IDs across 168 shards. The replication package records the upstream and
+staging revisions. A fresh upstream selection still requires row-level
+comparison with these frozen IDs and bodies.
 
 The retrospective pilot expands sampled rows within each of four pinned
 release frames (Table~\ref{tab:app-source}). A cluster draw selects a
@@ -29,17 +22,16 @@ has its own upstream filtering and deduplication, so the comparison
 concerns physical rows. Estimating unique stories, overlap or financial
 coverage outside the registry would require separate sampling.
 
-The other three source frames use the following Hub revisions.
-
-\begin{flushleft}
-  \small
-  Infini-News\\
-  \texttt{7f8fe13b0833c005365b81f1dee7c20b7087769b}\\
-  RefinedWeb\\
-  \texttt{c735840575b629292b41da8dde11dcd523d4f91c}\\
-  FineWeb-HQ\\
-  \texttt{e58199cdd52438d94405df1a4d8630cc5f13bf84}
-\end{flushleft}
+The Fine News matched-total interval is 2.15--18.67 million physical
+records, encompassing the 14.81 million staged IDs.
+The pinned release reports 219,192,987 English records. Staged IDs amount to
+6.76\% of that count, pending an independent replay of the selection.
+Four draws offer limited precision for a population total.
+The Fine News, Infini-News, RefinedWeb and FineWeb-HQ frames contain
+168, 49,748, 5,534 and 9,246 files respectively. The four selected
+Fine News files contain 437, 519, 71 and 319 row groups. Each sampled
+Infini-News file contains one group and each RefinedWeb file contains
+175. The FineWeb-HQ files contain 352, 336, 164 and 331 groups.
 
 \begin{table*}[t]
   \centering
@@ -65,6 +57,52 @@ The other three source frames use the following Hub revisions.
   \end{tabular}
 \end{table*}
 
+Among 11,260,839 usable copies, 237,193 were captured two through seven
+days after publication. Among 26,897 repeated normalized URLs with
+observed text hashes, 23,779 carried more than one body hash. An
+earlier publication date alone cannot establish when a revision appeared.
+
+\paragraph{Historical selection.}
+The 115 entries below describe the original publisher filter. Observed
+subdomains have distinct capture histories. Among the five largest
+observed hosts, the staged and usable shares of the respective totals
+were 9.0\% and 11.6\% for nasdaq.com, 8.9\% and 0.2\% for uk.reuters.com,
+7.7\% and 0.9\% for in.reuters.com, 6.5\% and 5.9\% for reuters.com,
+and 5.7\% and 7.5\% for business-standard.com.
+
+{\small\raggedright accountingtoday.com, afr.com, agriculture.com,
+  agweb.com, barrons.com, bdlive.co.za, benzinga.com,
+  bitcoinmagazine.com, bloomberg.com, bloombergquint.com,
+  business-standard.com, businessdailyafrica.com, businessday.co.za,
+  businessinsider.com, businessinsider.com.au, businessinsider.de,
+  businessinsider.pk, businesslive.co.za, businesstimes.com.sg,
+  businesstimesafrica.net, businessweek.com, businesswire.com, cfo.com,
+  channelnewsasia.com, cityam.com, cnbc.com, coindesk.com,
+  cointelegraph.com, dailyfx.com, dawn.com,
+  economictimes.indiatimes.com, economist.com, efinancialnews.com,
+  etf.com, etfdb.com, etftrends.com, etfworld.co.uk, fin24.com,
+  finance.yahoo.com, financial-planning.com, financialexpress.com,
+  financialpost.com, fnlondon.com, fool.co.uk, fool.com, fool.com.au,
+  forbes.com, forexcrunch.com, fortune.cnn.com, fortune.com,
+  freightwaves.com, ft.com, globenewswire.com, gurufocus.com,
+  handelsblatt.com, ibtimes.co.in, ibtimes.co.uk, ibtimes.com,
+  ibtimes.sg, institutionalinvestor.com, investing.com,
+  investingnews.com, investmentweek.co.uk, japantimes.co.jp, kitco.com,
+  koreabizwire.com, koreaherald.com, koreajoongangdaily.joins.com,
+  law360.com, livemint.com, malaymail.com, marketwatch.com, mining.com,
+  miningmonthly.com, moneycontrol.com, moneyweb.co.za, morningstar.com,
+  morningstar.com.au, morningstar.in, morningstaronline.co.uk,
+  nasdaq.com, nikkei.com, nikkeibp.co.jp, nikkeibp.com,
+  offshore-energy.biz, oilprice.com, pionline.com, platts.com,
+  prnewswire.co.uk, prnewswire.com, proactiveinvestors.co.uk,
+  proactiveinvestors.com, proactiveinvestors.com.au,
+  professionalpensions.com, qz.com, reuters.com, rigzone.com,
+  rttnews.com, scmp.com, seekingalpha.com, spglobal.com,
+  straitstimes.com, taipeitimes.com, theedgemalaysia.com,
+  theedgemarkets.com, theedgesingapore.com, thefinancialexpress.com.bd,
+  themalaymailonline.com, thestreet.com, thinkadvisor.com,
+thisismoney.co.uk, upstreamonline.com, worldoil.com, wsj.com, zacks.com.\par}
+
 \section{Extractor and metadata audits}
 
 \paragraph{Exact company spans.}
@@ -74,7 +112,8 @@ canonical English articles in the staging snapshot. A lead contains the
 first 150 whitespace-delimited words or the entire shorter body. A
 GPT-6.2-sol medium primary pass covered 250 leads, including the
 40-lead pilot. A separate GPT-6.2-sol low pass covered the first 12
-ranks per year. The passes agreed exactly on 52 of 60 repeated leads
+ranks in each of the five years. The passes agreed exactly on 52 of
+60 repeated leads
 (span F1 95.68\%). Disagreements were resolved against the guide
 before scoring. The repeat annotator had access to published pilot
 examples. The resulting model reference contains 712 spans across 250
@@ -90,7 +129,11 @@ therefore counts as a false positive for this task.
 Table~\ref{tab:app-spans} reports a GLiNER advantage of 10.34
 micro-F1 percentage points on this company-specific task, with a
 paired 95\% interval of $[5.84,14.56]$ over 2,000 passage bootstraps
-within publication year.
+within publication year. Differences use unrounded scores. When a
+prediction and reference need only share a character, maximum one-to-one
+matching gives F1 of 58.13\% for Stanza and 58.54\% for GLiNER.
+The paired difference is 0.41 points ($-3.36$ to $+4.40$) over 2,000
+year-stratified resamples. Both evaluations retain the business-only reference.
 Stanford's published 88.8\% OntoNotes and 92.1\% CoNLL03 scores are
 all-class micro-F1 on their benchmark splits \citep{stanza}. In the
 local task, a possessive attached to the Credit Suisse Group AG span
@@ -116,6 +159,19 @@ mention pairs before dated issuer resolution.
 \end{table}
 
 \paragraph{Article, mention and window metadata.}
+GLiNER2.5 Small processes 384-word windows with a 64-word overlap.
+Each window receives a softmax distribution over seven article forms
+and an independent score for each of six event families. The article
+inherits the form predicted with the highest confidence across its
+windows. Event families are evaluated per window at a cutoff of 0.5,
+so a window can have several families or none. The extractor returns
+body offsets for company, person, public-body and place spans. Each
+company span receives separate softmax scores for local relevance and
+investor-facing sentiment. Within an article--issuer pair, the linker
+takes the largest substantive-relevance score and averages the sentiment
+vectors using mention link scores as weights. The mention-level audit below
+evaluates local labels before that issuer-level aggregation.
+
 The seed-46 confirmation excludes seed-45 development articles and
 samples 400 units from each usable-corpus frame. For form and sentiment,
 half the allocation follows predicted class size and half balances
@@ -161,8 +217,10 @@ interpretation of the surrounding text affect this comparison.
   \caption{Weighted metadata validation against blinded model judgments.
     The frames each have 400 sampled units (whole articles, extracted spans
     and input windows). $n$ counts unweighted reference positives. Precision
-    and recall have 95\% article-cluster intervals. A dash marks an empty
-  denominator.}
+    and recall have 95\% article-cluster intervals. Rare reference classes
+    have limited support, including three insufficient-context articles,
+    nine roundups and seven invalid spans for relevance. A dash marks
+  an empty denominator.}
   \label{tab:app-metadata}
   \begin{tabular}{llrll}
     \toprule
@@ -211,6 +269,58 @@ precision is the share of abstentions judged to have no eligible issuer
 Cohen's $\kappa$ is 0.935 for the repeated judge on 164 mentions and
 0.881 for the independent audit judge on 339.
 
+\paragraph{Selecting a subject rule.}
+We compared mention counts, the position of an issuer's first mention
+as a fraction of body length, and its highest substantive-relevance
+score. The full grid crossed six count cutoffs, four position cutoffs
+and 19 relevance cutoffs. Three mentions, with no further restriction,
+gave the highest development F1. On held-out articles, counting two
+mentions recovered more subjects and gave a higher F1 than counting
+three (Table~\ref{tab:app-focus-rules}). Seven development and five
+held-out bodies exceeded
+the judge's 12,000-character limit. In one Schlumberger earnings-call
+transcript, the third linked mentions of Goldman Sachs, Citigroup and
+Bank of America all occurred after character 20,000. The full-body
+rule selected all three banks, whereas the judge identified Schlumberger
+as the subject from the visible prefix.
+
+\begin{table*}[t]
+  \centering
+  \small
+  \caption{Precision, recall and F1 (\%) for identifying an issuer as an
+    article subject. The 217 development and 183 held-out articles contain
+    80 and 65 judged subject pairs. Each row varies one rule applied to
+    accepted issuer links. The position and relevance rows show the best
+  development F1 for each of those measures used alone.}
+  \label{tab:app-focus-rules}
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    & \multicolumn{3}{c}{Development} & \multicolumn{3}{c}{Held out} \\
+    Rule & P & R & F1 & P & R & F1 \\
+    \midrule
+    Every link & 27.9 & 83.8 & 41.9 & 31.9 & 92.3 & 47.4 \\
+    At least two mentions & 53.8 & 71.3 & 61.3 & 55.6 & 76.9 & 64.5 \\
+    At least three mentions & 78.8 & 65.0 & 71.2 & 66.1 & 56.9 & 61.2 \\
+    At least four mentions & 88.2 & 56.3 & 68.7 & 75.6 & 52.3 & 61.8 \\
+    First mention in first quarter of body & 58.1 & 67.5 & 62.4 &
+    54.9 & 69.2 & 61.2 \\
+    Substantive relevance $\geq 0.40$ & 48.1 & 63.8 & 54.8 & 41.7 &
+    53.8 & 47.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+Against production, the prior-year replay retains 464 issuer identities,
+changes one and abstains on ten previously assigned mentions. All 411
+production abstentions persist. Registry validity describes the recorded
+effective date, while the prior window controls when frequency evidence
+could enter the decision. Explicit anchors can resolve a mention directly.
+Otherwise the leading candidate needs at least 75\% of the evidence,
+with a separate operating score of 0.5. Ambiguous mentions retain their
+candidate lists. Frequency strata use fewer than ten, ten through 999,
+and at least 1,000 occurrences, crossed with zero, one or multiple
+matching issuers.
+
 The anchor audit samples explicit listing anchors outside the seed-43
 articles. The decorated-name audit samples newly accepted article--issuer
 pairs after normalizing ticker and stock forms. Of 300 newly accepted
@@ -253,9 +363,10 @@ valid links, while full-corpus alias priors can use anchors observed later.
   \small
   \caption{Link and focus diagnostics. Denominators are unweighted counts
     of evaluated predictions or reference positives for the named measure.
-    Focus uses 183 held-out articles with a detected company. The
+    Span estimates use inverse sampling weights. Article estimates use
+    the uniform sample of 183 held-out articles with a detected company. The
     anchor and decorated-name rows
-  report distinct blinded model audits.}
+  give raw proportions from distinct blinded model audits.}
   \label{tab:app-links}
   \begin{tabular}{lll}
     \toprule
@@ -269,6 +380,8 @@ valid links, while full-corpus alias priors can use anchors observed later.
     Article recall, all mentioned issuers & 202 reference pairs &
     68.8\% [61.0,76.7] \\
     Article recall, subject issuers & 65 reference pairs & 92.3\% [86.3,98.3] \\
+    Focus precision, every link & 60 of 188 predicted pairs & 31.9\%
+    [24.7,39.1] \\
     Focus precision, three mentions & 56 predicted pairs & 66.1\% [54.8,77.3] \\
     Focus recall, three mentions & 65 reference pairs & 56.9\% [44.3,69.5] \\
     Explicit ticker anchors & 300 sampled anchors & 294/300 [95.70\%,99.26\%] \\
@@ -305,8 +418,11 @@ valid links, while full-corpus alias priors can use anchors observed later.
   \end{tabular}
 \end{table*}
 
-The large drop in 2017 places much of the dating failure in a single
-capture cohort (Table~\ref{tab:app-coverage}). The issuer panel assigns
+Of the 2017 captures, 2,886,747 arrived more than seven days after
+publication and 15 had publication dates beyond the future tolerance
+(Table~\ref{tab:app-coverage}). The UK and Indian Reuters hosts alone
+account for 1,297,451 and 1,042,605 of these late captures. The
+issuer panel assigns
 an article to its publication year and counts it once for each linked
 issuer. An issuer-year enters the universe with a dated listing or with
 a current listing of unknown start and public float observed in that
@@ -314,15 +430,48 @@ year or the previous year. The panel retains zero-count universe members.
 On the held-out articles, a development-selected relevance threshold of
 0.40 yields 41.7\% subject precision and 53.8\% recall.
 
+\begin{table}[t]
+  \centering\small
+  \caption{Issuer-years clearing 50 articles by publication year and
+    annual SEC public-float quintile. Parentheses give within-row
+    percentages. Float uses the latest measurement in the current or
+    preceding year. Annual rank allocation produces slightly uneven
+    pooled quintiles. Of all eligible issuer-years, 9,338 have dated
+    listing evidence and 25,443 qualify through a current listing with
+  unknown start and observed float.}
+  \label{tab:size-year}
+  \begin{tabular}{lrrr}\toprule
+    Group & Eligible & Usable (\%) & Focused (\%) \\ \midrule
+    2017 & 3,240 & 854 (26.4) & 326 (10.1) \\
+    2018 & 3,341 & 903 (27.0) & 358 (10.7) \\
+    2019 & 3,429 & 1,222 (35.6) & 593 (17.3) \\
+    2020 & 3,607 & 1,844 (51.1) & 1,184 (32.8) \\
+    2021 & 3,950 & 1,923 (48.7) & 1,209 (30.6) \\
+    2022 & 4,088 & 2,048 (50.1) & 1,414 (34.6) \\
+    2023 & 4,176 & 2,038 (48.8) & 1,475 (35.3) \\
+    2024 & 4,334 & 1,778 (41.0) & 1,228 (28.3) \\
+    2025 & 4,616 & 1,308 (28.3) & 854 (18.5) \\
+    Lowest & 6,533 & 329 (5.0) & 105 (1.6) \\
+    Second & 6,530 & 889 (13.6) & 311 (4.8) \\
+    Third & 6,529 & 2,084 (31.9) & 914 (14.0) \\
+    Fourth & 6,527 & 3,860 (59.1) & 2,161 (33.1) \\
+    Highest & 6,526 & 5,790 (88.7) & 4,561 (69.9) \\
+    Unmeasured & 2,136 & 966 (45.2) & 589 (27.6) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \section{Body embeddings and issuer conditioning}
 
 The production EmbeddingGemma artifact \citep{embeddinggemma2025} stores
 768 FP16 coordinates per body with a 2,048-token limit. The census
 reconciled all IDs, positions and text flags and checked finite values
 and norms. All 14,807,287 frozen bodies contained text. A blank-body
-fixture exercises the zero-vector convention. A local DVC checkout
-restored 985 files including the writer lock, and their hashes matched
-manifest \path{68fad30a7cff964595d800d7a7175ff0.dir}.
+fixture exercises the zero-vector convention. In the overnight panel,
+the production tokenizer truncated 44 of 996 bodies after adding the
+document prefix and special tokens. For six of 1,104 article--issuer
+rows, the third linked mention ended beyond the visible text. The focus
+screen uses mentions from the full captured body.
 
 In the separate issuer-conditioning pilot, a story is eligible when
 two companies have distinguishable accounts under the model reference.
@@ -375,41 +524,51 @@ Divide each publisher's shares by its dispersion over the 40
 calibration months through December 2022, average across publishers
 and rescale to the calibration mean VIX. The comparative fit uses an
 intercept and a contemporaneous tracker against each common outcome.
-The paired intervals use 10,000 bootstrap samples formed by drawing
-circular blocks with replacement,
-using the same starts for both trackers before recomputing the
-difference in squared correlations. On 49 months, realized-volatility
-$R^2$ is 0.336 for CCFinance and 0.569 for the archived tracker. The
-gap of $-0.233$ has a six-month block interval of $[-0.311,+0.041]$.
+For each of 10,000 bootstrap samples, we draw six-month circular
+blocks with replacement until we have 49 observations, trimming the
+last block. Both trackers and the common outcome use the same months
+in each draw. The 2.5th and 97.5th percentiles of the resulting
+differences in squared correlations give the paired interval.
+Realized-volatility $R^2$ is 0.336 for CCFinance and 0.569 for
+the archived tracker, a gap of $-0.233$ $[-0.311,+0.041]$.
 
-The publisher-omission refits keep dispersion calibration fixed
-when excluding the March and April 2020 outcomes. Each three-publisher
-tracker retains 147 cells over 49 months and 141 over 47 months.
-Omitting Forbes gives the largest shortfalls for both outcomes on
-both calendars. Requiring 15 publication dates drops three sparse
-cells and yields a VIX gap of $-0.142$ on 49 months. Moving the
-calibration endpoint to December 2021 gives a VIX gap of $-0.167$.
-Table~\ref{tab:app-emv} compares historical fits conditional on the
-observed series.
+Table~\ref{tab:app-emv} drops March and April 2020 first from the two
+fits, then also from the calibration of publisher dispersions and the
+VIX scale. With all four publishers, the 47-month VIX gap rounds to
+$-0.041$ under both calibrations. Omitting Forbes gives the largest
+shortfalls among the four publisher omissions in every specification.
+Using only the \emph{Wall Street Journal} gives 49-month $R^2$ values
+of 0.110 for VIX and 0.120 for realized volatility. The archive's
+monthly benchmark supplies the eleven-paper composite, so the
+correlation of 0.397 compares the single-publisher tracker with that
+composite. Requiring 15 publication dates drops three sparse cells and
+yields a full-calendar VIX gap of $-0.142$. Ending calibration in
+December 2021 gives a gap of $-0.167$.
 
 \begin{table*}[t]
   \centering
   \small
-  \caption{Publisher sensitivity of EMV tracking. Entries are CCFinance
-    minus archive contemporaneous $R^2$ on the common outcome and calendar.
-    The 47-month calendar omits March and April 2020. The publisher-omission
-  rows rebuild the tracker before fitting.}
+  \caption{CCFinance minus archive contemporaneous $R^2$. Each 47-month
+    fit omits March and April 2020. Calibration uses either the original
+    40 months or the 38 remaining after dropping the same two months.
+    Each three-publisher tracker retains 147 cells over the full calendar
+  and 141 over the restricted calendar.}
   \label{tab:app-emv}
-  \begin{tabular}{lrrrr}
+  \begin{tabular}{lrrrrrr}
     \toprule
-    Publisher omitted & VIX, 49 & VIX, 47 & Realized vol., 49 &
-    Realized vol., 47 \\
+    & \multicolumn{3}{c}{VIX} & \multicolumn{3}{c}{Realized volatility} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    Fit months & 49 & 47 & 47 & 49 & 47 & 47 \\
+    Calibration months & 40 & 40 & 38 & 40 & 40 & 38 \\
     \midrule
-    None & $-.132$ & $-.041$ & $-.233$ & $-.051$ \\
-    Benzinga & $-.098$ & $-.067$ & $-.115$ & $-.010$ \\
-    Forbes & $-.360$ & $-.233$ & $-.382$ & $-.072$ \\
-    MarketWatch & $-.149$ & $+.004$ & $-.284$ & $-.050$ \\
-    The Wall Street Journal & $-.202$ & $-.017$ & $-.320$ & $-.036$ \\
+    All four publishers & $-.132$ & $-.041$ & $-.041$ & $-.233$ &
+    $-.051$ & $-.047$ \\
+    Omit Benzinga & $-.098$ & $-.067$ & $-.075$ & $-.115$ & $-.010$ & $-.014$ \\
+    Omit Forbes & $-.360$ & $-.233$ & $-.240$ & $-.382$ & $-.072$ & $-.072$ \\
+    Omit MarketWatch & $-.149$ & $+.004$ & $+.003$ & $-.284$ &
+    $-.050$ & $-.045$ \\
+    Omit Wall Street Journal & $-.202$ & $-.017$ & $+.001$ & $-.320$
+    & $-.036$ & $-.026$ \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -421,9 +580,13 @@ The July 2023 CEBRA manuscript defines the reference nodes and windows
 counts at most once per eligible article. In the matched design,
 syndications form connected story components. Fixed quotas retain
 682 stories from 31 hosts per week for the comparison and two placebo
-changes. Across matched-story draws, January to April 2020 adds 307.6
-pair observations on average, compared with added weights of 45.7
-and 202.0 in the two placebo changes.
+changes. From January to April 2020 the matched network adds 56.3
+distinct pairs [5, 83] and 307.6 pair observations [178, 421]. From
+July to October 2020 it loses 9.8 distinct pairs [$-46$, 28] while
+gaining 45.7 observations [$-117$, 217]. From January to April 2021
+it loses 21.8 distinct pairs [$-43$, $-1$] while gaining 202.0
+observations [70, 341]. Brackets give the central 95\% of changes
+across 1,000 matched-story draws.
 
 The extended calendar requires the same roster and publisher quotas over
 14 weeks and keeps 158 stories from 14 hosts per week on 32 eligible
@@ -454,7 +617,7 @@ reference (Table~\ref{tab:app-banks}).
     Jul.--Oct.\ 2019 & $-2.5$ [$-41$,23] & $+11.1$ [$-85$,99] \\
     Jan.--Apr.\ 2020 & $+19.1$ [$-25$,59] & $+56.2$ [$-40$,155] \\
     Jul.--Oct.\ 2020 & $+19.0$ [$-13$,52] & $+89.8$ [$-14$,199] \\
-    Jan.--Apr.\ 2021 & $-49.5$ [$-71$,$-29$] & $-13.8$ [$-99$,90] \\
+    Jan.--Apr.\ 2021 & $-49.5$ [$-71$,$-29$] & $-13.8$ [$-99$,67] \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -472,7 +635,49 @@ a recent title and one failed the price-movement headline screen. The
 988 survivors passed dated listing, vector and price checks and add
 943 unique bodies and 667 firm-sessions. The same 20 of 32 rolling
 windows fit, though the recovered panel changes training and evaluation
-rows.
+rows. Allowing LBFGS up to 1,000 iterations eliminated all 16 baseline
+drift warnings. At the original inverse regularization strength $C=1$,
+nine of 738 chosen security--session signals changed, leaving 39 both-leg
+sessions and mean drift of $-8.73$ bp. Stronger regularization
+($C=0.1$) changed 221 signals, leaving six both-leg sessions and
+mean drift of $-13.67$ bp. Both refits evaluate the original 277 days.
+
+\begin{table*}[t]
+  \centering
+  \small
+  \caption{Mean Gemma body drift in basis points by portfolio support.
+    Each panel uses its own evaluated dates. Net means charge 5 bp one
+    way on each active leg at entry and exit. The short leg earns the
+    negative of its securities' return. Brackets give 95\% intervals
+    from 10,000 circular 21-session block samples of the exchange
+    calendar between the first and last evaluated dates, conditional
+  on saved predictions.}
+  \label{tab:overnight-support}
+  \begin{tabular}{lrrlrrl}
+    \toprule
+    & \multicolumn{3}{c}{Original panel} &
+    \multicolumn{3}{c}{Recovered panel} \\
+    Support & Days & Gross [95\% interval] & Net & Days & Gross [95\%
+    interval] & Net \\
+    \midrule
+    Any active leg & 154 & $-18.26$ [$-52.15$, $7.36$] & $-30.98$
+    & 266 & $-9.88$ [$-27.70$, $7.73$] & $-24.02$ \\
+    Both legs & 42 & $-18.18$ [$-93.80$, $30.97$] & $-38.18$
+    & 110 & $-6.64$ [$-40.12$, $22.53$] & $-26.64$ \\
+    Long leg & 118 & $-5.50$ [$-35.83$, $16.66$] & $-15.50$
+    & 194 & $0.18$ [$-17.88$, $17.08$] & $-9.82$ \\
+    Short leg & 78 & $-27.72$ [$-65.95$, $3.03$] & $-37.72$
+    & 182 & $-14.64$ [$-34.61$, $4.70$] & $-24.64$ \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+On days when the short leg traded, it lost 27.72 bp on average in the
+original panel and 14.64 bp in the recovered panel
+(Table~\ref{tab:overnight-support}). Across all evaluated dates the
+5 bp scenario yielded means of $-17.23$ and $-18.79$ bp, respectively.
+Restricting both panels to the original 277 dates, the paired net change
+was $-1.27$ bp [$-11.19$,$+9.25$].
 
 The representation probes keep the same 996 baseline stories, issuers,
 prices and timing restrictions. Gemma title minus Gemma body mean daily
@@ -504,6 +709,7 @@ break-even would require a rebate in these scenarios
   \end{tabular}
 \end{table*}
 
+\clearpage
 \section{Access and reproduction}
 
 Common Crawl makes its captures available and preserves third-party
@@ -511,72 +717,36 @@ rights \citep{commoncrawlterms}. Infini-News documents CC BY 4.0 for
 derived metadata and an academic research use condition for bulk text
 \citep{lazzaroni2026}. Fine News identifies AGPL-3.0-only for its code
 and assigns no common license to underlying stories \citep{solovev2026}.
-CCFinance's Apache-2.0 license applies to the project code. The Baker
-and L\'opez-Lira--Tang archives are listed under CC BY 4.0
+The CCFinance selector reads Fine News Parquet outputs through DuckDB.
+The project code uses Apache-2.0. The Baker
+and Lopez-Lira--Tang archives are listed under CC BY 4.0
 \citep{baker2025archive,lopez2026archive}. Proprietary inputs such as
 Factiva, RavenPack and CRSP have separate access requirements.
 
-Exact reconstruction requires the authorized project revision, the
-locked environment and matching frozen inputs. Code and the project
-artifact store are private. On 22 November 2026, anonymous requests
-for the exact staging revision
-and for bytes of a staged shard returned HTTP 401. The pinned upstream
-Fine News revision returned HTTP 200. Public upstream archives and
-reference packages supply only some dependencies. Run the commands in
-Table~\ref{tab:app-access} from the repository root in the pinned
-environment after restoring the corresponding dependencies and verifying
-their revisions or DVC checksums. Frozen reports read saved labels or
-predictions where available. Rebuilding extraction requires the
-configured runtime and model cache, and new adjudication requires access
-to the relevant models. Codex assisted with outlining, drafting,
-editing, and consistency checks.
+Exact reconstruction requires the frozen inputs. During review the
+project code and artifact store are private. Anonymous checks on
+22 November 2026 reached the public upstream release and encountered
+authentication on the staging snapshot. We plan a post-review release
+of code and derived records with artifact-specific terms. The historical
+publisher registry, capture identifiers, copy decisions, mention offsets
+and issuer mappings can be documented independently of the article bodies.
+Vector redistribution requires a separate terms review.
+Frozen labels permit rescoring, while fresh adjudication requires access
+to the corresponding models. Codex assisted with manuscript preparation.
 
-The exact-span benchmark runs in the locked Python project.
-
-\begin{flushleft}
-  \small
-  \texttt{uv run -{}-project src/python \textbackslash}\\
-  \texttt{-{}-offline -{}-frozen python \textbackslash}\\
-  \scalebox{.94}{\texttt{src/python/scripts/stanza\_microbench/score.py}}
-\end{flushleft}
-
-\begin{table*}[t]
-  \centering
-  \small
-  \caption{Reproduction entry points once frozen dependencies are restored.
-    Run the indicated DVC stages with \texttt{just dvc repro}. The
-    \texttt{-s} option selects only the named stage. The mention
-    runner uses the locked Python
-  project.}
+\begin{table}[!ht]\centering\small
+  \caption{Inputs needed to reconstruct the exhibits.}
   \label{tab:app-access}
-  \begin{tabular}{@{}L{.19\textwidth}L{.39\textwidth}L{.34\textwidth}@{}}
-    \toprule
-    Artifact & Stage or runner & Required access or evidence \\
-    \midrule
-    Source and comparison
-    & \path{filter_fine_news}, \path{compare_sources}
-    & Staged hashes and pinned frames and draws \\
-    Metadata, links and coverage
-    & \path{report_metadata_validation}, \path{report_company_links},
-    \path{report_coverage}
-    & Frozen labels, issuer snapshots, dates and article links \\
-    Mention-span benchmark
-    & \path{src/python/scripts/stanza_microbench/score.py}
-    & Frozen labels and prediction offsets, plus bodies to verify text \\
-    Issuer-vector pilot
-    & \path{entity_embedding_tables}
-    & Frozen outputs and local pilot archives \\
-    EMV comparison
-    & \path{report_baker_emv}, \path{compare_baker_tracking}
-    & Author archive v1, FRED outcomes and publisher-month panel \\
-    Bank co-mentions
-    & \path{report_kazinnik_banks},
-    \path{report_kazinnik_matched_weeks}, \path{report_kazinnik_extended_weeks}
-    & Dated links, reference mapping and week-specific panels \\
-    Overnight drift
-    & \path{report_lopez_portfolios}, \path{report_lopez_recovered},
-    \path{report_lopez_title_probes}, \path{report_lopez_drift_costs}
-    & Frozen bodies, clocks, vectors, security prices and labels \\
+  \begin{tabular}{lp{.55\columnwidth}}\toprule
+    Exhibit & Required evidence \\ \midrule
+    Corpus & Capture IDs, source frames, publisher registry \\
+    Coverage & Dated listings, public float, copy and issuer decisions \\
+    Extraction & Frozen predictions, offsets and reference judgments \\
+    Retrieval & Body vectors and masked issuer accounts \\
+    Volatility & Publisher-month shares, archived tracker, market outcomes \\
+    Bank pairs & Bank crosswalk and dated story pairs \\
+    Overnight drift & Publication and capture clocks, vectors and
+    security prices \\
     \bottomrule
   \end{tabular}
-\end{table*}
+\end{table}

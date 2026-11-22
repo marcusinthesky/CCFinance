@@ -168,30 +168,41 @@ def _publisher_influence(
     with duckdb.connect() as connection:
         rows = connection.execute(
             """
-            WITH cells AS (
-                SELECT month, host, calibration, eligible_share,
-                       stddev_samp(eligible_share ORDER BY month)
-                           FILTER (WHERE calibration) OVER (PARTITION BY host) AS sd
-                FROM read_parquet(?) WHERE variant = 'baseline'
+            WITH calendars AS (
+                SELECT * FROM (VALUES (false), (true)) t(exclude_shock)
+            ), eligible AS (
+                SELECT host, month, eligible_share, exclude_shock,
+                       calibration AND (NOT exclude_shock OR month NOT IN
+                           (DATE '2020-03-01', DATE '2020-04-01')) AS calibration
+                FROM read_parquet(?) CROSS JOIN calendars WHERE variant = 'baseline'
+            ), cells AS (
+                SELECT *, stddev_samp(eligible_share ORDER BY month)
+                    FILTER (WHERE calibration) OVER (PARTITION BY host, exclude_shock)
+                        AS sd FROM eligible
             ), omissions AS (
                 SELECT DISTINCT host AS omitted FROM cells UNION ALL SELECT 'none'
+                UNION ALL SELECT 'wsj_only'
             ), monthly AS (
-                SELECT omitted, month, calibration,
+                SELECT omitted, exclude_shock, month, calibration,
                        avg(eligible_share / nullif(sd, 0) ORDER BY host) AS unscaled,
                        count(*) - count(eligible_share / nullif(sd, 0)) AS missing
-                FROM omissions CROSS JOIN cells WHERE host <> omitted
-                GROUP BY omitted, month, calibration
+                FROM omissions CROSS JOIN cells
+                WHERE CASE WHEN omitted = 'wsj_only' THEN host = 'wsj.com'
+                           ELSE host <> omitted END
+                GROUP BY omitted, exclude_shock, month, calibration
             ), joined AS (
                 SELECT m.*, p.vix FROM monthly m JOIN read_parquet(?) p USING (month)
                 WHERE p.variant = 'baseline'
             ), scales AS (
-                SELECT omitted, avg(vix ORDER BY month) / avg(unscaled ORDER BY month)
-                    AS scale FROM joined WHERE calibration AND vix > 0
-                    AND unscaled IS NOT NULL GROUP BY omitted
+                SELECT omitted, exclude_shock,
+                       avg(vix ORDER BY month) / avg(unscaled ORDER BY month) AS scale
+                FROM joined WHERE calibration AND vix > 0 AND unscaled IS NOT NULL
+                GROUP BY omitted, exclude_shock
             )
-            SELECT omitted, list(month ORDER BY month),
+            SELECT omitted, exclude_shock, list(month ORDER BY month),
                    list(unscaled * scale ORDER BY month), list(missing ORDER BY month)
-            FROM joined JOIN scales USING (omitted) GROUP BY omitted ORDER BY omitted
+            FROM joined JOIN scales USING (omitted, exclude_shock)
+            GROUP BY omitted, exclude_shock ORDER BY omitted, exclude_shock
             """,
             [str(panel / "coverage.parquet"), str(panel / "monthly_panel.parquet")],
         ).fetchall()
@@ -199,12 +210,14 @@ def _publisher_influence(
     outside_shock = np.array(
         [m not in (date(2020, 3, 1), date(2020, 4, 1)) for m in months]
     )
-    for omitted, calendar, rebuilt, missing in rows:
+    for omitted, exclude_shock, calendar, rebuilt, missing in rows:
         tracker = np.asarray(rebuilt, dtype=np.float64)
         if calendar != months or not np.isfinite(tracker).all():
             raise ValueError(f"Incomplete tracker after omitting {omitted}")
-        if omitted == "none" and not np.allclose(
-            tracker, values[:, 3], atol=1e-12, rtol=0
+        if (
+            omitted == "none"
+            and not exclude_shock
+            and not np.allclose(tracker, values[:, 3], atol=1e-12, rtol=0)
         ):
             raise ValueError("All-publisher rebuild differs from the frozen tracker")
         trackers = np.column_stack((values[:, 0], tracker))
@@ -212,6 +225,11 @@ def _publisher_influence(
             ("full", np.ones(len(months), dtype=bool)),
             ("excluding_march_april_2020", outside_shock),
         ):
+            if exclude_shock and period == "full":
+                continue
+            if exclude_shock:
+                period = "excluding_march_april_2020_from_fit_and_calibration"
+            tracker_correlation = float(np.corrcoef(trackers[keep].T)[0, 1])
             for index, outcome in enumerate(OUTCOMES, start=1):
                 fit = _fit(trackers[keep], values[keep, index])
                 results.append(
@@ -222,6 +240,7 @@ def _publisher_influence(
                         int(keep.sum()),
                         int(np.asarray(missing)[keep].sum()),
                         *fit,
+                        tracker_correlation,
                     )
                 )
     return results
@@ -314,6 +333,7 @@ def compare_baker_tracking(
                 "months",
                 "missing_publisher_months",
                 *TrackerFit._fields,
+                "correlation_with_archive_composite",
             ),
             _publisher_influence(panel, months, values),
         )

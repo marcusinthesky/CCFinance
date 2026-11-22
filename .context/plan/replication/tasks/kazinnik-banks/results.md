@@ -53,6 +53,7 @@ and appendix were unavailable. [2023 manuscript](https://congress-files.s3.amazo
 | Exclude labeled roundups | 177 → 241 | 2,344 → 3,116 | 302 → 402 | 7,571 → 10,681 |
 | Reporting | 72 → 172 | 889 → 1,459 | 145 → 244 | 1,927 → 2,983 |
 | Reuters hosts | 50 → 35 | 245 → 287 | 88 → 82 | 797 → 926 |
+| Excluding Nasdaq hosts | 162 → 230 | 1,761 → 2,530 | 279 → 379 | 5,465 → 8,342 |
 | Direct mapping only | 77 → 133 | 1,927 → 2,670 | 145 → 213 | 5,193 → 7,818 |
 
 ## Concentration and article evidence

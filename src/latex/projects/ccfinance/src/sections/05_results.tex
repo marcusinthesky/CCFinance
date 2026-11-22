@@ -67,8 +67,10 @@ When we omit March and April 2020 from both regressions, both trackers
 explain less variation and the VIX fit gap narrows to $-0.041$. Keeping
 calibration fixed, omitting Forbes widens the gap with or without
 those months. On the full calendar the difference moves from $-0.132$
-to $-0.360$. Publisher choice thus changes historical tracking fit even
-when the outcome and calendar stay fixed. For a bank network, publisher
+to $-0.360$. Using only the \emph{Wall Street Journal}, the publisher
+common to both baskets, gives a VIX $R^2$ of 0.110. Its monthly tracker
+has a correlation of 0.397 with the authors' eleven-paper composite.
+For a bank network, publisher
 choice also determines which joint mentions can enter, because a
 pair appears only when a retained story names both institutions.
 
@@ -83,21 +85,23 @@ core among the six largest institutions. The number of connected
 pairs rises from 177 to 242, whereas the July 2023 manuscript reports
 a decline from 210 to 172. When we restrict CCFinance to Reuters
 hosts, changing both the publisher mix and the number of available
-stories, the pair count falls from 50 to 35.
+stories, the pair count falls from 50 to 35. Excluding Nasdaq alone
+leaves an increase from 162 to 230 pairs. Restricting the full publisher
+sample to direct bank mappings also leaves an increase, from 77 to 133.
 
 To see whether the increase survives at fixed publisher quotas, we
 collapse syndicated copies and match the number of stories drawn from
 each publisher. Over six weeks with 682 matched stories per week, the
 mean January--April 2020 increase is 56.3 connected pairs, with a
-central 95\% subsampling range of [5, 83]. Extending the calendar to
-fourteen weeks restricts the roster to 32 mapped bank nodes and
-requires common publisher quotas across those weeks. The narrower
-common support retains 158 stories per week and excludes Nasdaq,
-which supplied a substantial share of the earlier matched sample. The
-mean increase falls to 19.1 pairs [$-25$, 59]. The two ranges describe
-variation across draws of matched stories. The seven nonoverlapping
-week comparisons give a limited historical reference for the size of
-the increase.
+central 95\% subsampling range of [5, 83]. On the same six weeks,
+removing Truist to obtain a roster usable before its 2019 merger reduces
+the increase to 45.4 pairs. Requiring the same publisher quotas across
+fourteen weeks then leaves 158 stories per week and excludes Nasdaq,
+which supplied 271 of the original 682. The mean increase falls to
+19.1 pairs [$-25$, 59], close to the 19.0 added from July to October
+2020 under the same quotas. The ranges describe which stories enter
+each draw. The six placebo periods give the historical comparison
+(Table~\ref{tab:app-banks}).
 
 \subsection{Issuer-Session Drift}
 
@@ -115,9 +119,10 @@ and the session return adds the signed returns on one unit of notional
 per active leg. An inactive leg contributes zero. Of 670 possible
 sessions from October 2021 through May 2024, the fixed-sample probes
 evaluate 277. The issuer linker estimates alias frequencies across the full
-archive, so an earlier article can use evidence observed later. Sixteen
-of the 20 fitted baseline drift windows produced convergence warnings,
-which limits confidence in the fitted probabilities. Of the evaluated
+archive, so an earlier article can use evidence observed later. Twelve
+of 32 months had fewer than 100 training rows. In 16 of the 20 fitted
+months the baseline drift solver warned at the ten-iteration cap. Of
+the evaluated
 sessions, 42 have both a long and a short portfolio and 123 have neither. Mean
 open-to-close drift before costs is $-10.15$ basis points per evaluated
 session, with a 21-session block interval of [$-25.2$, $+4.2$] basis
@@ -126,9 +131,12 @@ points conditional on the saved predictions.
 Recovering first-publication times from the historical Business Standard
 format adds 667 distinct firm-sessions. Both-leg support rises from 42
 to 110 sessions, and the number of evaluated sessions rises from 277
-to 340. Because the new observations enter training as well as
+to 340, including 74 with neither leg. Because the new observations
+enter training as well as
 evaluation, we refit the probes on the expanded panel. Mean drift
-remains negative at $-7.73$ basis points per evaluated session. Table~8 of
+remains negative at $-7.73$ basis points per evaluated session. On the
+277 dates evaluated by both models, recovery changes mean gross drift
+by $+2.45$ bp (paired 95\% interval $[-6.80,+13.74]$). Table~8 of
 \citet{lopez2025v6} reports $+11$ basis points of mean daily drift for
 MiniLM headlines in a broader RavenPack and CRSP sample, with different
 texts, issuer coverage, representation and prices. On the fixed

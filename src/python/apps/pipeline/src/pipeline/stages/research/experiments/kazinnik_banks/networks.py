@@ -65,7 +65,7 @@ def build_networks(
         CREATE TABLE variants (variant VARCHAR);
         INSERT INTO variants VALUES ('baseline'), ('unique_headline'),
             ('under_six_banks'), ('exclude_roundups'), ('reporting'),
-            ('reuters_host'), ('direct_only');
+            ('reuters_host'), ('exclude_nasdaq'), ('direct_only');
         CREATE TABLE memberships AS
         SELECT v.variant, a.study_window, a.id, b.bank, r.bank_order
         FROM window_articles a JOIN article_banks b USING (id)
@@ -80,6 +80,8 @@ def build_networks(
             WHEN 'reporting' THEN a.article_form = 'reporting'
             WHEN 'reuters_host'
                 THEN regexp_matches(a.publisher, '(^|[.])reuters[.]com$')
+            WHEN 'exclude_nasdaq'
+                THEN NOT regexp_matches(a.publisher, '(^|[.])nasdaq[.]com$')
             WHEN 'direct_only' THEN b.directly_mapped
         END;
         CREATE TABLE article_pairs AS

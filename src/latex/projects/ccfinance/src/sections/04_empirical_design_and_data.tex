@@ -15,7 +15,10 @@ articles, 13,918 issuer-years qualify on usable links and 8,641 qualify
 when each article must mention the issuer at least three times. Among
 issuer-years with measured public float, 329 of 6,533 (5.0\%) in the
 lowest annual quintile meet the 50-usable-article minimum, compared
-with 5,790 of 6,526 (88.7\%) in the highest.
+with 5,790 of 6,526 (88.7\%) in the highest. Requiring three mentions
+leaves 105 qualifying issuer-years (1.6\%) in the lowest quintile and
+4,561 (69.9\%) in the highest. Appendix Table~\ref{tab:size-year}
+reports the intermediate quintiles and annual coverage.
 
 \begin{table}[t]
   \centering
@@ -44,7 +47,7 @@ with 5,790 of 6,526 (88.7\%) in the highest.
   \end{tabular}
   \caption{Distinct staged IDs surviving the article-level rules
     (Panel~A) and issuer-years meeting each annual article minimum
-    during 2017--2025 (Panel~B). An ID can
+    during 2017--2025 (34,781 eligible issuer-years in Panel~B). An ID can
     contribute to more than one issuer's annual counts. Focus requires
   three or more mentions of the linked issuer.}
   \label{tab:coverage}
@@ -53,7 +56,8 @@ with 5,790 of 6,526 (88.7\%) in the highest.
 The decline in coverage makes it important to ask which stories the
 rule excludes. Across 250 sampled leads with 712 model-reference
 company spans, GLiNER recovered 412 spans and Stanza recovered 421
-(Appendix Table~\ref{tab:app-spans}).
+(Appendix Table~\ref{tab:app-spans}). Allowing overlapping boundaries
+brings their company-span F1 scores within half a percentage point.
 To evaluate issuer identity after extraction, we sample extracted
 company spans independently of the linker's decisions. The model judges
 see the marked text and neutral search results and provide dated issuer
@@ -120,9 +124,13 @@ the declared week. A three-bank story can therefore supply three
 pairs, and the weight of each edge counts the stories in which it
 appears.
 
-Whereas a dated article can be assigned to an earnings week, a
-before-open signal needs evidence of the body available before the
-cutoff. First publication must follow the preceding exchange close and
+The overnight exercise pairs timely news from two Indian publishers with
+US-listed securities. On the fixed panel, 740 article--security rows
+trade on Nasdaq and 364 on the NYSE. For 270 rows the registry lacks a
+listing start date, so eligibility also requires usable pre-2021 news
+linked to the issuer. A before-open signal needs evidence of the body
+available before the cutoff. First publication must follow the
+preceding exchange close and
 precede 09:00 New York time, and capture must occur between publication
 and the cutoff, inclusive. If a story appears overnight and the crawler
 fetches it after 09:00, that capture establishes only what the page
