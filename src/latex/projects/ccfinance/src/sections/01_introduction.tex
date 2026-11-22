@@ -41,7 +41,13 @@ challenge a research crawler even when the site admits verified search
 crawlers \citep{cloudflare2026}, whose referrals can bring publishers
 readers and advertising revenue \citep{cma2020publishers}. A shared
 archive allows several teams to examine the same response after a single
-fetch. Common Crawl, for example, observes publisher crawl directives
+fetch. This matters for replication because two visits to the same URL
+can return different texts. If a publisher adds a second company's
+response to a story after publication, researchers collecting on
+different days can disagree even on which firms the story names. When
+both researchers can recover the same capture, they can instead examine
+how their respective rules treat the same passage. Common Crawl, for
+example, observes publisher crawl directives
 and slows its requests after rate limits or server errors
 \citep{commoncrawlfaq}.
 
@@ -68,16 +74,22 @@ For news, Infini-News extracts article bodies and structured metadata
 from CC-News and indexes them with their capture provenance
 \citep{lazzaroni2026}, while Fine News applies language and quality
 filters to those records and removes duplicate texts \citep{solovev2026}.
+These transformations allow a researcher who starts with a cleaned
+body to trace it back through the extraction to an archived response.
+For a language model the body can already serve as a training example.
+For a financial panel a further decision remains, because prices and
+returns are observed for particular securities on particular dates.
 
 Even after this processing, a single article can name several companies,
 report an event that concerns only one, or express different sentiment
 toward each \citep{shah2024,sinha2022sentfin}. Named-entity recognition
 locates the mentions, and issuer linking assigns them dated identities
 that a researcher can join to financial records \citep{schwenkler2020}.
-Article-form tags describe the kind of story a publisher ran, while
-event labels and issuer-specific sentiment describe the events
-described in the text and their implications for investors in
-a particular firm. Dense embeddings also allow
+Article-form tags distinguish, for example, a news report from a press
+release, while event labels identify the kind of development a passage
+describes. Its implications for investors can depend on whose shares
+they hold, which gives issuer-specific sentiment a different object
+from the overall tone of the sentence. Dense embeddings also allow
 researchers to compare passages that share few words and to use these
 representations in retrieval or return models
 \citep{lopez2025v6,embeddinggemma2025}. The relevant unit of evaluation

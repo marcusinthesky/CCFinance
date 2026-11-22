@@ -1,18 +1,85 @@
-\section{Related Corpora}
+\section{Literature Review}
 \label{sec:literature}
 
-Financial news collections differ in the observation a researcher can
-recover. In constructing FNSPID, \citet{dong2024} begin with the
-headlines and URLs on Nasdaq's per-symbol pages, retrieve article bodies
-from the linked pages, and supplement the collection with earlier news
-data. Their modeling experiments start from 15.7 million time-aligned
-news records, for which they separately examine the availability of text
-and stock symbols. CCFinance begins with the ID of an archived capture
-and asks which article--issuer observations and timed signals that
-particular copy can support.
+What constitutes an observation in a financial news corpus depends in
+part on how the news was collected. In constructing FNSPID,
+\citet{dong2024} begin with the headlines and URLs on Nasdaq's
+per-symbol pages, retrieve bodies from the linked pages, and supplement
+the collection with earlier news data. Their modeling experiments start
+from 15.7 million time-aligned news records, for which they separately
+examine the availability of text and stock symbols. Collecting by symbol
+gives the researcher a route from the security to the story. Starting
+from a web archive reverses that order: the researcher observes a copy
+of the text and must establish which, if any, securities it concerns.
+A story indexed under two symbols can supply two company observations,
+while two captures of the same page can document a revision. Counts of
+time-aligned records and archived copies consequently measure different
+aspects of news coverage. They also suggest different checks on
+completeness. Starting with a list of securities, one can ask which
+ones have any retrievable text at all. Starting with archived articles,
+one can ask how often a recognized company resolves to a listed issuer.
+To learn which firms receive little or no coverage, however, both
+approaches need a roster defined independently of the articles found.
+Otherwise an issuer with no stories disappears from the denominator
+along with the evidence of its absence.
 
-GDELT's Global Knowledge Graph records organizations, themes and tone in
-monitored news, allowing researchers to study how events are reported
-\citep{gdelt}. To follow a listed issuer through those events, a financial
-study also needs to establish which security a name identified on the
-article date and when the archived version became observable.
+For researchers starting with the archived page, the choice of corpus
+also determines which editorial and processing decisions they inherit.
+The daily CC-News files preserve fetched responses from news sites
+\citep{nagel2016}, while Infini-News extracts article text and metadata
+that can be searched together with their capture provenance
+\citep{lazzaroni2026}. Fine News further filters the extracted records by
+language and quality and selects representatives of duplicate texts
+\citep{solovev2026}. For pretraining, filtering and deduplication help
+determine which passages a model encounters and how often it encounters
+them \citep{penedo2023}. For a financial panel, the same operations
+can change the measured volume of coverage. Two publishers carrying the
+same wire story may each contribute a publication to a study of media
+attention, although counting both gives an additional observation of the
+same bank pair in a study of co-mentions. The appropriate treatment of
+the second copy depends on which of these quantities the study estimates.
+
+A further distinction arises between finding an organization in the
+text and identifying a security that a researcher can follow over time.
+GDELT's Global Knowledge Graph records organizations, themes and tone
+in monitored news and therefore allows researchers to follow how events
+are reported \citep{gdelt}. FiNER-ORD makes recognition itself amenable
+to evaluation: \citet{shah2024} provide manual annotations for people,
+organizations and locations in 201 financial news articles. Those labels
+let a researcher ask whether an extractor found the right words in a
+passage. In a financial application, a correctly extracted organization
+might be an exchange, a regulator or a subsidiary with a listed parent,
+each of which has a different implication for whether the mention can
+enter an issuer panel. \citet{schwenkler2020} make this additional step
+explicit when they recognize organizations in news and link firms to
+construct a network. A missed name can remove a genuine pair, while an
+incorrect assignment can attribute that pair to a different firm.
+
+Even a correct assignment leaves open what the text says about the firm.
+Of the 10,753 human-annotated headlines in SEntFiN, 2,847 contain several
+entities, and the sentiments expressed toward them can differ
+\citep{sinha2022sentfin}. Consider a headline announcing the acquisition
+of one company by another. The buyer and the target should both be
+retrievable by name, though an investor interpreting the terms of the
+transaction may draw different conclusions for each security.
+\citet{heston2017} can study such firm-level questions by matching news
+text to vendor firm tags and sentiment scores. For archived text, the
+corresponding decisions can be examined separately by asking whether
+the name was linked to the right issuer, whether the story concerned
+that issuer, and whether the sentiment assigned to it agrees with a
+judgment made in context.
+
+The financial application determines which of these decisions enters
+the estimate. In the volatility tracker of \citet{baker2026}, articles
+that meet a dictionary rule contribute to a publisher's monthly share,
+so the other articles the publisher carried that month also enter the
+calculation through the denominator. In the bank networks of
+\citet{kazinnik2026}, a connection requires evidence about two
+institutions in the same story. The overnight return design of
+\citet{lopez2026} adds a time requirement, since a headline can inform
+a trading decision only if it was available before the position was
+taken. For a captured article body, that requirement concerns the
+version containing the information used by the model. We therefore
+begin the construction of CCFinance with the archived copy and carry
+its identity forward as we assign issuers, evaluate their roles in
+the story and establish which observations can enter each design.

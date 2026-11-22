@@ -1,4 +1,4 @@
-\section{Constructing Eligible News Observations}
+\section{Methodology}
 \label{sec:method}
 
 To identify the archived copies from which a financial observation can
@@ -41,7 +41,15 @@ For the date check we allow capture up to seven days after reported
 publication or, to accommodate time zones, up to one calendar day before
 it. A page dated Monday and fetched Thursday can therefore count toward
 Monday's news in a day-level corpus, although Thursday is the first
-date on which we observe that version for a trading signal.
+date on which we observe that version for a trading signal. In the
+frozen corpus, 237,193 of the 11,260,839 usable copies were captured
+between two and seven days after reported publication. There is also
+direct evidence that a later visit can return a different body:
+among 26,897 repeated normalized URLs with observed text hashes,
+23,779 had more than one hash. A change in hash alone does not tell
+us whether a publisher added financially relevant information, but
+it does explain why we retain the capture time of the particular text
+from which the signal is computed.
 
 To determine which firms that version names, we use GLiNER2.5 Small
 \citep{gliner25} to extract candidate company spans, retain their text
@@ -83,3 +91,17 @@ EmbeddingGemma encodes up to 2,048 tokens per story in a fixed
 norms and alignment with the frozen article IDs and examine
 company-specific representations in a separate exploratory retrieval task
 (Appendix Table~\ref{tab:app-vectors}).
+
+The distinction between a body and an issuer also applies to its
+representation. If a story names both parties to a transaction, the
+stored body vector is the same whichever party a researcher queries.
+Conditioning an embedding on the sentences that mention one party
+could help distinguish the two accounts, provided those sentences
+contain different information. The exploratory retrieval task tests
+that condition by asking each company's representation to retrieve
+its own account after the names have been masked. Only 16 held-out
+stories judged eligible by the primary model fit every encoder,
+below the planned minimum of 60, and two companies can still share
+the same selected sentence. We therefore use the body vector for the
+overnight exercise and retain the article--issuer links as a separate
+record of which firms the story concerns or mentions.
