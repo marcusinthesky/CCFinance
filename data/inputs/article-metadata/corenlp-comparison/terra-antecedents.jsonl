@@ -1,0 +1,42 @@
+{"tag": "c004", "cik": 1065280, "head": 732, "end": 735, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c004", "cik": 1065280, "head": 1193, "end": 1196, "verdict": "wrong", "reason": "Refers to YouTube TV."}
+{"tag": "c015", "cik": 104169, "head": 458, "end": 461, "verdict": "wrong", "reason": "Refers to Instacart, not Walmart."}
+{"tag": "c015", "cik": 104169, "head": 588, "end": 591, "verdict": "wrong", "reason": "Refers to Instacart, not Walmart."}
+{"tag": "c015", "cik": 104169, "head": 833, "end": 840, "verdict": "wrong", "reason": "Refers to Instacart, not Walmart."}
+{"tag": "c015", "cik": 104169, "head": 1035, "end": 1042, "verdict": "wrong", "reason": "Refers to Instacart, not Walmart."}
+{"tag": "c015", "cik": 104169, "head": 1054, "end": 1057, "verdict": "wrong", "reason": "Refers to Instacart, not Walmart."}
+{"tag": "c020", "cik": 1090727, "head": 2018, "end": 2026, "verdict": "wrong", "reason": "The head denotes UPS\u2019s practice, not UPS itself."}
+{"tag": "c020", "cik": 1090727, "head": 2084, "end": 2086, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c034", "cik": 1467858, "head": 2768, "end": 2770, "verdict": "wrong", "reason": "Mercedes executive speaks for Mercedes, not General Motors."}
+{"tag": "c040", "cik": 64040, "head": 337, "end": 343, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c040", "cik": 64040, "head": 593, "end": 595, "verdict": "wrong", "reason": "Expletive it in a registration prompt."}
+{"tag": "c061", "cik": 886982, "head": 3462, "end": 3467, "verdict": "wrong", "reason": "Refers to a Credit Suisse business group, not Goldman Sachs."}
+{"tag": "c061", "cik": 1159510, "head": 2885, "end": 2888, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c061", "cik": 1159510, "head": 2922, "end": 2924, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c061", "cik": 1159510, "head": 3046, "end": 3049, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c061", "cik": 1159510, "head": 3681, "end": 3683, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4240, "end": 4243, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4254, "end": 4257, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4269, "end": 4272, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4668, "end": 4670, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4684, "end": 4687, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c075", "cik": 835403, "head": 4743, "end": 4746, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c086", "cik": 1059556, "head": 869, "end": 871, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c086", "cik": 1059556, "head": 899, "end": 902, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 68, "end": 70, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 404, "end": 406, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 620, "end": 622, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 664, "end": 666, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 687, "end": 689, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 713, "end": 715, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 871, "end": 873, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c087", "cik": 1070985, "head": 909, "end": 912, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c113", "cik": 49071, "head": 4203, "end": 4210, "verdict": "wrong", "reason": "Refers to Aetna."}
+{"tag": "c161", "cik": 823094, "head": 1951, "end": 1954, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c161", "cik": 823094, "head": 2003, "end": 2006, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c161", "cik": 823094, "head": 2067, "end": 2069, "verdict": "wrong", "reason": "Expletive it in \u201cIt is no coincidence\u201d."}
+{"tag": "c161", "cik": 823094, "head": 2093, "end": 2095, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c161", "cik": 823094, "head": 2245, "end": 2248, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c161", "cik": 823094, "head": 3597, "end": 3600, "verdict": "correct", "reason": "The local context identifies the named company as the referent."}
+{"tag": "c161", "cik": 823094, "head": 3641, "end": 3649, "verdict": "wrong", "reason": "Refers to the Richter painting."}
+{"tag": "c161", "cik": 823094, "head": 3719, "end": 3721, "verdict": "wrong", "reason": "Refers to the painting."}

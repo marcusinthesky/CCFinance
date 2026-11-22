@@ -77,6 +77,16 @@ precision from 31.9\% to
 (44.3--69.5\%). The focus rule therefore reduces incidental coverage
 while also losing some stories about the issuer.
 
+On the same test articles, we also count nominal and pronominal
+mentions in Stanford CoreNLP chains anchored to a single linked issuer
+\citep{manning2014corenlp}. Twelve additional article--issuer pairs
+pass the three-mention screen, seven of which are judged subjects.
+Recall rises from 56.9\% to 67.7\%, while precision moves from
+66.1\% to 64.7\%. A separate GPT-6.1 Terra review attributed 28 of
+the 42 added references in those pairs to the anchored issuer. Seven
+of the twelve pairs still qualify using only those confirmed references.
+The production panel uses named mentions.
+
 The metadata audits give two examples of how model scores can change
 sample composition. Blinded model judges label 400 sampled units in
 each of three confirmation frames covering article form, local mention

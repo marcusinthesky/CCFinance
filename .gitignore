@@ -40,6 +40,7 @@ lean_decls
 !/data/inputs/source-comparison/README.md
 !/data/inputs/article-metadata/diagnostics.jsonl
 !/data/inputs/article-metadata/README.md
+!/data/inputs/article-metadata/corenlp-comparison/*
 !/data/inputs/issuers/*.rq
 !/data/inputs/issuers/exchanges.csv
 !/data/inputs/issuers/README.md

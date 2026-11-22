@@ -140,6 +140,21 @@ The separate 10,000-article extraction benchmark ran at 106.1 articles
 per second with 7.22 GiB peak reserved CUDA memory. Synthetic examples
 guided development and contribute zero weight to confirmation estimates.
 
+\paragraph{Sentence and company sentiment.}
+The primary judge assigns positive, negative or neutral sentiment to
+358 of 400 marked mentions. We compare GLiNER's company label with
+the root sentiment of the containing sentence from Stanford CoreNLP
+4.5.10, collapsing the two intensities in each direction. Mixed and
+unassessable predictions miss the judged class. One Stanford sentence
+exceeds the 200-token parsing limit. Weighted three-class macro-F1 is
+46.79\% for GLiNER and 40.84\% for Stanford, a paired difference of
+5.95 points [$-1.33$, $+13.98$]. Polarity reversals occur on 8.38\%
+and 10.73\% of directionally judged units, respectively. A fresh
+GPT-6.1 Terra pass agreed with the primary judge on 10 of 40 blinded
+cases. It marked 23 targets as invalid company spans, including a
+product and a political party. Both span validity and the financial
+interpretation of the surrounding text affect this comparison.
+
 \begin{table*}[t]
   \centering
   \small

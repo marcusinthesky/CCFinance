@@ -1,0 +1,121 @@
+{
+  "n": 400,
+  "directional": 358,
+  "systems": {
+    "gliner": {
+      "classes": {
+        "positive": {
+          "precision": 0.4609374999999989,
+          "recall": 0.7268165371100846,
+          "f1": 0.564118474207516
+        },
+        "negative": {
+          "precision": 0.5641025641025633,
+          "recall": 0.5603615883389895,
+          "f1": 0.5622258533013382
+        },
+        "neutral": {
+          "precision": 0.5238095238095232,
+          "recall": 0.1886141219563789,
+          "f1": 0.2773570865955971
+        }
+      },
+      "macro_f1": 0.4679004713681505,
+      "polarity_reversal": 0.08384909609832654
+    },
+    "stanford": {
+      "classes": {
+        "positive": {
+          "precision": 0.49388414200617836,
+          "recall": 0.40330986267489655,
+          "f1": 0.4440251371510809
+        },
+        "negative": {
+          "precision": 0.3274809798656068,
+          "recall": 0.49535381796293215,
+          "f1": 0.3942928862871777
+        },
+        "neutral": {
+          "precision": 0.4214289479855958,
+          "recall": 0.3578048305470865,
+          "f1": 0.38701944775947283
+        }
+      },
+      "macro_f1": 0.40844582373257715,
+      "polarity_reversal": 0.10732545142542245
+    }
+  },
+  "root_counts": {
+    "Negative": 148,
+    "Neutral": 147,
+    "Positive": 104,
+    "over_200_tokens": 1
+  },
+  "reference": {
+    "invalid span": {
+      "n": 6,
+      "weighted_share": 0.014998797133309547
+    },
+    "mixed": {
+      "n": 21,
+      "weighted_share": 0.05889195529409282
+    },
+    "negative": {
+      "n": 92,
+      "weighted_share": 0.21312815907789948
+    },
+    "neutral": {
+      "n": 157,
+      "weighted_share": 0.37929761016691244
+    },
+    "not assessable": {
+      "n": 15,
+      "weighted_share": 0.038370792914389586
+    },
+    "positive": {
+      "n": 109,
+      "weighted_share": 0.29531268541339606
+    }
+  },
+  "terra": {
+    "n": 40,
+    "agree": 10,
+    "invalid": 23,
+    "reference_counts": {
+      "invalid span": 23,
+      "mixed": 2,
+      "negative": 3,
+      "neutral": 6,
+      "not assessable": 1,
+      "positive": 5
+    },
+    "directional": 14,
+    "directional_hits": {
+      "gliner": 8,
+      "stanford": 5,
+      "ref": 10
+    },
+    "macro_f1": {
+      "gliner": 0.698227875915649,
+      "stanford": 0.24282107681526777
+    }
+  },
+  "archived_terra": {
+    "n": 100,
+    "directional": 66,
+    "macro_f1": {
+      "gliner": 0.5005702777155709,
+      "stanford": 0.28019938232247926
+    }
+  },
+  "delta_macro_f1": [
+    0.05945464763557334,
+    -0.013342047634079016,
+    0.13983769647228506
+  ],
+  "delta_polarity_reversal": [
+    -0.02347635532709591,
+    -0.06969027586312507,
+    0.020165921950509588
+  ]
+}
