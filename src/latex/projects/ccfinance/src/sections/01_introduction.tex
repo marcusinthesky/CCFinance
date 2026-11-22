@@ -1,37 +1,117 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Suppose a researcher uses a news article to form a signal before the
-market opens and measures the stock's return from the open to the
-close. A second researcher can observe the same price change and apply
-the same estimator, but reconstructing the signal also requires the
-article version available when it was formed and the identity of the
-security to which the article refers. Because a publisher can update a
-story after it appears, the first-publication time alone leaves open
-which text was available when the signal was formed.
+Much financial news in empirical research comes from proprietary
+archives. A paper can disclose its estimator and still
+leave another researcher unable to recover the articles and
+annotations that define its sample. \citet[Section~2]{heston2017}, for
+example, match proprietary NewsScope sentiment scores and firm tags to
+full text from the Reuters News Archive by timestamp and story ID.
+Repeating that analysis or changing the sentiment measure requires
+access to the underlying observations.
+Earlier collections available to researchers have often had a narrower
+publisher or time span, and the fields needed for a particular design
+may be distributed across products. The comparisons in
+\citet[Appendix~A]{gawronsky2026} illustrate these differences in
+coverage, access to article bodies and issuer annotation. For example,
+the public SEntFiN release provides entity sentiment annotations for
+10,753 headlines \citep{sinha2022sentfin}. A financial design may also
+need the full body, publication time, capture provenance and a dated
+issuer assignment to reconstruct what an investor could observe.
 
-An estimating equation can be public while the news it uses remains
-proprietary. \citet{heston2017}, for example, study how stock prices
-respond to news using a large Reuters corpus and a proprietary sentiment
-measure. A researcher trying to repeat the analysis or change the way
-sentiment is measured needs the corresponding article versions and
-annotations. When a web archive retains a copy, it can supply a common
-text input even after the publisher changes or removes the live page.
+Two established routes give researchers access outside a commercial
+subscription. One is a bounded publisher or vendor release. Reuters
+Corpus Volume~1 covers a year of English-language
+newswire, and the Thomson Reuters Text Research Collection (TRC2)
+covers January 2008 to February 2009. NIST distributes these research
+collections under agreements \citep{reuterscorpora}. The other route
+is to collect articles directly from publishers or aggregators, as
+\citet{dong2024} do using Nasdaq's per-symbol pages. Direct collection
+gives researchers control over the input they retain, but the source
+pages, available dates and terms determine how much of the sample they
+can build or later reproduce. Even when researchers share a copy, access
+can change. \citet{remyding2015} document the withdrawal of their
+original Reuters and Bloomberg downloads on copyright grounds.
 
-We ask which financial samples can be reconstructed from those copies
-and how the link from captures to issuers and trading times changes the
-measurements. We construct CCFinance from a frozen selection of Common
-Crawl News, preserve source and timing evidence where available, and
-link extracted company mentions to dated issuer records. A link records
-the dated issuer assignment for a company mention. A separate company-focus rule
-determines whether the article counts toward focused coverage for that
-firm. Because the two rules can admit different sets of articles, we
-measure how many issuers have enough coverage under each rule.
+Because direct collection revisits live sites, it depends on publisher
+preferences and controls that protect users and servers from abusive traffic.
+A site can challenge automated requests from a research collector while
+allowing verified search crawlers \citep{cloudflare2026}. Search referrals
+can bring publishers readers and advertising revenue, giving some a
+reason to admit crawlers that make their pages discoverable
+\citep{cma2020publishers}. Research collection has to respect access
+controls, publisher terms and crawl preferences, and manage server load.
+Common Crawl, for example, checks crawl directives and slows requests
+after rate limits or server errors \citep{commoncrawlfaq}. A shared archive lets
+different teams examine a recorded response without making another
+request to the publisher for the same version.
 
-The study unit determines what the evidence must establish. An
-equity-market volatility tracker counts eligible articles by publisher
-and month. A co-mention network requires two mapped banks in one article.
-An overnight return test adds a cutoff for the article version and needs
-enough securities with qualifying signals to form portfolios. Before
-constructing those observations, we examine which text, time and identity
-fields earlier sources supply.
+Publicly accessible web corpora have supplied training material
+at a scale that helped advance large language models. Filtered Common
+Crawl data, for example, made up 60\% of the GPT-3 training mixture
+by sampling weight \citep[Table~2.2]{brown2020}. The nonprofit Common
+Crawl Foundation publishes a URL index and the underlying web
+responses for researchers, policymakers and the public to inspect
+\citep{commoncrawlabout,commoncrawloverview}. Commercial search
+services build indexes to retrieve and rank results
+\citep{google2026search}, while Common Crawl lets users work directly
+with the archived pages. In 2016 it introduced CC-News, a separate
+crawl of news sites around the world with daily releases of Web ARChive
+(WARC) files \citep{nagel2016}. The files record fetched
+responses and capture times, so a researcher can recover a documented
+copy even if the live page later changes. Access to a capture remains
+subject to the source terms and the rights in its content
+\citep{commoncrawlterms}.
+
+Archived responses still require processing before they can serve
+as article text. RefinedWeb demonstrates how filtering and
+deduplicating public web data can support language model pretraining
+\citep{penedo2023}. For news specifically, Infini-News extracts
+article bodies and structured metadata from CC-News, retains capture
+provenance, and indexes the collection \citep{lazzaroni2026}. Fine
+News applies language and quality filters and removes duplicate texts
+from those extracted records \citep{solovev2026}. The resulting texts
+and source records make it possible to ask what each article measures
+in a financial study.
+
+Even a clean article can name several companies, describe an event
+that concerns only one of them, or express different sentiment toward
+each \citep{shah2024,sinha2022sentfin}. Named-entity recognition
+locates company mentions, and issuer linking assigns those mentions
+to dated identities that can be joined to other financial records
+\citep{schwenkler2020}. Article-form tags, event labels and
+issuer-specific sentiment describe different aspects of the text.
+Dense embeddings support comparisons of meaning beyond shared words,
+and can supply inputs to retrieval or return models
+\citep{gawronsky2026,embeddinggemma2025}. Each annotation has to
+be evaluated at the level at which a study uses it.
+
+We apply a publisher filter to a frozen English Fine News release
+derived from CC-News, yielding 14,807,287 staged records. CCFinance
+checks reported publication dates against capture, selects canonical
+copies, and enriches the retained text with company mentions, dated
+issuer assignments, metadata and body embeddings.
+To characterize the selection, we estimate the yield of the same
+hostname rule across four pinned source releases. We use schema-driven
+GLiNER2.5 Small to extract spans and attributes from the same text
+\citep{gliner25}, compare its company spans with Stanza, and evaluate
+link and focus decisions against held-out model judgments. We also
+audit the additional labels and vector representations. A common
+annual article requirement makes the cost of requiring
+company focus visible as a change in the firms that qualify. Exact
+reconstruction requires authorized access to the frozen inputs and
+derived artifacts.
+
+The final comparisons reimplement selected designs from three
+peer-reviewed studies. At the publisher-month scale, we compare
+the equity-market volatility tracker of \citet{baker2026} with a
+tracker built from archived articles on a common calendar. At the
+bank-pair scale, we apply the co-mention design of \citet{kazinnik2026}
+and find that the change in connected pairs reverses sign in the
+Reuters subset. At the issuer-session scale, we apply the
+overnight design of \citet{lopez2026} to captured bodies with
+documented cutoff eligibility. Recovering publication clocks lets
+us evaluate both portfolio legs on more sessions, while mean drift
+remains negative after refitting. Together these applications show
+which source, identity and timing decisions determine the sample
+behind each financial estimate.
