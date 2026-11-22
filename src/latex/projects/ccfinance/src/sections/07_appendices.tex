@@ -3,30 +3,30 @@
 
 \section{Corpus lineage and source pilot}
 
-The historical publisher list selects English-language Fine News records
-using the hostname in metadata, with the URL as fallback, and includes
-dot-delimited subdomains. The frozen input contains 14,807,287 distinct
-IDs across 168 shards. The replication package records the upstream and
-staging revisions. A fresh upstream selection still requires row-level
-comparison with these frozen IDs and bodies.
+To apply the historical publisher list to English-language Fine News
+records, we take the hostname from the metadata, falling back to the URL
+when necessary, and include dot-delimited subdomains of the listed hosts.
+The replication package identifies both the upstream revision and the
+frozen selection of 14,807,287 distinct IDs across 168 shards. Verifying
+that a fresh upstream selection reproduces the snapshot still requires
+a row-by-row comparison of IDs and bodies.
 
-The retrospective pilot expands sampled rows within each of four pinned
-release frames (Table~\ref{tab:app-source}). A cluster draw selects a
-file and then a row group.
-The product of those two probabilities determines the inverse-probability
-expansion of its counts. The ratio of the resulting Hansen--Hurwitz
-totals gives weighted publisher yield, with exploratory 95\% linearized
-$t$ intervals on three degrees of freedom. The manifests preserve the
-release versions, draw probabilities and observed counts. Each frame
-has its own upstream filtering and deduplication, so the comparison
-concerns physical rows. Estimating unique stories, overlap or financial
-coverage outside the registry would require separate sampling.
+Within each of four pinned release frames (Table~\ref{tab:app-source}),
+the retrospective pilot samples a file and then a row group within it.
+We expand each count by the inverse of the product of its two selection
+probabilities and take the ratio of the resulting Hansen--Hurwitz totals
+to estimate publisher yield, with exploratory 95\% linearized $t$
+intervals on three degrees of freedom. The manifests preserve the release
+versions, draw probabilities and observed counts. Because filtering and
+deduplication differ across releases, these totals count physical rows.
+Estimating unique stories, overlap or financial coverage outside the
+registry would require separate sampling.
 
-The Fine News matched-total interval is 2.15--18.67 million physical
-records, encompassing the 14.81 million staged IDs.
-The pinned release reports 219,192,987 English records. Staged IDs amount to
-6.76\% of that count, pending an independent replay of the selection.
-Four draws offer limited precision for a population total.
+With only four draws, the interval for the Fine News matched total is
+wide enough (2.15--18.67 million physical records) to encompass the
+14.81 million staged IDs. Those IDs amount to 6.76\% of the
+219,192,987 English records in the pinned release, although the exact
+selection has yet to be independently replayed.
 The Fine News, Infini-News, RefinedWeb and FineWeb-HQ frames contain
 168, 49,748, 5,534 and 9,246 files respectively. The four selected
 Fine News files contain 437, 519, 71 and 319 row groups. Each sampled
@@ -37,9 +37,10 @@ Infini-News file contains one group and each RefinedWeb file contains
   \centering
   \small
   \setlength{\tabcolsep}{4pt}
-  \caption{Source pilot. Four independent file--row-group draws per
-    source with replacement. Yield divides estimated matching English
-  physical records by estimated English physical records in the frame.}
+  \caption{Estimated publisher yield in four source releases. Within each
+    release we make four independent file--row-group draws with replacement
+    and divide the estimated number of matching English physical records
+  by the estimated number of English physical records in the frame.}
   \label{tab:app-source}
   \begin{tabular}{llrrrl}
     \toprule
@@ -63,8 +64,8 @@ observed text hashes, 23,779 carried more than one body hash. An
 earlier publication date alone cannot establish when a revision appeared.
 
 \paragraph{Historical selection.}
-The 115 entries below describe the original publisher filter. Observed
-subdomains have distinct capture histories. Among the five largest
+The original filter comprised the 115 entries below, but even subdomains
+of a single publisher have distinct capture histories. Among the five largest
 observed hosts, the staged and usable shares of the respective totals
 were 9.0\% and 11.6\% for nasdaq.com, 8.9\% and 0.2\% for uk.reuters.com,
 7.7\% and 0.9\% for in.reuters.com, 6.5\% and 5.9\% for reuters.com,
@@ -108,16 +109,16 @@ thisismoney.co.uk, upstreamonline.com, worldoil.com, wsj.com, zacks.com.\par}
 \paragraph{Exact company spans.}
 The microbenchmark takes the 50 lowest seeded ID hashes per
 publication year from 2019 through 2023 among consistently dated,
-canonical English articles in the staging snapshot. A lead contains the
-first 150 whitespace-delimited words or the entire shorter body. A
-GPT-6.2-sol medium primary pass covered 250 leads, including the
-40-lead pilot. A separate GPT-6.2-sol low pass covered the first 12
-ranks in each of the five years. The passes agreed exactly on 52 of
-60 repeated leads
-(span F1 95.68\%). Disagreements were resolved against the guide
-before scoring. The repeat annotator had access to published pilot
-examples. The resulting model reference contains 712 spans across 250
-leads, 73 with none. The guide includes named businesses
+canonical English articles in the staging snapshot. For each lead we
+take the first 150 whitespace-delimited
+words or the entire body if it is shorter. A GPT-6.2-sol medium primary
+pass covered all 250 leads, including the 40-lead pilot, while a separate
+GPT-6.2-sol low pass covered the first 12 ranks in each of the five
+years. The two passes agreed exactly on 52 of the 60 repeated leads
+(span F1 95.68\%). The repeat annotator had access to published pilot
+examples, and disagreements were resolved against the guide before
+scoring. The resulting model reference contains 712 spans across the
+250 leads, of which 73 contain none. The guide includes named businesses
 and excludes products, bare tickers and nonbusiness organizations.
 
 Stanza 1.11.0 uses the English \texttt{ontonotes\_charlm} model with
@@ -259,12 +260,13 @@ interpretation of the surrounding text affect this comparison.
 The seed-43 confirmation samples extracted spans by alias frequency
 and the number of issuers sharing a key, and draws a separate uniform
 sample of articles containing at least one extracted company span.
-Article judges receive up to 12,000 body characters. Both draws are
-independent of linker predictions. Model
-judges receive marked text and neutral issuer search with the candidate
-link withheld. A correct link names the judged issuer or the same listed
-security on the article date. Weighted intervals are linearized. Unlinked
-precision is the share of abstentions judged to have no eligible issuer
+Both draws are independent of the linker's predictions. For the span
+judgments, the models see the marked text and neutral issuer search
+results with the candidate link withheld, while the article judges
+receive up to 12,000 body characters. We count a link as correct when
+it names the judged issuer or the same listed security on the article
+date, and measure unlinked precision by the share of abstentions judged
+to have no eligible issuer. Weighted estimates use linearized intervals
 (Table~\ref{tab:app-links}).
 Cohen's $\kappa$ is 0.935 for the repeated judge on 164 mentions and
 0.881 for the independent audit judge on 339.
@@ -272,13 +274,18 @@ Cohen's $\kappa$ is 0.935 for the repeated judge on 164 mentions and
 \paragraph{Selecting a subject rule.}
 We compared mention counts, the position of an issuer's first mention
 as a fraction of body length, and its highest substantive-relevance
-score. The full grid crossed six count cutoffs, four position cutoffs
-and 19 relevance cutoffs. Three mentions, with no further restriction,
-gave the highest development F1. On held-out articles, counting two
-mentions recovered more subjects and gave a higher F1 than counting
-three (Table~\ref{tab:app-focus-rules}). Seven development and five
-held-out bodies exceeded
-the judge's 12,000-character limit. In one Schlumberger earnings-call
+score. Across the grid of six count cutoffs, four position cutoffs and
+19 relevance cutoffs, three mentions with no further restriction gave
+the highest development F1. On held-out articles, counting two mentions
+recovered more subjects and gave a higher F1 than counting three
+(Table~\ref{tab:app-focus-rules}). A development-selected relevance
+threshold of 0.40 yielded 41.7\% subject precision and 53.8\% recall
+on the held-out articles.
+
+Because the judge reads only the first 12,000 characters, some of the
+evidence available to the full-body rule can fall outside the judged
+text. Seven development and five held-out bodies exceeded that limit.
+In one Schlumberger earnings-call
 transcript, the third linked mentions of Goldman Sachs, Citigroup and
 Bank of America all occurred after character 20,000. The full-body
 rule selected all three banks, whereas the judge identified Schlumberger
@@ -426,9 +433,9 @@ issuer panel assigns
 an article to its publication year and counts it once for each linked
 issuer. An issuer-year enters the universe with a dated listing or with
 a current listing of unknown start and public float observed in that
-year or the previous year. The panel retains zero-count universe members.
-On the held-out articles, a development-selected relevance threshold of
-0.40 yields 41.7\% subject precision and 53.8\% recall.
+year or the previous year. Issuers that meet either condition stay in
+the panel even in years
+when they have no linked articles.
 
 \begin{table}[t]
   \centering\small
@@ -464,24 +471,25 @@ On the held-out articles, a development-selected relevance threshold of
 \section{Body embeddings and issuer conditioning}
 
 The production EmbeddingGemma artifact \citep{embeddinggemma2025} stores
-768 FP16 coordinates per body with a 2,048-token limit. The census
-reconciled all IDs, positions and text flags and checked finite values
-and norms. All 14,807,287 frozen bodies contained text. A blank-body
-fixture exercises the zero-vector convention. In the overnight panel,
-the production tokenizer truncated 44 of 996 bodies after adding the
-document prefix and special tokens. For six of 1,104 article--issuer
-rows, the third linked mention ended beyond the visible text. The focus
-screen uses mentions from the full captured body.
+768 FP16 coordinates per body with a 2,048-token limit. In the census we
+reconciled all IDs, positions and text flags and checked vector norms
+and finiteness. All 14,807,287 frozen bodies contained text, so we used
+a blank-body fixture to check the zero-vector convention. Whereas the
+focus screen counts mentions throughout the captured body, in the
+overnight panel the tokenizer truncated 44 of 996 bodies after adding
+the document prefix and special tokens. For six of 1,104 article--issuer
+rows, the third linked mention ended beyond the text visible to the
+encoder.
 
-In the separate issuer-conditioning pilot, a story is eligible when
-two companies have distinguishable accounts under the model reference.
-A paired success requires both company-conditioned views to prefer
-their own name-masked account. Luna identified 18 eligible stories
-among 150 held out, of which 16 fit every encoder. Terra found eight
-eligible stories in the audit. The primary and audit denominators fell
-below their planned minima of 60 and 20. The observed gains from
-selecting issuer sentences motivate confirmation on a larger sample
-(Table~\ref{tab:app-vectors}).
+To evaluate whether an embedding can distinguish two firms in the same
+story, the issuer-conditioning pilot requires the model reference to
+identify a distinct account for each. A paired success occurs when both
+company-conditioned views prefer their own name-masked account. Among
+150 held-out stories Luna identified 18 eligible cases, of which 16 fit
+every encoder, while Terra found eight eligible stories in the audit.
+Since both denominators fell below their planned minima of 60 and 20,
+the observed gains from selecting issuer sentences warrant confirmation
+on a larger sample (Table~\ref{tab:app-vectors}).
 
 \begin{table*}[t]
   \centering
@@ -518,12 +526,12 @@ exercise while these issuer-specific experiments remain exploratory.
 \paragraph{Equity market volatility.}
 The July 2025 manuscript and archive v1 supply the reference tracker
 and specifications \citep{baker2025ms,baker2025archive}. Six archive
-reruns recover the monthly fits at displayed precision. The substituted
-tracker uses dictionary-hit shares in 196 publisher-month cells.
-Divide each publisher's shares by its dispersion over the 40
-calibration months through December 2022, average across publishers
-and rescale to the calibration mean VIX. The comparative fit uses an
-intercept and a contemporaneous tracker against each common outcome.
+reruns recover the monthly fits at displayed precision. To construct
+the CCFinance tracker from 196 publisher-month cells,
+we divide each publisher's dictionary-hit shares by their dispersion
+over the 40 calibration months through December 2022, average across
+publishers and rescale to the calibration mean VIX. We then regress
+each common outcome on an intercept and its contemporaneous tracker.
 For each of 10,000 bootstrap samples, we draw six-month circular
 blocks with replacement until we have 49 observations, trimming the
 last block. Both trackers and the common outcome use the same months
@@ -592,12 +600,12 @@ The extended calendar requires the same roster and publisher quotas over
 14 weeks and keeps 158 stories from 14 hosts per week on 32 eligible
 nodes. Nasdaq is outside the common publisher support. Truist is
 excluded because combining its predecessors would change the network
-unit. Both January--April 2020 draw ranges cross zero. Among seven
-changes, its connected-pair increase ranks first by signed change,
-0.1 pair above the next largest, and its pair-weight increase ranks
-second. These ranges measure variation across matched stories within
-selected weeks. Six placebo periods supply a descriptive historical
-reference (Table~\ref{tab:app-banks}).
+unit. Although both January--April 2020 draw ranges cross zero, the mean
+increase in connected pairs ranks first by signed change among the
+seven periods, just 0.1 pair above the next largest, while the increase
+in pair weight ranks second. The ranges measure variation across matched
+stories within selected weeks, and the six placebo periods supply the
+historical comparison (Table~\ref{tab:app-banks}).
 
 \begin{table*}[t]
   \centering
@@ -717,16 +725,17 @@ rights \citep{commoncrawlterms}. Infini-News documents CC BY 4.0 for
 derived metadata and an academic research use condition for bulk text
 \citep{lazzaroni2026}. Fine News identifies AGPL-3.0-only for its code
 and assigns no common license to underlying stories \citep{solovev2026}.
-The CCFinance selector reads Fine News Parquet outputs through DuckDB.
-The project code uses Apache-2.0. The Baker
+CCFinance uses Apache-2.0 for its project code, and its selector
+reads Fine News Parquet outputs through DuckDB. The Baker
 and Lopez-Lira--Tang archives are listed under CC BY 4.0
 \citep{baker2025archive,lopez2026archive}. Proprietary inputs such as
 Factiva, RavenPack and CRSP have separate access requirements.
 
-Exact reconstruction requires the frozen inputs. During review the
-project code and artifact store are private. Anonymous checks on
-22 November 2026 reached the public upstream release and encountered
-authentication on the staging snapshot. We plan a post-review release
+Reconstructing the exhibits requires access to the frozen inputs as
+well as the code. During review the project code and artifact store are
+private, and anonymous checks on 22 November 2026 reached the upstream
+release but required authentication at the staging snapshot.
+We plan a post-review release
 of code and derived records with artifact-specific terms. The historical
 publisher registry, capture identifiers, copy decisions, mention offsets
 and issuer mappings can be documented independently of the article bodies.

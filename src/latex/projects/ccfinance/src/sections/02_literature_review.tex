@@ -1,18 +1,18 @@
 \section{Related Corpora}
 \label{sec:literature}
 
-The closest comparisons differ in what counts as an observation.
-\citet{dong2024} obtain headlines and URLs from Nasdaq's per-symbol
-pages, then retrieve bodies from the linked pages and supplement the
-collection with earlier news data. They report 15.7 million
-time-aligned news records in FNSPID and separately examine
-availability of article text and stock symbols. The aligned record
-serves as the starting point for their modeling experiments.
-CCFinance counts frozen capture IDs and separately evaluates which
-article--issuer observations and timed signals those captures support.
+Financial news collections differ in the observation a researcher can
+recover. In constructing FNSPID, \citet{dong2024} begin with the
+headlines and URLs on Nasdaq's per-symbol pages, retrieve article bodies
+from the linked pages, and supplement the collection with earlier news
+data. Their modeling experiments start from 15.7 million time-aligned
+news records, for which they separately examine the availability of text
+and stock symbols. CCFinance begins with the ID of an archived capture
+and asks which article--issuer observations and timed signals that
+particular copy can support.
 
 GDELT's Global Knowledge Graph records organizations, themes and tone in
-monitored news, providing observations for research on how events are
-reported \citep{gdelt}. Following an issuer through time adds two
-requirements: the identity of the listed security at the article date
-and a record of when the archived version became observable.
+monitored news, allowing researchers to study how events are reported
+\citep{gdelt}. To follow a listed issuer through those events, a financial
+study also needs to establish which security a name identified on the
+article date and when the archived version became observable.

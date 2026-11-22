@@ -1,79 +1,85 @@
 \section{Constructing Eligible News Observations}
 \label{sec:method}
 
-The frozen staging sample selects publishers from the English-language
-\texttt{eng\_Latn} shards of Fine News. The 115-entry list includes
-general-interest sources with financial coverage, and a record qualifies
-if its hostname is an exact match or a dot-delimited subdomain of an
-entry. We preserve the article ID, body, source URL and available
-capture and publisher metadata. The recorded upstream revision and a
-separate checksum-verified staging revision identify 14,807,287 distinct
-IDs in 168 staged Parquet shards. The appendix records both revisions
-and the separate source-comparison frames (Table~\ref{tab:app-source}).
+To identify the archived copies from which a financial observation can
+be constructed, we begin with the English-language \texttt{eng\_Latn}
+shards of Fine News. We retain a record when its hostname matches an
+entry on our 115-entry publisher list or a dot-delimited subdomain of
+that entry. The list includes general-interest publishers with financial
+coverage. For each match we preserve the article ID, body, source URL
+and available capture and publisher metadata. The upstream revision
+and a separate checksum-verified staging revision identify 14,807,287
+distinct IDs in 168 staged Parquet shards (see Appendix
+Table~\ref{tab:app-source} for the source comparison).
 
-We apply the same hostname rule retrospectively to four pinned source
-frames, including FineWeb-HQ \citep{messmer2025}. In each frame we make
-four independent draws with replacement, choosing a file uniformly and
-then doing the same for a row group within that file. Inverse-probability
-weights estimate the English and publisher-matched totals. Their ratio
-gives the estimated publisher yield, with higher point estimates in the
-two news collections (Appendix Table~\ref{tab:app-source}). Because the sources
-differ in English scope and duplicate retention, each yield describes
-physical rows within that release. Estimating additional unique stories
-would require matching records across releases.
+To see how the choice of source affects the yield of this filter, we
+apply the same hostname rule retrospectively to four pinned releases,
+including FineWeb-HQ \citep{messmer2025}. Within each release we make
+four independent draws with replacement, sampling a file uniformly and
+then a row group uniformly within that file. We use inverse-probability
+weights to estimate the publisher-matched and English totals, whose ratio
+gives the estimated publisher yield. The two news collections have the
+higher point estimates (Appendix Table~\ref{tab:app-source}). Because
+the releases differ in their English-language coverage and treatment of
+duplicates, the yields describe physical rows within each release, while
+estimating how many unique stories a source adds would require matching
+records across releases.
 
-An article is usable when it is the canonical copy and its reported
-publication date is consistent with capture. We allow capture up to
-seven days after that date or up to one calendar day before it to
-accommodate time zones. A page dated Monday and fetched Thursday can
-therefore count in the day-level corpus, while Thursday remains the
-observed capture date of that version. If this canonical copy names one
-linked issuer three times and another once, it supplies one usable article
-to each issuer and one focused article to the first issuer. Although
-Fine News retains
-representatives of upstream duplicate clusters, the staged records
-still contain exact-text and normalized-URL repeats. Each capture
-competes separately on exact text and normalized URL,
-with the earliest capture winning each group and the ID breaking ties.
-A usable copy must win both comparisons and pass the date check. When
-both comparisons identify a duplicate, the ledger records the text match.
-An earlier copy with an invalid date still takes precedence. In the
-Monday example, Thursday is the first observable date for a signal
-using this body. Because a repeated URL can contain
-revised text, the canonical ID identifies the selected archived body.
+Within the chosen release, an article is usable if it is the canonical
+copy and its reported publication date is consistent with capture.
+Although Fine News retains representatives of upstream duplicate clusters,
+the staged records still contain exact-text and normalized-URL repeats.
+We select the earliest capture separately within each text group and
+each normalized-URL group, breaking ties by ID and recording the text
+match when both comparisons identify a duplicate. A copy must win both
+comparisons before it can qualify, even if an earlier copy that takes
+precedence subsequently fails the date check. Because publishers can
+revise the text at the same URL, the canonical ID identifies the
+particular body retained.
 
-To identify firms in the captured text, we use GLiNER2.5 Small
+For the date check we allow capture up to seven days after reported
+publication or, to accommodate time zones, up to one calendar day before
+it. A page dated Monday and fetched Thursday can therefore count toward
+Monday's news in a day-level corpus, although Thursday is the first
+date on which we observe that version for a trading signal.
+
+To determine which firms that version names, we use GLiNER2.5 Small
 \citep{gliner25} to extract candidate company spans, retain their text
-and offsets, and resolve the names against a dated listing and alias table.
-The table combines SEC registrant identifiers and current and former
-names with listing, alias and subsidiary evidence from Wikidata.
-An explicit exchange ticker or Reuters code can anchor an identity and
-help resolve later mentions in the same article. Alias evidence is
-evaluated on the article date where validity dates are known, and the
-linker retains ambiguous candidates or abstains when the evidence is
-insufficient. The anchor disagreement audit includes a ticker whose
-issuer in an older article about Sprint differs from a later assignment.
-\citet{schwenkler2020} use Stanford CoreNLP to identify organizations
-before linking firms in a news-derived network. Appendix
-Table~\ref{tab:app-spans} compares GLiNER2.5 Small with Stanza, a
-separate Stanford toolkit, on exact company spans in leads from the
-publisher-filtered sample. FiNER-ORD also documents the difficulty of
+and offsets, and resolve them against a table of dated listings and
+aliases. The table combines SEC registrant identifiers and current and
+former names with listing, alias and subsidiary evidence from Wikidata.
+Where validity dates are known, we evaluate alias evidence as of the
+article date. An exchange ticker or Reuters code can anchor an identity
+and help resolve later mentions within the article, while ambiguous
+candidates are retained and the linker can abstain. In the anchor
+audit, for example, the issuer associated with a ticker
+in an older Sprint story differs from the issuer to which that ticker
+was later assigned.
+
+\citet{schwenkler2020} likewise identify organizations with Stanford
+CoreNLP before linking firms in a news-derived network. To examine
+company recognition before the linking decision, we compare exact
+company spans from GLiNER2.5 Small and Stanza, a separate Stanford
+toolkit, in leads from our publisher-filtered sample (Appendix
+Table~\ref{tab:app-spans}). FiNER-ORD also documents the difficulty of
 transferring named-entity recognition to financial text \citep{shah2024}.
 
-Because a single story can name several firms, the article--issuer
-table records each accepted pair and stores the evidence for its link.
+Even when the issuer's identity is clear, its role in a story can vary.
 A dispute involving Gap and a Tapestry brand can concern both firms,
-while an article about Tesla may mention Nvidia in passing. For the
-company-focus screen we require at least three extracted mentions of
-the linked issuer, with no additional relevance threshold. Each article
-still counts once in the corpus and can count toward the coverage of
-more than one issuer.
+while an article about Tesla may mention Nvidia in passing. We retain
+each accepted article--issuer pair with the evidence for its link,
+and count the article as focused on an issuer when it contains at least
+three extracted mentions of that issuer, with no further relevance
+threshold. A usable story that names one linked firm three times and
+another once thus counts once in the corpus, toward usable coverage for
+both firms, and toward focused coverage for the first.
 
-In one joint schema, GLiNER processes 384-word windows with 64 words of
-overlap. The pipeline records article form, local relevance and investor-facing
-sentiment for extracted mentions, and event scores for model input windows.
-The overnight probe uses fixed 768-coordinate EmbeddingGemma body vectors,
-whose alignment and norms we check against the frozen article IDs
-\citep{embeddinggemma2025}. The body encoder reads up to 2,048 tokens per story.
-Appendix Table~\ref{tab:app-vectors} examines company-specific
-representations in a separate exploratory retrieval task.
+To describe the text at each of these levels, GLiNER uses a joint schema
+on 384-word windows with 64 words of overlap, recording article form,
+local relevance and investor-facing sentiment for extracted mentions,
+and event scores for individual windows. For the overnight probe,
+EmbeddingGemma encodes up to 2,048 tokens per story in a fixed
+768-coordinate body vector \citep{embeddinggemma2025}. We check vector
+norms and alignment with the frozen article IDs and examine
+company-specific representations in a separate exploratory retrieval task
+(Appendix Table~\ref{tab:app-vectors}).
