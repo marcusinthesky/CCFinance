@@ -1,18 +1,21 @@
-A story about one firm's earnings may also name its competitors, so a
-researcher measuring firm coverage must decide whether to count the
-story for every firm it mentions or only for those it concerns. For a frozen
-Common Crawl News sample, CCFinance selects canonical copies, checks
-publication dates against capture, and links company mentions to issuers
-on the article date. Of 34,781 issuer-years with listing evidence
-from 2017 through
-2025, 13,918 have at least 50 usable linked articles. Requiring three
-mentions per article reduces that count to 8,641 and, among held-out
-articles with a detected company, raises subject precision while lowering
-recall. On a common calendar the archived-news volatility tracker
-explains less variation than the reference tracker, although the paired
-interval for the difference spans zero. From January to April 2020,
-bank-pair counts rose across publishers but fell within Reuters.
-Recovering publication times increases the number of overnight sessions
-with both portfolio legs from 42 to 110, while mean open-to-close drift
-remains negative after refitting. Exact reconstruction requires access
-to the frozen inputs and derived artifacts.
+Proprietary news archives assign stories to firms, so reproducing a
+financial study often requires access to both the articles and the
+vendor's assignments. CCFinance lets researchers reconstruct firm coverage
+under different selection rules by recording which version of a story
+was captured, which issuers it names and how often each appears. From
+14.8 million
+English-language records in Fine News, derived from public Common Crawl
+News, we identify 5.22 million distinct, consistently dated articles
+with issuer links. Exact reconstruction requires the restricted snapshot
+and derived artifacts. We compare GLiNER and Stanza on 250 model-labeled
+article leads and assess issuer links and story focus against blinded
+model judgments. Estimated precision among 475 accepted links is 96.8\%.
+Among held-out articles with a detected company, requiring three
+mentions raises subject precision from 31.9\% to 66.1\%. Across the
+2017--2025 panel, the same rule reduces the number of issuer-years with
+at least 50 qualifying stories from 13,918 to 8,641. Three
+reimplementations examine
+volatility tracking, bank networks and overnight returns. In the network
+study, bank pairs appearing together rose from 177 to 242 across
+publishers between January and April 2020, but fell from 50 to 35
+within Reuters.
