@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.processed.company_links:link_companies",
-  "digest": "sha256:f608bcbea08f1a5e74e8e688614e5b45cd67022de7a3aff8a8d8b4f4a88f6d91",
+  "digest": "sha256:d101978822c20b6243640bb54539bacf428fb0a831caa10f4b5923e9f046462f",
   "entrypoint": "pipeline stages processed link-companies",
   "fallbacks": [
   ],
@@ -29,7 +29,7 @@
     {"digest":"sha256:ae5302f0e0e99a232fca5ae366cd49065090fb7c633394f25f868998f1c2d3c3","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:TRAILING_TICKER"},
     {"digest":"sha256:0c3f25aeced3cf31d6a710c33f70e440c7ec3e4dc5ea3e9debca1c149a83ea22","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:US_EXCHANGES"},
     {"digest":"sha256:8d1ad380a613a0d1d6f52a6f4b49850cac1a82960d5a9dc2e264e86bc65838fb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:_recover_names"},
-    {"digest":"sha256:c4358838590a879546ad45bfb5e4dbc9aa0572472548498e92e97897c2679448","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:_write"},
+    {"digest":"sha256:8ed775718c3601a6add8cc9f5de46778f92bd3c37e17ec81e2b1aa9d38288f52","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:_write"},
     {"digest":"sha256:e84ebd004c73b053ae50e624ad5d10ce8098618a01a03db73ae4c14e254f4d2c","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:find_anchors"},
     {"digest":"sha256:f22b497b5866e28bf19b757e609f773cebc0e45adaabf28500a9d958fe5bef97","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_companies"},
     {"digest":"sha256:7cf7ed387610ee94892d79a9de1d07434fdc7dfb1255995046c46d446ef40243","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/company_links.py","symbol":"pipeline.stages.processed.company_links:link_unit"},

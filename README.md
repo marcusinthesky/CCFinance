@@ -59,6 +59,14 @@ just dvc status
 just dvc dag
 ```
 
+To restore the frozen paper inputs in a fresh checkout, run
+`just restore-source` with authorized access to the staging dataset and
+`just restore-vectors` for the public CCFinance metadata revision. Both
+commands take an optional destination and require a fresh output directory.
+The vector restore projects IDs, text-presence flags and FP16 coordinates
+from each public shard and checks every reconstructed file against its DVC
+digest. The remaining paper artifacts come from the private DVC bucket.
+
 Semflow tracks the executable Python dependencies of DVC stages. When adding a
 stage, run `just semflow-patch` to review its proposed fingerprints, then
 `just semflow-apply` to materialize them. Commit the generated

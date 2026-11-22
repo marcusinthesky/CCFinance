@@ -23,9 +23,10 @@ work. Setup may download dependencies; ordinary checks use cached dependencies
 and do not repair authored content. LaTeX uses a versioned Tectonic asset bundle.
 
 The restricted Fine News publisher snapshot provides the source bodies.
-DVC stores intermediate and experiment artifacts under the `dvc-store/` prefix
-of the Hugging Face Storage Bucket. Bucket visibility is set independently of
-the Hub dataset. The public dataset is assembled by `just release-metadata`
+DVC stores retained intermediate and experiment artifacts under `dvc-release-v1/`
+in the private Hugging Face Storage Bucket. The original raw snapshot and body
+vectors have pinned Hub restore recipes. Their original directory hashes remain
+in the DVC lock for verification. The public dataset is assembled by `just release-metadata`
 from explicit field projections and verified body vectors. The frozen
 acquisition stages record their inputs without refetching them.
 
