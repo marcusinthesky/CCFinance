@@ -29,7 +29,6 @@ template = "children.md.j2"
 
 | Status | Item | Description |
 | --- | --- | --- |
-| backlog | [03. Plan the sections and exhibits](tasks/step-03-sections/README.md) | Give each of the eight section files a question and a specific job. |
 | backlog | [04. Outline one bullet per paragraph](tasks/step-04-paragraphs/README.md) | Turn the section map into a readable argument before drafting prose. |
 | backlog | [05. Score and revise the paragraph outline](tasks/step-05-score/README.md) | Decide where readers need preparation, explanation or emphasis. |
 | backlog | [06. Draft the shared manuscript](tasks/step-06-draft/README.md) | Translate the scored outline into the shared LaTeX sections. |
@@ -37,7 +36,7 @@ template = "children.md.j2"
 | backlog | [08. Refine the prose in context](tasks/step-08-style/README.md) | Make the revised manuscript easier to read while preserving the verified claims. |
 | backlog | [09. Proof both layouts and verify reproduction instructions](tasks/step-09-proof/README.md) | Prepare a checked manuscript candidate for circulation. |
 
-`7 open; 2 terminal`
+`6 open; 3 terminal`
 
 <!-- insitu:end -->
 
