@@ -929,9 +929,9 @@ stages:
 
   audit_lopez_publisher_support:
     desc: Screen publisher opportunities within the fixed issuer universe and inspect first-publication evidence.
-    cmd: mkdir -p data/research/experiments/lopez-publisher-support && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_publisher_support.sql
+    cmd: mkdir -p data/research/experiments/lopez-publisher-support && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
     deps:
-      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_publisher_support.sql
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
       - data/processed/experiments/lopez-lira-tang-events
       - data/processed/experiments/lopez-lira-tang-sample/sample.parquet
       - data/processed/articles/articles.parquet
@@ -1089,9 +1089,9 @@ stages:
       - data/research/experiments/kazinnik-extended-weeks
 
   report_lopez_drift_costs:
-    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
     deps:
-      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
       - data/research/experiments/lopez-lira-tang-title-probes/paired_days.csv
       - data/research/experiments/lopez-lira-tang-title-probes/portfolios.csv
     outs:

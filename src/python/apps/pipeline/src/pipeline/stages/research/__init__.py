@@ -6,26 +6,36 @@ from pipeline.stages.research.coverage import build_coverage_panel
 from pipeline.stages.research.experiments.article_metadata import (
     report_article_metadata,
 )
-from pipeline.stages.research.experiments.baker_emv import (
+from pipeline.stages.research.experiments.baker_emv.panel import (
     build_baker_emv_panel,
+)
+from pipeline.stages.research.experiments.baker_emv.regressions import (
     report_baker_emv,
 )
-from pipeline.stages.research.experiments.baker_tracking import compare_baker_tracking
+from pipeline.stages.research.experiments.baker_emv.tracking import (
+    compare_baker_tracking,
+)
 from pipeline.stages.research.experiments.company_focus import report_company_focus
 from pipeline.stages.research.experiments.company_links import report_company_links
 from pipeline.stages.research.experiments.coverage import report_coverage
 from pipeline.stages.research.experiments.entity_focus import score_entity_focus
-from pipeline.stages.research.experiments.kazinnik_banks import report_kazinnik_banks
-from pipeline.stages.research.experiments.kazinnik_matched_weeks import (
+from pipeline.stages.research.experiments.kazinnik_banks.matched_weeks import (
     report_kazinnik_matched_weeks,
 )
-from pipeline.stages.research.experiments.lopez_lira_tang import (
-    fit_lopez_probes,
-    report_lopez_portfolios,
-    report_lopez_title_probes,
+from pipeline.stages.research.experiments.kazinnik_banks.networks import (
+    report_kazinnik_banks,
 )
-from pipeline.stages.research.experiments.lopez_recovered_report import (
+from pipeline.stages.research.experiments.lopez_lira_tang.portfolios import (
+    report_lopez_portfolios,
+)
+from pipeline.stages.research.experiments.lopez_lira_tang.probes import (
+    fit_lopez_probes,
+)
+from pipeline.stages.research.experiments.lopez_lira_tang.recovered import (
     report_lopez_recovered,
+)
+from pipeline.stages.research.experiments.lopez_lira_tang.title_comparison import (
+    report_lopez_title_probes,
 )
 from pipeline.stages.research.experiments.metadata_validation import (
     report_metadata_validation,

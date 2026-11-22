@@ -2,7 +2,7 @@
 
 import numpy as np
 import pytest
-from pipeline.stages.research.experiments.baker_tracking import paired_r2_interval
+from pipeline.stages.research.experiments.baker_emv.tracking import paired_r2_interval
 
 
 @pytest.mark.unit

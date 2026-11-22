@@ -6,25 +6,33 @@ from pipeline.stages.processed.articles import prepare_articles
 from pipeline.stages.processed.body_vectors import verify_body_vectors
 from pipeline.stages.processed.company_links import link_companies
 from pipeline.stages.processed.experiments.article_metadata import sample_articles
-from pipeline.stages.processed.experiments.baker_emv import (
-    measure_baker_emv,
+from pipeline.stages.processed.experiments.baker_emv.market import (
     prepare_baker_emv_market,
+)
+from pipeline.stages.processed.experiments.baker_emv.news import (
+    measure_baker_emv,
 )
 from pipeline.stages.processed.experiments.company_links import (
     adjudicate_links,
 )
 from pipeline.stages.processed.experiments.entity_focus import judge_entity_focus
-from pipeline.stages.processed.experiments.kazinnik_banks import prepare_kazinnik_banks
-from pipeline.stages.processed.experiments.kazinnik_matched_weeks import (
+from pipeline.stages.processed.experiments.kazinnik_banks.matched_weeks import (
     prepare_kazinnik_matched_weeks,
 )
-from pipeline.stages.processed.experiments.lopez_events import (
-    prepare_lopez_events,
-    prepare_lopez_sample,
-    project_lopez_titles,
+from pipeline.stages.processed.experiments.kazinnik_banks.mentions import (
+    prepare_kazinnik_banks,
 )
-from pipeline.stages.processed.experiments.lopez_recovered import (
+from pipeline.stages.processed.experiments.lopez_lira_tang.events import (
+    prepare_lopez_events,
+)
+from pipeline.stages.processed.experiments.lopez_lira_tang.recovered import (
     prepare_lopez_recovered,
+)
+from pipeline.stages.processed.experiments.lopez_lira_tang.sample import (
+    prepare_lopez_sample,
+)
+from pipeline.stages.processed.experiments.lopez_lira_tang.titles import (
+    project_lopez_titles,
 )
 from pipeline.stages.processed.experiments.metadata_judges import judge_metadata
 from pipeline.stages.processed.experiments.metadata_validation import (

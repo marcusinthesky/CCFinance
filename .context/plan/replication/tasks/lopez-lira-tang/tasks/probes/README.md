@@ -10,7 +10,7 @@ status: done
 
 ## Goal
 
-Implement the scikit-learn probes in `stages/research/experiments/lopez_lira_tang.py`. Verify the executed logic against the
+Implement the scikit-learn probes in `stages/research/experiments/lopez_lira_tang/probes.py`. Verify the executed logic against the
 [version-two replication archive](https://data.mendeley.com/datasets/f39x226htv/2).
 
 [Study evidence](../../../../../../../data/inputs/lopez-lira-tang/README.md#rolling-probes-and-portfolios).

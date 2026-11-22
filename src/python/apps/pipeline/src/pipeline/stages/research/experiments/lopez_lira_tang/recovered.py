@@ -5,12 +5,8 @@ from tempfile import TemporaryDirectory
 
 import duckdb
 
-from .lopez_lira_tang import (
-    _load_portfolio_inputs,
-    _portfolio_days,
-    _portfolio_metrics,
-    fit_lopez_probes,
-)
+from .portfolios import build_portfolio_days, load_portfolio_inputs, portfolio_metrics
+from .probes import fit_lopez_probes
 
 PROCESSED = Path("data/processed/experiments")
 RESEARCH = Path("data/research/experiments")
@@ -32,9 +28,9 @@ def report_lopez_recovered() -> None:
                 raise ValueError(msg)
     fit_lopez_probes(expanded, OUTPUT)
     with duckdb.connect() as con:
-        _load_portfolio_inputs(con, expanded, OUTPUT)
-        _portfolio_days(con)
-        _portfolio_metrics(con).write_csv(str(OUTPUT / "portfolios.csv"), header=True)
+        load_portfolio_inputs(con, expanded, OUTPUT)
+        build_portfolio_days(con)
+        portfolio_metrics(con).write_csv(str(OUTPUT / "portfolios.csv"), header=True)
         con.read_parquet(str(baseline / "sample.parquet")).create_view("base")
         con.read_parquet(str(expanded / "sample.parquet")).create_view("expanded")
         con.read_parquet(str(expanded / "eligibility.parquet")).create_view(

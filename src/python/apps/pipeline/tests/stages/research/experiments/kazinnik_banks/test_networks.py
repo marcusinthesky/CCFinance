@@ -3,7 +3,9 @@ from pathlib import Path
 
 import duckdb
 import pytest
-from pipeline.stages.research.experiments.kazinnik_banks import report_kazinnik_banks
+from pipeline.stages.research.experiments.kazinnik_banks.networks import (
+    report_kazinnik_banks,
+)
 
 
 @pytest.mark.component

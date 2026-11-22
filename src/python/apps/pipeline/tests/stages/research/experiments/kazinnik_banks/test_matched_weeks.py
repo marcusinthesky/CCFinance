@@ -3,7 +3,7 @@ from pathlib import Path
 
 import duckdb
 import pytest
-from pipeline.stages.research.experiments.kazinnik_matched_weeks import (
+from pipeline.stages.research.experiments.kazinnik_banks.matched_weeks import (
     report_kazinnik_matched_weeks,
 )
 

@@ -10,7 +10,7 @@ status: done
 
 ## Goal
 
-Use DuckDB in `stages/processed/experiments/baker_emv.py` for corpus measurement and the raw and processed
+Use DuckDB in `stages/processed/experiments/baker_emv/news.py` for corpus measurement and the raw and processed
 market-index commands for external observations. Consume frozen Fine News text and prepared
 article dates and canonical flags.
 

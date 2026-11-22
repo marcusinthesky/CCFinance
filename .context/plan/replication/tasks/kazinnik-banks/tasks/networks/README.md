@@ -10,8 +10,8 @@ status: done
 
 ## Goal
 
-Use DuckDB to build the study bridge in `stages/processed/experiments/kazinnik_banks.py`; build windowed edges
-in `stages/research/experiments/kazinnik_banks.py`. Join dated articles, issuer links and the roster.
+Use DuckDB to build the study bridge in `stages/processed/experiments/kazinnik_banks/mentions.py`; build windowed edges
+in `stages/research/experiments/kazinnik_banks/networks.py`. Join dated articles, issuer links and the roster.
 
 ## Acceptance
 

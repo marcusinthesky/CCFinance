@@ -8,7 +8,9 @@ from typing import Annotated
 
 import typer
 
-from pipeline.stages.processed.experiments.kazinnik_banks import prepare_kazinnik_banks
+from pipeline.stages.processed.experiments.kazinnik_banks.mentions import (
+    prepare_kazinnik_banks,
+)
 
 
 def prepare_kazinnik_matched_weeks(

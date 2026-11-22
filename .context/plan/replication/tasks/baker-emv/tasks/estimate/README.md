@@ -10,7 +10,8 @@ status: done
 
 ## Goal
 
-Use `stages/research/experiments/baker_emv.py` for `build-baker-emv-panel` and `report-baker-emv`. Join the scaled tracker to market
+Use `stages/research/experiments/baker_emv/panel.py` for `build-baker-emv-panel` and
+`stages/research/experiments/baker_emv/regressions.py` for `report-baker-emv`. Join the scaled tracker to market
 observations by month.
 
 The archived Table 1 specification uses an intercept in each column. The VIX

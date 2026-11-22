@@ -4,13 +4,13 @@ from pathlib import Path
 
 import duckdb
 
-from .lopez_events import (
-    _article_files,
-    _copy,
-    _event_rules,
-    _remove_same_session_repeats,
-    prepare_lopez_sample,
+from .events import (
+    apply_event_rules,
+    article_files,
+    copy_parquet,
+    remove_same_session_repeats,
 )
+from .sample import prepare_lopez_sample
 
 PROCESSED = Path("data/processed")
 EXPERIMENTS = PROCESSED / "experiments"
@@ -63,7 +63,7 @@ def prepare_lopez_recovered() -> None:
             FROM parsed JOIN original o USING(id) LEFT JOIN calendar c
               ON first_utc>c.close_at AND first_utc<c.cutoff_at
         """,
-            [_article_files(raw, "2020-12", "2024-06", "**/*.parquet")],
+            [article_files(raw, "2020-12", "2024-06", "**/*.parquet")],
         )
         con.execute("""
             CREATE TABLE article_pool AS SELECT id,host,indexed_date,captured,
@@ -88,9 +88,9 @@ def prepare_lopez_recovered() -> None:
         """,
             [str(links / "articles/*.parquet")],
         )
-        _event_rules(
+        apply_event_rules(
             con,
-            _article_files(raw, "2020-09", "2024-06", "**/*.parquet"),
+            article_files(raw, "2020-09", "2024-06", "**/*.parquet"),
             PROCESSED / "articles",
             links,
             PROCESSED / "issuers",
@@ -98,19 +98,21 @@ def prepare_lopez_recovered() -> None:
         con.execute(
             "DELETE FROM event_screen WHERE cik NOT IN (SELECT cik FROM roster)"
         )
-        _remove_same_session_repeats(con)
+        remove_same_session_repeats(con)
         for source, target in (
             ("sessions", "sessions"),
             ("event_screen", "events"),
             ("ticker_history", "ticker_history"),
         ):
-            _copy(con, f"FROM {source} ORDER BY ALL", OUTPUT / f"{target}.parquet")
-        _copy(
+            copy_parquet(
+                con, f"FROM {source} ORDER BY ALL", OUTPUT / f"{target}.parquet"
+            )
+        copy_parquet(
             con,
             "FROM article_pool JOIN timestamps USING(id) ORDER BY id",
             OUTPUT / "timestamps.parquet",
         )
-        _copy(con, "FROM recovered ORDER BY id", OUTPUT / "recovered.parquet")
+        copy_parquet(con, "FROM recovered ORDER BY id", OUTPUT / "recovered.parquet")
     prepare_lopez_sample(
         OUTPUT,
         Path("data/raw/experiments/lopez-lira-tang"),
