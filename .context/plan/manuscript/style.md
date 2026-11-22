@@ -30,3 +30,21 @@ market convention. Identify what each must already know. Expand the missing
 premise, keeping the technical detail, sample restriction and uncertainty that
 give the result its meaning. Judge cadence by reading the passage in context.
 Sentence lengths and conjunction frequencies are editorial choices.
+
+## Carry a question forward
+
+Follow the order in which a researcher can establish a result. For example,
+the publisher filter identifies a population of captured stories. Linking those
+stories to dated issuers lets the reader count coverage by firm. Requiring the
+firm to be the subject of a story changes that count again. Each operation
+answers the previous question and gives the reader a reason to ask the next.
+Use chronological language for dated events and describe analytical dependencies
+in terms of the evidence each step supplies.
+
+A constructive passage can report an adverse result directly. For example,
+“Recovering publication times increased the number of evaluated days with both
+portfolio legs from 42 to 110. Mean drift remained negative on the expanded
+sample.” The first sentence establishes what the timing work achieved. The
+second answers the question that achievement makes possible. Report uncertainty
+where the reader interprets the estimate. Carry the implication into the next
+paragraph only when the next question depends on it.
