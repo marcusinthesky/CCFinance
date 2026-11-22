@@ -185,7 +185,9 @@ guided development and contribute zero weight to confirmation estimates.
 
 The seed-43 confirmation samples extracted spans by alias frequency
 and the number of issuers sharing a key, and draws a separate uniform
-article sample. Both draws are independent of linker predictions. Model
+sample of articles containing at least one extracted company span.
+Article judges receive up to 12,000 body characters. Both draws are
+independent of linker predictions. Model
 judges receive marked text and neutral issuer search with the candidate
 link withheld. A correct link names the judged issuer or the same listed
 security on the article date. Weighted intervals are linearized. Unlinked
@@ -210,7 +212,8 @@ valid links, while full-corpus alias priors can use anchors observed later.
   \small
   \caption{Link and focus diagnostics. Denominators are unweighted counts
     of evaluated predictions or reference positives for the named measure.
-    Focus uses 183 held-out articles. The anchor and decorated-name rows
+    Focus uses 183 held-out articles with a detected company. The
+    anchor and decorated-name rows
   report distinct blinded model audits.}
   \label{tab:app-links}
   \begin{tabular}{lll}
@@ -267,13 +270,8 @@ an article to its publication year and counts it once for each linked
 issuer. An issuer-year enters the universe with a dated listing or with
 a current listing of unknown start and public float observed in that
 year or the previous year. The panel retains zero-count universe members.
-At 47 articles per issuer, 1,794 issuers have at least five consecutive
-years of usable support and 1,003 have five consecutive years of
-focused support, allowing the start year to vary. The fixed 2018--2022
-screen requires coverage in the same years for every issuer. A
-development-selected relevance-only threshold of 0.40 admits 83 of 100
-reference firms, with 41.7\% focus precision and 53.8\% recall on test
-articles. The three-mention rule trades roster breadth for higher precision.
+On the held-out articles, a development-selected relevance threshold of
+0.40 yields 41.7\% subject precision and 53.8\% recall.
 
 \section{Body embeddings and issuer conditioning}
 
@@ -336,7 +334,8 @@ Divide each publisher's shares by its dispersion over the 40
 calibration months through December 2022, average across publishers
 and rescale to the calibration mean VIX. The comparative fit uses an
 intercept and a contemporaneous tracker against each common outcome.
-The paired intervals draw 10,000 circular blocks with replacement,
+The paired intervals use 10,000 bootstrap samples formed by drawing
+circular blocks with replacement,
 using the same starts for both trackers before recomputing the
 difference in squared correlations. On 49 months, realized-volatility
 $R^2$ is 0.336 for CCFinance and 0.569 for the archived tracker. The
@@ -478,8 +477,10 @@ Factiva, RavenPack and CRSP have separate access requirements.
 
 Exact reconstruction requires the authorized project revision, the
 locked environment and matching frozen inputs. Code and the project
-artifact store are private. Unauthenticated access to the exact
-staging revision remains unverified. Public upstream archives and
+artifact store are private. On 22 November 2026, anonymous requests
+for the exact staging revision
+and for bytes of a staged shard returned HTTP 401. The pinned upstream
+Fine News revision returned HTTP 200. Public upstream archives and
 reference packages supply only some dependencies. Run the commands in
 Table~\ref{tab:app-access} from the repository root in the pinned
 environment after restoring the corresponding dependencies and verifying

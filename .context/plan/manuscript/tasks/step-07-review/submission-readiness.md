@@ -5,6 +5,12 @@ description: Task-by-task assessment of the final manuscript, with independent c
 
 # FinFM submission-readiness review
 
+## Revision disposition
+
+The numbered findings below document the original proof. The revised paper uses its own annual listing-evidence population throughout. The first exhibit now reports coverage at 1, 10 and 50 articles for 34,781 issuer-years in 2017–2025. At 50 usable articles, the lowest and highest annual public-float quintiles qualify in 329 of 6,533 and 5,790 of 6,526 cases. The four-source pilot remains in Appendix A.
+
+The introduction motivates issuer assignment and documents access. The worked Monday-to-Thursday example shows how one canonical story enters two usable issuer counts and one focused count. The main evaluation identifies extraction, accepted-link and article-focus denominators, including the development split and the company-detection condition. The applications report the directions of the bank-pair changes and disclose full-archive alias evidence and baseline solver warnings beside the drift result. Author approval of the arXiv byline and confirmation of OpenReview profiles remain separate submission steps.
+
 Reviewed 22 November 2026 on revision `b4a409d`. **Revise before submitting as a FinFM long benchmark paper.** On the fixed 100-firm roster, requiring at least three mentions of the issuer reduces coverage from 94 firms to 57 under the same annual article minimum. I reproduced those counts. Table 2 misidentifies the broader issuer population, and the focus audit conditions on an earlier extraction step that readers need to know about. The workshop PDF fits the venue and the principal corrections use evidence already in the repository. [Coverage and evaluation](../../../../../src/latex/projects/ccfinance/src/sections/04_empirical_design_and_data.tex) · [FinFM call](https://finfm.finhorizons.org/#cfp)
 
 ## 01. Frame the paper and its audience

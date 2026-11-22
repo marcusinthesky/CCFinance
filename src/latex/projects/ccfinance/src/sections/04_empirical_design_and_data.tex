@@ -4,16 +4,18 @@
 To measure how the rules change coverage, we count surviving articles
 and ask which issuers have enough of them for a panel. Panel~A of
 Table~\ref{tab:coverage} counts distinct IDs, including each article once
-per row even when it has several issuer links. For the firm counts in
-Panel~B, an article can contribute to each issuer's annual total. The
-screen requires at least 47 associated articles in each publication
-year from 2018 through 2022. In the fixed 100-firm Nasdaq reference
-frame, 95 firms qualify on all accepted links before the date and
-canonical-copy checks, and 94 qualify on usable links. Requiring focus
-excludes 37 more, leaving 57 firms. Among 6,591 evidenced listed issuers,
-1,102 meet the usable criterion and 408 meet the focused criterion.
-The broader universe includes dated listings and undated current listings
-with public-float evidence, and retains zeros for issuer-years in scope.
+per row even when it has several issuer links. Panel~B counts
+issuer-years across the nine complete calendar years from
+2017 through 2025. An issuer enters the denominator for a year with a
+dated listing, or with an undated current listing and public-float
+evidence in that year or the preceding year. Issuers with no linked
+articles remain in the denominator. Of 34,781 eligible issuer-years,
+33,024 have at least one usable article. At an annual minimum of 50
+articles, 13,918 issuer-years qualify on usable links and 8,641 qualify
+when each article must mention the issuer at least three times. Among
+issuer-years with measured public float, 329 of 6,533 (5.0\%) in the
+lowest annual quintile meet the 50-usable-article minimum, compared
+with 5,790 of 6,526 (88.7\%) in the highest.
 
 \begin{table}[t]
   \centering
@@ -33,30 +35,37 @@ with public-float evidence, and retains zeros for issuer-years in scope.
   \smallskip
   \begin{tabular}{@{}lrrr@{}}
     \toprule
-    Panel B. Issuer frame & Raw & Usable & Focused \\
+    Panel B. Annual minimum & Raw & Usable & Focused \\
     \midrule
-    Reference roster (100) & 95 & 94 & 57 \\
-    Evidenced issuers (6,591) & 1,147 & 1,102 & 408 \\
+    1 article & 33,109 & 33,024 & 31,745 \\
+    10 articles & 26,930 & 26,434 & 22,243 \\
+    50 articles & 14,539 & 13,918 & 8,641 \\
     \bottomrule
   \end{tabular}
   \caption{Distinct staged IDs surviving the article-level rules
-    (Panel~A) and issuers with at least 47 associated articles in
-    each publication year from 2018 to 2022 (Panel~B). An ID can
+    (Panel~A) and issuer-years meeting each annual article minimum
+    during 2017--2025 (Panel~B). An ID can
     contribute to more than one issuer's annual counts. Focus requires
   three or more mentions of the linked issuer.}
   \label{tab:coverage}
 \end{table}
 
-The smaller focused roster makes it important to ask which stories the
-rule excludes. We first assess mention identity, sampling extracted
+The decline in coverage makes it important to ask which stories the
+rule excludes. In 40 sampled leads, GLiNER and Stanza each recovered
+69 of 118 model-adjudicated company spans (Appendix Table~\ref{tab:app-spans}).
+To evaluate issuer identity after extraction, we sample extracted
 company spans independently of the linker's decisions. The model judges
 see the marked text and neutral search results and provide dated issuer
 decisions with predictions withheld. On held-out extracted spans,
-accepted mention links have 96.8\% estimated precision (95\% interval
+the 475 accepted links have 96.8\% estimated precision (95\% interval
 94.0--99.6\%), and recall among reference-linkable mentions is 70.8\%
 (64.6--77.1\%). Subject focus requires an article-level reference.
-Across 183 held-out articles with 65 reference-positive article--issuer
-pairs, the three-mention rule increases focus precision from 31.9\% to
+Only articles with at least one GLiNER company detection could enter
+this audit. The three-mention rule achieved the highest subject F1 on
+217 development articles among the relevance, position and mention-count
+rules compared. On 183 separate test articles it retains 37 of 65 judged
+subject pairs. Relative to all accepted links, it increases focus
+precision from 31.9\% to
 66.1\% (54.8--77.3\%) and reduces subject recall from 92.3\% to 56.9\%
 (44.3--69.5\%). The focus rule therefore reduces incidental coverage
 while also losing some stories about the issuer.

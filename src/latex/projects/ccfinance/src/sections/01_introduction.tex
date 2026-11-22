@@ -8,13 +8,13 @@ annotations that define its sample. \citet[Section~2]{heston2017}, for
 example, match proprietary NewsScope sentiment scores and firm tags to
 full text from the Reuters News Archive by timestamp and story ID.
 Repeating that analysis or changing the sentiment measure requires
-access to the underlying observations.
+access to the underlying observations. Even researchers who recover the same
+story can construct different firm samples when it names a competitor
+alongside the company whose earnings it reports.
 Earlier collections available to researchers have often had a narrower
 publisher or time span, and the fields needed for a particular design
-may be distributed across products. The comparisons in
-\citet[Appendix~A]{gawronsky2026} illustrate these differences in
-coverage, access to article bodies and issuer annotation. For example,
-the public SEntFiN release provides entity sentiment annotations for
+may be distributed across products. For example, the public SEntFiN
+release provides entity sentiment annotations for
 10,753 headlines \citep{sinha2022sentfin}. A financial design may also
 need the full body, publication time, capture provenance and a dated
 issuer assignment to reconstruct what an investor could observe.
@@ -83,7 +83,7 @@ to dated identities that can be joined to other financial records
 issuer-specific sentiment describe different aspects of the text.
 Dense embeddings support comparisons of meaning beyond shared words,
 and can supply inputs to retrieval or return models
-\citep{gawronsky2026,embeddinggemma2025}. Each annotation has to
+\citep{lopez2025v6,embeddinggemma2025}. Each annotation has to
 be evaluated at the level at which a study uses it.
 
 We apply a publisher filter to a frozen English Fine News release
@@ -98,17 +98,18 @@ GLiNER2.5 Small to extract spans and attributes from the same text
 link and focus decisions against held-out model judgments. We also
 audit the additional labels and vector representations. A common
 annual article requirement makes the cost of requiring
-company focus visible as a change in the firms that qualify. Exact
-reconstruction requires authorized access to the frozen inputs and
-derived artifacts.
+company focus visible in the number of qualifying issuer-years. The
+pinned upstream Fine News
+release is publicly accessible. Reconstructing the exact CCFinance sample
+requires access to the restricted staging snapshot and derived artifacts.
 
 The final comparisons reimplement selected designs from three
 peer-reviewed studies. At the publisher-month scale, we compare
 the equity-market volatility tracker of \citet{baker2026} with a
 tracker built from archived articles on a common calendar. At the
 bank-pair scale, we apply the co-mention design of \citet{kazinnik2026}
-and find that the change in connected pairs reverses sign in the
-Reuters subset. At the issuer-session scale, we apply the
+and find that connected pairs rose across publishers and fell within
+Reuters. At the issuer-session scale, we apply the
 overnight design of \citet{lopez2026} to captured bodies with
 documented cutoff eligibility. Recovering publication clocks lets
 us evaluate both portfolio legs on more sessions, while mean drift

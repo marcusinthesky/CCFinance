@@ -2,16 +2,17 @@ Reconstructing a financial news sample requires the observed article
 version and the rules that determine which observations it supplies.
 CCFinance records these decisions for a frozen Common Crawl News
 selection through publication-date checks, deduplication and dated
-issuer linking. Among 100 reference firms, 94 have at least 47 usable
-linked articles in each year from 2018 through 2022. Requiring three
-mentions of the issuer in each counted article reduces that number
-to 57. The rule raises subject precision and lowers subject recall
-in a held-out model-adjudicated audit. On a common calendar, the
+issuer linking. Across 34,781 issuer-years with listing evidence from
+2017 through
+2025, 13,918 have at least 50 usable linked articles. Requiring three
+mentions of the issuer per article reduces that count to 8,641. The
+rule raises subject precision and lowers subject recall
+among held-out articles with a detected company. On a common calendar, the
 archived-news volatility tracker has lower estimated fit than the
 reference tracker, with a paired interval for the difference spanning
-zero. The January--April 2020 change in distinct co-mentioned bank
-pairs reverses sign in the Reuters subset. Recovering publication
-clocks raises the number of sessions with both portfolio legs from
+zero. From January to April 2020, bank-pair counts rose across publishers
+and fell within Reuters. Recovering publication
+clocks raises the number of sessions with both long and short portfolios from
 42 to 110, while mean open-to-close drift remains negative after
 refitting. Exact reconstruction requires access to the frozen inputs
 and derived artifacts.

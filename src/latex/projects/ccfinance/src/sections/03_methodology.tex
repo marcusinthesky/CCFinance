@@ -17,40 +17,20 @@ four independent draws with replacement, choosing a file uniformly and
 then doing the same for a row group within that file. Inverse-probability
 weights estimate the English and publisher-matched totals. Their ratio
 gives the estimated publisher yield, with higher point estimates in the
-two news collections (Table~\ref{tab:sources}). Because the sources
+two news collections (Appendix Table~\ref{tab:app-source}). Because the sources
 differ in English scope and duplicate retention, each yield describes
 physical rows within that release. Estimating additional unique stories
 would require matching records across releases.
-
-\begin{table}[t]
-  \centering
-  \small
-  \begin{tabular}{lrr}
-    \toprule
-    Source & Yield (\%) & 95\% interval \\
-    \midrule
-    Fine News & 4.50 & [2.36, 6.63] \\
-    Infini-News & 6.84 & [3.37, 10.32] \\
-    RefinedWeb & 0.50 & [0.16, 0.84] \\
-    FineWeb-HQ & 0.69 & [0.13, 1.25] \\
-    \bottomrule
-  \end{tabular}
-  \caption{Estimated share of physical English records that match the
-    historical hostname list in each pinned source frame. English means
-    the \texttt{eng\_Latn} shards for Fine News, native \texttt{eng\_Latn}
-    labels for Infini-News, the declared English release for RefinedWeb,
-    and native \texttt{en} labels for FineWeb-HQ. Each estimate uses
-    four independent file and row-group draws with replacement.
-  Intervals are exploratory and have three degrees of freedom.}
-  \label{tab:sources}
-\end{table}
 
 An article is usable when it is the canonical copy and its reported
 publication date is consistent with capture. We allow capture up to
 seven days after that date or up to one calendar day before it to
 accommodate time zones. A page dated Monday and fetched Thursday can
 therefore count in the day-level corpus, while Thursday remains the
-observed capture date of that version. Although Fine News retains
+observed capture date of that version. If this canonical copy names one
+linked issuer three times and another once, it supplies one usable article
+to each issuer and one focused article to the first issuer. Although
+Fine News retains
 representatives of upstream duplicate clusters, the staged records
 still contain exact-text and normalized-URL repeats. The rule uses the
 earliest capture in each group. Because a repeated URL can contain
