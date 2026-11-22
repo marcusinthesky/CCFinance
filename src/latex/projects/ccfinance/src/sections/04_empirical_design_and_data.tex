@@ -81,11 +81,23 @@ On the same test articles, we also count nominal and pronominal
 mentions in Stanford CoreNLP chains anchored to a single linked issuer
 \citep{manning2014corenlp}. Twelve additional article--issuer pairs
 pass the three-mention screen, seven of which are judged subjects.
-Recall rises from 56.9\% to 67.7\%, while precision moves from
+Recall rises from 56.9\% to 67.7\% (paired gain of 10.77 percentage
+points, 95\% interval [3.92, 19.61]), while precision falls from
 66.1\% to 64.7\%. A separate GPT-6.1 Terra review attributed 28 of
 the 42 added references in those pairs to the anchored issuer. Seven
-of the twelve pairs still qualify using only those confirmed references.
+of the twelve pairs still qualify using only those confirmed references,
+and six of those seven are judged subjects.
 The production panel uses named mentions.
+
+Once a story is assigned to a firm, its tone can still differ from
+what the news implies for that firm's investors. On the 358 of 400
+marked mentions that the primary judge labeled positive, negative or
+neutral, GLiNER's company-specific sentiment achieved 46.79\% weighted
+macro-F1, compared with 40.84\% when each company received the
+Stanford sentiment of its sentence. The paired 95\% interval for the
+5.95-point difference spans zero [$-1.33$, $+13.98$]. A blinded
+GPT-6.1 Terra review marked 23 of 40 sampled targets as invalid
+company spans. We therefore treat issuer sentiment as exploratory.
 
 The metadata audits give two examples of how model scores can change
 sample composition. Blinded model judges label 400 sampled units in
