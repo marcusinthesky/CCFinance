@@ -7,7 +7,7 @@ description: Planned claims, evidence, reading transitions and shared prose targ
 
 **Intended readers and venue.** FinFM's seven-page benchmark track and the shared arXiv preprint address empirical finance and financial NLP researchers who need to reconstruct a news sample. Finance readers know sample selection, trading sessions and returns. NLP readers know extraction and held-out evaluation. Each needs to see how the same captured story becomes distinct usable observations under different financial designs. [Reader brief](../step-01-brief/finfm-audience.md)
 
-**Evidence and budgeting.** Short references below point to the exact outputs, paper versions and terms in the [claim-to-evidence map](../step-02-evidence/enrichment.md). Exhibit numbers and page estimates follow the [section map](../step-03-sections/section-map.md). Targets count prose only. Read the top-level claims in order to test continuity before expanding them.
+**Evidence and budgeting.** Short references below point to the exact outputs, paper versions and terms in the [claim-to-evidence map](../step-02-evidence/enrichment.md). Exhibit numbers follow the [section map](../step-03-sections/section-map.md). The [Step 05 score](../step-05-score/score.md) records revisions and page estimates. Targets count prose only.
 
 ## `00_abstract.tex` · 170 words
 
@@ -30,7 +30,7 @@ description: Planned claims, evidence, reading transitions and shared prose targ
   - Evidence. Heston–Sinha's proprietary Reuters sentiment shows why a published specification alone can leave text measurement vendor-dependent. Publishers and archive operators can also provide bounded research releases. Reserve the details of those alternatives for §02.
   - Carry forward. If an archived source supplies the text, what additional work gives it financial meaning?
 - **115 words.** CCFinance contributes a versioned construction from archived text to study-specific eligible units.
-  - Evidence. Introduce the recorded source version, date evidence, canonical record, dated issuer and study rules in dependency order. Use the fixed 100-firm screen as a preview of the value of recording both issuer identity and story focus.
+  - Evidence. Introduce the recorded source version, date evidence, canonical record, dated issuer and study rules in dependency order. Leave the quantitative coverage preview to the abstract and Table 2.
   - Carry forward. Which parts of the construction matter for an actual estimate?
 - **80 words.** Three financial exercises test increasingly specific requirements of the reconstructed corpus.
   - Evidence. Publisher-month volatility tracking uses article counts. Bank networks add dated identities. Overnight drift adds a trading cutoff and enough eligible securities to form portfolios.
@@ -58,8 +58,8 @@ description: Planned claims, evidence, reading transitions and shared prose targ
 **Question and answer.** How does a capture become a candidate observation? Selection defines which records enter, provenance preserves a version, and timing and entity evidence allow design-specific rules to operate.
 
 - **120 words.** The pinned English Fine News input and historical hostname list define which captured news records can enter CCFinance.
-  - Evidence. The acquisition recipe lists exactly 115 hostnames, including listed subdomains. State the upstream revision and separate restored staging revision, with 14,807,287 distinct staged IDs across 168 monthly shards and checksums.
-  - Carry forward. Is that population a consequence of the hostname rule or the underlying published source frame?
+  - Evidence. The historical registry lists 115 entries. A normalized hostname qualifies by exact match or as a dot-delimited subdomain of an entry. State the upstream revision and separate restored staging revision, with 14,807,287 distinct staged IDs across 168 monthly shards and checksums.
+  - Carry forward. How selective is the same hostname rule when applied retrospectively to other source frames?
   - Pace. Explain record/ID and archived version before using “article” for the canonical unit.
 - **115 words.** The same hostname rule yields different fractions of physical English records across four pinned source frames.
   - Evidence. Table 1 reports design-weighted yields of 4.50%, 6.84%, 0.50% and 0.69% for Fine News, Infini-News, RefinedWeb and FineWeb-HQ with exploratory intervals. Explain the four independent file–row-group draws and each native English definition.
@@ -81,54 +81,54 @@ description: Planned claims, evidence, reading transitions and shared prose targ
   - Evidence. Identify article form, local sentiment or relevance, event windows and fixed EmbeddingGemma body vectors. Use the census for body-vector alignment and refer to the issuer-conditioning pilot separately.
   - Carry forward. Multiple outputs make different samples possible. The next section measures their support and audits their labels.
 
-## `04_empirical_design_and_data.tex` · 610 words
+## `04_empirical_design_and_data.tex` · 670 words
 
 **Question and answer.** Which observations survive, and what is known about their quality? The staged funnel measures support, and audits with separately specified reference units show where measurement errors enter.
 
-- **115 words.** Table 2 translates the dataset construction into distinct-ID and issuer-year support.
-  - Evidence. Read Panel A as 14,807,287 staged IDs, 11,287,476 consistently dated, 11,260,839 usable, 5,220,290 usable with an accepted link and 2,547,597 usable with a focused link. Read Panel B as 95 raw, 94 usable and 57 focused issuers from the fixed 100-firm roster and 1,147, 1,102 and 408 across the 6,591 evidenced issuers.
-  - Carry forward. How much of the roster change reflects the performance of the focus rule?
-  - Pace. Give the 47-in-each-year criterion and switch from capture-year IDs to publication-year issuer counts before interpreting Panel B.
-- **150 words.** Link validation shows high precision on accepted extracted mentions, while the focus screen trades recall for more targeted coverage.
-  - Evidence. The seed-43 sample is independent of linker decisions. The blinded test gives about 96.8% span-link precision and 70.8% recall. On 183 test articles with 65 reference-positive issuer pairs, the focus rule raises end-to-end focus precision from 31.9% to 66.1% and reduces subject recovery from 92.3% to 56.9%, with intervals in the audit. Identify model adjudicators and give the relevant denominators rather than equating each measure.
+- **145 words.** The same coverage threshold admits fewer firms when an article has to be about the linked issuer.
+  - Evidence. Read Panel A by distinct capture-cohort ID, then Panel B by issuer and publication year. Explain that the raw issuer count already requires an accepted link, that usable adds the date and canonical-copy rules, and that focused adds the subject proxy. Explain 47 articles in every year 2018–2022 before reporting 94 usable and 57 focused of the same 100 reference firms. Use the broader 6,591-issuer screen to show scope under dated listing and float evidence. Let the panels carry the rest of the counts.
+  - Carry forward. Fewer qualifying firms can reflect a useful exclusion or missed subject stories. The independent focus audit separates those possibilities at the article–issuer level.
+  - Pace. Pause at the switch in denominators. The two panels answer different questions and cannot be read as one percentage funnel.
+- **170 words.** Link validation shows high precision on accepted extracted mentions, while the focus screen trades subject recall for higher precision.
+  - Evidence. The seed-43 sample is independent of linker decisions and its blinded model judges see candidate text and neutral lookup. Define precision over accepted extracted-span links and recall over judged linkable extracted spans. Report 96.8% precision and 70.8% recall with intervals. Separately, on 183 articles with 65 reference-positive issuer pairs, show end-to-end precision from 31.9% to 66.1% and subject recall from 92.3% to 56.9%. Treat false negatives as foregone study support and distinguish membership counts from reference performance.
   - Carry forward. The sampling unit matters just as much when validating other model fields.
   - Pace. Define an extracted-span verdict and a subject-issuer verdict separately before giving the numbers.
-- **120 words.** The supporting metadata audits establish use-specific limits to form and event labels.
-  - Evidence. Seed-46 blinds predictions from judges on three frames of 400 sampled units each. Use the gap between model and judged press-release share for distinct usable articles and 23.6% transaction recall for input windows. Put spans, event counts and judge agreement in Appendix B.
+- **100 words.** The metadata audits identify when form and event labels need corroboration before they can define a sample.
+  - Evidence. Seed-46 blinds predictions from judges on three frames of 400 sampled units each. Use the gap in press-release prevalence to explain why uncorrected form labels would distort a publisher-level composition estimate. Use 23.6% transaction recall to explain why an event-label gate would miss judged events. Put detailed denominators, class breakdowns and judge agreement in Appendix B.
   - Carry forward. Financial applications can choose validated or direct evidence according to their own unit.
 - **110 words.** Monthly article shares and bank-pair counts exercise different levels of the observed text.
   - Evidence. Define a publisher-month as an eligible-article denominator and a bank-pair observation as two mapped banks appearing in the same article in a declared week. Table 3 supplies analysis-specific sample sizes.
   - Carry forward. A return study goes from entities observed during a week to a signal that must exist before part of one session.
   - Pace. Explicitly count a multi-bank article once per unordered pair and explain why it can contribute several pairs.
-- **115 words.** The firm-session design requires evidence of both first publication and the captured body's availability before the cutoff.
-  - Evidence. Establish the previous-close to 09:00 New York publication window, capture by the cutoff, and distinction between close-to-open reaction and open-to-close drift. Example of a page published overnight but captured after the cutoff. Describe the fixed retrospective encoder and unknown pretraining overlap once here.
+- **145 words.** The firm-session design requires both a timely captured body and enough issuer signals to form an active portfolio leg.
+  - Evidence. Establish the previous-close to 09:00 New York publication window, capture between publication and the cutoff inclusive, and distinction between close-to-open reaction and open-to-close drift. Give a late capture example for NLP readers, then define earliest eligible prediction per issuer-session, two securities per active leg and zero-leg evaluated sessions. Explain that the encoder is fixed and retrospective and that its pretraining overlap is unknown even when fitted labels precede evaluation.
   - Carry forward. With each denominator and its timing established, compare the financial measurements in order of evidence requirements.
   - Pace. Slow down at the event-time and trade-time join before exposing the reader to portfolio returns.
 
-## `05_results.tex` · 920 words
+## `05_results.tex` · 860 words
 
 **Question and answer.** What do the reconstructed samples support? Contemporary tracking can be compared on a common calendar, pair counts depend on observed publisher coverage, and recovering clocks expands the portfolio sample available for a drift test.
 
 - **140 words.** On a common calendar, the captured-article EMV tracker supports a direct comparison of contemporaneous VIX fit.
   - Evidence. Table 3 uses 675,234 eligible articles across four hosts and 49 months. Give R² 0.515 versus 0.647 and paired six-month block difference interval [−0.215, +0.110]. Cite the July 2025 benchmark and distinguish the original archive rerun from the CCFinance comparison on common outcomes.
   - Carry forward. How much does this gap depend on the same calendar's large volatility episodes and which publishers cover them?
-- **145 words.** Early-pandemic months and the publisher basket materially affect the observed difference in fit.
-  - Evidence. Removing March–April 2020 narrows the VIX gap from −0.132 to −0.041. Leaving Forbes out gives −0.360 over 49 months and −0.233 over 47 with original calibration. Appendix E gives publisher and outcome comparisons.
+- **115 words.** Early-pandemic months and the publisher basket affect how broadly the observed fit difference can be read.
+  - Evidence. Removing March–April 2020 narrows the VIX gap from −0.132 to −0.041. Name the publisher sensitivity and leave omission values to Appendix E. The paired interval spanning zero supports a comparison on this calendar with uncertain ordering.
   - Carry forward. When the publisher mix changes, the coverage question extends from counts per publisher to which relationships are observed between entities.
   - Pace. Explain that both trackers face the same omitted months and that historical fit is descriptive.
-- **150 words.** The CCFinance bank networks recover selected structural features while the observed direction of total connected pairs changes with the source.
+- **150 words.** The direction of the connected-pair change depends on which sources supply the bank co-mentions.
   - Evidence. The July 2023 CEBRA manuscript reports 210 to 172 pairs. The mapped CCFinance sample gives 177 to 242 and the Reuters-only case 50 to 35, with 33 of 34 nodes mapped in the comparison. Establish bank-pair count before edge weight and state that a co-mention is a measure of news association.
   - Carry forward. Does the increase persist after holding publisher quotas and volume fixed?
-- **150 words.** The observed rise persists under story matching on six weeks and attenuates when matching across fourteen weeks requires a narrower common sample.
-  - Evidence. Six-week matched result +56.3 connected pairs [5, 83] with 682 stories per week. The fixed 32-node extension retains 158 stories per week and estimates +19.1 [−25, 59]. Explain why removing Nasdaq and changing the eligible roster matter and why subsampling ranges differ from week-level inference.
-  - Carry forward. At the firm-session scale, publisher and story eligibility also determines whether the financial estimand can be evaluated at all.
-  - Pace. Put each range beside its design and explain the wider calendar's limited historical reference.
+- **145 words.** The bank-pair increase is smaller under the narrower common support required for fourteen weeks, and the extended draw range includes zero.
+  - Evidence. Six-week matched result +56.3 connected pairs [5, 83] with 682 stories per week. The 14-week extension fixes 32 mapped nodes and 158 stories per week and estimates +19.1 [−25, 59]. Explain that calendar, roster and publisher quotas change together. Table A8 carries pair weight, Nasdaq support, quotas and placebo ranks.
+  - Carry forward. Matching bank stories tests how publisher support shapes observed relationships during a week. The return exercise asks a separate question about whether timely issuer signals can form legs before a session opens.
+  - Pace. Put each range beside its design and identify it as variation across story draws. Treat the result as evidence for reporting support and sensitivity to the chosen week and roster.
 - **155 words.** The fixed overnight sample supports a retrospective drift test with sparse portfolio legs.
   - Evidence. Two publisher feeds, 996 bodies and 171 issuers, fixed body vectors, Yahoo bars and rolling past-label fits reproduce a selected Table 8 design of arXiv v6 using a different sample. Of 277 evaluated days, 42 have both legs and 123 have neither. Mean gross drift −10.15 bp per evaluated day has a 21-session block interval [−25.2, +4.2] conditional on saved predictions.
   - Carry forward. Does recovering earlier publication markers increase the number of usable days?
-  - Pace. Explain the minimum two securities per active leg and the distinction between a zero-leg evaluated day and one with no prediction before interpreting the mean.
-- **180 words.** Recovering explicit first-publication clocks enlarges the usable overnight sample and leaves the refitted mean drift negative.
-  - Evidence. Historical Business Standard format supplies 943 more eligible articles and 667 more firm-sessions. Evaluated days grow to 340 and both-leg days to 110, with mean gross drift −7.73 bp. Contrast the compared sample definitions when reporting arXiv v6's +11 bp MiniLM headline reference. Appendix E holds title/body paired and execution-cost sensitivities.
+  - Pace. Use the leg definitions from §04. Report evaluated days and leg support before interpreting the mean or discussing the clock refit.
+- **155 words.** Recovering explicit first-publication clocks expands two-leg coverage, with a negative drift point estimate after refitting.
+  - Evidence. Lead with 42 to 110 both-leg days and 277 to 340 evaluated days, then report −7.73 bp after refitting. Keep the versioned +11 bp MiniLM headline reference beside the different sample and input design. Appendix E carries parser counts, title/body probes and execution costs.
   - Carry forward. The applications establish which eligibility decisions to record when reusing the pipeline.
   - Pace. Give the improved support before its new estimate. Note that refitting changes training and evaluation panels where the difference is interpreted.
 
@@ -207,13 +207,13 @@ description: Planned claims, evidence, reading transitions and shared prose targ
   - Evidence. Table A7 paired VIX and realized-volatility intervals, 49 versus 47 months, leave-one-host variants and fixed 40-month calibration including the omission of Forbes. Explain shared calendar block resampling.
   - Carry forward. A bank-network comparison uses the same idea of common publisher support, but the quantity of interest is observed co-mentions.
 - **140 words.** The bank bridge converts dated issuer links into connected bank pairs under a declared roster and syndication rule.
-  - Evidence. Table A8 CEBRA mapping and reference windows, foreign-parent proxies and missing node, once-per-article pair count, sources and story grouping, original raw and Reuters-only counts, 682-story matched design and ranges.
+  - Evidence. Table A8 CEBRA mapping and reference windows, foreign-parent proxies and missing node, story grouping, original sample and 682-story matched design. Use the appendix prose to explain the matching rule and show pair-weight results rather than restate the main connected-pair values.
   - Carry forward. Can identical quotas be preserved over more comparison weeks?
 - **135 words.** The fourteen-week bank extension buys more historical comparisons by restricting the fixed bank roster and common publisher quotas.
   - Evidence. Table A8 extended portion, 32 mapped nodes, 158 stories per week, 14 hosts, seven comparisons, both January–April draw ranges crossing zero and descriptive historical ranks. Explain the influence of losing Nasdaq and why draw ranges describe matched-story variation.
   - Carry forward. Overnight research imposes an additional requirement within each session.
 - **135 words.** The overnight eligibility ledger shows why time evidence, security joins and portfolio support must be checked separately.
-  - Evidence. Table A9 reference versions, capture and first-publication values, original and recovered panels, focus/novelty and price screens, 996 baseline versus 1,939 expanded bodies, rolling fits and legs. Use the archived Yahoo prices and CRSP distinctions along with unknown encoder-pretraining overlap.
+  - Evidence. Table A9 reference versions, capture and first-publication values, article and issuer-session counts lost at each gate, focus/novelty and price screens, 996 baseline versus 1,939 expanded bodies, rolling fits and leg counts. Document the archived Yahoo inputs and CRSP substitution. Keep the principal drift estimates and encoder caveat in the main discussion.
   - Carry forward. With the baseline sample fixed, which changes can be attributed to representation or imposed cost assumptions?
 - **125 words.** Paired title/body probes and imposed cost scenarios test sensitivity on the same eligible calendar.
   - Evidence. Table A9 paired MiniLM and Gemma titles and same Gemma body inputs on 996 articles, paired 21-session block contrasts and 277 evaluated days. Show how assumed entry and exit costs depend on active legs and retain zero-leg days.
@@ -236,8 +236,8 @@ description: Planned claims, evidence, reading transitions and shared prose targ
 | Introduction | 110 + 125 + 115 + 80 | 430 | 0.63 / 1.00 |
 | Literature review | 100 + 135 + 135 | 370 | 0.50 / 0.83 |
 | Methodology | 120 + 115 + 125 + 150 + 105 + 75 | 690 | 1.20 / 1.95 |
-| Empirical design and data | 115 + 150 + 120 + 110 + 115 | 610 | 1.24 / 1.99 |
-| Results | 140 + 145 + 150 + 150 + 155 + 180 | 920 | 1.75 / 2.65 |
+| Empirical design and data | 145 + 170 + 100 + 110 + 145 | 670 | 1.33 / 2.13 |
+| Results | 140 + 115 + 150 + 145 + 155 + 155 | 860 | 1.66 / 2.51 |
 | Conclusion | 115 + 115 | 230 | 0.34 / 0.52 |
 | **Technical content, including front matter** | | **3,420** | **6.24 / 10.00** |
 | A. Corpus lineage and source pilot | 150 + 150 | 300 | 0.85 / 1.25 |
@@ -248,4 +248,4 @@ description: Planned claims, evidence, reading transitions and shared prose targ
 | F. Access and reproduction ledger | 150 + 150 | 300 | 0.80 / 1.20 |
 | **Appendix content** | | **2,700** | **7.50 / 11.20** |
 
-Every section uses the Step 03 allocation. The technical reserve is 0.76 page in FinFM and 1.00 in arXiv. The references and back-matter reserves retain the Step 03 estimates.
+Step 05 moves 60 prose words from results to empirical design and data. The technical reserve is 0.76 page in FinFM and 1.00 in arXiv. The references and back-matter reserves retain the Step 03 estimates.
