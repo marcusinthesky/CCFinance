@@ -14,6 +14,7 @@ Turn the section map into a readable argument before drafting prose.
 
 ## Acceptance
 
+- [ ] For each paragraph boundary, identify the question, comparison or term the reader carries forward. For example, a publisher-month volatility result raises a coverage question before the paper turns to an issuer-level network.
 - [ ] Use the academic-manuscript section-outline template. Write one substantive claim per planned paragraph in reading order and attach evidence or reasoning to each.
 - [ ] State why the next paragraph follows. Flag changes of unit, especially from captured records to articles, issuer links and trading sessions. Save the outline beside this task.
 - [ ] Give each paragraph bullet a target word count and a pacing cue where needed. Allow room to explain an unfamiliar sample rule or interpret an exhibit, and compress routine setup. Sum the paragraph targets by section and compare them with the section plan.

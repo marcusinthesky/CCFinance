@@ -14,6 +14,7 @@ Translate the scored outline into the shared LaTeX sections.
 
 ## Acceptance
 
+- [ ] Use the author’s longer sentences where a condition, comparison and implication belong together. Give the finding a clear subject and main verb. Open with a conjunction when it makes the relationship precise, and give a definition or pivotal result a short sentence when it needs emphasis.
 - [ ] Draft the body and appendix using the evidence map. At first use, define the sample and unit behind each result and identify model-adjudicated labels.
 - [ ] Write the abstract and conclusion against the completed body. Insert citations and exhibit references into the common source, then build both layouts.
 - [ ] Compare actual section word counts and space occupied in both rendered PDFs with the scored plan. Include tables and figures in the page check. Resolve material differences through editing or a documented reallocation before substantive review.

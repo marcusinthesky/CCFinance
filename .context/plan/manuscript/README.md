@@ -16,6 +16,8 @@ Follow the numbered tasks in order. Keep planning and review artifacts beside th
 
 ## Acceptance
 
+Use the [academic style guide](style.md) when outlining, drafting and reviewing the paper.
+
 - [ ] The reader brief, evidence map and scored paragraph outline account for all eight sections.
 - [ ] The shared draft has passed substantive review, style refinement and final proofing in both layouts.
 

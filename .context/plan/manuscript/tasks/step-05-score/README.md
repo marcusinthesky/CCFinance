@@ -14,6 +14,7 @@ Decide where readers need preparation, explanation or emphasis.
 
 ## Acceptance
 
+- [ ] Read the last claim of each paragraph beside the first claim of the next. State the premise that makes the second follow. Supply a missing premise, narrow the inference or reorder the paragraphs before choosing a connective.
 - [ ] Read the paragraph claims in order. Mark missing premises, repeated conclusions and transitions that imply more than the evidence supports.
 - [ ] Annotate difficult passages with what to introduce, where to slow down and which result deserves emphasis. Revise the bullets and link the scored outline from this task.
 - [ ] Before drafting, compare the original and revised section budgets side by side. Record the paragraph word totals, estimated pages in both layouts and the reason for each material change. Confirm that the revised allocation fits the overall limits and gives the principal findings enough room for interpretation.

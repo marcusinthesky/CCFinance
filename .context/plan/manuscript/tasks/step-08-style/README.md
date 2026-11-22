@@ -14,6 +14,8 @@ Make the revised manuscript easier to read while preserving the verified claims.
 
 ## Acceptance
 
+- [ ] Read adjoining paragraphs aloud. Preserve a longer sentence when the reader can follow its subject through the qualification to the finding. Check what each opening conjunction earns: “And” develops a point, “Yet” qualifies an expectation, and “Because” commits the author to a reason the evidence supports. Split or recast a sentence where the subject, sample or inference becomes ambiguous.
+- [ ] Check the academic register against the introductions to Free Foundations and Pricing Perspective. Introduce the economic object before the technical operation, identify the comparison behind a result, and attach uncertainty to the claim it qualifies. Record one consequential revision and the meaning it preserved.
 - [ ] Edit for paragraph emphasis, consistent terms, clear subjects and transitions. Read edited paragraphs with their neighbours and remove duplicated caveats.
 - [ ] Review advisory findings from just latex::prose-lint in context. Recheck numbers, qualifications and citations in passages whose wording changed.
 
