@@ -14,6 +14,8 @@ Give each of the eight section files a question and a specific job.
 
 ## Acceptance
 
+- [ ] Write the paper’s argument in reading order, one sentence per section. Start with the researcher trying to reconstruct a sample, follow a captured article through selection, dating, issuer linking and focus, then show what researchers can learn at the publisher, bank-pair and firm-session scales. For each handoff, name the new capability or open question the next section takes up. Verify historical sequence against the evidence wherever the prose claims one.
+- [ ] Budget the FinFM technical pages so a reviewer reading only the main paper can identify the contribution, evaluation population, strongest evidence, material limitation and artifact access. Assign a reader question to each main exhibit.
 - [ ] Make a section map from abstract through appendices, covering access, prior corpora, construction, validation, coverage and replications. Assign the abstract and conclusion their own takeaways.
 - [ ] Place each proposed table or figure beside the question it answers. Record its source, unit and denominator, and decide which supporting detail belongs in the appendix.
 - [ ] Before paragraph outlining, record the overall length target and any venue limits, citing the rules for what counts toward each limit. Label editorial targets as provisional wherever a venue leaves length open.

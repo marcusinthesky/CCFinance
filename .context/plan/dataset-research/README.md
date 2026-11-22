@@ -3,7 +3,7 @@ type: plan
 title: CCFinance dataset research
 description: Assess feasibility and define a research-ready financial news dataset.
 links: []
-status: done
+status: in-progress
 ---
 
 # CCFinance dataset research
@@ -17,6 +17,7 @@ company-level language and market research.
 
 - [x] Evaluate staging coverage and quality against the dataset requirements.
 - [x] Establish evidence-based release targets and a plan for meeting them.
+- [ ] Complete the paired Stanza and GLiNER company-mention micro-benchmark.
 
 <!-- insitu:begin sql
 id = "planning-children"
@@ -24,9 +25,11 @@ model = "children"
 template = "children.md.j2"
 -->
 
-_No open children._
+| Status | Item | Description |
+| --- | --- | --- |
+| backlog | [Compare Stanza and GLiNER on financial company mentions](tasks/stanza-microbench/README.md) | Compare Stanza and GLiNER on financial company mentions |
 
-`0 open; 3 terminal`
+`1 open; 3 terminal`
 
 <!-- insitu:end -->
 

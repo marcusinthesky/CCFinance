@@ -14,6 +14,7 @@ Turn the section map into a readable argument before drafting prose.
 
 ## Acceptance
 
+- [ ] At a change of discipline, write the premise a specialist from the other field needs. For example, explain how a capture after the trading cutoff changes sample eligibility before interpreting the overnight result.
 - [ ] For each paragraph boundary, identify the question, comparison or term the reader carries forward. For example, a publisher-month volatility result raises a coverage question before the paper turns to an issuer-level network.
 - [ ] Use the academic-manuscript section-outline template. Write one substantive claim per planned paragraph in reading order and attach evidence or reasoning to each.
 - [ ] State why the next paragraph follows. Flag changes of unit, especially from captured records to articles, issuer links and trading sessions. Save the outline beside this task.

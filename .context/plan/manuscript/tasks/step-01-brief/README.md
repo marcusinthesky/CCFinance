@@ -14,6 +14,7 @@ Agree on the paper’s contribution and the question a finance reader brings to 
 
 ## Acceptance
 
+- [ ] Update the [FinFM audience brief](finfm-audience.md) from dated public sources. For each readership, name one assumed concept, one missing premise and one decision the paper should enable. Identify the submission track and record the chosen length.
 - [ ] Write a brief naming the intended reader, assumed knowledge and the connection between proprietary news access and reproducibility.
 - [ ] State the contribution of the dataset and its construction in one sentence. Explain the role of the three selected replication exercises.
 
