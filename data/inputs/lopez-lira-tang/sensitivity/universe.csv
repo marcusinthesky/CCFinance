@@ -1,0 +1,5 @@
+exchange,fallback,rows,issuers
+NYSE,false,214,49
+NYSE,true,150,57
+Nasdaq,false,620,35
+Nasdaq,true,120,30

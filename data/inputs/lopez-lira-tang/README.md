@@ -288,3 +288,46 @@ Qualifying historical Business Standard clocks on the original issuer roster
 added 943 articles and 667 firm-sessions. On the expanded panel the Gemma
 body drift probe evaluated 340 days, including 110 with both legs, and its
 gross mean was −7.73 bp. [Eligibility and rolling-window reconciliation](../../../.context/plan/replication/tasks/lopez-lira-tang/tasks/recovered-events/results.md).
+
+## Overnight sensitivity audit
+
+The baseline comprises 740 Nasdaq article–security rows (65 issuers) and
+364 NYSE rows (106 issuers). A pre-2021 usable link establishes the coverage
+criterion for 270 rows with undated listing starts across 87 issuers. The other
+834 rows have dated matches. [Exchange and listing breakdown](sensitivity/universe.csv).
+
+With the reference ten-iteration solver, the audit reproduces all 738 chosen
+signals and −10.15 bp mean gross drift. Raising the maximum to 1,000 removes
+all warnings. At C = 1, nine chosen signals change, 39 days have both legs and
+mean drift is −8.73 bp. At C = 0.1, 221 change, six days have both legs and
+mean drift is −13.67 bp. The fixed 20 fitted windows and 277 evaluated dates
+are common to all three runs. [Solver results](sensitivity/solver.csv).
+
+The return ledger covers all evaluated days, days with at least one active
+leg, days with both legs and the signed return of each leg on its active days.
+For each denominator it gives panel-specific estimates, estimates restricted
+to dates satisfying that denominator in both panels, and the paired difference
+on those dates. Net charges 5 bp one way on the entry notional of each active
+leg, twice per day. Intervals use the same 10,000 circular 21-session block
+draws (seed 42) between the first and last evaluated sessions, conditional on
+the model fits. [Gross and net returns with 95% intervals](sensitivity/returns.csv).
+
+The production tokenizer truncated 44 of 996 distinct bodies. Among 1,104
+issuer–body pairs, six third linked mentions ended beyond the last retained
+body character. The ledger reports character offsets relative to the body and
+counts tokens including the production prefix, BOS and EOS. [Visibility ledger](sensitivity/token_visibility.csv).
+
+Run the following commands from the repository root in the pinned devenv shell.
+The Docker image and model snapshot are the same ones used by the Gemma writer.
+
+```bash
+mkdir -p .runtime/overnight-audit data/inputs/lopez-lira-tang/sensitivity
+duckdb -bail < src/python/scripts/overnight_audit/prepare_tokens.sql
+docker run --rm --network none --user "$(id -u):$(id -g)" -e HF_HUB_OFFLINE=1 -e HOME=/tmp \
+  -v "$PWD/.runtime/embeddinggemma-300m:/model:ro" -v "$PWD/.runtime/overnight-audit:/input:ro" \
+  -v "$PWD/src/python/scripts/overnight_audit:/scripts:ro" \
+  -v "$PWD/data/inputs/lopez-lira-tang/sensitivity:/output" --entrypoint python \
+  sha256:f7876bef696ccf9cf75a2bf7ccb82970f5fac577f082fb8ca95c9a59d2160eb5 /scripts/tokens.py
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen \
+  --package ccfinance-pipeline python src/python/scripts/overnight_audit/portfolios.py
+```
