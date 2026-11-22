@@ -3,7 +3,7 @@ type: task
 title: 02. Map claims to evidence
 description: Assemble the evidence needed to defend the paper’s claims.
 links: []
-status: backlog
+status: done
 ---
 
 # 02. Map claims to evidence
@@ -11,13 +11,13 @@ status: backlog
 ## Goal
 
 Assemble the evidence needed to defend the paper’s claims.
-Use the [enrichment evidence map](enrichment.md) for primary-source exhibits, existing results and proposed follow-up studies.
+Use the [claim-to-evidence map](enrichment.md) for primary sources, frozen study results, artifact access and proposed exhibits.
 
 ## Acceptance
 
-- [ ] Map the reader questions in the venue brief to a result, an artifact or an explicit evidence gap. Check especially what a reader can rebuild, which labels were judged independently of predictions and which timing assumptions support retrospective evaluation.
-- [ ] Link each proposed claim about access, scale, source selection, enrichment quality and coverage to a primary source or frozen output. Identify which artifacts readers can download or rebuild and the applicable licence for each.
-- [ ] For each replication, record the benchmark version, sample, estimator, substitutions, uncertainty and unresolved details. Mark unsupported claims for qualification or removal.
+- [x] Map the reader questions in the venue brief to a result, an artifact or an explicit evidence gap. Check especially what a reader can rebuild, which labels were judged independently of predictions and which timing assumptions support retrospective evaluation.
+- [x] Link each proposed claim about access, scale, source selection, enrichment quality and coverage to a primary source or frozen output. Identify which artifacts readers can download or rebuild and the applicable licence for each.
+- [x] For each replication, record the benchmark version, sample, estimator, substitutions, uncertainty and unresolved details. Mark unsupported claims for qualification or removal.
 
 <!-- insitu:begin sql
 id = "planning-children"
