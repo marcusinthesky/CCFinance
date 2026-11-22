@@ -94,12 +94,12 @@ def main() -> None:
     ranks = {year: set() for year in range(2019, 2024)}
     for row in manifest.values():
         ranks[row["year"]].add(row["year_rank"])
-    if len(manifest) != 40 or any(
-        values != set(range(1, 9)) for values in ranks.values()
+    if len(manifest) != 250 or any(
+        values != set(range(1, 51)) for values in ranks.values()
     ):
-        raise ValueError("Expected eight distinct ranks in each of the five years")
-    if set(repeat) != {key for key, row in manifest.items() if row["year_rank"] <= 2}:
-        raise ValueError("Repeat IDs must be the first two ranks in each year")
+        raise ValueError("Expected 50 distinct ranks in each of the five years")
+    if set(repeat) != {key for key, row in manifest.items() if row["year_rank"] <= 12}:
+        raise ValueError("Repeat IDs must be the first 12 ranks in each year")
 
     strata = defaultdict(list)
     exact_agreement = 0

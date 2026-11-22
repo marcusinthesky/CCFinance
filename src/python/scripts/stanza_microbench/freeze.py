@@ -14,7 +14,7 @@ SALT = "stanza-microbench-v1:"
 SNAPSHOT = "3168f32f57107eac95a2c53f024e5e340c91ef2e"
 RAW_DVC_HASH = "3cd438d50a74f30d54d6eb854642e69b.dir"
 ARTICLES_DVC_HASH = "401d21de164386c0e17c667f8b924ae8.dir"
-COUNT = 8
+COUNT = 50
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -59,7 +59,7 @@ def main() -> None:
             [SALT, str(args.articles), COUNT],
         ).fetchall()
         if [row[1] for row in rank] != [year for year in YEARS for _ in range(COUNT)]:
-            raise ValueError("Each publication-year stratum must supply eight articles")
+            raise ValueError("Unexpected number of articles per year")
         ids = [row[0] for row in rank]
         if len(set(ids)) != len(ids):
             raise ValueError("Sample contains a duplicate article ID")
@@ -106,7 +106,7 @@ def main() -> None:
         write_jsonl(args.work / "passages.jsonl", passages)
         write_jsonl(
             args.work / "repeat-passages.jsonl",
-            [row for row in passages if row["year_rank"] <= 2],
+            [row for row in passages if row["year_rank"] <= 12],
         )
         write_jsonl(
             args.manifest,

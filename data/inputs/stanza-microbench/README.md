@@ -1,10 +1,10 @@
 # Company mention micro-benchmark
 
-The sample comprises eight article leads per publication year from 2019 through
+The sample comprises 50 article leads per publication year from 2019 through
 2023. The frame contains English articles from the financial-publisher staging
 snapshot that the [processed corpus](../../README.md) marks canonical and
 consistently dated. Frame sizes are 1,250,715, 1,563,214, 1,571,984, 1,557,377
-and 1,375,820, respectively. Within year, the sample takes the eight lowest
+and 1,375,820, respectively. Within year, the sample takes the 50 lowest
 SHA256 hashes of `stanza-microbench-v1:<article-id>`. A lead begins at
 character zero of the original body field and ends after its 150th
 whitespace-delimited word or last word, preserving whitespace in between. The
@@ -12,16 +12,7 @@ whitespace-delimited word or last word, preserving whitespace in between. The
 ranks, IDs, years, hosts, source shards, passage hashes and exclusive Unicode
 end offsets. The source bodies stay in the restored corpus.
 
-An independent GPT-6.2-sol medium Codex agent labelled all 40 leads and a
-GPT-6.2-sol low Codex agent labelled the first two ranks in each year from the
-[annotation guide](annotation.md). Both worked blind to extractor outputs.
-The repeat agent saw neither the primary labels nor the rest of the sample.
-Their exact-span sets agreed on all ten repeated leads and all 26 reference
-spans, including two empty leads. No disagreements required adjudication.
-The [primary](primary-labels.jsonl) and [repeat](repeat-labels.jsonl) files
-preserve the independent passes. The [frozen gold](gold.jsonl) is the unchanged
-primary pass with 118 company spans across the 40 leads, eight of which have
-none. These are model annotations, with agreement measured on a small subset.
+The expanded sample includes all 40 pilot leads and 210 new leads. GPT-6.2-sol medium supplied the primary labels. GPT-6.2-sol low supplied independent repeat labels for the first 12 ranks per year. Both passes retained their original pilot annotations where available. The repeat annotator saw published pilot examples in the earlier benchmark notes. Neither annotation pass consulted the expanded extractor outputs. Before adjudication, the passes agreed exactly on 52 of 60 leads (span F1 95.68%). The [adjudication record](adjudication.jsonl) resolves disputed offsets against the [guide](annotation.md). The [frozen reference](gold.jsonl) comprises 712 model-annotated company spans, with 73 leads containing none. The benchmark has no human reference.
 
 The [frozen settings](settings.json) use Stanza 1.11.0 with the
 `ontonotes_charlm` English model, `combined` tokenization and `combined`
@@ -46,17 +37,23 @@ These figures refer to Stanford's benchmark test sets and entity taxonomies.
 
 | Extractor | TP | FP | FN | Micro precision | Micro recall | Micro F1 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Stanza ORG | 69 | 132 | 49 | 34.33% | 58.47% | 43.26% |
-| GLiNER company | 69 | 80 | 49 | 46.31% | 58.47% | 51.69% |
+| Stanza ORG | 421 | 835 | 291 | 33.52 | 59.13 | 42.78 |
+| GLiNER company | 412 | 427 | 300 | 49.11 | 57.87 | 53.13 |
 
-The observed difference in micro-F1 is **+8.43 percentage points** for GLiNER
-with a paired 95% percentile interval of **−1.76 to +18.76 points**. Each of
-2,000 draws resamples eight lead pairs with replacement within each publication
+The observed difference in micro-F1 is **+10.34 percentage points** for GLiNER
+with a paired 95% percentile interval of **5.84 to 14.56 points**. Each of
+2,000 draws resamples 50 lead pairs with replacement within each publication
 year, using seed 42, then recomputes the pooled micro-F1 for both systems. All
 draws were defined. The difference is descriptive for this balanced lead
 sample. See the [machine-readable results](scores.json).
 
-### Errors and co-mentions
+On the 210 new leads alone (596 reference spans), GLiNER's F1 is 53.34%
+and Stanza's is 42.88%. Across all 250 leads, 151 of Stanza's 835 false
+positives and 42 of GLiNER's 427 overlap a reference company with different
+boundaries. Other unmatched spans include organizations outside the company
+definition. The paired interval conditions on the frozen annotations.
+
+### Errors and co-mentions in the original 40-lead pilot
 
 | False-positive span | Stanza | GLiNER |
 | --- | ---: | ---: |

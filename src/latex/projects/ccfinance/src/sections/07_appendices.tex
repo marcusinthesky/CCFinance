@@ -68,17 +68,17 @@ The other three source frames use the following Hub revisions.
 \section{Extractor and metadata audits}
 
 \paragraph{Exact company spans.}
-The microbenchmark takes the eight lowest seeded ID hashes per
+The microbenchmark takes the 50 lowest seeded ID hashes per
 publication year from 2019 through 2023 among consistently dated,
 canonical English articles in the staging snapshot. A lead contains the
 first 150 whitespace-delimited words or the entire shorter body. A
-GPT-6.2-sol Codex agent at medium reasoning effort annotated all 40
-leads, and a separate GPT-6.2-sol agent at low effort annotated the first
-two ranks in each year. Both worked blind to extractor predictions.
-The repeat agent also worked blind to the primary annotations. The
-passes agreed on all ten repeated leads and all 26 reference spans in
-them. The frozen primary model reference contains 118 company spans
-across 40 leads, eight with none. The guide includes named businesses
+GPT-6.2-sol medium primary pass covered 250 leads, including the
+40-lead pilot. A separate GPT-6.2-sol low pass covered the first 12
+ranks per year. The passes agreed exactly on 52 of 60 repeated leads
+(span F1 95.68\%). Disagreements were resolved against the guide
+before scoring. The repeat annotator had access to published pilot
+examples. The resulting model reference contains 712 spans across 250
+leads, 73 with none. The guide includes named businesses
 and excludes products, bare tickers and nonbusiness organizations.
 
 Stanza 1.11.0 uses the English \texttt{ontonotes\_charlm} model with
@@ -86,11 +86,11 @@ combined tokenization and multiword-token expansion. GLiNER2.5 Small
 uses the deployed company schema and cutoff 0.5 \citep{stanza,gliner25}.
 Scoring matches Stanza ORG or GLiNER company spans by article ID and
 exact half-open Unicode offsets. A correctly recognized noncompany ORG
-therefore counts as a false positive for this task. Both models recover
-69 spans (Table~\ref{tab:app-spans}). GLiNER scores 8.43 micro-F1
-percentage points higher in this sample, with a paired 95\% interval
-of $[-1.76,+18.76]$ over 2,000 passage bootstraps within publication
-year that permits either ordering.
+therefore counts as a false positive for this task.
+Table~\ref{tab:app-spans} reports a GLiNER advantage of 10.34
+micro-F1 percentage points on this company-specific task, with a
+paired 95\% interval of $[5.84,14.56]$ over 2,000 passage bootstraps
+within publication year.
 Stanford's published 88.8\% OntoNotes and 92.1\% CoNLL03 scores are
 all-class micro-F1 on their benchmark splits \citep{stanza}. In the
 local task, a possessive attached to the Credit Suisse Group AG span
@@ -103,14 +103,14 @@ mention pairs before dated issuer resolution.
   \small
   \setlength{\tabcolsep}{3pt}
   \caption{Exact company-span micro scores (\%). The balanced set has
-  40 leads and 118 model-reference spans.}
+  250 leads and 712 model-reference spans.}
   \label{tab:app-spans}
   \begin{tabular}{lrrrrrr}
     \toprule
     System & TP & FP & FN & P & R & F1 \\
     \midrule
-    Stanza ORG & 69 & 132 & 49 & 34.33 & 58.47 & 43.26 \\
-    GLiNER company & 69 & 80 & 49 & 46.31 & 58.47 & 51.69 \\
+    Stanza ORG & 421 & 835 & 291 & 33.52 & 59.13 & 42.78 \\
+    GLiNER company & 412 & 427 & 300 & 49.11 & 57.87 & 53.13 \\
     \bottomrule
   \end{tabular}
 \end{table}

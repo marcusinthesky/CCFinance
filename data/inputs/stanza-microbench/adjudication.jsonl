@@ -1,0 +1,15 @@
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 59, "end": 65, "text": "Forbes", "annotation": "p", "retain": false, "reason": "The audience belongs to the publication in this phrase."}
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 212, "end": 218, "text": "Forbes", "annotation": "p", "retain": false, "reason": "The audience belongs to the publication in this phrase."}
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 911, "end": 920, "text": "Instagram", "annotation": "r", "retain": false, "reason": "The name denotes a platform used by marketers."}
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 922, "end": 930, "text": "Facebook", "annotation": "r", "retain": false, "reason": "The name denotes a platform used by marketers."}
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 935, "end": 942, "text": "Twitter", "annotation": "r", "retain": false, "reason": "The name denotes a platform used by marketers."}
+{"id": "<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>", "start": 1018, "end": 1026, "text": "LinkedIn", "annotation": "r", "retain": false, "reason": "The name denotes a platform used by marketers."}
+{"id": "<urn:uuid:7c04046b-1df6-4daf-b8ef-9c715f653296>", "start": 401, "end": 409, "text": "Substack", "annotation": "r", "retain": false, "reason": "Using Substack denotes the publishing service."}
+{"id": "<urn:uuid:a3a90d12-8e59-431f-9725-68c9d3c5c5e5>", "start": 167, "end": 176, "text": "StarGames", "annotation": "p", "retain": true, "reason": "The named casino business is the partner in the deal."}
+{"id": "<urn:uuid:492f96c1-9aed-43ed-bb53-7e6f49ce484f>", "start": 537, "end": 543, "text": "Pfizer", "annotation": "p", "retain": true, "reason": "The manufacturer name explicitly attributes the vaccine to its producer."}
+{"id": "<urn:uuid:492f96c1-9aed-43ed-bb53-7e6f49ce484f>", "start": 544, "end": 552, "text": "BioNTech", "annotation": "p", "retain": true, "reason": "The manufacturer name explicitly attributes the vaccine to its producer."}
+{"id": "<urn:uuid:7cd8e96f-efbb-47a2-ae5b-e23528adbe19>", "start": 134, "end": 140, "text": "Pfizer", "annotation": "p", "retain": true, "reason": "The manufacturer name explicitly attributes the vaccine to its producer."}
+{"id": "<urn:uuid:479d6a91-c996-4631-b795-053b13d41d73>", "start": 769, "end": 775, "text": "Pfizer", "annotation": "p", "retain": true, "reason": "The manufacturer name explicitly attributes the vaccine to its producer."}
+{"id": "<urn:uuid:479d6a91-c996-4631-b795-053b13d41d73>", "start": 776, "end": 784, "text": "BioNTech", "annotation": "p", "retain": true, "reason": "The manufacturer name explicitly attributes the vaccine to its producer."}
+{"id": "<urn:uuid:f5530754-b82b-4acf-81e9-224bac460307>", "start": 316, "end": 323, "text": "Insider", "annotation": "r", "retain": false, "reason": "This navigation prompt refers to the publication's reference library."}
+{"id": "<urn:uuid:536315f5-2949-4fe9-96c1-7b96945fc810>", "start": 430, "end": 433, "text": "MPS", "annotation": "p", "retain": true, "reason": "MPS is a short name identifying the lender in context."}

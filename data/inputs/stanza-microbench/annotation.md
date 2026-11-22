@@ -18,7 +18,7 @@ Keep passages without mentions. For a cut-off name, label only when the visible
 text independently identifies a company.
 
 Two independent Codex agents receive the passage text and this guide. The
-primary pass covers all 40 leads. The repeat pass covers the first two frozen
+primary pass covers all 250 leads. The repeat pass covers the first 12 frozen
 ranks per publication year and receives neither primary labels nor predictions.
 Resolve disagreements from the passage and the guide before viewing either
 extractor's output. Retain both annotation passes and the adjudication record.

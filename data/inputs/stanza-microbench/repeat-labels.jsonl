@@ -1,10 +1,60 @@
 {"id":"<urn:uuid:6e45bb39-a823-4086-9ccf-ec068d85b82f>","spans":[{"start":0,"end":4,"text":"Ford"},{"start":57,"end":75,"text":"Ford Motor Company"},{"start":314,"end":318,"text":"Ford"},{"start":603,"end":616,"text":"Deutsche Bank"},{"start":646,"end":650,"text":"Ford"},{"start":714,"end":728,"text":"Morgan Stanley"},{"start":798,"end":813,"text":"Bank of America"},{"start":913,"end":917,"text":"Ford"}]}
 {"id":"<urn:uuid:8a8fa733-a913-4bfc-8e8b-5d97b0e0420a>","spans":[{"start":0,"end":6,"text":"Evolve"},{"start":121,"end":127,"text":"Evolve"},{"start":526,"end":537,"text":"Evolve ETFs"}]}
+{"id":"<urn:uuid:c99cf17e-5056-4418-bc97-e8c1a2ae024e>","spans":[{"start":51,"end":58,"text":"Reuters"}]}
+{"id":"<urn:uuid:e418b354-4676-4884-bef3-15ec463e1b00>","spans":[{"start":36,"end":43,"text":"Porsche"},{"start":99,"end":106,"text":"Porsche"},{"start":809,"end":835,"text":"Porsche Financial Services"}]}
+{"id":"<urn:uuid:0428cc08-be8d-4519-b211-275cc290461c>","spans":[{"start":310,"end":316,"text":"Forbes"},{"start":911,"end":920,"text":"Instagram"},{"start":922,"end":930,"text":"Facebook"},{"start":935,"end":942,"text":"Twitter"},{"start":1018,"end":1026,"text":"LinkedIn"}]}
+{"id":"<urn:uuid:4a00dd4c-17ef-42f5-8fdf-a9c75001d7bf>","spans":[{"start":234,"end":250,"text":"Frost & Sullivan"},{"start":275,"end":285,"text":"PRNewswire"},{"start":702,"end":718,"text":"Frost & Sullivan"}]}
+{"id":"<urn:uuid:6ebc7ac1-1d7c-470f-8ff4-5bf3f9fda7c5>","spans":[]}
+{"id":"<urn:uuid:6d866256-25af-4342-9ba3-b8cd62c1376b>","spans":[{"start":908,"end":911,"text":"AFP"}]}
+{"id":"<urn:uuid:4b673c2c-cd95-41d9-a703-5cf890e048c8>","spans":[{"start":63,"end":70,"text":"Reuters"}]}
+{"id":"<urn:uuid:44432765-0f01-46d5-813f-06d906ca148b>","spans":[]}
+{"id":"<urn:uuid:66c40e1a-43b8-4175-a950-68b3e38a474d>","spans":[{"start":69,"end":72,"text":"EOH"},{"start":151,"end":154,"text":"EOH"},{"start":424,"end":433,"text":"Microsoft"}]}
+{"id":"<urn:uuid:7c04046b-1df6-4daf-b8ef-9c715f653296>","spans":[{"start":125,"end":143,"text":"Andreesen Horowitz"},{"start":194,"end":202,"text":"Substack"},{"start":301,"end":320,"text":"Andreessen Horowitz"},{"start":401,"end":409,"text":"Substack"},{"start":491,"end":499,"text":"Substack"},{"start":567,"end":575,"text":"Substack"},{"start":644,"end":651,"text":"Fortune"}]}
 {"id":"<urn:uuid:a283c54b-4333-4202-9d6d-597a7fd598f2>","spans":[{"start":257,"end":272,"text":"Bank of America"},{"start":586,"end":590,"text":"BofA"},{"start":815,"end":829,"text":"Mosaic Company"},{"start":831,"end":853,"text":"Chipotle Mexican Grill"},{"start":855,"end":878,"text":"Alexion Pharmaceuticals"},{"start":880,"end":900,"text":"Take-Two Interactive"},{"start":905,"end":913,"text":"L Brands"},{"start":928,"end":932,"text":"BofA"}]}
 {"id":"<urn:uuid:516b68cd-6400-4b58-945b-77a73fd0b155>","spans":[{"start":0,"end":17,"text":"Simply Good Foods"},{"start":552,"end":581,"text":"The Simply Good Foods Company"}]}
+{"id":"<urn:uuid:a3a90d12-8e59-431f-9725-68c9d3c5c5e5>","spans":[{"start":24,"end":38,"text":"GLOBE NEWSWIRE"},{"start":43,"end":54,"text":"ORYX Gaming"},{"start":58,"end":76,"text":"Bragg Gaming Group"},{"start":145,"end":154,"text":"Greentube"},{"start":200,"end":204,"text":"ORYX"},{"start":267,"end":276,"text":"StarGames"},{"start":318,"end":322,"text":"ORYX"},{"start":612,"end":621,"text":"StarGames"},{"start":634,"end":649,"text":"Greentube Malta"},{"start":663,"end":672,"text":"NOVOMATIC"}]}
+{"id":"<urn:uuid:0db98d18-9f82-4473-bef2-699821256ea2>","spans":[{"start":0,"end":20,"text":"Chaparral Energy Inc"},{"start":55,"end":75,"text":"Chaparral Energy Inc"},{"start":618,"end":638,"text":"Chaparral Energy Inc"}]}
+{"id":"<urn:uuid:6df839e1-b35b-467e-8193-7d409ab5e71d>","spans":[]}
+{"id":"<urn:uuid:492f96c1-9aed-43ed-bb53-7e6f49ce484f>","spans":[]}
+{"id":"<urn:uuid:2d0df463-da80-44ad-af5d-e23b109136eb>","spans":[{"start":60,"end":67,"text":"Reuters"}]}
+{"id":"<urn:uuid:7c2efec4-bd27-4b97-8529-cdf54b21f098>","spans":[{"start":118,"end":125,"text":"Reuters"}]}
+{"id":"<urn:uuid:65c8150f-61d3-4fa8-acc8-d0956c08f14c>","spans":[]}
+{"id":"<urn:uuid:54a9e5fd-7ec3-4e5d-93a6-d14f10e2ea58>","spans":[{"start":499,"end":519,"text":"National Land Realty"}]}
+{"id":"<urn:uuid:0ef0ca7a-6b0a-4fde-811d-f6b09c9f59f8>","spans":[{"start":139,"end":166,"text":"Nasdaq Governance Solutions"},{"start":210,"end":216,"text":"Nasdaq"},{"start":230,"end":257,"text":"Center for Board Excellence"},{"start":442,"end":448,"text":"Nasdaq"},{"start":749,"end":755,"text":"Nasdaq"},{"start":835,"end":841,"text":"Nasdaq"},{"start":904,"end":910,"text":"Nasdaq"},{"start":955,"end":961,"text":"Nasdaq"}]}
+{"id":"<urn:uuid:f588e2f4-a77b-4c47-9df6-a23b72bb23bb>","spans":[{"start":0,"end":6,"text":"Natera"},{"start":54,"end":60,"text":"Natera"},{"start":614,"end":620,"text":"Natera"}]}
 {"id":"<urn:uuid:107d31e8-8dee-491e-9fa8-10e3ec9083ca>","spans":[{"start":725,"end":736,"text":"Rolex Rings"}]}
 {"id":"<urn:uuid:3e279df0-bc76-4585-bf93-7c086cdcae38>","spans":[{"start":595,"end":606,"text":"ING Germany"},{"start":613,"end":617,"text":"CNBC"}]}
+{"id":"<urn:uuid:7cd8e96f-efbb-47a2-ae5b-e23528adbe19>","spans":[]}
+{"id":"<urn:uuid:2d5ce902-c569-47a5-864c-b737c98d2628>","spans":[]}
+{"id":"<urn:uuid:479d6a91-c996-4631-b795-053b13d41d73>","spans":[{"start":0,"end":6,"text":"Pfizer"},{"start":501,"end":512,"text":"AstraZeneca"},{"start":969,"end":975,"text":"Pfizer"}]}
+{"id":"<urn:uuid:661a4211-417d-4c88-89cc-26a8339ae62d>","spans":[{"start":686,"end":692,"text":"Realme"},{"start":774,"end":780,"text":"Realme"}]}
+{"id":"<urn:uuid:8352a8b8-3851-4472-8e55-6de258e40fea>","spans":[{"start":42,"end":45,"text":"ANI"},{"start":47,"end":65,"text":"BusinessWire India"},{"start":413,"end":422,"text":"Baapstore"},{"start":516,"end":525,"text":"Baapstore"},{"start":661,"end":670,"text":"Baapstore"}]}
+{"id":"<urn:uuid:152915a2-dfea-44f6-9ab0-d9c7ffbe6851>","spans":[{"start":0,"end":17,"text":"Decklar Resources"},{"start":81,"end":103,"text":"Decklar Resources Inc."},{"start":149,"end":171,"text":"Investing News Network"},{"start":173,"end":195,"text":"Decklar Resources Inc."},{"start":607,"end":614,"text":"Decklar"},{"start":880,"end":897,"text":"Decklar Resources"},{"start":921,"end":938,"text":"Decklar Resources"},{"start":961,"end":978,"text":"Decklar Resources"}]}
+{"id":"<urn:uuid:cfdcfead-fb9d-4679-baca-778941e145d1>","spans":[{"start":287,"end":294,"text":"Moody’s"},{"start":299,"end":302,"text":"S&P"},{"start":410,"end":413,"text":"S&P"}]}
+{"id":"<urn:uuid:c8eee4a3-1c17-48ea-86ee-6fc483802e7d>","spans":[{"start":114,"end":127,"text":"Hyosung Group"},{"start":200,"end":214,"text":"Linde Hydrogen"},{"start":254,"end":267,"text":"Hyosung Group"},{"start":290,"end":314,"text":"Hyosung Heavy Industries"},{"start":340,"end":345,"text":"Linde"},{"start":698,"end":705,"text":"Hyosung"},{"start":749,"end":762,"text":"Hyosung Group"},{"start":850,"end":863,"text":"Hyosung Group"}]}
+{"id":"<urn:uuid:294c09ce-5e4e-41e6-9eed-381247e8b0a1>","spans":[{"start":370,"end":388,"text":"Hindu BusinessLine"}]}
+{"id":"<urn:uuid:f5530754-b82b-4acf-81e9-224bac460307>","spans":[{"start":316,"end":323,"text":"Insider"}]}
 {"id":"<urn:uuid:ca034bd3-e511-443e-8d00-7e3e2540de19>","spans":[]}
 {"id":"<urn:uuid:ff8a3bbe-b464-4f52-aa14-9449eabf93b9>","spans":[{"start":155,"end":161,"text":"Google"}]}
+{"id":"<urn:uuid:d932e197-97d1-4e8e-9504-49cd8f39ac65>","spans":[{"start":146,"end":166,"text":"Lucknow Super Giants"},{"start":305,"end":317,"text":"Super Giants"},{"start":462,"end":474,"text":"Super Giants"}]}
+{"id":"<urn:uuid:245cd743-ffd2-4b21-9b83-06facb15829b>","spans":[{"start":15,"end":33,"text":"Global Partners LP"},{"start":615,"end":621,"text":"Global"}]}
+{"id":"<urn:uuid:b38ee4c6-69a6-4360-a03e-a49626b6759f>","spans":[]}
+{"id":"<urn:uuid:a8a5e703-a17b-41cb-9d8e-002b19a1dc9d>","spans":[{"start":0,"end":22,"text":"Nutraceutical Insights"},{"start":151,"end":175,"text":"Goldgaber Research Group"},{"start":290,"end":304,"text":"GLOBE NEWSWIRE"},{"start":309,"end":331,"text":"Nutraceutical Insights"},{"start":544,"end":568,"text":"Goldgaber Research Group"}]}
+{"id":"<urn:uuid:536315f5-2949-4fe9-96c1-7b96945fc810>","spans":[{"start":22,"end":38,"text":"Monte dei Paschi"},{"start":129,"end":136,"text":"Reuters"},{"start":163,"end":188,"text":"Monte dei Paschi di Siena"},{"start":412,"end":428,"text":"Monte dei Paschi"},{"start":857,"end":866,"text":"UniCredit"},{"start":930,"end":933,"text":"MPS"}]}
+{"id":"<urn:uuid:d502ce85-cb29-4644-b027-9ae3e98b2a92>","spans":[{"start":10,"end":24,"text":"Morgan Stanley"},{"start":176,"end":183,"text":"Reuters"},{"start":187,"end":201,"text":"Morgan Stanley"},{"start":824,"end":838,"text":"Morgan Stanley"}]}
+{"id":"<urn:uuid:335e5a22-a2d5-498b-999c-70638a0c4b95>","spans":[{"start":0,"end":6,"text":"Roblox"},{"start":131,"end":137,"text":"Roblox"},{"start":292,"end":298,"text":"Roblox"},{"start":584,"end":590,"text":"Roblox"},{"start":762,"end":768,"text":"Roblox"},{"start":770,"end":785,"text":"The Motley Fool"},{"start":818,"end":824,"text":"Roblox"},{"start":826,"end":841,"text":"The Motley Fool"}]}
+{"id":"<urn:uuid:cbf82a56-1aeb-4d9a-9f37-462448b3400d>","spans":[]}
+{"id":"<urn:uuid:31925550-5518-4026-a072-b1fa76e06001>","spans":[{"start":15,"end":27,"text":"Fiore Dorato"},{"start":196,"end":208,"text":"Fiore Dorato"}]}
+{"id":"<urn:uuid:21d14351-9d57-458f-8ae8-146ce45ac014>","spans":[{"start":200,"end":226,"text":"HT Digital Streams Limited"}]}
 {"id":"<urn:uuid:d663e358-a09c-46f8-a305-3d04fd548623>","spans":[{"start":86,"end":93,"text":"Reuters"}]}
 {"id":"<urn:uuid:ee97f9ba-9965-49a6-89ff-45e997d8d4b3>","spans":[]}
+{"id":"<urn:uuid:7bd03882-0279-4122-a8d2-edac0892d199>","spans":[{"start":22,"end":34,"text":"Alphabet Inc"},{"start":163,"end":169,"text":"Google"},{"start":186,"end":194,"text":"Alphabet"},{"start":367,"end":373,"text":"Google"},{"start":383,"end":388,"text":"Axios"},{"start":602,"end":607,"text":"Axios"},{"start":648,"end":654,"text":"Google"},{"start":696,"end":702,"text":"Google"}]}
+{"id":"<urn:uuid:1f3e0249-dc1b-400d-b803-8751d4b252bf>","spans":[]}
+{"id":"<urn:uuid:84f13d8c-75c9-427e-84a2-c0b571220092>","spans":[{"start":24,"end":49,"text":"Sylvania Platinum Limited"},{"start":188,"end":205,"text":"Sylvania Platinum"},{"start":352,"end":369,"text":"Sylvania Platinum"},{"start":439,"end":464,"text":"Sylvania Platinum Limited"}]}
+{"id":"<urn:uuid:0b0643a6-3752-4df7-8c35-3f18584c384a>","spans":[{"start":1,"end":13,"text":"UBS Group AG"},{"start":46,"end":68,"text":"Credit Suisse Group AG"},{"start":501,"end":504,"text":"UBS"},{"start":654,"end":667,"text":"Credit Suisse"},{"start":748,"end":751,"text":"UBS"},{"start":802,"end":814,"text":"ING Groep NV"}]}
+{"id":"<urn:uuid:f86a4c7f-c36d-48a9-8a1a-0a85556ea632>","spans":[]}
+{"id":"<urn:uuid:305beb5b-44a1-48f9-99ba-0817f4756d41>","spans":[{"start":0,"end":6,"text":"Hermes"},{"start":60,"end":66,"text":"Hermes"},{"start":518,"end":524,"text":"Hermes"}]}
+{"id":"<urn:uuid:7ba4bd1a-4e07-4a7e-9025-66cae74ede9f>","spans":[{"start":605,"end":611,"text":"Nvidia"},{"start":628,"end":650,"text":"Advanced Micro Devices"},{"start":670,"end":678,"text":"Broadcom"},{"start":845,"end":851,"text":"Nvidia"}]}
+{"id":"<urn:uuid:37ebd447-8c48-4747-aa52-b91abf94a5a8>","spans":[]}
+{"id":"<urn:uuid:0316a7d2-df52-4f07-a047-bde572e4f9ec>","spans":[{"start":11,"end":19,"text":"Illumina"},{"start":52,"end":57,"text":"Grail"},{"start":105,"end":118,"text":"Illumina Inc."},{"start":177,"end":187,"text":"Grail Inc."},{"start":316,"end":324,"text":"Illumina"},{"start":335,"end":340,"text":"Grail"},{"start":662,"end":670,"text":"Illumina"},{"start":714,"end":722,"text":"Illumina"}]}
+{"id":"<urn:uuid:78e07a2b-2f19-4155-8eec-8a0deba1c26a>","spans":[]}

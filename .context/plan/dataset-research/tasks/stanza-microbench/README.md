@@ -14,7 +14,7 @@ Compare Stanza and GLiNER on financial company mentions
 
 ## Acceptance
 
-- [x] Freeze the 40 passages and blind reference spans specified in the [exercise](../../tasks1/stanza-microbench.md).
+- [x] Freeze the 250 passages and blind reference spans specified in the [exercise](../../tasks1/stanza-microbench.md).
 - [x] Run both pinned extractors and record paired exact-span scores, uncertainty and representative errors with the reproducible scoring command.
 - [x] Identify the published all-class reference scores and explain the economic consequence of a missed co-mention.
 
