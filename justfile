@@ -56,6 +56,10 @@ links:
 dvc *args:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen dvc "$@"
 
+# Build the metadata-only Hugging Face release from restored artifacts.
+release-metadata output:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --frozen --script src/python/scripts/hub_release/build.py "$1"
+
 # Validate DVC metadata without fetching data.
 data-check:
     just dvc status

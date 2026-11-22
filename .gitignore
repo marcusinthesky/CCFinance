@@ -17,6 +17,7 @@ result-*
 .runtime/
 .env
 .env.*
+.aws/
 .DS_Store
 *.bak
 .turbo/

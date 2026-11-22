@@ -1,13 +1,30 @@
 # CCFinance
 
-CCFinance is a data engineering project for filtering and enriching public
-Common Crawl News (CC-News) copies for research into language in finance.
+CCFinance links archived English-language news to corporate issuers so that
+researchers can reconstruct the sample behind a financial news study. The
+frozen selection contains 14,807,287 captures from Fine News, a processed
+release of Common Crawl News. Of these, 5,220,290 are consistently dated,
+canonical captures with an accepted issuer link. Requiring three mentions
+of the same issuer reduces that count to 2,547,597.
+
+## Use the dataset
+
+The [Hugging Face dataset](https://huggingface.co/datasets/marcusinthesky/CCFinance)
+provides one sharded Parquet dataset with one row per capture. Each row contains
+the publication and capture dates, eligibility decisions, entity offsets,
+issuer assignments, window scores and a 768-dimensional FP16 body embedding.
+Readers can project just the columns they need. The dataset card includes a
+streaming example, a query to reproduce the counts above, the label order,
+and estimates of extraction, linking and subject-focus accuracy.
+
+CCFinance-authored annotations and embeddings carry CC BY 4.0. The card
+identifies the upstream metadata sources and their terms. Researchers who
+require the underlying articles can use the frozen upstream identifiers to
+locate the corresponding bodies under the applicable source terms.
 
 ## Start
 
-Exordio supplies the Python and LaTeX toolchains, a pinned Nix environment and CI.
-Copier answers record Exordio `v0.1.1-alpha` (the documented `v0.1.0` tag was not
-available in the local source).
+Use the pinned development environment to build the data pipeline or manuscript.
 
 ```bash
 bash infra/nix/install-devenv.sh
@@ -58,8 +75,13 @@ Keep data, configuration and environment dependencies explicit in DVC: Semflow's
 static analysis cannot discover string-driven dynamic imports.
 
 See [Python commands](src/python/README.md), [LaTeX commands](src/latex/README.md)
-and [infrastructure](infra/README.md). The scaffold's Apache-2.0 license covers
-code; it does not grant rights to upstream article content.
+and [infrastructure](infra/README.md). The project code is licensed under
+[Apache-2.0](LICENSE).
+
+With the frozen inputs and processed outputs restored, run
+`just release-metadata .runtime/ccfinance-release` to build the Hub files in a
+new directory. The exporter selects public columns explicitly, preserves the
+stored FP16 vectors, reconciles row totals and writes a SHA256 manifest.
 
 ## Replication studies
 
