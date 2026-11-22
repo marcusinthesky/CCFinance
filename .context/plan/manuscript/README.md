@@ -29,7 +29,6 @@ template = "children.md.j2"
 
 | Status | Item | Description |
 | --- | --- | --- |
-| backlog | [01. Frame the paper and its audience](tasks/step-01-brief/README.md) | Agree on the paper’s contribution and the question a finance reader brings to it. |
 | backlog | [02. Map claims to evidence](tasks/step-02-evidence/README.md) | Assemble the evidence needed to defend the paper’s claims. |
 | backlog | [03. Plan the sections and exhibits](tasks/step-03-sections/README.md) | Give each of the eight section files a question and a specific job. |
 | backlog | [04. Outline one bullet per paragraph](tasks/step-04-paragraphs/README.md) | Turn the section map into a readable argument before drafting prose. |
@@ -39,7 +38,7 @@ template = "children.md.j2"
 | backlog | [08. Refine the prose in context](tasks/step-08-style/README.md) | Make the revised manuscript easier to read while preserving the verified claims. |
 | backlog | [09. Proof both layouts and verify reproduction instructions](tasks/step-09-proof/README.md) | Prepare a checked manuscript candidate for circulation. |
 
-`9 open; 0 terminal`
+`8 open; 1 terminal`
 
 <!-- insitu:end -->
 
