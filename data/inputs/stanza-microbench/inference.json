@@ -1,0 +1,26 @@
+{
+  "gliner": {
+    "model_sha256": "4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b",
+    "code_sha256": {
+      "extract": "d44c071141b4d89eb7c4a3bf165f1b5662764d13409703c00b6a149d45ca166a",
+      "schema": "a7485b42807e0c8eaccf0736007c43bbced3236ff17163f75ab03a616200b023",
+      "runtime": "abe752f132db35015feb40839a0e84db5ca76086af07f5e01a07915e6932c16a",
+      "attributes": "cf1372b519fbd9c9cccbbdac8f9021eacb927429434977dfb11788896ca1571b",
+      "probabilities": "daa235d66092238cec692ec8b1e1e4b0118d90d7d2fcdb32c6f52c8274a5405c"
+    },
+    "completed_passages": 40,
+    "invalid_passages": 0
+  },
+  "stanza": {
+    "resources_git_revision": "fed8c08e53f0279c7a687c7bb134858a59c42163",
+    "torch": "2.14.1+cu130",
+    "model_sha256": {
+      "backward_charlm/1billion": "5d8cb2306650e4fc2b4f7517cc0fb33b38269e05bbf8d05e712e481471052225",
+      "forward_charlm/1billion": "8a32ac2226dda8ea5d30f2a15fe3f835639977f299cfda315ce1b8a656596fd2",
+      "mwt/combined": "5f7579111def1f6212c98fa8154ff964bf0eafb9218845ecfa3a1d5a931be237",
+      "ner/ontonotes_charlm": "305eefefbd42a56a8f80892044e34f9dacd6c7db3a7062d9e574fe066893e655",
+      "pretrain/fasttextcrawl": "2f493fe8d8583fc73ae0b4fc3aec908630b206743e3a572cc1fcfb321f285afc",
+      "tokenize/combined": "6280da0f82125c267e22f5fb912c4e090cb02804232d17a2df9a174df7c8fef1"
+    }
+  }
+}

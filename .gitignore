@@ -57,6 +57,7 @@ lean_decls
 !/data/inputs/kazinnik-banks/*
 !/data/inputs/kazinnik-banks/extended/*.csv
 !/data/inputs/lopez-lira-tang/*
+!/data/inputs/stanza-microbench/*
 
 # Local literature records and source material.
 /.context/reference/

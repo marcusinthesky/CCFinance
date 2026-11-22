@@ -25,11 +25,9 @@ model = "children"
 template = "children.md.j2"
 -->
 
-| Status | Item | Description |
-| --- | --- | --- |
-| backlog | [Compare Stanza and GLiNER on financial company mentions](tasks/stanza-microbench/README.md) | Compare Stanza and GLiNER on financial company mentions |
+_No open children._
 
-`1 open; 3 terminal`
+`0 open; 4 terminal`
 
 <!-- insitu:end -->
 

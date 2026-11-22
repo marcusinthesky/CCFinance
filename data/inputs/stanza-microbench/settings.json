@@ -1,0 +1,27 @@
+{
+  "stanza": {
+    "runtime": "stanza==1.11.0",
+    "resources_version": "1.11.0",
+    "resources_sha256": "e334b4e200aeaa5c1903223de2f3be066f69d3a50a33c70aa1691407628de1ef",
+    "hub_revision": "3485d1dd01841c4cace1834d8078395a6f5e4520",
+    "lang": "en",
+    "processors": {"tokenize": "combined", "mwt": "combined", "ner": "ontonotes_charlm"},
+    "retain": "ORG",
+    "device": "cpu"
+  },
+  "gliner": {
+    "runtime": "gliner2==2.1.0 with the three repository patches",
+    "hub_revision": "b5d42bf7dc7d01c40304ae4ed43c2f13c325a75b",
+    "checkpoint_sha256": "4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b",
+    "image": "lmsysorg/sglang@sha256:f7876bef696ccf9cf75a2bf7ccb82970f5fac577f082fb8ca95c9a59d2160eb5",
+    "schema": "infra/inference/gliner_schema.py",
+    "retain": "company",
+    "threshold": 0.5,
+    "batch_size": 128,
+    "buffer_size": 8192,
+    "workers": 4,
+    "chunk_size": 384,
+    "chunk_overlap": 64
+  },
+  "bootstrap": {"seed": 42, "draws": 2000}
+}
