@@ -32,6 +32,8 @@
 
 ## Evaluation
 
+The [paired linker comparison](comparison/README.md) evaluates dated names, Stanford WikiDict with a financial crosswalk, prior-year aliases and the production linker on the same held-out mentions.
+
 The evaluation runs three stages:
 
 1. **`sample_company_links`** draws GLiNER company mentions by seeded hash priority within strata, plus a uniform article sample.

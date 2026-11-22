@@ -60,7 +60,13 @@ see the marked text and neutral search results and provide dated issuer
 decisions with predictions withheld. On held-out extracted spans,
 the 475 accepted links have 96.8\% estimated precision (95\% interval
 94.0--99.6\%), and recall among reference-linkable mentions is 70.8\%
-(64.6--77.1\%). Subject focus requires an article-level reference.
+(64.6--77.1\%). On the same 886 held-out mentions, weighted issuer-link
+F1 is 81.81\% with the full linker and 59.46\% when a normalized name
+must identify one dated issuer. Restricting learned aliases and their
+frequencies to prior calendar years yields 78.57\%
+(Appendix Table~\ref{tab:app-link-baselines}).
+
+Subject focus requires an article-level reference.
 Only articles with at least one GLiNER company detection could enter
 this audit. The three-mention rule achieved the highest subject F1 on
 217 development articles among the relevance, position and mention-count

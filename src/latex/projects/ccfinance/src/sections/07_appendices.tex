@@ -207,6 +207,32 @@ keys with noncompany meanings and subsidiaries with competing issuer
 candidates can produce errors or abstentions. Dated records constrain
 valid links, while full-corpus alias priors can use anchors observed later.
 
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Issuer assignment & Precision & Recall & F1 \\
+    \midrule
+    Unique dated name & 99.12 & 42.47 & 59.46 \\
+    WikiDict and crosswalk & 99.78 & 20.42 & 33.91 \\
+    Prior-year CCFinance & 96.66 & 66.18 & 78.57 \\
+    Full CCFinance & 96.81 & 70.83 & 81.81 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Weighted issuer-link scores (\%) on 886 common extracted
+    mentions. Of these, 578 have a model-adjudicated eligible issuer.
+    The name rule requires a unique dated issuer. Stanford's WikiDict
+    returned a page for 464 mentions, of which 97 matched canonical
+    English Wikipedia sitelinks of CIK-bearing Wikidata items and 49
+    yielded a unique dated issuer. The prior-year replay fixes learned
+    alias evidence before the calendar year and retains the frozen
+    registry. Full minus prior-year F1 is 3.24 percentage points
+    [1.22, 6.23] in 2,000 paired article-level multiplier draws
+  reweighted within sampling strata.}
+  \label{tab:app-link-baselines}
+\end{table}
+
 \begin{table*}[t]
   \centering
   \small
