@@ -3,7 +3,7 @@ type: task
 title: 09. Proof both layouts and verify reproduction instructions
 description: Prepare a checked manuscript candidate for circulation.
 links: []
-status: backlog
+status: done
 ---
 
 # 09. Proof both layouts and verify reproduction instructions
@@ -12,11 +12,13 @@ status: backlog
 
 Prepare a checked manuscript candidate for circulation.
 
+See the [proof and reproduction check](proof.md) for both PDFs, submission limits and remaining access constraints.
+
 ## Acceptance
 
-- [ ] Recheck the current CFP and OpenReview instructions against the rendered FinFM PDF. Verify the selected technical-page limit, anonymity including artifact links, and that the core benchmark evidence can be assessed without supplementary files.
-- [ ] Build the arXiv and anonymous AAAI targets. Inspect both PDFs for legibility, cross-references, bibliography, appendix order and author anonymity where required.
-- [ ] Check the availability statement and reproduction instructions from a reader’s perspective. Run just check and record the candidate revision, results and any remaining limitations.
+- [x] Recheck the current CFP and OpenReview instructions against the rendered FinFM PDF. Verify the selected technical-page limit, anonymity including artifact links, and that the core benchmark evidence can be assessed without supplementary files.
+- [x] Build the arXiv and anonymous AAAI targets. Inspect both PDFs for legibility, cross-references, bibliography, appendix order and author anonymity where required.
+- [x] Check the availability statement and reproduction instructions from a reader’s perspective. Run just check and record the candidate revision, results and any remaining limitations.
 
 <!-- insitu:begin sql
 id = "planning-children"

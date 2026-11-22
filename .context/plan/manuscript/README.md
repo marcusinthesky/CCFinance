@@ -3,7 +3,7 @@ type: plan
 title: Write the CCFinance dataset paper
 description: Plan, draft and verify the paper on reproducible financial news research.
 links: []
-status: backlog
+status: done
 ---
 
 # Write the CCFinance dataset paper
@@ -18,8 +18,8 @@ Follow the numbered tasks in order. Keep planning and review artifacts beside th
 
 Use the [academic style guide](style.md) when outlining, drafting and reviewing the paper.
 
-- [ ] The reader brief, evidence map and scored paragraph outline account for all eight sections.
-- [ ] The shared draft has passed substantive review, style refinement and final proofing in both layouts.
+- [x] The reader brief, evidence map and scored paragraph outline account for all eight sections.
+- [x] The shared draft has passed substantive review, style refinement and final proofing in both layouts.
 
 <!-- insitu:begin sql
 id = "planning-children"
@@ -27,11 +27,9 @@ model = "children"
 template = "children.md.j2"
 -->
 
-| Status | Item | Description |
-| --- | --- | --- |
-| backlog | [09. Proof both layouts and verify reproduction instructions](tasks/step-09-proof/README.md) | Prepare a checked manuscript candidate for circulation. |
+_No open children._
 
-`1 open; 8 terminal`
+`0 open; 9 terminal`
 
 <!-- insitu:end -->
 
