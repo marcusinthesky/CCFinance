@@ -1,45 +1,37 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Suppose an empirical researcher uses a news article to form a signal
-before the market opens and measures the stock's return from the open to
-the close. A second researcher can observe the same price change and
-apply the same estimator, but reconstructing the signal requires the
-version of the article that was available at the time and an identifier
-for the security to which the text refers. Because an article can be
-updated after its initial publication, even a record of the publisher's
-first-publication time leaves open which text the original analysis used.
-The data behind the signal include these decisions as well as the words
-on the page.
+Suppose a researcher uses a news article to form a signal before the
+market opens and measures the stock's return from the open to the
+close. A second researcher can observe the same price change and apply
+the same estimator, but reconstructing the signal also requires the
+article version available when it was formed and the identity of the
+security to which the article refers. Because a publisher can update a
+story after it appears, the first-publication time alone leaves open
+which text was available when the signal was formed.
 
-Access to proprietary news is one obstacle to recovering those decisions.
-\citet{heston2017}, for example, use a large Reuters corpus and a
-proprietary sentiment measure to study how stock prices respond to news.
-The data and measurements make the question tractable. A researcher who
-has the estimating equation but lacks access to the article versions or
-their sentiment annotations must still recover the inputs before
-repeating the analysis or changing the way sentiment is measured. A
-publicly accessible web archive can supply an observed version of a
-story, and an archived copy gives the research team a common input even
-when the publisher changes or removes the live page.
+An estimating equation can be public while the news it uses remains
+proprietary. \citet{heston2017}, for example, study how stock prices
+respond to news using a large Reuters corpus and a proprietary sentiment
+measure. A researcher trying to repeat the analysis or change the way
+sentiment is measured needs the corresponding article versions and
+annotations. When a web archive retains a copy, it can supply a common
+text input even after the publisher changes or removes the live page.
 
-We ask when those copies can support a reconstructible sample for
-financial research, and how the rules that connect captures to issuers
-and trading times change the resulting measurements. We construct
-CCFinance from a frozen selection of Common Crawl News, preserve
-available source and timing evidence, link extracted company mentions to
-dated issuer records, and evaluate the resulting populations under
-explicit eligibility rules. A link records which company the text names.
-A separate decision about company focus determines whether the same text
-is suitable for studying that firm's news. Recording the decisions makes
-it possible to compare what a researcher gains and loses by tightening
-the definition of an observation.
+We ask which financial samples can be reconstructed from those copies
+and how the link from captures to issuers and trading times changes the
+measurements. We construct CCFinance from a frozen selection of Common
+Crawl News, preserve source and timing evidence where available, and
+link extracted company mentions to dated issuer records. A link records
+the dated issuer assignment for a company mention. A separate company-focus rule
+determines whether the article counts toward focused coverage for that
+firm. Because the two rules can admit different sets of articles, we
+measure how many issuers have enough coverage under each rule.
 
-Three exercises test successive requirements on those observations. An
-equity-market volatility tracker requires a denominator of eligible
-articles for each publisher and month. A co-mention network requires
-articles linked to pairs of banks. An overnight return test also
-requires evidence that the selected article was available before the
-trading interval and enough securities with qualifying signals to form
-portfolios. We first compare the types of source evidence available in
-prior corpora, then measure the support produced by these requirements.
+The study unit determines what the evidence must establish. An
+equity-market volatility tracker counts eligible articles by publisher
+and month. A co-mention network requires two mapped banks in one article.
+An overnight return test adds a cutoff for the article version and needs
+enough securities with qualifying signals to form portfolios. Before
+constructing those observations, we examine which text, time and identity
+fields earlier sources supply.

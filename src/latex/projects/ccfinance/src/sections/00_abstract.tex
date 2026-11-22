@@ -1,17 +1,17 @@
-Rules for turning archived news into financial observations change
-which firms, dates and estimates a study can support. We construct
-CCFinance from a frozen selection of Common Crawl News and trace
-article versions through publication-date checks, deduplication and
-dated issuer linking. Among 100 reference firms, 94 have at least 47
-usable linked articles in each year from 2018 through 2022. Requiring
-three mentions of the issuer reduces that count to 57. In a held-out
-model-adjudicated audit, the rule raises subject precision and lowers
-subject recall. On a shared calendar, a volatility tracker built from
-archived articles has lower point-estimate fit than the reference
-tracker, with a paired interval spanning zero for the difference.
-The January--April 2020 change in distinct co-mentioned bank pairs
-reverses sign in the Reuters subset. Recovering publication clocks
-raises the number of sessions with both portfolio legs from 42 to
-110, and mean open-to-close drift stays negative after refitting.
-Exact reconstruction requires access to the frozen inputs and
-derived artifacts.
+Reconstructing a financial news sample requires the observed article
+version and the rules that determine which observations it supplies.
+CCFinance records these decisions for a frozen Common Crawl News
+selection through publication-date checks, deduplication and dated
+issuer linking. Among 100 reference firms, 94 have at least 47 usable
+linked articles in each year from 2018 through 2022. Requiring three
+mentions of the issuer in each counted article reduces that number
+to 57. The rule raises subject precision and lowers subject recall
+in a held-out model-adjudicated audit. On a common calendar, the
+archived-news volatility tracker has lower estimated fit than the
+reference tracker, with a paired interval for the difference spanning
+zero. The January--April 2020 change in distinct co-mentioned bank
+pairs reverses sign in the Reuters subset. Recovering publication
+clocks raises the number of sessions with both portfolio legs from
+42 to 110, while mean open-to-close drift remains negative after
+refitting. Exact reconstruction requires access to the frozen inputs
+and derived artifacts.

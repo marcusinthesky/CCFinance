@@ -1,23 +1,19 @@
 \section{Coverage and Evaluation Design}
 \label{sec:design}
 
-Table~\ref{tab:coverage} relates the corpus to the articles an issuer
-study can use. Panel~A counts distinct article IDs, so articles linked
-to several issuers enter each row once. Panel~B instead counts the firms
-with at least 47 associated articles in each publication year from 2018
-through 2022. Raw counts include all accepted article--issuer links
-before the consistent-date and canonical-copy requirements. A given
-article can contribute to several issuers' annual counts. In the fixed
-100-firm Nasdaq reference frame, 95 firms qualify on raw links, 94 on
-usable ones and 57 on focused ones. Across the 6,591 evidenced listed
-issuers in the coverage screen, 1,102 meet the usable criterion and
-408 meet the focused criterion. The universe includes issuers with
-dated listings or with public-float evidence backing an otherwise
-undated current listing, and retains zeros for issuer-years in scope.
-Requiring focus removes 37 of the 94 qualifying reference firms,
-even though those firms already have enough usable linked articles.
-The issuer panel allows a researcher to distinguish this loss of
-support from gaps in article capture or dating.
+To measure how the rules change coverage, we count surviving articles
+and ask which issuers have enough of them for a panel. Panel~A of
+Table~\ref{tab:coverage} counts distinct IDs, including each article once
+per row even when it has several issuer links. For the firm counts in
+Panel~B, an article can contribute to each issuer's annual total. The
+screen requires at least 47 associated articles in each publication
+year from 2018 through 2022. In the fixed 100-firm Nasdaq reference
+frame, 95 firms qualify on all accepted links before the date and
+canonical-copy checks, and 94 qualify on usable links. Requiring focus
+excludes 37 more, leaving 57 firms. Among 6,591 evidenced listed issuers,
+1,102 meet the usable criterion and 408 meet the focused criterion.
+The broader universe includes dated listings and undated current listings
+with public-float evidence, and retains zeros for issuer-years in scope.
 
 \begin{table}[t]
   \centering
@@ -51,55 +47,52 @@ support from gaps in article capture or dating.
   \label{tab:coverage}
 \end{table}
 
-Whether the tighter focus rule is worth the loss of coverage depends
-on what it excludes. To measure identity accuracy, we sampled company
-spans before reading linker decisions. Model judges saw the marked
-text and neutral search results and supplied dated issuer decisions
-independently of the linker's predictions. On held-out extracted spans,
-the estimated precision of accepted mention links was 96.8\%
-(95\% interval 94.0--99.6\%) and recall among reference-linkable
-mentions was 70.8\% (64.6--77.1\%). In a separate whole-article
-evaluation on 183 held-out articles with 65 reference-positive
-article--issuer pairs, the three-mention rule increased focus precision
-from 31.9\% to 66.1\% and reduced subject recall from 92.3\% to 56.9\%.
-The estimated precision and recall intervals for the focused rule
-were 54.8--77.3\% and 44.3--69.5\%. A design that requires the firm
-to be the subject of each text gains selectivity at the cost of missing
-some subject stories the judge identified.
+The smaller focused roster makes it important to ask which stories the
+rule excludes. We first assess mention identity, sampling extracted
+company spans independently of the linker's decisions. The model judges
+see the marked text and neutral search results and provide dated issuer
+decisions with predictions withheld. On held-out extracted spans,
+accepted mention links have 96.8\% estimated precision (95\% interval
+94.0--99.6\%), and recall among reference-linkable mentions is 70.8\%
+(64.6--77.1\%). Subject focus requires an article-level reference.
+Across 183 held-out articles with 65 reference-positive article--issuer
+pairs, the three-mention rule increases focus precision from 31.9\% to
+66.1\% (54.8--77.3\%) and reduces subject recall from 92.3\% to 56.9\%
+(44.3--69.5\%). The focus rule therefore reduces incidental coverage
+while also losing some stories about the issuer.
 
-The scope of a model label likewise depends on the unit chosen for
-its audit. Blinded model judges labeled 400 sampled units in each of
-three confirmation frames for article form, local mention attributes
-and event families in input windows. The weighted press-release share
-among usable articles was 42.1\% under the classifier and 4.2\%
-under the primary judge, with 14 reference-positive sampled articles.
-Transaction recall against the window labels was 23.6\%. A study that
-uses either field to define eligible records therefore needs
-corroborating evidence. Appendix Table~\ref{tab:app-metadata} reports
-the class and judge detail.
+The metadata audits give two examples of how model scores can change
+sample composition. Blinded model judges label 400 sampled units in
+each of three confirmation frames covering article form, local mention
+attributes and event families in input windows. The weighted
+press-release share among usable articles is 42.1\% under the
+classifier and 4.2\% under the primary judge, with 14 reference-positive
+sampled articles. A filter on predicted transactions would miss many
+windows the judge labels as transactional, since recall against those
+labels is 23.6\%. Appendix
+Table~\ref{tab:app-metadata} reports estimates by class.
 
-The financial applications select observations according to the
-measurement at hand. For volatility tracking, a publisher-month share
-divides eligible articles containing the required groups of words by all
-eligible articles from that publisher in the same month. For bank
-networks, two mapped banks appearing in one eligible article produce
-one unordered pair observation during the declared week. A three-bank
-story can supply three distinct pairs, and a pair mentioned in multiple
-stories contributes one edge with a weight reflecting its number of
-co-mentions. Both measures depend on which news the chosen sources
-cover.
+The equity-market volatility tracker measures how much of a publisher's
+news concerns volatility. Its monthly share divides articles containing
+the required groups of words by all eligible articles from that
+publisher in the same month. A bank network instead measures whether
+two institutions appear together. Each eligible article supplies an
+unordered pair observation for every two mapped banks it mentions in
+the declared week. A three-bank story can therefore supply three
+pairs, and the weight of each edge counts the stories in which it
+appears.
 
-An overnight return test adds an ordering requirement. First publication
-must follow the preceding exchange close and precede 09:00 New York
-time, and the archived version must have been captured between
-publication and the cutoff. A story published overnight but first
-captured later that morning cannot pass the rule, because its observed
-body was unavailable as evidence before the cutoff. We evaluate
-open-to-close drift after that cutoff and distinguish it from the
-close-to-open reaction, which begins before the article appears. The
-encoder was released after the study period, and overlap between its
-pretraining data and the archived stories is unmeasured. Returns used
-for training the rolling probes are realized before the refit. Each
-active long or short leg needs at least two securities. A session with
-predictions but no qualifying leg contributes zero to the portfolio
-mean, while a day without predictions is unevaluated.
+Whereas a dated article can be assigned to an earnings week, a
+before-open signal needs evidence of the body available before the
+cutoff. First publication must follow the preceding exchange close and
+precede 09:00 New York time, and capture must occur between publication
+and the cutoff, inclusive. If a story appears overnight and the crawler
+fetches it after 09:00, that capture establishes only what the page
+contained after the cutoff. We measure drift from the open to the close.
+The close-to-open reaction begins before the article appears. The
+rolling probes train on returns realized before each refit, while
+the encoder was released after the study period and its pretraining
+overlap with the archived stories is unmeasured. Each active long or
+short leg needs at least two securities. A session with predictions
+but no qualifying leg contributes zero to the portfolio mean. A day
+without predictions is unevaluated.

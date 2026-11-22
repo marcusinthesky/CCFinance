@@ -5,8 +5,8 @@
 
 The historical filter selects English Fine News records from revision
 \texttt{7a841090e69f3c58a9e04}\allowbreak\texttt{b0c39213d879af68e8a}.
-It reads the normalized
-hostname from metadata and falls back to the URL when that field is blank.
+It reads the normalized hostname from metadata and falls back to the
+URL when that field is blank.
 A host qualifies if it exactly matches one of the 115 registry entries or
 is a dot-delimited subdomain of one. The frozen downstream input is the
 staging revision
@@ -29,7 +29,7 @@ has its own upstream filtering and deduplication, so the comparison
 concerns physical rows. Estimating unique stories, overlap or financial
 coverage outside the registry would require separate sampling.
 
-The additional Hub revisions are listed below.
+The other three source frames use the following Hub revisions.
 
 \begin{flushleft}
   \small
@@ -87,10 +87,10 @@ uses the deployed company schema and cutoff 0.5 \citep{stanza,gliner25}.
 Scoring matches Stanza ORG or GLiNER company spans by article ID and
 exact half-open Unicode offsets. A correctly recognized noncompany ORG
 therefore counts as a false positive for this task. Both models recover
-69 spans (Table~\ref{tab:app-spans}). GLiNER's advantage of 8.43
-micro-F1 percentage points has a
-paired 95\% interval of $[-1.76,+18.76]$ over 2,000 passage bootstraps
-within publication year. The interval permits either ordering.
+69 spans (Table~\ref{tab:app-spans}). GLiNER scores 8.43 micro-F1
+percentage points higher in this sample, with a paired 95\% interval
+of $[-1.76,+18.76]$ over 2,000 passage bootstraps within publication
+year that permits either ordering.
 Stanford's published 88.8\% OntoNotes and 92.1\% CoNLL03 scores are
 all-class micro-F1 on their benchmark splits \citep{stanza}. In the
 local task, a possessive attached to the Credit Suisse Group AG span
@@ -349,8 +349,8 @@ Omitting Forbes gives the largest shortfalls for both outcomes on
 both calendars. Requiring 15 publication dates drops three sparse
 cells and yields a VIX gap of $-0.142$ on 49 months. Moving the
 calibration endpoint to December 2021 gives a VIX gap of $-0.167$.
-These are historical fits conditional on the observed series
-(Table~\ref{tab:app-emv}).
+Table~\ref{tab:app-emv} compares historical fits conditional on the
+observed series.
 
 \begin{table*}[t]
   \centering
@@ -489,21 +489,22 @@ configured runtime and model cache, and new adjudication requires access
 to the relevant models. Codex assisted with outlining, drafting,
 editing, and consistency checks.
 
-The exact-span benchmark uses this command.
+The exact-span benchmark runs in the locked Python project.
 
 \begin{flushleft}
   \small
-  \texttt{uv run --project src/python \textbackslash}\\
-  \texttt{\quad --offline --frozen python \textbackslash}\\
-  \texttt{src/python/scripts/}\allowbreak\texttt{stanza\_microbench/score.py}
+  \texttt{uv run -{}-project src/python \textbackslash}\\
+  \texttt{-{}-offline -{}-frozen python \textbackslash}\\
+  \scalebox{.94}{\texttt{src/python/scripts/stanza\_microbench/score.py}}
 \end{flushleft}
 
 \begin{table*}[t]
   \centering
   \small
   \caption{Reproduction entry points once frozen dependencies are restored.
-    Run the indicated DVC stages with \texttt{just dvc repro}; \texttt{-s}
-    selects only the named stage. The mention runner uses the locked Python
+    Run the indicated DVC stages with \texttt{just dvc repro}. The
+    \texttt{-s} option selects only the named stage. The mention
+    runner uses the locked Python
   project.}
   \label{tab:app-access}
   \begin{tabular}{@{}L{.19\textwidth}L{.39\textwidth}L{.34\textwidth}@{}}

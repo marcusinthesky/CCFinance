@@ -29,10 +29,9 @@ template = "children.md.j2"
 
 | Status | Item | Description |
 | --- | --- | --- |
-| backlog | [08. Refine the prose in context](tasks/step-08-style/README.md) | Make the revised manuscript easier to read while preserving the verified claims. |
 | backlog | [09. Proof both layouts and verify reproduction instructions](tasks/step-09-proof/README.md) | Prepare a checked manuscript candidate for circulation. |
 
-`2 open; 7 terminal`
+`1 open; 8 terminal`
 
 <!-- insitu:end -->
 

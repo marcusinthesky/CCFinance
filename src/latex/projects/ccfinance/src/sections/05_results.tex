@@ -40,103 +40,95 @@
 \section{Financial Applications}
 \label{sec:results}
 
-Table~\ref{tab:studies} shows where the benchmarks are sensitive to
-sample construction. The volatility fit gap narrows outside two
-crisis months, the change in bank co-mentions reverses sign in the
-Reuters subset, and additional publication clocks increase portfolio
-support while the mean drift remains negative.
+Table~\ref{tab:studies} reports what changes when we vary the calendar
+for volatility tracking, the publisher mix for bank co-mentions and
+the timing evidence for issuer-session drift.
 
 \subsection{Publisher-Month Volatility}
 
-We apply the monthly specifications of \citet{baker2025ms,baker2026}
-after reproducing the six published columns to their displayed precision
-on the authors' archived data \citep{baker2025archive}. Our tracker
-instead uses 675,234 consistently dated canonical articles from
-Benzinga, Forbes, MarketWatch and the \emph{Wall Street Journal}.
-Only the last appears in the authors' eleven-newspaper basket.
-We count an article as a hit when its title and body together contain
-terms from all three dictionary groups for the economy, equity markets
-and volatility. We divide the hit share for each publisher by its
-dispersion over 40 calibration months through December 2022, average
-the standardized shares, and rescale the average to the
-calibration-period mean VIX. For September 2019 through September
-2023, each tracker enters its own regression of monthly VIX with an
-intercept and the same outcomes from FRED. The captured-article tracker
-has an $R^2$ of 0.515 against 0.647 for the authors' tracker, a difference
-of $-0.132$ (paired 95\% interval $[-0.215, 0.110]$).
+The volatility benchmark asks how much of the same monthly VIX variation
+each archive's tracker explains. We first reproduce the six monthly columns of
+\citet{baker2025ms,baker2026} to their displayed precision using the
+authors' archived data \citep{baker2025archive}. The CCFinance tracker
+uses 675,234 consistently dated canonical articles from Benzinga,
+Forbes, MarketWatch and the \emph{Wall Street Journal}, the only one of
+the four in the authors' eleven-newspaper basket. A hit requires terms
+from all three dictionary groups for the economy, equity markets and
+volatility across the title and body. We divide each publisher's hit
+shares by their dispersion over 40 calibration months through December
+2022, average the standardized shares, and rescale the average to the
+calibration-period mean VIX. From September 2019 through September
+2023, each tracker enters a separate regression with an intercept and
+the same monthly VIX outcomes from FRED. The CCFinance tracker has an
+$R^2$ of 0.515 against 0.647 for the authors' tracker, a difference of
+$-0.132$ (paired 95\% interval $[-0.215, 0.110]$).
 
-Omitting March and April 2020 from both regressions narrows the VIX
-difference to $-0.041$. The choice of publishers also affects the
-comparison with calibration held fixed. For example, the shortfall
-is larger when Forbes is omitted, both with and without the two
-months. In the full calendar, that omission changes the difference from
-$-0.132$ to $-0.360$. Both trackers also explain less variation when
-March and April 2020 are omitted, which shows how much the fit depends
-on those two months. These comparisons describe historical fit on a
-common calendar. Because the publisher basket determines which stories
-contribute to the index, a change in source can alter more than the
-volume of articles a researcher sees. It can also alter which firms
-appear together in the retained stories.
+When we omit March and April 2020 from both regressions, both trackers
+explain less variation and the VIX fit gap narrows to $-0.041$. Keeping
+calibration fixed, omitting Forbes widens the gap with or without
+those months. On the full calendar the difference moves from $-0.132$
+to $-0.360$. Publisher choice thus changes historical tracking fit even
+when the outcome and calendar stay fixed. For a bank network, publisher
+choice also determines which joint mentions can enter, because a
+pair appears only when a retained story names both institutions.
 
 \subsection{Bank Pairs in Earnings Weeks}
 
-We compare co-mentions in the weeks of 13--19 January and 13--19 April
-2020 against the July 2023 benchmark of
-\citet{kazinnik2023ms,kazinnik2026}. The archived corpus supplies
-links for 33 of the reference design's 34 bank nodes, in some cases
-through a foreign group's listed parent, and substitutes these links
-for the Factiva tags. The reconstructed networks recover a complete core
-among the six largest institutions. The number of connected pairs rises
-from 177 to 242, whereas the July 2023 manuscript reports a decline
-from 210 to 172. Restricting CCFinance to Reuters hosts yields 50 to 35.
-That restriction changes both the publisher mix and the supply of
-stories from which pairs can be formed.
+We compare bank pairs in the weeks of 13--19 January and 13--19 April
+2020 in the July 2023 design of \citet{kazinnik2023ms,kazinnik2026}.
+CCFinance supplies links for 33 of the 34 reference nodes, in some
+cases through a foreign group's listed parent, and uses them in place
+of the Factiva tags. The reconstructed networks recover a complete
+core among the six largest institutions. The number of connected
+pairs rises from 177 to 242, whereas the July 2023 manuscript reports
+a decline from 210 to 172. When we restrict CCFinance to Reuters
+hosts, changing both the publisher mix and the number of available
+stories, the pair count falls from 50 to 35.
 
-To compare weeks at fixed publisher quotas, we collapse syndicated
-copies and match the number of stories drawn from each publisher. Over
-six weeks with 682 matched stories per week, the mean January--April
-2020 increase is 56.3 connected pairs, with a central 95\% subsampling
-range of [5, 83]. Extending the calendar to fourteen weeks restricts the
-roster to 32 mapped bank nodes and requires common publisher quotas on
-all fourteen weeks. The narrower common support retains 158 stories
-per week and excludes Nasdaq, which supplied a substantial share of
-the earlier matched sample.
-The increase becomes 19.1 pairs [$-25$, 59]. The ranges describe
+To see whether the increase survives at fixed publisher quotas, we
+collapse syndicated copies and match the number of stories drawn from
+each publisher. Over six weeks with 682 matched stories per week, the
+mean January--April 2020 increase is 56.3 connected pairs, with a
+central 95\% subsampling range of [5, 83]. Extending the calendar to
+fourteen weeks restricts the roster to 32 mapped bank nodes and
+requires common publisher quotas across those weeks. The narrower
+common support retains 158 stories per week and excludes Nasdaq,
+which supplied a substantial share of the earlier matched sample. The
+mean increase falls to 19.1 pairs [$-25$, 59]. The two ranges describe
 variation across draws of matched stories. The seven nonoverlapping
-week comparisons in the extended sample give limited historical
-evidence about how exceptional the increase was.
+week comparisons give a limited historical reference for the size of
+the increase.
 
 \subsection{Issuer-Session Drift}
 
-The overnight analogue of \citet{lopez2025v6,lopez2026} begins with
-996 captured bodies from Business Standard and Mint Lounge linked
-to 171 issuers. It uses their EmbeddingGemma vectors and Yahoo price
-histories in place of the authors' RavenPack-matched headlines and
-CRSP prices. Following the authors' archive, we fit separate rolling
-logistic regressions using prior return signs from six-month windows
-\citep{lopez2026archive}. The earliest eligible predicted article for a
-security supplies its session signal, and each qualifying portfolio leg
-weights the securities within that leg equally. Session drift adds the
-active legs' signed returns, assigning one unit of notional to each
-active leg. An inactive leg contributes zero.
-Of 670 possible sessions from
-October 2021 through May 2024, the fixed-sample probes evaluate 277.
-Of these, 42 have two active legs and 123 have neither. The mean open-to-close
-return is $-10.15$ basis points per evaluated session before trading
-costs, with a 21-session block interval of [$-25.2$, $+4.2$] basis
+For the overnight exercise, the coverage question is whether enough
+securities have timely news in the same session to form portfolio legs.
+We apply the selected design of \citet{lopez2025v6,lopez2026} to 996
+captured bodies from Business Standard and Mint Lounge linked to 171
+issuers, using EmbeddingGemma vectors and Yahoo price histories in place
+of the authors' RavenPack-matched headlines and CRSP prices. Following
+their archive, we fit separate rolling logistic regressions on prior
+return signs in six-month windows \citep{lopez2026archive}. The
+earliest eligible predicted article for each security supplies its
+session signal. Each qualifying leg weights its securities equally,
+and the session return adds the signed returns on one unit of notional
+per active leg. An inactive leg contributes zero. Of 670 possible
+sessions from October 2021 through May 2024, the fixed-sample probes
+evaluate 277. Of these, 42 have both legs and 123 have neither. Mean
+open-to-close drift before costs is $-10.15$ basis points per evaluated
+session, with a 21-session block interval of [$-25.2$, $+4.2$] basis
 points conditional on the saved predictions.
 
-The recovered Business Standard first-publication format adds 667
-distinct firm-sessions and raises the number of evaluated sessions from 277 to
-340, including 110 with both legs. The new observations enter training
-as well as evaluation, and the refitted mean remains negative at
-$-7.73$ basis points. Table~8 of \citet{lopez2025v6} reports $+11$
-basis points of mean daily drift for MiniLM headlines in a broader
-RavenPack and CRSP sample. Recovering the clocks improves the ability
-to evaluate both portfolio legs on the archived sample. The difference
-from the reference estimate also reflects changes to texts, the
-issuer universe, representation and price coverage. On the fixed
-sample, the paired title and body comparisons leave substantial
+Recovering first-publication times from the historical Business Standard
+format adds 667 distinct firm-sessions. Both-leg support rises from 42
+to 110 sessions, and the number of evaluated sessions rises from 277
+to 340. Because the new observations enter training as well as
+evaluation, we refit the probes on the expanded panel. Mean drift
+remains negative at $-7.73$ basis points per evaluated session. Table~8 of
+\citet{lopez2025v6} reports $+11$ basis points of mean daily drift for
+MiniLM headlines in a broader RavenPack and CRSP sample, with different
+texts, issuer coverage, representation and prices. On the fixed
+CCFinance sample, the paired title and body comparisons leave substantial
 uncertainty about which representation produces a higher mean drift
 (Appendix~\ref{sec:app-studies}). Charging for entry and exit reduces
 the portfolio means further (Appendix Table~\ref{tab:app-drift}).
