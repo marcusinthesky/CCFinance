@@ -132,6 +132,7 @@ def report_kazinnik_matched_weeks(
     estimates: dict[str, np.ndarray[tuple[int, int], np.dtype[np.int64]]] = {}
     for week, by_publisher in stories.items():
         draws = np.empty((_DRAWS, 2), dtype=np.int64)
+        bank_counts: list[int] = []
         for draw in range(_DRAWS):
             sample = []
             for publisher, quota in quotas.items():
@@ -140,6 +141,7 @@ def report_kazinnik_matched_weeks(
                     indices = rng.choice(len(candidates), quota, replace=False)
                     sample.extend(candidates[i] for i in indices)
             draws[draw] = _network(sample, edge_bits)
+            bank_counts.append(len({bank for article in sample for bank in article}))
         estimates[week] = draws
         all_stories = [banks for group in by_publisher.values() for banks in group]
         week_rows.append(
@@ -151,6 +153,8 @@ def report_kazinnik_matched_weeks(
                 *_network([banks for *_, banks in raw[week]], edge_bits),
                 *_network(all_stories, edge_bits),
                 *draws.mean(axis=0),
+                min(bank_counts),
+                max(bank_counts),
             )
         )
     _write_csv(
@@ -166,6 +170,8 @@ def report_kazinnik_matched_weeks(
             "story_weight",
             "matched_edges_mean",
             "matched_weight_mean",
+            "matched_banks_min",
+            "matched_banks_max",
         ),
         week_rows,
     )

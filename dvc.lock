@@ -2288,8 +2288,8 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/compare-baker-tracking.json
       hash: md5
-      md5: cdf9941d481c0656985fac13ba3f043d
-      size: 8664
+      md5: 0d5d504d6a76875336c4ff2ac80139d6
+      size: 8949
     - path: data/raw/experiments/baker-emv/replication.rar
       hash: md5
       md5: cb029604ff40ec4261fccbebe58c6ee8
@@ -2305,9 +2305,9 @@ stages:
     outs:
     - path: data/research/experiments/baker-emv/paired-tracking
       hash: md5
-      md5: 08a60b626b58bfada0400c94df43f243.dir
-      size: 23569
-      nfiles: 4
+      md5: 25963ec7d2eb09b7d30d4489e2ec2201.dir
+      size: 26536
+      nfiles: 5
   prepare_kazinnik_matched_weeks:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
       src/python --offline --frozen --package ccfinance-pipeline pipeline stages
@@ -2373,7 +2373,7 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
       hash: md5
-      md5: a8bb58920307bafb6b59bc9bb5e2e758
+      md5: 1522a673ff1cdabdf1791bb1ac3bbf07
       size: 4370
     - path: data/inputs/kazinnik-banks/matched-weeks.csv
       hash: md5
@@ -2390,8 +2390,8 @@ stages:
     outs:
     - path: data/research/experiments/kazinnik-matched-weeks
       hash: md5
-      md5: 8f501be1d0e5541a01bb382ba529ac6f.dir
-      size: 13977
+      md5: 5869d088f4c003c9c64007fed94f7d81.dir
+      size: 14049
       nfiles: 4
   project_lopez_titles:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -2508,3 +2508,212 @@ stages:
       md5: 50a447eae558ee189d7763c34d4a8b93.dir
       size: 2439165
       nfiles: 9
+  prepare_kazinnik_extended_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-kazinnik-banks --articles
+      data/processed/articles/articles.parquet --links
+      data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet --inputs
+      data/inputs/kazinnik-banks/extended --output
+      data/processed/experiments/kazinnik-extended-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+      hash: md5
+      md5: 4c6bec7774d342f1e1fa5bcdb3f4b925
+      size: 1907
+    - path: data/inputs/kazinnik-banks/extended/crosswalk.csv
+      hash: md5
+      md5: 31f65f9318239e8ec981f73bfafbafb2
+      size: 2832
+    - path: data/inputs/kazinnik-banks/extended/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/extended/windows.csv
+      hash: md5
+      md5: 327f1b5c6f1ad46853f8940e9e02bf5e
+      size: 862
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/processed/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: c2772223944c48f270279853ae812a18.dir
+      size: 4924952
+      nfiles: 2
+  report_kazinnik_extended_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-kazinnik-matched-weeks --source
+      data/processed/experiments/kazinnik-extended-weeks --inputs
+      data/inputs/kazinnik-banks/extended --output
+      data/research/experiments/kazinnik-extended-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+      hash: md5
+      md5: 1522a673ff1cdabdf1791bb1ac3bbf07
+      size: 4370
+    - path: data/inputs/kazinnik-banks/extended/matched-weeks.csv
+      hash: md5
+      md5: 327f1b5c6f1ad46853f8940e9e02bf5e
+      size: 862
+    - path: data/processed/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: c2772223944c48f270279853ae812a18.dir
+      size: 4924952
+      nfiles: 2
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/research/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: 843cab7f92e627f99d60d5eb5f8afe63.dir
+      size: 36119
+      nfiles: 4
+  report_lopez_drift_costs:
+    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail <
+      src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+    deps:
+    - path:
+        data/research/experiments/lopez-lira-tang-title-probes/paired_days.csv
+      hash: md5
+      md5: 56708932001d1d9bc718da8bdb2456f1
+      size: 408867
+    - path:
+        data/research/experiments/lopez-lira-tang-title-probes/portfolios.csv
+      hash: md5
+      md5: 89213cb41486616efc6f16bd35e134a8
+      size: 1402
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+      hash: md5
+      md5: ea1c92ad0d8bad5cb0507fc0bd372210
+      size: 1430
+    outs:
+    - path: data/research/experiments/lopez-drift-costs
+      hash: md5
+      md5: eca168bfd4dd70851949b0720212b688.dir
+      size: 1263
+      nfiles: 1
+  prepare_lopez_recovered:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-recovered
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-recovered.json
+      hash: md5
+      md5: eaecc6c9bd1847818694ce86f58c2e30
+      size: 11642
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
+      nfiles: 2954
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+    - path: data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      hash: md5
+      md5: a1b6708141d9559b7367bf9a6cafb304
+      size: 2002852
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/experiments/lopez-recovered-events
+      hash: md5
+      md5: de5a24743eb0a0e129d46e316d172328.dir
+      size: 19768054
+      nfiles: 5
+    - path: data/processed/experiments/lopez-recovered-sample
+      hash: md5
+      md5: f2e50e071e2274fe8ead83fe5741a14c.dir
+      size: 5147245
+      nfiles: 6
+  report_lopez_recovered:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen --package
+      ccfinance-pipeline pipeline stages research report-lopez-recovered
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-recovered.json
+      hash: md5
+      md5: d4b874ab574845af87bd37d049e604ff
+      size: 11896
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: data/processed/experiments/lopez-recovered-events/recovered.parquet
+      hash: md5
+      md5: 8127ab1743f8c092caf879e2bceace97
+      size: 395429
+    - path: data/processed/experiments/lopez-recovered-sample
+      hash: md5
+      md5: f2e50e071e2274fe8ead83fe5741a14c.dir
+      size: 5147245
+      nfiles: 6
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+    - path: data/research/experiments/lopez-lira-tang/drift.csv
+      hash: md5
+      md5: f4c88ff6f60ce5e97d773f3561af605b
+      size: 527
+    outs:
+    - path: data/research/experiments/lopez-recovered
+      hash: md5
+      md5: 0671b86f3c6f801bfae0d0204617d131.dir
+      size: 3080022
+      nfiles: 7

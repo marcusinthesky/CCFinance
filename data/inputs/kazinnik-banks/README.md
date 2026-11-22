@@ -152,3 +152,23 @@ summarized by their means and percentiles, and placebo ranks.
 [hsbc-retail]: https://www.about.us.hsbc.com/newsroom/press-releases/hsbc-exits-us-mass-market-retail-banking
 [mufg-close]: https://www.usbank.com/dam/usbank-2024/en/documents/pdfs/common/2023-USB_Annual_Report.pdf
 [ms-acquisitions]: https://www.morganstanley.com/content/dam/msdotcom/en/about-us-ir/shareholder/4q2021-strategic-update.pdf
+
+## Extended earnings calendar
+
+The [extended calendar](extended/matched-weeks.csv) adds the two complete
+calendar years preceding 2020. Pair January with April and July with October
+within each year, with no week used twice. This gives four pre-pandemic
+changes, two original placebos and one observed change. The eight additional
+weeks contain the JPMorgan release dates in the issuer's [January 2018
+notice](https://www.jpmorganchase.com/ir/news/2018/4q17-and-full-year-2017-earnings-010218),
+[2018 schedule](https://www.jpmorganchase.com/ir/news/2017/2018-earnings-conference-012617)
+and [2019 schedule](https://www.jpmorganchase.com/ir/news/2018/earnings-schedule-053118).
+
+Freeze the same 32 [mapped nodes](extended/crosswalk.csv) across all 14 weeks.
+Exclude Truist throughout because it formed in December 2019 and combining
+both predecessor banks would change the network unit. BNP remains unresolved.
+Retain the original parent proxies. Earlier quarters fall outside the two-year
+lookback. From June 2021 the sale of BBVA USA breaks the Spanish parent's
+mapping. Restrict the calendar to the last complete comparison before that
+sale. Apply the same connected-component story rule, publisher minimum quotas,
+1,000 draws and seed across the full calendar.

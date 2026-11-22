@@ -277,3 +277,14 @@ After restoring the frozen sources and body vectors with DVC, run
 | `reaction.csv`, `drift.csv`, `metrics.json` | Separate economic results, model support and vector reuse |
 | `daily_portfolios.csv`, `story_positions.parquet`, `monthly_support.csv` | Daily returns, exposures, story ranks and refit support |
 | `portfolio_figure.pdf`, `portfolio_figure.tex`, `portfolio_figure_data.csv` | Cumulative arithmetic return figure with data and plotting source |
+
+## Execution costs and recovered overnight events
+
+At 5 bp per one-way trade, the mean net daily drift across the original 277
+evaluated sessions was −17.23 bp for Gemma bodies, −11.07 bp for Gemma titles
+and −11.40 bp for MiniLM titles. [Exposure, break-even rates and cost scenarios](../../../.context/plan/replication/tasks/lopez-lira-tang/tasks/drift-costs/results.md).
+
+Qualifying historical Business Standard clocks on the original issuer roster
+added 943 articles and 667 firm-sessions. On the expanded panel the Gemma
+body drift probe evaluated 340 days, including 110 with both legs, and its
+gross mean was −7.73 bp. [Eligibility and rolling-window reconciliation](../../../.context/plan/replication/tasks/lopez-lira-tang/tasks/recovered-events/results.md).

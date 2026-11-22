@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.research.experiments.baker_tracking:compare_baker_tracking",
-  "digest": "sha256:206f812e733e4277c79ec1f587e6373975a57c82868f35662f66d046906b41c5",
+  "digest": "sha256:43a05de4f39ae353e12f018e53a16c7a9fc4b22e64d56a2f5a6fcac3a68bdd1d",
   "entrypoint": "pipeline stages research compare-baker-tracking",
   "fallbacks": [
   ],
@@ -32,8 +32,9 @@
     {"digest":"sha256:a7b9234407de8f2e0f173ec650a3f50967cfeb7884e31a6551901cb30edce522","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:_author_index"},
     {"digest":"sha256:a80fdf06427449c1acf6b416e432b38fd748350cc4abbc880119de5a10dbc2b2","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:_fit"},
     {"digest":"sha256:03eea43624a5d17b16a15ee6bc56d8ff19976aa862fc2bd346e4439fd544d631","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:_paired_panel"},
+    {"digest":"sha256:e06dd14905b00c2529b82d7bdd9cf3c43d48348d6b4af0e47bf58cd7e78c3a45","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:_publisher_influence"},
     {"digest":"sha256:fcbc6a85a140934828f6342ad68593d4f5d75d3dcc658b03a753cdf5d2deeb0e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:_write_csv"},
-    {"digest":"sha256:2368e5858552652c7782628a5509b9f8dbff189f1729da9a22a41456f00b8e7e","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:compare_baker_tracking"},
+    {"digest":"sha256:9840d6318d4d78bc9de032a17f463f29aa3f92afc83a84d7c7a99369ec251de3","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:compare_baker_tracking"},
     {"digest":"sha256:785f8d078981c68e7d08fcff2821faf5f7bde9eb6a974bbd24f752d428a91a52","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/baker_tracking.py","symbol":"pipeline.stages.research.experiments.baker_tracking:paired_r2_interval"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},

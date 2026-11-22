@@ -1,7 +1,7 @@
 {
   "algorithm": "sha256",
   "callback": "pipeline.stages.research.experiments.kazinnik_matched_weeks:report_kazinnik_matched_weeks",
-  "digest": "sha256:11d3294a1fb874fdd950efde332cd32d646b5ddef1612418cb8c688c3873bf11",
+  "digest": "sha256:c93572d11638e4d1a0fc1f21351bcb90928a3eb8b1ebe71e2cae8e9d7ab08200",
   "entrypoint": "pipeline stages research report-kazinnik-matched-weeks",
   "fallbacks": [
   ],
@@ -18,7 +18,7 @@
     {"digest":"sha256:64e98542b465f4f7427200882f67632f886bcbbd2936444c4515348298dae5cb","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_network"},
     {"digest":"sha256:68d029b5436060470df3ee239862404194c4cc280203802ddccce445ec498f7b","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_representatives"},
     {"digest":"sha256:3cc0c73cf79032f8552992334d2f91ef3e31a9407745bf9679979061402298a8","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:_write_csv"},
-    {"digest":"sha256:071e309e3adcfb50e18ab1eff9a549216aa2facfd1c205464a74620d755f20b0","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:report_kazinnik_matched_weeks"}
+    {"digest":"sha256:660440fa1e95027643bd716293d4feb86c507f3c5936dd41da3b058f9d0324b2","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/research/experiments/kazinnik_matched_weeks.py","symbol":"pipeline.stages.research.experiments.kazinnik_matched_weeks:report_kazinnik_matched_weeks"}
   ],
   "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
   "schema_version": 2

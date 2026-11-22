@@ -1048,3 +1048,84 @@ stages:
       - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-title-probes.json
     outs:
       - data/research/experiments/lopez-lira-tang-title-probes
+
+  prepare_kazinnik_extended_weeks:
+    desc: Join the common historical bank roster to fourteen earnings weeks.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-kazinnik-banks --articles data/processed/articles/articles.parquet
+      --links data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet
+      --inputs ${experiments.kazinnik_banks.protocol}/extended --output data/processed/experiments/kazinnik-extended-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+      - ${experiments.kazinnik_banks.protocol}/extended/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/extended/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/extended/windows.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+    outs:
+      - data/processed/experiments/kazinnik-extended-weeks
+
+  report_kazinnik_extended_weeks:
+    desc: Estimate the observed change and its rank among six placebo periods.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-kazinnik-matched-weeks --source data/processed/experiments/kazinnik-extended-weeks
+      --inputs ${experiments.kazinnik_banks.protocol}/extended --output data/research/experiments/kazinnik-extended-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/experiments/kazinnik-extended-weeks
+      - ${experiments.kazinnik_banks.protocol}/extended/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+    outs:
+      - data/research/experiments/kazinnik-extended-weeks
+
+  report_lopez_drift_costs:
+    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_drift_costs.sql
+      - data/research/experiments/lopez-lira-tang-title-probes/paired_days.csv
+      - data/research/experiments/lopez-lira-tang-title-probes/portfolios.csv
+    outs:
+      - data/research/experiments/lopez-drift-costs
+
+  prepare_lopez_recovered:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed prepare-lopez-recovered
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-recovered.json
+      - data/raw/fine-news
+      - data/processed/articles
+      - data/processed/company-links
+      - data/processed/issuers
+      - data/processed/experiments/lopez-lira-tang-events
+      - data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      - data/raw/experiments/lopez-lira-tang
+      - data/processed/embeddinggemma-embeddings
+    outs:
+      - data/processed/experiments/lopez-recovered-events
+      - data/processed/experiments/lopez-recovered-sample
+
+  report_lopez_recovered:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      uv run --project src/python --offline --frozen --package ccfinance-pipeline
+      pipeline stages research report-lopez-recovered
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-recovered.json
+      - data/processed/experiments/lopez-recovered-events/recovered.parquet
+      - data/processed/experiments/lopez-recovered-sample
+      - data/processed/experiments/lopez-lira-tang-sample
+      - data/research/experiments/lopez-lira-tang-probes
+      - data/research/experiments/lopez-lira-tang/drift.csv
+    outs:
+      - data/research/experiments/lopez-recovered

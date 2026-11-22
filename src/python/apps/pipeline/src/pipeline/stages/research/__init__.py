@@ -24,6 +24,9 @@ from pipeline.stages.research.experiments.lopez_lira_tang import (
     report_lopez_portfolios,
     report_lopez_title_probes,
 )
+from pipeline.stages.research.experiments.lopez_recovered_report import (
+    report_lopez_recovered,
+)
 from pipeline.stages.research.experiments.metadata_validation import (
     report_metadata_validation,
 )
@@ -39,6 +42,7 @@ app.command("report-kazinnik-banks")(report_kazinnik_banks)
 app.command("report-kazinnik-matched-weeks")(report_kazinnik_matched_weeks)
 app.command("fit-lopez-probes")(fit_lopez_probes)
 app.command("report-lopez-portfolios")(report_lopez_portfolios)
+app.command("report-lopez-recovered")(report_lopez_recovered)
 app.command("report-lopez-title-probes")(report_lopez_title_probes)
 
 

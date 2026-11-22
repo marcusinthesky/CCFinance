@@ -23,6 +23,9 @@ from pipeline.stages.processed.experiments.lopez_events import (
     prepare_lopez_sample,
     project_lopez_titles,
 )
+from pipeline.stages.processed.experiments.lopez_recovered import (
+    prepare_lopez_recovered,
+)
 from pipeline.stages.processed.experiments.metadata_judges import judge_metadata
 from pipeline.stages.processed.experiments.metadata_validation import (
     sample_metadata_confirmation,
@@ -39,6 +42,7 @@ app.command("prepare-baker-emv-market")(prepare_baker_emv_market)
 app.command("prepare-kazinnik-banks")(prepare_kazinnik_banks)
 app.command("prepare-kazinnik-matched-weeks")(prepare_kazinnik_matched_weeks)
 app.command("prepare-lopez-events")(prepare_lopez_events)
+app.command("prepare-lopez-recovered")(prepare_lopez_recovered)
 app.command("prepare-lopez-sample")(prepare_lopez_sample)
 app.command("project-lopez-titles")(project_lopez_titles)
 
