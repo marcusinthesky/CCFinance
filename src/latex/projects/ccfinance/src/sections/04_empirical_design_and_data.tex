@@ -1,0 +1,105 @@
+\section{Coverage and Evaluation Design}
+\label{sec:design}
+
+Table~\ref{tab:coverage} relates the corpus to the articles an issuer
+study can use. Panel~A counts distinct article IDs, so articles linked
+to several issuers enter each row once. Panel~B instead counts the firms
+with at least 47 associated articles in each publication year from 2018
+through 2022. Raw counts include all accepted article--issuer links
+before the consistent-date and canonical-copy requirements. A given
+article can contribute to several issuers' annual counts. In the fixed
+100-firm Nasdaq reference frame, 95 firms qualify on raw links, 94 on
+usable ones and 57 on focused ones. Across the 6,591 evidenced listed
+issuers in the coverage screen, 1,102 meet the usable criterion and
+408 meet the focused criterion. The universe includes issuers with
+dated listings or with public-float evidence backing an otherwise
+undated current listing, and retains zeros for issuer-years in scope.
+Requiring focus removes 37 of the 94 qualifying reference firms,
+even though those firms already have enough usable linked articles.
+The issuer panel allows a researcher to distinguish this loss of
+support from gaps in article capture or dating.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Panel A. Article requirements & Article IDs \\
+    \midrule
+    Staged & 14,807,287 \\
+    Consistently dated & 11,287,476 \\
+    Usable canonical copy & 11,260,839 \\
+    Usable with an accepted issuer link & 5,220,290 \\
+    Usable with a focused issuer link & 2,547,597 \\
+    \bottomrule
+  \end{tabular}
+
+  \smallskip
+  \begin{tabular}{@{}lrrr@{}}
+    \toprule
+    Panel B. Issuer frame & Raw & Usable & Focused \\
+    \midrule
+    Reference roster (100) & 95 & 94 & 57 \\
+    Evidenced issuers (6,591) & 1,147 & 1,102 & 408 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Distinct staged IDs surviving the article-level rules
+    (Panel~A) and issuers with at least 47 associated articles in
+    each publication year from 2018 to 2022 (Panel~B). An ID can
+    contribute to more than one issuer's annual counts. Focus requires
+  three or more mentions of the linked issuer.}
+  \label{tab:coverage}
+\end{table}
+
+Whether the tighter focus rule is worth the loss of coverage depends
+on what it excludes. To measure identity accuracy, we sampled company
+spans before reading linker decisions. Model judges saw the marked
+text and neutral search results and supplied dated issuer decisions
+independently of the linker's predictions. On held-out extracted spans,
+the estimated precision of accepted mention links was 96.8\%
+(95\% interval 94.0--99.6\%) and recall among reference-linkable
+mentions was 70.8\% (64.6--77.1\%). In a separate whole-article
+evaluation on 183 held-out articles with 65 reference-positive
+article--issuer pairs, the three-mention rule increased focus precision
+from 31.9\% to 66.1\% and reduced subject recall from 92.3\% to 56.9\%.
+The estimated precision and recall intervals for the focused rule
+were 54.8--77.3\% and 44.3--69.5\%. A design that requires the firm
+to be the subject of each text gains selectivity at the cost of missing
+some subject stories the judge identified.
+
+The scope of a model label likewise depends on the unit chosen for
+its audit. Blinded model judges labeled 400 sampled units in each of
+three confirmation frames for article form, local mention attributes
+and event families in input windows. The weighted press-release share
+among usable articles was 42.1\% under the classifier and 4.2\%
+under the primary judge, with 14 reference-positive sampled articles.
+Transaction recall against the window labels was 23.6\%. A study that
+uses either field to define eligible records therefore needs
+corroborating evidence. Appendix Table~\ref{tab:app-metadata} reports
+the class and judge detail.
+
+The financial applications select observations according to the
+measurement at hand. For volatility tracking, a publisher-month share
+divides eligible articles containing the required groups of words by all
+eligible articles from that publisher in the same month. For bank
+networks, two mapped banks appearing in one eligible article produce
+one unordered pair observation during the declared week. A three-bank
+story can supply three distinct pairs, and a pair mentioned in multiple
+stories contributes one edge with a weight reflecting its number of
+co-mentions. Both measures depend on which news the chosen sources
+cover.
+
+An overnight return test adds an ordering requirement. First publication
+must follow the preceding exchange close and precede 09:00 New York
+time, and the archived version must have been captured between
+publication and the cutoff. A story published overnight but first
+captured later that morning cannot pass the rule, because its observed
+body was unavailable as evidence before the cutoff. We evaluate
+open-to-close drift after that cutoff and distinguish it from the
+close-to-open reaction, which begins before the article appears. The
+encoder was released after the study period, and overlap between its
+pretraining data and the archived stories is unmeasured. Returns used
+for training the rolling probes are realized before the refit. Each
+active long or short leg needs at least two securities. A session with
+predictions but no qualifying leg contributes zero to the portfolio
+mean, while a day without predictions is unevaluated.

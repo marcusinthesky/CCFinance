@@ -1,0 +1,107 @@
+\section{Constructing Eligible News Observations}
+\label{sec:method}
+
+The staging sample is a frozen selection of the English-language
+\texttt{eng\_Latn} shards of Fine News. The selection admits a record
+when its hostname matches an entry in a 115-entry list or is a
+dot-delimited subdomain of one. The list defines a publisher scope,
+which includes general-interest sources with financial coverage. An
+individual record enters on its hostname. We preserve its article ID,
+body, source URL and available capture and publisher metadata. The
+recorded upstream revision and a separate checksum-verified staging
+revision identify 14,807,287 distinct IDs in 168 staged Parquet shards.
+Appendix Table~\ref{tab:app-source} records both revisions and the
+separate source-comparison frames.
+
+A retrospective comparison applies the same hostname rule in four
+pinned source frames, including FineWeb-HQ \citep{messmer2025}.
+Within each frame we use four independent draws
+with replacement, choosing a file uniformly and then a row group
+uniformly within that file. Weighting by the inverse draw probabilities
+estimates the totals of English records and publisher matches, whose
+ratio gives the estimated yield. Table~\ref{tab:sources} shows higher
+point yields in the two news collections. Because each source defines
+English scope and duplicate retention differently, these yields describe
+physical rows within their release frames. They give the concentration
+of matches under the hostname rule, while establishing how many extra
+stories another source contributes would require matching records across
+the different frames.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{lrr}
+    \toprule
+    Source & Yield (\%) & 95\% interval \\
+    \midrule
+    Fine News & 4.50 & [2.36, 6.63] \\
+    Infini-News & 6.84 & [3.37, 10.32] \\
+    RefinedWeb & 0.50 & [0.16, 0.84] \\
+    FineWeb-HQ & 0.69 & [0.13, 1.25] \\
+    \bottomrule
+  \end{tabular}
+  \caption{Estimated share of physical English records that match the
+    historical hostname list in each pinned source frame. English means
+    the \texttt{eng\_Latn} shards for Fine News, native \texttt{eng\_Latn}
+    labels for Infini-News, the declared English release for RefinedWeb,
+    and native \texttt{en} labels for FineWeb-HQ. Each estimate uses
+    four independent file and row-group draws with replacement.
+  Intervals are exploratory and have three degrees of freedom.}
+  \label{tab:sources}
+\end{table}
+
+Within the staged population, an article is usable if it is the canonical
+copy and its publication date is consistent with capture. To be
+consistent, the capture can follow the reported publication date by at
+most seven days, or precede it by up to one calendar day to allow for
+time zones. A page said to have appeared on Monday and fetched on
+Thursday can therefore enter the day-level corpus, although Thursday
+is the observed capture of that version. Fine News already retains
+representatives of upstream duplicate clusters. We mark the earliest
+capture of exact-text and normalized-URL repeats to resolve additional
+duplication across the staged records. This step keeps a stable identifier
+for the selected copy, so that a researcher can inspect the same body even
+when its URL recurs in later monthly captures.
+
+Once a version and date are recorded, the extraction model identifies
+text spans that could name companies. We use GLiNER2.5 Small
+\citep{gliner25}, keep the source spans and character offsets, and
+resolve the extracted names against a dated listing and alias table.
+The table combines SEC registrant identifiers and current and former
+names with listing, alias and subsidiary evidence from Wikidata.
+An explicit exchange ticker or Reuters code can anchor an identity and
+help resolve later mentions in the same article. Alias evidence is
+evaluated on the article date where validity dates are known, and the
+linker retains ambiguous candidates or abstains when the evidence is
+insufficient. For example, the ticker in an older article about
+Sprint can refer to a different issuer than the ticker in a later
+article. The anchor disagreement audit includes this case.
+\citet{schwenkler2020} use Stanford CoreNLP to identify organizations
+before linking firms in a news-derived network. Appendix
+Table~\ref{tab:app-spans} compares GLiNER2.5 Small with Stanza, a
+separate Stanford toolkit, on exact company spans in financial leads.
+FiNER-ORD also documents the difficulty of transferring named-entity
+recognition to financial text \citep{shah2024}.
+
+Because a single story can name several firms, the article--issuer
+table records one row for each accepted pair and retains the support
+for that link. A story about a dispute involving Gap and a Tapestry
+brand can concern both firms, while an article about Tesla may name
+Nvidia in passing. For the focus screen, we require at least three
+extracted mentions of the linked issuer and impose no additional
+relevance threshold. The rule preserves a usable distinction between
+counting an article once in the corpus and letting it contribute to
+more than one issuer's coverage.
+
+The pipeline also records article form, local relevance and investor-facing
+sentiment for extracted mentions, and event scores for model input windows.
+It stores a fixed 768-coordinate EmbeddingGemma vector for each staged
+body, with alignment and norms checked against the frozen article IDs
+\citep{embeddinggemma2025}. The overnight probe uses those body vectors.
+In a separate pilot on 16 model-judged stories with two distinguishable
+company accounts and inputs that fit all encoders, EmbeddingGemma
+retrieves both accounts correctly in 10 cases when given issuer
+sentences and in two cases each with a company header or a selected
+instruction. This selected sample makes issuer sentences a candidate
+for further evaluation (Appendix Table~\ref{tab:app-vectors}). The
+coverage and enrichment audits use their own reference units.

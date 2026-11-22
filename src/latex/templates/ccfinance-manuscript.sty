@@ -1,6 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{ccfinance-manuscript}[Shared CCFinance manuscript packages]
-\RequirePackage{amsmath,amssymb,amsthm,booktabs,graphicx}
+\RequirePackage{amsmath,amssymb,amsthm,array,booktabs,graphicx}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 % The skeleton has an empty bibliography until an author cites a work.
 \newif\ifmanuscriptcites

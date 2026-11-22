@@ -1,0 +1,42 @@
+\section{Related Corpora}
+\label{sec:literature}
+
+Publisher releases have provided well-defined research collections.
+Reuters Corpus Volume~1 contains roughly 810,000 English-language
+newswire stories from one year, and the later Thomson Reuters Text
+Research Collection contains roughly 1.8 million stories from January
+2008 to February 2009. NIST distributes the collections under research
+agreements \citep{reuterscorpora}. These are defined text releases,
+whereas proprietary news measures such as the sentiment scores used by
+\citet{heston2017} give researchers a particular measurement of the
+text. Access can also change after a collection is published.
+\citet{remyding2015} document the withdrawal of their original Reuters
+and Bloomberg downloads, citing copyright.
+
+Direct collection gives researchers more control over the text they
+measure, while the pages and symbols available from a site shape the
+sample. \citet{dong2024} obtain headlines and URLs from Nasdaq's
+per-symbol pages, retrieve article bodies from the linked pages, and
+supplement the collection with earlier news data. They report 15.7
+million time-aligned news records in FNSPID and separately examine
+the availability of article text and stock symbols. The unit differs
+from both a captured article ID and a validated issuer link. A Nasdaq-based
+application uses the same kind of per-symbol archive to construct a
+100-firm frame with at least 47 raw article records per firm in each
+year from 2018 through 2022 \citep[Appendix~A]{gawronsky2026}.
+A record attached to a ticker by the site can enter that design directly.
+A shared news archive starts with publishers' pages, so recovering an
+issuer requires evidence from the text and the listing record.
+
+Common Crawl made archived web pages available as research inputs, and
+its 2016 news release provides Web ARChive records that preserve a
+fetched response and its capture time \citep{nagel2016}. RefinedWeb
+shows that filtering and deduplication can make general web text useful
+at pretraining scale \citep{penedo2023}. Infini-News extracts article
+bodies and structured metadata from CC-News and indexes the collection
+\citep{lazzaroni2026}. Fine News applies language and quality filters
+and removes duplicate text \citep{solovev2026}. These stages make
+individual observed versions easier to recover, subject to source
+coverage and terms of use. A financial study still needs to specify
+which version and issuer can contribute to its observations. CCFinance
+begins with that construction.
