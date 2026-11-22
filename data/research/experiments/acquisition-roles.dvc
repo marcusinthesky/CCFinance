@@ -1,0 +1,7 @@
+outs:
+- path: acquisition-roles
+  hash: md5
+  md5: 465ff83b8ff22e584df3e35200fc7ad5.dir
+  size: 17075
+  nfiles: 3
+  push: false

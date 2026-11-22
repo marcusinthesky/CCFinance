@@ -1,0 +1,5 @@
+{
+  "economy": "\\b(economic|economy|financial)\\b",
+  "equity": "\\b(stock\\s+market|equity|equities|standard\\s+and\\s+poor(?:s|['’]s)?|standard\\s+&\\s+poor(?:s|['’]s))\\b",
+  "volatility": "\\b(volatility|volatile|uncertain|uncertainty|risk|risky)\\b"
+}

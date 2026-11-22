@@ -1,0 +1,48 @@
+{
+  "named": {
+    "hits_predicted_reference": [
+      37,
+      56,
+      65
+    ],
+    "precision_recall_f1": [
+      0.6607142857142857,
+      0.5692307692307692,
+      0.6115702479338843
+    ]
+  },
+  "chains": {
+    "hits_predicted_reference": [
+      44,
+      68,
+      65
+    ],
+    "precision_recall_f1": [
+      0.6470588235294118,
+      0.676923076923077,
+      0.6616541353383458
+    ]
+  },
+  "paired_difference_ci": [
+    [
+      -0.061691086121972084,
+      0.0334975369458127
+    ],
+    [
+      0.039215686274509776,
+      0.1960871848739495
+    ],
+    [
+      0.0010932992894317184,
+      0.11515853233162632
+    ]
+  ],
+  "articles": 183,
+  "truncated": 5,
+  "antecedent_review": {
+    "heads": 42,
+    "correct_heads": 28,
+    "confirmed_new_pairs": 7,
+    "confirmed_new_subjects": 6
+  }
+}

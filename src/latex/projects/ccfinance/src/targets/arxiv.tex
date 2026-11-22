@@ -1,0 +1,23 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{../../../templates/ccfinance-manuscript}
+\usepackage[hidelinks]{hyperref}
+\input{metadata}
+\title{\papertitle}
+\author{\paperauthors}
+\date{\paperdate}
+\begin{document}
+\maketitle
+\begin{abstract}
+  \input{sections/00_abstract}
+\end{abstract}
+\input{body}
+\bibliographystyle{plainnat}
+\ifmanuscriptcites
+\bibliography{refs}
+\fi
+\appendix
+\renewcommand{\theHtable}{appendix.\arabic{table}}
+\input{appendix}
+\end{document}

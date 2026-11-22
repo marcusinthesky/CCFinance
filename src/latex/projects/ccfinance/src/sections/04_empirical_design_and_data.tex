@@ -1,0 +1,206 @@
+\section{Data and Empirical Design}
+\label{sec:design}
+
+We count coverage first by article and then by issuer, since a single
+canonical copy may supply news about several firms. Panel~A of
+Table~\ref{tab:coverage} counts each distinct article ID once per row,
+while Panel~B follows issuers across the nine complete calendar years
+from 2017 through 2025. For a given year an issuer qualifies with
+either a dated listing or an
+undated current listing supported by public-float evidence in that year
+or the preceding year. Qualifying issuers remain in the denominator
+even when no articles could be linked to them.
+
+Because we assign news to the publication year but observe it at
+capture, a year with many archived pages need not supply many eligible
+stories about firms in that year. The 2017 capture cohort illustrates
+the distinction. Of the 3,659,035 staged records captured that year,
+2,886,747 were fetched more than seven days after reported publication,
+including over a million late captures on each of the UK and Indian
+Reuters hosts (Appendix Table~\ref{tab:app-coverage}). Counting all
+those pages in 2017 would conflate the date on which a crawler visited
+a publisher with the date on which the publisher reported the news.
+Under the publication-year rule, 854 of 3,240 eligible issuer-years
+clear the 50-usable-article minimum in 2017, compared with 1,844 of
+3,607 in 2020. The fact that a firm qualifies in one year therefore
+does not establish continuous coverage over the study period.
+
+Of 34,781 eligible issuer-years, 33,024 have at least one usable article.
+At an annual minimum of 50 articles, 13,918 issuer-years qualify on
+usable links, while 8,641 meet the same minimum when each story must
+mention the issuer at least three times. The cost of that restriction
+also varies with firm size. In the lowest annual quintile of measured
+public float, 329 of 6,533 issuer-years (5.0\%) clear the usable-article
+minimum and 105 (1.6\%) clear the focused minimum. In the highest
+quintile the corresponding counts are 5,790 of 6,526 (88.7\%) and
+4,561 (69.9\%). Appendix Table~\ref{tab:size-year} gives the
+intermediate quintiles and the breakdown by year. Among smaller firms,
+even the initial requirement selects a narrow group: roughly one in
+twenty issuer-years in the lowest quintile reaches the 50-article minimum.
+Requiring subject focus then retains 105 of the 329 that cleared the
+first screen, compared with 4,561 of 5,790 in the highest quintile.
+For an analysis that estimates one coefficient across the qualifying
+firms, changing the definition of a relevant story consequently changes
+the composition of the sample on which that coefficient is estimated.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Panel A. Article requirements & Article IDs \\
+    \midrule
+    Staged & 14,807,287 \\
+    Consistently dated & 11,287,476 \\
+    Usable canonical copy & 11,260,839 \\
+    Usable with an accepted issuer link & 5,220,290 \\
+    Usable with a focused issuer link & 2,547,597 \\
+    \bottomrule
+  \end{tabular}
+
+  \smallskip
+  \begin{tabular}{@{}lrrr@{}}
+    \toprule
+    Panel B. Annual minimum & Raw & Usable & Focused \\
+    \midrule
+    1 article & 33,109 & 33,024 & 31,745 \\
+    10 articles & 26,930 & 26,434 & 22,243 \\
+    50 articles & 14,539 & 13,918 & 8,641 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Distinct staged IDs surviving the article-level rules
+    (Panel~A) and issuer-years meeting each annual article minimum
+    during 2017--2025 (34,781 eligible issuer-years in Panel~B). An
+    article can count for several issuers
+    and qualifies as focused for each linked issuer it mentions at least
+  three times.}
+  \label{tab:coverage}
+\end{table}
+
+To understand which stories enter an issuer's coverage, we examine
+first whether the extractor recognizes a company name and then whether
+the linker assigns that name to the right issuer. Of the 712
+model-reference company spans in 250 sampled leads, GLiNER recovered 412
+and Stanza 421 under exact matching, while allowing overlapping boundaries
+brings their company-span F1 scores within half a percentage point
+(Appendix Table~\ref{tab:app-spans}). Exact scoring requires the first
+and last characters of a predicted name to agree with the reference.
+For example, Stanza attached a possessive to the name of Credit Suisse
+Group AG in a lead that also named UBS Group AG. A reader could
+recognize both banks, yet the extra characters cost Stanza the pair
+under exact scoring. Conversely, an organization correctly recognized
+under Stanza's broader label counts as a false positive when it is
+outside the business-only reference. The comparison therefore describes
+what each extractor supplies to a company-linking task, whose next
+step is to decide whether the name identifies an eligible issuer.
+
+For the identity comparison, we sample extracted spans independently of
+the linker's decisions and ask model judges to identify the issuer on
+the article date from the marked text and neutral search results, with
+the predictions withheld. On held-out extracted spans,
+the 475 accepted links have 96.8\% estimated precision (95\% interval
+94.0--99.6\%), and recall among reference-linkable mentions is 70.8\%
+(64.6--77.1\%). On the same 886 held-out mentions, weighted issuer-link
+F1 is 81.81\% with the full linker and 59.46\% when a normalized name
+must identify one dated issuer. Restricting learned aliases and their
+frequencies to prior calendar years yields 78.57\%
+(Appendix Table~\ref{tab:app-link-baselines}). The two time restrictions
+have different purposes. The listing date determines whether a candidate
+could have been the issuer at the time of the article, while the prior
+window determines which earlier uses of a name can help resolve it.
+Of the 475 production assignments, the prior-year replay keeps 464,
+changes the identity on one and abstains on ten. Thus a historical user
+can lose a link even when both versions of the linker consult the same
+dated listing.
+
+Having established which issuer a name identifies, we ask whether the
+article concerns that issuer. This comparison uses article-level
+judgments and is conditional on GLiNER detecting at least one company
+in the article. Among the relevance, position and mention-count rules
+compared on 217 development articles, the three-mention rule achieved
+the highest subject F1. On 183 separate test articles, it retained 37
+of 65 judged subject pairs. Relative to counting all accepted links,
+requiring three mentions raised subject precision from 31.9\% to 66.1\%
+(54.8--77.3\%) but reduced recall from 92.3\% to 56.9\%
+(44.3--69.5\%). Of the 188 accepted test pairs, the judges identified
+60 as subjects. Requiring three mentions retained 56 pairs, of which
+37 were subjects. The increase in precision is useful when a study
+needs articles principally about the firm, although it excludes 23 subject pairs
+that the broader rule had retained. A researcher willing to admit
+more incidental
+mentions can make a different choice on the same records: a two-mention
+minimum recovers 76.9\% of judged subjects at 55.6\% precision on the
+held-out articles (Appendix Table~\ref{tab:app-focus-rules}).
+
+Because the production panel counts named mentions, a story can fall
+short of three even when it continues to discuss the firm using a
+pronoun or a description. When we also count nominal and pronominal
+mentions in Stanford CoreNLP chains anchored to a single linked issuer
+on the same test articles \citep{manning2014corenlp}, twelve additional
+article--issuer pairs qualify, seven of which are judged subjects.
+Recall rises from 56.9\% to 67.7\% (paired gain of 10.77 percentage
+points, 95\% interval [3.92, 19.61]), while precision falls from
+66.1\% to 64.7\%. A separate GPT-6.1 Terra review attributed 28 of
+the 42 added references in those pairs to the anchored issuer. Seven
+of the twelve pairs still qualify using only those confirmed references,
+and six of those seven are judged subjects.
+
+Once a story is assigned to a firm, its tone can still differ from
+what the news implies for that firm's investors. On the 358 of 400
+marked mentions that the primary judge labeled positive, negative or
+neutral, GLiNER's company-specific sentiment achieved 46.79\% weighted
+macro-F1, compared with 40.84\% when each company received the
+Stanford sentiment of its sentence. The paired 95\% interval for the
+5.95-point difference spans zero [$-1.33$, $+13.98$]. A blinded
+GPT-6.1 Terra review marked 23 of 40 sampled targets as invalid
+company spans. We therefore treat issuer sentiment as exploratory.
+
+Similar questions arise when researchers select articles by form or
+event. To assess how those choices affect sample composition, blinded
+model judges label 400 sampled units in each of three confirmation
+frames covering article form, local mention attributes and event
+families in input windows. The weighted
+press-release share among usable articles is 42.1\% under the
+classifier and 4.2\% under the primary judge, with 14 reference-positive
+sampled articles. A filter on predicted transactions would miss many
+windows the judge labels as transactional, since recall against those
+labels is 23.6\%. Appendix
+Table~\ref{tab:app-metadata} reports estimates by class. These errors
+would enter two common designs differently. Removing predicted press
+releases would discard articles the reference judge regarded as other
+forms of news, whereas retaining only predicted transactions would omit
+many windows containing transactions according to that judge. The unit
+matters here as well: a missed window establishes a local omission,
+while exclusion of an entire article depends on what was detected in
+its other windows.
+
+The unit on which these decisions operate changes across the three
+financial applications. For the equity-market volatility tracker we
+divide the number of articles containing the required groups of words
+by all eligible articles from that publisher in the same month. For a
+bank network we also need to know which institutions appear together,
+since each eligible article contributes one observation for every
+unordered pair of mapped banks it mentions in the declared week. A
+three-bank story thus supplies three pairs, while the weight on each
+pair counts the stories in which it appears.
+
+For the overnight exercise, identifying the security also determines
+which exchange session to use. We pair timely news from two Indian
+publishers with US-listed securities, which trade on Nasdaq in 740
+article--security rows of the fixed panel and on the NYSE in 364.
+For 270 rows the registry lacks a
+listing start date, so eligibility also requires usable pre-2021 news
+linked to the issuer. To establish what could have been observed before
+the open, we require first publication to follow the preceding exchange
+close and precede 09:00 New York time, with capture between publication
+and the cutoff, inclusive. If the crawler fetches an overnight story
+after 09:00, we observe the body only after the cutoff. We measure
+drift from the open to the close because the close-to-open reaction
+begins before the article appears. The
+rolling probes train on returns realized before each refit, while
+the encoder was released after the study period and its pretraining
+overlap with the archived stories is unmeasured. Each active long or
+short leg requires at least two
+securities, so a session with predictions contributes zero to the
+portfolio mean when neither leg qualifies,
+while a day without predictions falls outside the evaluation.

@@ -1,0 +1,21 @@
+article_key,cik,assessment,note
+2b3f00c9,704415,supported,
+7e8d709b,1018724,supported,
+14613dbb,2046386,supported,
+90aea6b6,1809691,supported,
+78d4a6e3,885721,supported,
+73de083a,1172724,supported,
+ad97d903,42582,supported,
+85c72507,1429937,supported,
+b049650b,1164727,supported,
+8b97fd5a,1634997,supported,
+99529c58,1070412,supported,
+73de083a,1264089,needs_context,The next sentence names the investor and explains its holding.
+10cd5418,753308,needs_context,The preceding sentence identifies the bidder.
+77b1872e,1288847,supported,
+70ca7a52,47217,supported,
+d3dd27bf,1124610,needs_context,The surrounding story identifies the offer as the tracking-stock transaction.
+7e8d709b,1404123,partial_error,Revenue matches but the statement reverses the incorporated-name relationship.
+de32ec29,901832,supported,
+99d24111,1020859,supported,
+04a3386b,820318,wrong_issuer,The quote describes the target Coherent Inc. This CIK was II-VI on publication day and the article identifies II-VI as a competing bidder.

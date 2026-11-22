@@ -1,0 +1,114 @@
+---
+pretty_name: CCFinance
+language:
+- en
+license: cc-by-4.0
+size_categories:
+- 10M<n<100M
+annotations_creators:
+- machine-generated
+language_creators:
+- found
+multilinguality:
+- monolingual
+task_categories:
+- token-classification
+- feature-extraction
+- text-classification
+tags:
+- finance
+- financial-news
+- financial-econometrics
+- common-crawl
+- named-entity-recognition
+- entity-linking
+- sentiment-analysis
+- embeddings
+- semantic-search
+- provenance
+- parquet
+configs:
+- config_name: default
+  data_files:
+  - split: corpus
+    path: data/*.parquet
+---
+
+# CCFinance
+
+Which archived stories count as news about a firm? CCFinance lets researchers vary that decision across **14,807,287 English-language news captures**, collected from August 2016 through April 2026. Each capture has a stable identifier that joins its dates and duplicate status to entity spans, issuer assignments and a body embedding. Of the 11,260,839 consistently dated canonical captures, **5,220,290** have an accepted issuer link. Requiring an issuer to appear at least three times leaves **2,547,597** distinct captures. This distinction matters whenever firm-level estimates depend on how frequently the archive covers a company.
+
+## Get started
+
+Each row represents one archived capture. Its dates, issuer links, GLiNER output and embedding travel together in **one Parquet dataset**. The single split, `corpus`, covers the full capture period. The release comprises **190 shards totaling 31.54 GB** (decimal), grouped by capture month, with Zstandard compression and row groups of up to 4,096 articles. The embedding column occupies 19.29 GB across those shards, compared with 22.74 GB for the uncompressed FP16 coordinates. The nested layout stores the capture ID once. Column projection lets you read issuer links or dates while skipping the 768-coordinate vector. For prediction experiments, construct a chronological split appropriate to your research question.
+
+```python
+from datasets import load_dataset
+
+captures = load_dataset(
+    "marcusinthesky/CCFinance", split="corpus", streaming=True,
+    columns=["id", "published", "captured", "usable", "issuer_links"],
+)
+row = next(iter(captures))
+print(row["id"], row["published"], row["captured"], len(row["issuer_links"]))
+```
+
+**Reproduce the published selection.** In DuckDB, count each eligible capture once if any issuer in its list meets the threshold. The two output counts are 5,220,290 and 2,547,597. The query reads only the eligibility flag and issuer evidence. Replace the Hub path with a local Parquet glob after downloading the shards to run it offline.
+
+```sql
+SELECT
+    count(*) FILTER (WHERE len(list_filter(issuer_links,
+        l -> l.link_score >= 0.5)) > 0) AS usable_with_issuer,
+    count(*) FILTER (WHERE len(list_filter(issuer_links,
+        l -> l.link_score >= 0.5 AND l.n_mentions >= 3)) > 0) AS usable_with_focus
+FROM read_parquet('hf://datasets/marcusinthesky/CCFinance/data/*.parquet')
+WHERE usable;
+```
+
+For a firm panel, expand `issuer_links` with DuckDB's `UNNEST` and extract the SEC Central Index Key (`cik`). For a citable download, record the Hub commit SHA and pass it to `hf download` with `--revision`. The manifest gives the byte size, row count and SHA256 digest of every Parquet shard. [Release manifest](documentation/manifest.json)
+
+## Data dictionary
+
+| Field or group | Interpretation |
+| --- | --- |
+| `id`, `warc_filename`, `page_url`, `host` | The upstream record ID and CC-News WARC filename identify the capture. The publisher URL retains the scheme, hostname and path where available, with query and fragment removed. The same URL may appear in multiple captures. |
+| `published`, `captured`, `lag_days`, `date_status` | Reported publication date, UTC capture timestamp, calendar-day difference and its classification as consistent, archival, future or missing. |
+| `canonical`, `duplicate_of`, `duplicate_kind`, `usable`, `copies` | The canonical flag and predecessor ID describe the text or URL duplicate decision. Usability combines canonical and date checks. Copies is the upstream sampling weight, defaulting to one. |
+| `text_sha256`, `text_length`, `extraction_status`, `article_form` | Identity and upstream length of the source body, extractor status and predicted document form. Use the hash to verify a locally obtained body before applying offsets. |
+| `windows[]` | One struct per GLiNER window, with character bounds and separate score arrays for article form and event families. |
+| `mentions[]` | One struct per extracted occurrence, with entity type, character bounds, span confidence and, for companies, local relevance and financial sentiment scores. Across the corpus there are 386,352,022 occurrences. |
+| `mention_links[]` | One struct per company mention considered for linking (158,582,914 in total). Match by `start, stop` within a capture. Fields include assigned `cik` where available, `method`, `link_score`, `self_publisher` and candidate CIKs and scores. |
+| `issuer_links[]` | One struct per article–issuer pair (16,828,111 in total before the publication screen). Fields include CIK, link date, ticker and exchange where available, mention count, maximum link score, substantive relevance, weighted sentiment, relative first-mention position, publisher self-mention flag and supporting offsets. |
+| `embedding`, `has_text` | A fixed-length list of 768 FP16 coordinates and a flag for body availability. All issuers in an article share its document vector. |
+
+Character offsets are zero-based Unicode indices into the original body, with the end excluded. Empty mention or issuer lists preserve an article in the denominator. A missing issuer assignment can reflect an unrecognized company, an ineligible listing or insufficient evidence. It does not establish that the article contained no financial news.
+
+## Collection and annotation
+
+**Corpus.** Fine News supplies the cleaned text and identifiers derived from INFINI-NEWS and Common Crawl News. The historical selection used English (`eng_Latn`) capture-month shards and 115 publisher hostname entries, including dot-delimited subdomains. General-interest publishers contribute their nonfinancial coverage as well. The frozen staging revision is `3168f32f57107eac95a2c53f024e5e340c91ef2e` (168 shards). Researchers with appropriate access to source text can join on the exact upstream `id` and check the body digest in `windows` before applying offsets. A fresh full-corpus upstream extraction has yet to be reconciled against every staged row. [Publisher registry](documentation/publisher-hosts.csv) · [Pinned Fine News release](https://huggingface.co/datasets/ksolovev/fine-news/tree/7a841090e69f3c58a9e04b0c39213d879af68e8a) · [INFINI-NEWS](https://huggingface.co/datasets/ruggsea/infini-news-corpus) · [Common Crawl News](https://commoncrawl.org/blog/news-dataset-available)
+
+**Dates and copies.** A consistent capture falls between one calendar day before and seven days after the reported publication date, inclusive. The pipeline finds the earliest capture in each exact-text and normalized-URL group, breaking ties by ID and giving the text match precedence when recording a duplicate. A row is usable when it is both canonical and consistently dated. A Monday article first fetched on Thursday can therefore enter a publication-day study, although Thursday is the first observation of that archived version. Intraday and forecasting studies need their own availability cutoff.
+
+**Entity and event extraction.** GLiNER2.5 Small processes 384-word windows with a 64-word overlap. Company attributes describe the mention's local context. The article-form vector follows reporting, analysis, opinion, interview, roundup, press release and other. The event vector follows performance, financing, transactions, operations, legal and reputation, and markets and macroeconomics. Relevance follows substantive, incidental and uncertain. Sentiment follows positive, negative, neutral, mixed and not assessable. The machine-readable schema includes the label order, descriptions and model checksum. [GLiNER schema](documentation/gliner-schema.json) · [Pinned GLiNER checkpoint](https://huggingface.co/fastino/gliner2.5-small-v1/tree/b5d42bf7dc7d01c40304ae4ed43c2f13c325a75b)
+
+**Issuer resolution.** SEC registrant identities and Wikidata listing, alias and subsidiary evidence supply candidates for eligible US-listed issuers. Explicit exchange tickers and Reuters codes can anchor a name within a story. The linker uses dated evidence where available and stores alternative candidate scores. It also learns alias frequencies across the full archive, so a historical assignment can depend on a later observation. Record this choice when interpreting historical trading results.
+
+**Representations.** EmbeddingGemma-300M encodes up to 2,048 tokens including the document prefix. The pipeline normalizes the resulting vector before storing it in half precision. All 14,807,287 bodies passed the corpus audit for source alignment, dimensions and text availability. A mention later in a long article can influence issuer focus while falling outside the encoded prefix. The encoder postdates part of the archive. [Pinned encoder](https://huggingface.co/google/embeddinggemma-300m/tree/57c266a740f537b4dc058e1b0cda161fd15afa75) · [Vector audit](documentation/vector-audit.json)
+
+## Validation and limits of use
+
+| Audit | Reference population | Result |
+| --- | --- | --- |
+| Company extraction | 250 article leads from 2019–2023, with 712 model-reference company spans | GLiNER recovered 412 exact spans (micro-F1 53.13%). Stanza recovered 421 (42.78%) using the broader OntoNotes ORG class. |
+| Issuer assignment | Stratified sample of extracted mentions, with 475 accepted assignments and 578 judged linkable mentions | Weighted precision was 96.8% (95% interval 94.0–99.6%) and recall was 70.8% (64.6–77.1%). These measure assignment given extraction. |
+| Story focus | 183 held-out articles with at least one detected company, after rule selection on 217 development articles | Three mentions retained 37 of 65 judged subject pairs. Subject precision rose from 31.9% to 66.1% while recall fell from 92.3% to 56.9%. |
+
+These reference labels come from model judges. Financial sentiment and article form are exploratory annotations. For example, the classifier assigned press-release form to 42.1% of usable articles versus 4.2% under the primary judge, and two independent judges agreed on sentiment for 57.2% of weighted mentions. Event labels can also miss relevant windows below the score threshold. Calibrate these fields on observations that represent the intended application before using them as sample filters.
+
+Coverage varies by publisher, year and issuer size. Within the paper's eligible 2017–2025 issuer-year panel, 5.0% of the lowest measured public-float quintile reached 50 usable linked stories in a year, compared with 88.7% of the highest quintile. The public article rows and nested issuer links support measurement of observed coverage. Reconstructing an eligible universe that includes firms with zero stories additionally requires a listing denominator appropriate to the study.
+
+## Rights, attribution and contact
+
+Marcus Gawronsky releases the CCFinance-authored annotations and embeddings under **CC BY 4.0**. Attribute CCFinance, cite the release revision and indicate any changes. Credit INFINI-NEWS for upstream derived metadata under CC BY 4.0, Fine News for its cleaned CC-News release, Common Crawl for the captures, and SEC and Wikidata for issuer evidence. Publisher rights and source-specific terms continue to govern the underlying news. The downloadable shards contain metadata, stand-off annotations and vectors. Article bodies, headlines and quoted mention strings are excluded. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · [Fine News terms](https://huggingface.co/datasets/ksolovev/fine-news#terms-of-use) · [INFINI-NEWS terms](https://huggingface.co/datasets/ruggsea/infini-news-corpus#terms-of-use) · [Common Crawl terms](https://commoncrawl.org/terms-of-use)
+
+Suggested citation: Gawronsky, Marcus (2026). *CCFinance* [dataset]. Hugging Face, `marcusinthesky/CCFinance`. Include the commit SHA used in your analysis. For a correction to a timestamp or issuer assignment, open a discussion with the capture ID and, where relevant, the mention offsets and proposed CIK. [Dataset discussions](https://huggingface.co/datasets/marcusinthesky/CCFinance/discussions)

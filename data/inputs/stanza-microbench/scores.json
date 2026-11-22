@@ -1,0 +1,41 @@
+{
+  "passages": 250,
+  "gold_spans": 712,
+  "zero_mention_passages": 73,
+  "repeat_agreement": {
+    "passages": 60,
+    "passages_with_identical_span_sets": 52,
+    "primary_spans": 175,
+    "repeat_spans": 172,
+    "overlapping_spans": 166,
+    "span_f1": 0.9567723342939481
+  },
+  "models": {
+    "stanza": {
+      "tp": 421,
+      "fp": 835,
+      "fn": 291,
+      "precision": 0.3351910828025478,
+      "recall": 0.5912921348314607,
+      "f1": 0.42784552845528456
+    },
+    "gliner": {
+      "tp": 412,
+      "fp": 427,
+      "fn": 300,
+      "precision": 0.49106078665077474,
+      "recall": 0.5786516853932584,
+      "f1": 0.5312701482914249
+    }
+  },
+  "gliner_minus_stanza_f1": {
+    "observed": 0.10342461983614037,
+    "percentile_95": [
+      0.058427220723952844,
+      0.14555056716353088
+    ],
+    "seed": 42,
+    "draws": 2000,
+    "undefined_draws": 0
+  }
+}

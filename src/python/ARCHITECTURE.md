@@ -10,6 +10,13 @@ One uv workspace and lock own runtime, development and build dependencies.
 - `stages.research` owns coverage panels, study cohorts and release datasets.
 - `__main__` exposes the same application through `python -m pipeline`.
 
+The three paper replications use `stages.<layer>.experiments.<study>.<analysis>`
+in the processed and research layers. The study package uses its key from
+`params.yaml`, such as `lopez_lira_tang`. Each layer registers CLI commands
+from the module that implements the analysis. Study-specific SQL lives beside
+the Python analyses that use the same artifacts. Tests mirror these paths
+under `apps/pipeline/tests`.
+
 Tach enforces the declared dependency direction from the application entry point
 to CLI to the stage router and its independent layer modules, including
 type-checking imports, with cycles forbidden. Artifact dependencies in DVC

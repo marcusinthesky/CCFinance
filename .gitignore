@@ -17,6 +17,7 @@ result-*
 .runtime/
 .env
 .env.*
+.aws/
 .DS_Store
 *.bak
 .turbo/
@@ -40,6 +41,7 @@ lean_decls
 !/data/inputs/source-comparison/README.md
 !/data/inputs/article-metadata/diagnostics.jsonl
 !/data/inputs/article-metadata/README.md
+!/data/inputs/article-metadata/corenlp-comparison/*
 !/data/inputs/issuers/*.rq
 !/data/inputs/issuers/exchanges.csv
 !/data/inputs/issuers/README.md
@@ -47,9 +49,19 @@ lean_decls
 !/data/inputs/coverage/README.md
 !/data/inputs/coverage/pricing-perspective.csv
 !/data/inputs/company-links/README.md
+!/data/inputs/company-links/comparison/*
 !/data/inputs/company-links/normalized-name-audit.sql
 !/data/inputs/company-links/check-name-recovery.sql
 !/data/inputs/company-links/normalized-name-confirmation.csv
+!/data/inputs/entity-embeddings/README.md
+!/data/inputs/entity-embeddings/entity-focus.md
+!/data/inputs/entity-embeddings/grounding-audit.csv
+!/data/inputs/baker-emv/*
+!/data/inputs/kazinnik-banks/*
+!/data/inputs/kazinnik-banks/extended/*.csv
+!/data/inputs/lopez-lira-tang/*
+!/data/inputs/lopez-lira-tang/sensitivity/*.csv
+!/data/inputs/stanza-microbench/*
 
 # Local literature records and source material.
 /.context/reference/

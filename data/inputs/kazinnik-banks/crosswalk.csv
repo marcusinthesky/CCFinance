@@ -1,0 +1,35 @@
+bank,cik,valid_from,valid_through,scope,evidence
+BofA,70858,2020-01-01,2020-04-30,domestic_holding,BAC holding company
+Citi,831001,2020-01-01,2020-04-30,domestic_holding,C Citigroup holding company
+GS,886982,2020-01-01,2020-04-30,domestic_holding,GS holding company
+JPMC,19617,2020-01-01,2020-04-30,domestic_holding,JPM holding company
+MS,895421,2020-01-01,2020-04-30,domestic_holding,MS holding company
+WFC,72971,2020-01-01,2020-04-30,domestic_holding,WFC holding company
+BNY,1390777,2020-01-01,2020-04-30,domestic_holding,BK historical Bank of New York Mellon listing
+NTRS,73124,2020-01-01,2020-04-30,domestic_holding,NTRS custodian parent
+STT,93751,2020-01-01,2020-04-30,domestic_holding,STT custodian parent
+Amex,4962,2020-01-01,2020-04-30,domestic_holding,AXP holding company
+COF,927628,2020-01-01,2020-04-30,domestic_holding,COF holding company
+DFS,1393612,2020-01-01,2020-04-30,domestic_holding,Historical DFS listing before acquisition by Capital One
+Ally,40729,2020-01-01,2020-04-30,domestic_holding,ALLY holding company
+CFG,759944,2020-01-01,2020-04-30,domestic_holding,CFG US holding company and historical RBS subsidiary
+FITB,35527,2020-01-01,2020-04-30,domestic_holding,FITB Fifth Third Bancorp
+HBAN,49196,2020-01-01,2020-04-30,domestic_holding,HBAN Huntington Bancshares
+KEY,91576,2020-01-01,2020-04-30,domestic_holding,KEY holding company
+MTB,36270,2020-01-01,2020-04-30,domestic_holding,MTB holding company
+PNC,713676,2020-01-01,2020-04-30,domestic_holding,PNC Financial Services Group
+RF,1281761,2020-01-01,2020-04-30,domestic_holding,RF holding company
+TFC,92230,2020-01-01,2020-04-30,domestic_holding,TFC surviving BB&T charter after 2019 SunTrust merger
+USBC,36104,2020-01-01,2020-04-30,domestic_holding,USB US Bancorp
+BBVA,842180,2020-01-01,2020-04-30,foreign_parent,BBVA listed Spanish parent before the 2021 sale of its US subsidiary to PNC
+BMO,927971,2020-01-01,2020-04-30,foreign_parent,BMO listed Canadian parent of BMO Financial Corp
+BCS,312069,2020-01-01,2020-04-30,foreign_parent,BCS listed UK parent of Barclays US
+CS,1159510,2020-01-01,2020-04-30,foreign_parent,CS historical equity CIK for Credit Suisse Group before UBS acquisition
+DB,1159508,2020-01-01,2020-04-30,foreign_parent,DB listed German parent of DB USA
+HSBC,1089113,2020-01-01,2020-04-30,foreign_parent,HSBC listed UK parent of HSBC North America
+MUFG,67088,2020-01-01,2020-04-30,foreign_parent,Listed Japanese parent of MUFG Americas and Union Bank; corpus can label the CIK MTU
+RBC,1000275,2020-01-01,2020-04-30,foreign_parent,RY listed Canadian parent of RBC US Group
+SAN,891478,2020-01-01,2020-04-30,foreign_parent,SAN listed Spanish parent of Santander Holdings USA
+SAN,811830,2020-01-01,2020-04-30,us_ihc,Santander Holdings USA listed preferred stock issuer
+TD,947263,2020-01-01,2020-04-30,foreign_parent,TD listed Canadian parent of TD Group US
+UBS,1610520,2020-01-01,2020-04-30,foreign_parent,UBS listed Swiss parent of UBS Americas

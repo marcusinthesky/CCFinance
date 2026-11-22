@@ -1,0 +1,41 @@
+tag,label,rationale
+s159,positive,Strong customer base and recognition as market leader.
+s245,positive,Golden cross and support signal a potential bullish breakout.
+s113,invalid span,AAP is a political party in this context.
+s098,negative,Commentary says WWE mishandled a potentially valuable star.
+s017,invalid span,iPhone Air is a product rather than a company.
+s247,negative,SAP faces a reported price fixing investigation and shares fell.
+s025,invalid span,ETF denotes a fund structure rather than a company.
+s030,positive,Gildan has a buy rating and stronger earnings revisions than its comparator.
+s373,invalid span,The reference is to a football team.
+s178,invalid span,An unnamed hedge fund is not a specific company mention.
+s278,invalid span,The entity is a research center.
+s339,mixed,Strong teen popularity contrasts with cash burn and losses.
+s308,positive,Better growth and lower risk support expected outperformance.
+s183,not assessable,Group results are mixed without identifying Oscar's result.
+s164,invalid span,FTSE 100 is a stock index.
+s356,invalid span,Biotech refers to an industry rather than a company.
+s037,invalid span,ROV refers to a remotely operated vehicle.
+s059,invalid span,The span refers generically to other companies.
+s126,invalid span,Labour Party is a political party.
+s226,invalid span,The span describes a watch component.
+s314,neutral,The excerpt describes the company's privacy commitments without a clear financial consequence.
+s078,mixed,Growth slowed markedly while merchant activity and transaction volume rose strongly.
+s273,invalid span,Talc is a mineral and product category.
+s064,neutral,A former executive's prior roles at Orthofix are described factually.
+s118,invalid span,Dow refers to a stock index.
+s116,invalid span,Company is an unidentified generic reference.
+s016,negative,REX alleges its listings are concealed behind primary results.
+s216,invalid span,Congress refers to a political party.
+s228,invalid span,Credit cards are financial products.
+s330,neutral,The excerpt lists Microsoft's scheduled earnings report.
+s305,invalid span,World powers refers to countries.
+s090,neutral,RadarOnline is cited as the source of a claim.
+s225,positive,Several jurisdictions have cleared DuPont's proposed merger.
+s083,invalid span,Scandium is a chemical element.
+s335,invalid span,Columbia Business School is an educational institution.
+s147,neutral,Reuters is mentioned in a website registration notice.
+s237,invalid span,NSF refers to national service personnel.
+s080,neutral,Zebra is listed in a free stock report link without a company specific assessment.
+s130,invalid span,Food industry refers to a sector.
+s260,invalid span,The span is an advertising slogan.

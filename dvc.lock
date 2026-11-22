@@ -1289,3 +1289,1431 @@ stages:
       md5: 92ff1edf1e8677e3a91ac32f0e9925c2.dir
       size: 38950
       nfiles: 90
+  entity_focus_sample:
+    cmd: mkdir -p data/processed/experiments/entity-focus && duckdb -bail <
+      src/python/apps/pipeline/src/pipeline/stages/processed/experiments/entity_focus.sql
+    deps:
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/experiments/company-links/sample
+      hash: md5
+      md5: cdac5e135aed4309a5cef137314f266e.dir
+      size: 2615094
+      nfiles: 2
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: data/research/coverage/pp_roster.parquet
+      hash: md5
+      md5: 4379b85e94cf06a7e965f8b724ad77a5
+      size: 2612
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/processed/experiments/entity_focus.sql
+      hash: md5
+      md5: 3d9f78f2718b13726ca0739ead57d79f
+      size: 3646
+    outs:
+    - path: data/processed/experiments/entity-focus/frame.csv
+      hash: md5
+      md5: b93c0e5cd231b4c9dcd724887cc53223
+      size: 217
+    - path: data/processed/experiments/entity-focus/manifest.csv
+      hash: md5
+      md5: 17cd83120088867ec09670dedff49685
+      size: 29266
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+  entity_focus_dev_references:
+    cmd: uv run --offline --frozen --project src/python pipeline stages
+      processed judge-entity-focus --split dev
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-entity-focus.json
+      hash: md5
+      md5: 67441a34798445763e0ba0f1f274571a
+      size: 8111
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+  entity_focus_dev_vectors@gemma:
+    cmd: bash infra/inference/entity-focus/encode.sh gemma dev
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-gemma
+      hash: md5
+      md5: 27f3cf50acafac104d1ccea23433caf9.dir
+      size: 1148841
+      nfiles: 100
+  entity_focus_dev_vectors@open:
+    cmd: bash infra/inference/entity-focus/encode.sh open dev
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-open
+      hash: md5
+      md5: 2defd0e33cf617d9c318bc5100d99b56.dir
+      size: 2802442
+      nfiles: 100
+  entity_focus_dev_vectors@qwen:
+    cmd: bash infra/inference/entity-focus/encode.sh qwen dev
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-qwen
+      hash: md5
+      md5: 25e0ddeb6224bb162e742d7d80f44c7d.dir
+      size: 1483466
+      nfiles: 100
+  entity_focus_dev_score:
+    cmd: uv run --offline --frozen --project src/python pipeline stages research
+      score-entity-focus --split dev
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/score-entity-focus.json
+      hash: md5
+      md5: 8c5e58581f1cd5a51e4096062fd15722
+      size: 4557
+    - path: data/processed/experiments/entity-focus/dev-gemma
+      hash: md5
+      md5: 27f3cf50acafac104d1ccea23433caf9.dir
+      size: 1148841
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-open
+      hash: md5
+      md5: 2defd0e33cf617d9c318bc5100d99b56.dir
+      size: 2802442
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-qwen
+      hash: md5
+      md5: 25e0ddeb6224bb162e742d7d80f44c7d.dir
+      size: 1483466
+      nfiles: 100
+    - path: data/processed/experiments/entity-focus/dev-references.json
+      hash: md5
+      md5: cd7cdf056f2a951d772f949ca8ccf474
+      size: 123181
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    outs:
+    - path: data/processed/experiments/entity-focus/dev-coverage.csv
+      hash: md5
+      md5: 1126a51bf371aafde9934a97eafc31ae
+      size: 9102
+    - path: data/processed/experiments/entity-focus/dev-margins.parquet
+      hash: md5
+      md5: 8ad997ac1e098820a30734c154443524
+      size: 17390
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+  entity_focus_test_references:
+    cmd: uv run --offline --frozen --project src/python pipeline stages
+      processed judge-entity-focus --split test
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/judge-entity-focus.json
+      hash: md5
+      md5: 67441a34798445763e0ba0f1f274571a
+      size: 8111
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    outs:
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+  entity_focus_test_vectors@open:
+    cmd: bash infra/inference/entity-focus/encode.sh open test
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/test-open
+      hash: md5
+      md5: 62ebf9193f47a39384061a1b34c1e74b.dir
+      size: 5459158
+      nfiles: 150
+  entity_focus_test_vectors@qwen:
+    cmd: bash infra/inference/entity-focus/encode.sh qwen test
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/test-qwen
+      hash: md5
+      md5: b927a60960cdcaae29e8a965b21eea33.dir
+      size: 2841630
+      nfiles: 150
+  entity_focus_test_vectors@gemma:
+    cmd: bash infra/inference/entity-focus/encode.sh gemma test
+      src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+    deps:
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    - path: infra/inference/entity-focus/encode.py
+      hash: md5
+      md5: 6c4923b42afba488a9f2dd7db281f5a0
+      size: 2460
+    - path: infra/inference/entity-focus/encode.sh
+      hash: md5
+      md5: 6c8cbeba013598b56de48cfff8f12f67
+      size: 880
+    - path: infra/inference/entity-focus/segments.py
+      hash: md5
+      md5: c1d7a721c8d01783bfbe3d29120656c0
+      size: 916
+    - path: infra/inference/entity-focus/setup.sh
+      hash: md5
+      md5: 1df503c53a74fe98f6665119c5af5321
+      size: 985
+    - path: infra/inference/entity-focus/vectors.py
+      hash: md5
+      md5: a593cd34d785704652262f432b86a12d
+      size: 4936
+    - path: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+      hash: md5
+      md5: 883ebf4972db6d1593eeb824879836a7
+      size: 2480
+    outs:
+    - path: data/processed/experiments/entity-focus/test-gemma
+      hash: md5
+      md5: 880c360e682c401a53a57101011ebc91.dir
+      size: 2471197
+      nfiles: 150
+  entity_focus_test_score:
+    cmd: uv run --offline --frozen --project src/python pipeline stages research
+      score-entity-focus --split test
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/score-entity-focus.json
+      hash: md5
+      md5: 8c5e58581f1cd5a51e4096062fd15722
+      size: 4557
+    - path: data/processed/experiments/entity-focus/sample.parquet
+      hash: md5
+      md5: 9f7f72d28ebd898912d70553478a1acd
+      size: 990999
+    - path: data/processed/experiments/entity-focus/selection.json
+      hash: md5
+      md5: 6fdad37dfaf3508ef23827d983f694f8
+      size: 79
+    - path: data/processed/experiments/entity-focus/test-gemma
+      hash: md5
+      md5: 880c360e682c401a53a57101011ebc91.dir
+      size: 2471197
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-open
+      hash: md5
+      md5: 62ebf9193f47a39384061a1b34c1e74b.dir
+      size: 5459158
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-qwen
+      hash: md5
+      md5: b927a60960cdcaae29e8a965b21eea33.dir
+      size: 2841630
+      nfiles: 150
+    - path: data/processed/experiments/entity-focus/test-references.json
+      hash: md5
+      md5: df9d090b5b154165ba608b480f40dc58
+      size: 237824
+    outs:
+    - path: data/research/experiments/entity-focus
+      hash: md5
+      md5: 4fb2dc2aca7aa79ed7949f8956dafa50.dir
+      size: 67835
+      nfiles: 4
+  entity_embedding_tables:
+    cmd: mkdir -p data/research/experiments/entity-paper && duckdb -bail <
+      src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+    deps:
+    - path: data/research/experiments/acquisition-roles/comparisons.parquet
+      hash: md5
+      md5: 87d6ab51be117c076d20def4b1ed1580
+      size: 11994
+    - path: data/research/experiments/entity-focus/comparison.csv
+      hash: md5
+      md5: ff38ae9010ff0eaf88a6016960cdd5a2
+      size: 16688
+    - path: data/research/experiments/entity-focus/decision.json
+      hash: md5
+      md5: 9c364109badd47c839b09346677eac74
+      size: 2129
+    - path: data/research/experiments/entity-pooling/report.parquet
+      hash: md5
+      md5: 0026e81ce1d5fe467eba7ee81c17de40
+      size: 3739
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+      hash: md5
+      md5: 50aefa14aac334724baa52ad64bc99cf
+      size: 1081
+    outs:
+    - path: data/research/experiments/entity-paper
+      hash: md5
+      md5: ff94295f3dc5a416d1c64a5dc2dae68e.dir
+      size: 2349
+      nfiles: 3
+  embed_article_bodies:
+    cmd: bash infra/inference/gemma-run.sh
+      data/processed/embeddinggemma-embeddings
+    deps:
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path: infra/inference/gemma-run.sh
+      hash: md5
+      md5: 0a883c31dc86a261d615d6ed3241f750
+      size: 1241
+      isexec: true
+    - path: infra/inference/gemma_embed.py
+      hash: md5
+      md5: b92e61358bf6fa7a400619af4c912abd
+      size: 8060
+    outs:
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+  verify_body_vectors:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed verify-body-vectors --source data/raw/fine-news --vectors
+      data/processed/embeddinggemma-embeddings --output
+      data/processed/body-vector-audit/summary.json
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/verify-body-vectors.json
+      hash: md5
+      md5: b7a051cebfc188ea1ed85794cbc0db7e
+      size: 2243
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/body-vector-audit/summary.json
+      hash: md5
+      md5: 9aad2ae4529ba857c36f1c0b5db646b5
+      size: 344
+  snapshot_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-baker-emv --window data/inputs/baker-emv/window.json --output
+      data/raw/experiments/baker-emv
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-baker-emv.json
+      hash: md5
+      md5: 6d898cc55af83fb89b7fb71769c2f0f6
+      size: 7334
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/raw/experiments/baker-emv
+      hash: md5
+      md5: 9dca11ae3fd93206d7cc4a283528dc9a.dir
+      size: 212175138
+      nfiles: 3
+  snapshot_lopez_prices:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      raw snapshot-lopez-prices --symbols
+      data/inputs/lopez-lira-tang/price-symbols.csv --output
+      data/raw/experiments/lopez-lira-tang
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-lopez-prices.json
+      hash: md5
+      md5: a605685cc0252f046b9170a324c04fa8
+      size: 4579
+    - path: data/inputs/lopez-lira-tang/price-symbols.csv
+      hash: md5
+      md5: a7d98ba677d1df97aa6eeace72a3caf7
+      size: 1491
+    outs:
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+  measure_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed measure-baker-emv --source data/raw/fine-news --articles
+      data/processed/articles/articles.parquet --hosts
+      data/inputs/baker-emv/hosts.csv --dictionary
+      data/inputs/baker-emv/dictionary.json --window
+      data/inputs/baker-emv/window.json --output
+      data/processed/experiments/baker-emv/news
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/measure-baker-emv.json
+      hash: md5
+      md5: 2bf22b891436e841bc46df0100f3a2d7
+      size: 3018
+    - path: data/inputs/baker-emv/dictionary.json
+      hash: md5
+      md5: 1dba39ff7807f1313639ec137f9c7897
+      size: 262
+    - path: data/inputs/baker-emv/hosts.csv
+      hash: md5
+      md5: 2278fdc2b537ebe3cae09ae85e55e858
+      size: 115
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/processed/experiments/baker-emv/news
+      hash: md5
+      md5: 94cdb55146c309ab205bc4b4c03c6183.dir
+      size: 16524204
+      nfiles: 2
+  prepare_baker_emv_market:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-baker-emv-market --source
+      data/raw/experiments/baker-emv/market.csv --window
+      data/inputs/baker-emv/window.json --output
+      data/processed/experiments/baker-emv/market
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-baker-emv-market.json
+      hash: md5
+      md5: 1504f42e6ea368180dcb154b6e2a1b02
+      size: 3077
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/raw/experiments/baker-emv/market.csv
+      hash: md5
+      md5: 718728be0eb51561d407ca6c5fcd8ead
+      size: 56778
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/processed/experiments/baker-emv/market
+      hash: md5
+      md5: 3ebe4136be6b1c7465e294793b21ff8f.dir
+      size: 25090
+      nfiles: 2
+  build_baker_emv_panel:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research build-baker-emv-panel --news
+      data/processed/experiments/baker-emv/news/publisher_month.parquet --market
+      data/processed/experiments/baker-emv/market/monthly_market.parquet
+      --window data/inputs/baker-emv/window.json --output
+      data/research/experiments/baker-emv/panel
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/build-baker-emv-panel.json
+      hash: md5
+      md5: e988c183f88fa8bbfc68e63d32c52fd8
+      size: 3303
+    - path: data/inputs/baker-emv/window.json
+      hash: md5
+      md5: de03d0b0cf27b42f03d2fedfac580498
+      size: 116
+    - path: data/processed/experiments/baker-emv/market/monthly_market.parquet
+      hash: md5
+      md5: 06f69fb3e90c3f766f82348410e585cc
+      size: 2205
+    - path: data/processed/experiments/baker-emv/news/publisher_month.parquet
+      hash: md5
+      md5: 3fd7e3447ef060298c975db36d52d914
+      size: 3965
+    params:
+      params.yaml:
+        experiments.baker_emv.window: data/inputs/baker-emv/window.json
+    outs:
+    - path: data/research/experiments/baker-emv/panel
+      hash: md5
+      md5: 3235dd063ffdef1e5eb10cc0c57aa192.dir
+      size: 16315
+      nfiles: 2
+  report_baker_emv:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-baker-emv --panel
+      data/research/experiments/baker-emv/panel --output
+      data/research/experiments/baker-emv/report && SOURCE_DATE_EPOCH=0 just
+      latex::render data/research/experiments/baker-emv/report/vix.tex &&
+      SOURCE_DATE_EPOCH=0 just latex::render
+      data/research/experiments/baker-emv/report/realized_volatility.tex
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-baker-emv.json
+      hash: md5
+      md5: e20652850641190cc4b4126375100dea
+      size: 7093
+    - path: data/research/experiments/baker-emv/panel
+      hash: md5
+      md5: 3235dd063ffdef1e5eb10cc0c57aa192.dir
+      size: 16315
+      nfiles: 2
+    - path: src/latex/justfile
+      hash: md5
+      md5: 149e6f35dca12f73d342a4e998965777
+      size: 1320
+    outs:
+    - path: data/research/experiments/baker-emv/report
+      hash: md5
+      md5: 0040ed9744692a0ca72bfacbfbbd1126.dir
+      size: 92171
+      nfiles: 9
+  prepare_kazinnik_banks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-kazinnik-banks --articles
+      data/processed/articles/articles.parquet --links
+      data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet --inputs
+      data/inputs/kazinnik-banks --output
+      data/processed/experiments/kazinnik-banks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+      hash: md5
+      md5: 2604ee71c5ec2ea51ffd06249922fcda
+      size: 2006
+    - path: data/inputs/kazinnik-banks/crosswalk.csv
+      hash: md5
+      md5: a27357553c7b3ab0143141f23d7c8d8b
+      size: 2935
+    - path: data/inputs/kazinnik-banks/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/windows.csv
+      hash: md5
+      md5: 05c8369651f9d07398a485ab822aa1ab
+      size: 186
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/processed/experiments/kazinnik-banks
+      hash: md5
+      md5: b553a62059cbb71408e12952ba0c0510.dir
+      size: 3467137
+      nfiles: 2
+  report_kazinnik_banks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-kazinnik-banks --source
+      data/processed/experiments/kazinnik-banks --inputs
+      data/inputs/kazinnik-banks --output
+      data/research/experiments/kazinnik-banks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-banks.json
+      hash: md5
+      md5: 5ada6ca3be9128a5c8b80e2886a18dc9
+      size: 4684
+    - path: data/inputs/kazinnik-banks/crosswalk.csv
+      hash: md5
+      md5: a27357553c7b3ab0143141f23d7c8d8b
+      size: 2935
+    - path: data/inputs/kazinnik-banks/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/windows.csv
+      hash: md5
+      md5: 05c8369651f9d07398a485ab822aa1ab
+      size: 186
+    - path: data/processed/experiments/kazinnik-banks
+      hash: md5
+      md5: b553a62059cbb71408e12952ba0c0510.dir
+      size: 3467137
+      nfiles: 2
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/research/experiments/kazinnik-banks
+      hash: md5
+      md5: 7a319e94f50ac97360135c04362c3a0a.dir
+      size: 12429752
+      nfiles: 18
+  prepare_lopez_events:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-events --raw data/raw/fine-news --articles
+      data/processed/articles --links data/processed/company-links --issuers
+      data/processed/issuers --calendar data/inputs/lopez-lira-tang/sessions.csv
+      --output data/processed/experiments/lopez-lira-tang-events
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-events.json
+      hash: md5
+      md5: 4daa0e76383d9585f05eeaf52ae80632
+      size: 11984
+    - path: data/inputs/lopez-lira-tang/sessions.csv
+      hash: md5
+      md5: e0c9a357fe2667daec5d9bd123cada41
+      size: 17199
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
+      nfiles: 2954
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.lopez_lira_tang.calendar:
+          data/inputs/lopez-lira-tang/sessions.csv
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+  prepare_lopez_sample:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-sample --events
+      data/processed/experiments/lopez-lira-tang-events --prices
+      data/raw/experiments/lopez-lira-tang --vectors
+      data/processed/embeddinggemma-embeddings --output
+      data/processed/experiments/lopez-lira-tang-sample
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-sample.json
+      hash: md5
+      md5: 68b6b4e252c1d0841a47d14dd1ac6703
+      size: 8547
+    - path: data/processed/body-vector-audit/summary.json
+      hash: md5
+      md5: 9aad2ae4529ba857c36f1c0b5db646b5
+      size: 344
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+  fit_lopez_probes:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen --package
+      ccfinance-pipeline pipeline stages research fit-lopez-probes --sample
+      data/processed/experiments/lopez-lira-tang-sample --output
+      data/research/experiments/lopez-lira-tang-probes
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/fit-lopez-probes.json
+      hash: md5
+      md5: ec69a186764175333c48eae0479c6872
+      size: 7736
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 68cb180fe4785dd8410b69b153542c8b
+      size: 279778
+    outs:
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+  report_lopez_portfolios:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-lopez-portfolios --sample
+      data/processed/experiments/lopez-lira-tang-sample --probes
+      data/research/experiments/lopez-lira-tang-probes --output
+      data/research/experiments/lopez-lira-tang && SOURCE_DATE_EPOCH=0 just
+      latex::render
+      data/research/experiments/lopez-lira-tang/portfolio_figure.tex
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-portfolios.json
+      hash: md5
+      md5: 639efebc98ac7377de960630dd2ec23c
+      size: 4544
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+    - path: src/latex/justfile
+      hash: md5
+      md5: 149e6f35dca12f73d342a4e998965777
+      size: 1320
+    outs:
+    - path: data/research/experiments/lopez-lira-tang
+      hash: md5
+      md5: 12e2675614f30e00060f1b05406da55a.dir
+      size: 405690
+      nfiles: 11
+  audit_lopez_publisher_support:
+    cmd: mkdir -p data/research/experiments/lopez-publisher-support && duckdb
+      -bail <
+      src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
+    deps:
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+    - path: data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      hash: md5
+      md5: a1b6708141d9559b7367bf9a6cafb304
+      size: 2002852
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
+      hash: md5
+      md5: 9e3f1ffde110b05dc779b39520bbb9a7
+      size: 5484
+    outs:
+    - path: data/research/experiments/lopez-publisher-support
+      hash: md5
+      md5: 9e2d8d7a1fdf676ce1fc31bf78e2ebb9.dir
+      size: 1042499
+      nfiles: 6
+  compare_baker_tracking:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research compare-baker-tracking --panel
+      data/research/experiments/baker-emv/panel --archive
+      data/raw/experiments/baker-emv/replication.rar --output
+      data/research/experiments/baker-emv/paired-tracking
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/compare-baker-tracking.json
+      hash: md5
+      md5: a2bc136002d922e55ee48e2a4257ea0c
+      size: 9193
+    - path: data/raw/experiments/baker-emv/replication.rar
+      hash: md5
+      md5: cb029604ff40ec4261fccbebe58c6ee8
+      size: 212117658
+    - path: data/research/experiments/baker-emv/panel/coverage.parquet
+      hash: md5
+      md5: 2d33e0e0a0ce5d0bcb7de8b8b8c38c01
+      size: 8508
+    - path: data/research/experiments/baker-emv/panel/monthly_panel.parquet
+      hash: md5
+      md5: 3e18d76dfa6c6863763c7a4c2ea9e287
+      size: 7807
+    outs:
+    - path: data/research/experiments/baker-emv/paired-tracking
+      hash: md5
+      md5: d746e35f65f865938b962a19ac56d6e0.dir
+      size: 29991
+      nfiles: 5
+  prepare_kazinnik_matched_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-kazinnik-matched-weeks --articles
+      data/processed/articles/articles.parquet --links
+      data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet --inputs
+      data/inputs/kazinnik-banks --output
+      data/processed/experiments/kazinnik-matched-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-matched-weeks.json
+      hash: md5
+      md5: e81e6c50af6829221de321c43f8e07fb
+      size: 4718
+    - path: data/inputs/kazinnik-banks/crosswalk.csv
+      hash: md5
+      md5: a27357553c7b3ab0143141f23d7c8d8b
+      size: 2935
+    - path: data/inputs/kazinnik-banks/matched-weeks.csv
+      hash: md5
+      md5: 7d4763d0a4c6be7be512f2123cd6d3f0
+      size: 418
+    - path: data/inputs/kazinnik-banks/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/processed/experiments/kazinnik-matched-weeks
+      hash: md5
+      md5: d98825adcd3548b2f53d3ab798e13156.dir
+      size: 2734110
+      nfiles: 2
+  report_kazinnik_matched_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-kazinnik-matched-weeks --source
+      data/processed/experiments/kazinnik-matched-weeks --inputs
+      data/inputs/kazinnik-banks --output
+      data/research/experiments/kazinnik-matched-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+      hash: md5
+      md5: 73be371180f5fd311795611b28de87a1
+      size: 4532
+    - path: data/inputs/kazinnik-banks/matched-weeks.csv
+      hash: md5
+      md5: 7d4763d0a4c6be7be512f2123cd6d3f0
+      size: 418
+    - path: data/processed/experiments/kazinnik-matched-weeks
+      hash: md5
+      md5: d98825adcd3548b2f53d3ab798e13156.dir
+      size: 2734110
+      nfiles: 2
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/research/experiments/kazinnik-matched-weeks
+      hash: md5
+      md5: 5869d088f4c003c9c64007fed94f7d81.dir
+      size: 14049
+      nfiles: 4
+  project_lopez_titles:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed project-lopez-titles --sample
+      data/processed/experiments/lopez-lira-tang-sample --output
+      data/processed/experiments/lopez-lira-tang-titles
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/project-lopez-titles.json
+      hash: md5
+      md5: b126b414c929a8cb06a683616d85dc91
+      size: 1989
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-titles
+      hash: md5
+      md5: ed05f2e1c34a609606571b9bc548a30a.dir
+      size: 85230
+      nfiles: 1
+  embed_lopez_gemma_titles:
+    cmd: ARTICLE_SOURCE=data/processed/experiments/lopez-lira-tang-titles bash
+      infra/inference/gemma-run.sh
+      data/processed/experiments/lopez-lira-tang-title-gemma
+    deps:
+    - path: data/processed/experiments/lopez-lira-tang-titles
+      hash: md5
+      md5: ed05f2e1c34a609606571b9bc548a30a.dir
+      size: 85230
+      nfiles: 1
+    - path: infra/inference/gemma-run.sh
+      hash: md5
+      md5: 0a883c31dc86a261d615d6ed3241f750
+      size: 1241
+      isexec: true
+    - path: infra/inference/gemma_embed.py
+      hash: md5
+      md5: b92e61358bf6fa7a400619af4c912abd
+      size: 8060
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-title-gemma
+      hash: md5
+      md5: e9ff8b68afba2c87a6e642746632709b.dir
+      size: 1588481
+      nfiles: 2
+  embed_lopez_minilm_titles:
+    cmd: bash infra/inference/minilm-run.sh
+      data/processed/experiments/lopez-lira-tang-titles
+      data/processed/experiments/lopez-lira-tang-title-minilm
+    deps:
+    - path: data/processed/experiments/lopez-lira-tang-titles
+      hash: md5
+      md5: ed05f2e1c34a609606571b9bc548a30a.dir
+      size: 85230
+      nfiles: 1
+    - path: infra/inference/minilm-model.sha256
+      hash: md5
+      md5: 86cc4a40e7476686e0303d7882ab8efe
+      size: 756
+    - path: infra/inference/minilm-run.sh
+      hash: md5
+      md5: 259a3a0607327b910d45b4fed5009fbf
+      size: 724
+    - path: infra/inference/minilm_embed.py
+      hash: md5
+      md5: 8cabc7de79dfbdeeb1249eae8e33dca4
+      size: 2047
+    outs:
+    - path: data/processed/experiments/lopez-lira-tang-title-minilm
+      hash: md5
+      md5: 56159486413e5ee9270dc2fdf1d1b4f8.dir
+      size: 2193721
+      nfiles: 1
+  report_lopez_title_probes:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen --package
+      ccfinance-pipeline pipeline stages research report-lopez-title-probes
+      --sample data/processed/experiments/lopez-lira-tang-sample --gemma
+      data/processed/experiments/lopez-lira-tang-title-gemma --minilm
+      data/processed/experiments/lopez-lira-tang-title-minilm --output
+      data/research/experiments/lopez-lira-tang-title-probes
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-title-probes.json
+      hash: md5
+      md5: b30d7cf37d957f527624a7eca7f9ff40
+      size: 13644
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: data/processed/experiments/lopez-lira-tang-title-gemma
+      hash: md5
+      md5: e9ff8b68afba2c87a6e642746632709b.dir
+      size: 1588481
+      nfiles: 2
+    - path: data/processed/experiments/lopez-lira-tang-title-minilm
+      hash: md5
+      md5: 56159486413e5ee9270dc2fdf1d1b4f8.dir
+      size: 2193721
+      nfiles: 1
+    - path: src/python/uv.lock
+      hash: md5
+      md5: 68cb180fe4785dd8410b69b153542c8b
+      size: 279778
+    outs:
+    - path: data/research/experiments/lopez-lira-tang-title-probes
+      hash: md5
+      md5: 50a447eae558ee189d7763c34d4a8b93.dir
+      size: 2439165
+      nfiles: 9
+  prepare_kazinnik_extended_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-kazinnik-banks --articles
+      data/processed/articles/articles.parquet --links
+      data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet --inputs
+      data/inputs/kazinnik-banks/extended --output
+      data/processed/experiments/kazinnik-extended-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+      hash: md5
+      md5: 2604ee71c5ec2ea51ffd06249922fcda
+      size: 2006
+    - path: data/inputs/kazinnik-banks/extended/crosswalk.csv
+      hash: md5
+      md5: 31f65f9318239e8ec981f73bfafbafb2
+      size: 2832
+    - path: data/inputs/kazinnik-banks/extended/roster.csv
+      hash: md5
+      md5: 1deab473877b2764042e124f0b99f313
+      size: 990
+    - path: data/inputs/kazinnik-banks/extended/windows.csv
+      hash: md5
+      md5: 327f1b5c6f1ad46853f8940e9e02bf5e
+      size: 862
+    - path: data/processed/articles/articles.parquet
+      hash: md5
+      md5: 1464dbed47957965f32b768a99bab15a
+      size: 490062789
+    - path: data/processed/company-links/articles
+      hash: md5
+      md5: 3dbb2174d4038effff10336b86801a93.dir
+      size: 1013219153
+      nfiles: 984
+    - path: data/processed/issuers/issuers.parquet
+      hash: md5
+      md5: 974fec279bc4c32410a5b4587c795590
+      size: 120344
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/processed/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: c2772223944c48f270279853ae812a18.dir
+      size: 4924952
+      nfiles: 2
+  report_kazinnik_extended_weeks:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      research report-kazinnik-matched-weeks --source
+      data/processed/experiments/kazinnik-extended-weeks --inputs
+      data/inputs/kazinnik-banks/extended --output
+      data/research/experiments/kazinnik-extended-weeks
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+      hash: md5
+      md5: 73be371180f5fd311795611b28de87a1
+      size: 4532
+    - path: data/inputs/kazinnik-banks/extended/matched-weeks.csv
+      hash: md5
+      md5: 327f1b5c6f1ad46853f8940e9e02bf5e
+      size: 862
+    - path: data/processed/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: c2772223944c48f270279853ae812a18.dir
+      size: 4924952
+      nfiles: 2
+    params:
+      params.yaml:
+        experiments.kazinnik_banks.protocol: data/inputs/kazinnik-banks
+    outs:
+    - path: data/research/experiments/kazinnik-extended-weeks
+      hash: md5
+      md5: 843cab7f92e627f99d60d5eb5f8afe63.dir
+      size: 36119
+      nfiles: 4
+  report_lopez_drift_costs:
+    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail <
+      src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
+    deps:
+    - path:
+        data/research/experiments/lopez-lira-tang-title-probes/paired_days.csv
+      hash: md5
+      md5: 56708932001d1d9bc718da8bdb2456f1
+      size: 408867
+    - path:
+        data/research/experiments/lopez-lira-tang-title-probes/portfolios.csv
+      hash: md5
+      md5: 89213cb41486616efc6f16bd35e134a8
+      size: 1402
+    - path:
+        src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
+      hash: md5
+      md5: ea1c92ad0d8bad5cb0507fc0bd372210
+      size: 1430
+    outs:
+    - path: data/research/experiments/lopez-drift-costs
+      hash: md5
+      md5: eca168bfd4dd70851949b0720212b688.dir
+      size: 1263
+      nfiles: 1
+  prepare_lopez_recovered:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
+      src/python --offline --frozen --package ccfinance-pipeline pipeline stages
+      processed prepare-lopez-recovered
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-recovered.json
+      hash: md5
+      md5: bc2dd71248aa7fb9e9f29302a0a58c54
+      size: 14492
+    - path: data/processed/articles
+      hash: md5
+      md5: 401d21de164386c0e17c667f8b924ae8.dir
+      size: 490063112
+      nfiles: 2
+    - path: data/processed/company-links
+      hash: md5
+      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
+      size: 5374769724
+      nfiles: 2954
+    - path: data/processed/embeddinggemma-embeddings
+      hash: md5
+      md5: 68fad30a7cff964595d800d7a7175ff0.dir
+      size: 23614361622
+      nfiles: 985
+    - path: data/processed/experiments/lopez-lira-tang-events
+      hash: md5
+      md5: ef14e5bc1e2e7859483c3997985c42c2.dir
+      size: 19261071
+      nfiles: 5
+    - path: data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      hash: md5
+      md5: a1b6708141d9559b7367bf9a6cafb304
+      size: 2002852
+    - path: data/processed/issuers
+      hash: md5
+      md5: bfa9c78837a23511f18cae2d16a20104.dir
+      size: 638369
+      nfiles: 4
+    - path: data/raw/experiments/lopez-lira-tang
+      hash: md5
+      md5: fb64e3e128aeee6b576ada764cfc0932.dir
+      size: 25772292
+      nfiles: 351
+    - path: data/raw/fine-news
+      hash: md5
+      md5: 3cd438d50a74f30d54d6eb854642e69b.dir
+      size: 20100099064
+      nfiles: 169
+    outs:
+    - path: data/processed/experiments/lopez-recovered-events
+      hash: md5
+      md5: de5a24743eb0a0e129d46e316d172328.dir
+      size: 19768054
+      nfiles: 5
+    - path: data/processed/experiments/lopez-recovered-sample
+      hash: md5
+      md5: f2e50e071e2274fe8ead83fe5741a14c.dir
+      size: 5147245
+      nfiles: 6
+  report_lopez_recovered:
+    cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1
+      OMP_NUM_THREADS=1 uv run --project src/python --offline --frozen --package
+      ccfinance-pipeline pipeline stages research report-lopez-recovered
+    deps:
+    - path:
+        .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-recovered.json
+      hash: md5
+      md5: 534ac8322d5829be098aefad9ddb80fd
+      size: 13041
+    - path: data/processed/experiments/lopez-lira-tang-sample
+      hash: md5
+      md5: 47cbaa760c32db5fbd4844af700fedf8.dir
+      size: 3472472
+      nfiles: 6
+    - path: data/processed/experiments/lopez-recovered-events/recovered.parquet
+      hash: md5
+      md5: 8127ab1743f8c092caf879e2bceace97
+      size: 395429
+    - path: data/processed/experiments/lopez-recovered-sample
+      hash: md5
+      md5: f2e50e071e2274fe8ead83fe5741a14c.dir
+      size: 5147245
+      nfiles: 6
+    - path: data/research/experiments/lopez-lira-tang-probes
+      hash: md5
+      md5: 6e62d82ea302924b26dcd91d45535d76.dir
+      size: 461814
+      nfiles: 2
+    - path: data/research/experiments/lopez-lira-tang/drift.csv
+      hash: md5
+      md5: f4c88ff6f60ce5e97d773f3561af605b
+      size: 527
+    outs:
+    - path: data/research/experiments/lopez-recovered
+      hash: md5
+      md5: 44f30113fbde8acb2750df13078f9316.dir
+      size: 3080023
+      nfiles: 7

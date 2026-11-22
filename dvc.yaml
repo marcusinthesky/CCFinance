@@ -23,7 +23,34 @@
 # independent evaluation labels and quality reports as versioned supporting
 # artifacts; they inform promotion between layers rather than forming a data tier.
 
+vars:
+  - entity_templates: src/python/apps/pipeline/src/pipeline/experiments/entity_focus.py
+
 stages:
+  embed_article_bodies:
+    desc: Encode frozen Fine News article bodies with the pinned EmbeddingGemma GPU worker.
+    cmd: bash infra/inference/gemma-run.sh data/processed/embeddinggemma-embeddings
+    deps:
+      - data/raw/fine-news
+      - infra/inference/gemma-run.sh
+      - infra/inference/gemma_embed.py
+    outs:
+      - data/processed/embeddinggemma-embeddings:
+          persist: true
+
+  verify_body_vectors:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      verify-body-vectors --source data/raw/fine-news --vectors data/processed/embeddinggemma-embeddings
+      --output data/processed/body-vector-audit/summary.json
+    deps:
+      - data/raw/fine-news
+      - data/processed/embeddinggemma-embeddings
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/verify-body-vectors.json
+    metrics:
+      - data/processed/body-vector-audit/summary.json
+
   filter_fine_news:
     desc: Reproduce the historical English financial-publisher selection from Fine News.
     # Published monthly shards are restored here; provenance.json records their
@@ -581,3 +608,524 @@ stages:
     outs:
       - data/processed/experiments/article-metadata/pilot-labels:
           persist: true
+
+  entity_focus_sample:
+    cmd: mkdir -p data/processed/experiments/entity-focus && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/processed/experiments/entity_focus.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/processed/experiments/entity_focus.sql
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/research/coverage/pp_roster.parquet
+      - data/processed/experiments/company-links/sample
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+    outs:
+      - data/processed/experiments/entity-focus/sample.parquet:
+          push: false
+      - data/processed/experiments/entity-focus/manifest.csv:
+          push: false
+      - data/processed/experiments/entity-focus/frame.csv:
+          push: false
+
+  entity_focus_dev_references:
+    cmd: uv run --offline --frozen --project src/python pipeline stages processed judge-entity-focus --split dev
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/judge-entity-focus.json
+      - data/processed/experiments/entity-focus/sample.parquet
+    outs:
+      - data/processed/experiments/entity-focus/dev-references.json:
+          push: false
+
+  entity_focus_dev_vectors:
+    foreach: [open, qwen, gemma]
+    do:
+      cmd: bash infra/inference/entity-focus/encode.sh ${item} dev ${entity_templates}
+      deps:
+        - infra/inference/entity-focus/encode.sh
+        - infra/inference/entity-focus/vectors.py
+        - ${entity_templates}
+        - infra/inference/entity-focus/encode.py
+        - infra/inference/entity-focus/segments.py
+        - infra/inference/entity-focus/setup.sh
+        - data/processed/experiments/entity-focus/sample.parquet
+        - data/processed/experiments/entity-focus/dev-references.json
+      outs:
+        - data/processed/experiments/entity-focus/dev-${item}:
+            push: false
+
+  entity_focus_dev_score:
+    cmd: uv run --offline --frozen --project src/python pipeline stages research score-entity-focus --split dev
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/research/score-entity-focus.json
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/dev-references.json
+      - data/processed/experiments/entity-focus/dev-open
+      - data/processed/experiments/entity-focus/dev-qwen
+      - data/processed/experiments/entity-focus/dev-gemma
+    outs:
+      - data/processed/experiments/entity-focus/selection.json:
+          push: false
+      - data/processed/experiments/entity-focus/dev-margins.parquet:
+          push: false
+      - data/processed/experiments/entity-focus/dev-coverage.csv:
+          push: false
+
+  entity_focus_test_references:
+    cmd: uv run --offline --frozen --project src/python pipeline stages processed judge-entity-focus --split test
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/judge-entity-focus.json
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/selection.json
+    outs:
+      - data/processed/experiments/entity-focus/test-references.json:
+          push: false
+
+  entity_focus_test_vectors:
+    foreach: [open, qwen, gemma]
+    do:
+      cmd: bash infra/inference/entity-focus/encode.sh ${item} test ${entity_templates}
+      deps:
+        - infra/inference/entity-focus/encode.sh
+        - infra/inference/entity-focus/vectors.py
+        - ${entity_templates}
+        - infra/inference/entity-focus/encode.py
+        - infra/inference/entity-focus/segments.py
+        - infra/inference/entity-focus/setup.sh
+        - data/processed/experiments/entity-focus/sample.parquet
+        - data/processed/experiments/entity-focus/test-references.json
+        - data/processed/experiments/entity-focus/selection.json
+      outs:
+        - data/processed/experiments/entity-focus/test-${item}:
+            push: false
+
+  entity_focus_test_score:
+    cmd: uv run --offline --frozen --project src/python pipeline stages research score-entity-focus --split test
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/research/score-entity-focus.json
+      - data/processed/experiments/entity-focus/sample.parquet
+      - data/processed/experiments/entity-focus/test-references.json
+      - data/processed/experiments/entity-focus/test-open
+      - data/processed/experiments/entity-focus/test-qwen
+      - data/processed/experiments/entity-focus/test-gemma
+      - data/processed/experiments/entity-focus/selection.json
+    outs:
+      - data/research/experiments/entity-focus:
+          push: false
+
+  entity_embedding_tables:
+    desc: Rebuild the main entity-focus table and both appendix tables from local scores.
+    cmd: mkdir -p data/research/experiments/entity-paper && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/entity_tables.sql
+      - data/research/experiments/entity-focus/comparison.csv
+      - data/research/experiments/entity-focus/decision.json
+      - data/research/experiments/acquisition-roles/comparisons.parquet
+      - data/research/experiments/entity-pooling/report.parquet
+    outs:
+      - data/research/experiments/entity-paper:
+          push: false
+
+  snapshot_baker_emv:
+    desc: Snapshot the verified authors' replication archive and FRED daily market closes.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages raw snapshot-baker-emv
+      --window ${experiments.baker_emv.window} --output data/raw/experiments/baker-emv
+    frozen: true
+    params:
+      - experiments.baker_emv.window
+    deps:
+      - ${experiments.baker_emv.window}
+      - .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-baker-emv.json
+    outs:
+      - data/raw/experiments/baker-emv
+
+  measure_baker_emv:
+    desc: Count dictionary hits for consistently dated canonical articles by publisher and month.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed measure-baker-emv
+      --source data/raw/fine-news --articles data/processed/articles/articles.parquet
+      --hosts data/inputs/baker-emv/hosts.csv --dictionary data/inputs/baker-emv/dictionary.json
+      --window ${experiments.baker_emv.window} --output data/processed/experiments/baker-emv/news
+    params:
+      - experiments.baker_emv.window
+    deps:
+      - data/raw/fine-news
+      - data/processed/articles/articles.parquet
+      - data/inputs/baker-emv/hosts.csv
+      - data/inputs/baker-emv/dictionary.json
+      - ${experiments.baker_emv.window}
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/measure-baker-emv.json
+    outs:
+      - data/processed/experiments/baker-emv/news
+
+  prepare_baker_emv_market:
+    desc: Aggregate daily VIX and S&P 500 closes to monthly volatility observations.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed prepare-baker-emv-market
+      --source data/raw/experiments/baker-emv/market.csv --window ${experiments.baker_emv.window}
+      --output data/processed/experiments/baker-emv/market
+    params:
+      - experiments.baker_emv.window
+    deps:
+      - data/raw/experiments/baker-emv/market.csv
+      - ${experiments.baker_emv.window}
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-baker-emv-market.json
+    outs:
+      - data/processed/experiments/baker-emv/market
+
+  build_baker_emv_panel:
+    desc: Calibrate publisher hit shares, join monthly market volatility and create calendar lags.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research build-baker-emv-panel
+      --news data/processed/experiments/baker-emv/news/publisher_month.parquet
+      --market data/processed/experiments/baker-emv/market/monthly_market.parquet
+      --window ${experiments.baker_emv.window} --output data/research/experiments/baker-emv/panel
+    params:
+      - experiments.baker_emv.window
+    deps:
+      - data/processed/experiments/baker-emv/news/publisher_month.parquet
+      - data/processed/experiments/baker-emv/market/monthly_market.parquet
+      - ${experiments.baker_emv.window}
+      - .semflow/hashes/entrypoints/pipeline/stages/research/build-baker-emv-panel.json
+    outs:
+      - data/research/experiments/baker-emv/panel
+
+  report_baker_emv:
+    desc: Estimate six monthly Table 1 models with Newey–West standard errors and coverage sensitivity.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research report-baker-emv
+      --panel data/research/experiments/baker-emv/panel --output data/research/experiments/baker-emv/report
+      && SOURCE_DATE_EPOCH=0 just latex::render data/research/experiments/baker-emv/report/vix.tex
+      && SOURCE_DATE_EPOCH=0 just latex::render data/research/experiments/baker-emv/report/realized_volatility.tex
+    deps:
+      - src/latex/justfile
+      - data/research/experiments/baker-emv/panel
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-baker-emv.json
+    outs:
+      - data/research/experiments/baker-emv/report
+
+  prepare_kazinnik_banks:
+    desc: Join dated CCFinance articles and resolved company links to the bank roster.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-kazinnik-banks --articles data/processed/articles/articles.parquet
+      --links data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/processed/experiments/kazinnik-banks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+      - ${experiments.kazinnik_banks.protocol}/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/windows.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+    outs:
+      - data/processed/experiments/kazinnik-banks
+  report_kazinnik_banks:
+    desc: Estimate earnings-week and full-month bank networks and their sensitivities.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-kazinnik-banks --source data/processed/experiments/kazinnik-banks
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/research/experiments/kazinnik-banks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/experiments/kazinnik-banks
+      - ${experiments.kazinnik_banks.protocol}/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/windows.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-banks.json
+    outs:
+      - data/research/experiments/kazinnik-banks
+
+  prepare_lopez_events:
+    desc: Screen captured overnight news and retain dated listing and timing evidence.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed prepare-lopez-events
+      --raw data/raw/fine-news --articles data/processed/articles --links data/processed/company-links --issuers data/processed/issuers
+      --calendar ${experiments.lopez_lira_tang.calendar} --output data/processed/experiments/lopez-lira-tang-events
+    params:
+      - experiments.lopez_lira_tang.calendar
+    deps:
+      - data/raw/fine-news
+      - data/processed/articles
+      - data/processed/company-links
+      - data/processed/issuers
+      - ${experiments.lopez_lira_tang.calendar}
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-events.json
+    outs:
+      - data/processed/experiments/lopez-lira-tang-events
+
+  prepare_lopez_sample:
+    desc: Join frozen public-market bars and verified body embeddings with the overnight events.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed prepare-lopez-sample
+      --events data/processed/experiments/lopez-lira-tang-events --prices data/raw/experiments/lopez-lira-tang
+      --vectors data/processed/embeddinggemma-embeddings --output data/processed/experiments/lopez-lira-tang-sample
+    deps:
+      - data/processed/experiments/lopez-lira-tang-events
+      - data/raw/experiments/lopez-lira-tang
+      - data/processed/embeddinggemma-embeddings
+      - data/processed/body-vector-audit/summary.json
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-sample.json
+    outs:
+      - data/processed/experiments/lopez-lira-tang-sample
+
+  fit_lopez_probes:
+    desc: Fit six-month rolling monthly logistic probes separately for reaction and drift.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research fit-lopez-probes
+      --sample data/processed/experiments/lopez-lira-tang-sample --output data/research/experiments/lopez-lira-tang-probes
+    deps:
+      - src/python/uv.lock
+      - data/processed/experiments/lopez-lira-tang-sample
+      - .semflow/hashes/entrypoints/pipeline/stages/research/fit-lopez-probes.json
+    outs:
+      - data/research/experiments/lopez-lira-tang-probes
+
+  report_lopez_portfolios:
+    desc: Report separate reaction and drift portfolios, exposures, and model support from saved predictions.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research report-lopez-portfolios
+      --sample data/processed/experiments/lopez-lira-tang-sample --probes data/research/experiments/lopez-lira-tang-probes
+      --output data/research/experiments/lopez-lira-tang
+      && SOURCE_DATE_EPOCH=0 just latex::render data/research/experiments/lopez-lira-tang/portfolio_figure.tex
+    deps:
+      - src/latex/justfile
+      - data/processed/experiments/lopez-lira-tang-sample
+      - data/research/experiments/lopez-lira-tang-probes
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-portfolios.json
+    outs:
+      - data/research/experiments/lopez-lira-tang
+
+  snapshot_lopez_prices:
+    desc: Preserve frozen daily Yahoo equity chart responses, corporate actions, and request vintage.
+    frozen: true
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages raw snapshot-lopez-prices
+      --symbols data/inputs/lopez-lira-tang/price-symbols.csv --output data/raw/experiments/lopez-lira-tang
+    deps:
+      - data/inputs/lopez-lira-tang/price-symbols.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/raw/snapshot-lopez-prices.json
+    outs:
+      - data/raw/experiments/lopez-lira-tang
+
+  audit_lopez_publisher_support:
+    desc: Screen publisher opportunities within the fixed issuer universe and inspect first-publication evidence.
+    cmd: mkdir -p data/research/experiments/lopez-publisher-support && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/publisher_support.sql
+      - data/processed/experiments/lopez-lira-tang-events
+      - data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/raw/fine-news
+    outs:
+      - data/research/experiments/lopez-publisher-support
+
+  compare_baker_tracking:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research compare-baker-tracking
+      --panel data/research/experiments/baker-emv/panel
+      --archive data/raw/experiments/baker-emv/replication.rar
+      --output data/research/experiments/baker-emv/paired-tracking
+    deps:
+      - data/research/experiments/baker-emv/panel/monthly_panel.parquet
+      - data/research/experiments/baker-emv/panel/coverage.parquet
+      - data/raw/experiments/baker-emv/replication.rar
+      - .semflow/hashes/entrypoints/pipeline/stages/research/compare-baker-tracking.json
+    outs:
+      - data/research/experiments/baker-emv/paired-tracking
+
+  prepare_kazinnik_matched_weeks:
+    desc: Join the frozen bank roster to articles in predefined earnings weeks.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-kazinnik-matched-weeks --articles data/processed/articles/articles.parquet
+      --links data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/processed/experiments/kazinnik-matched-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+      - ${experiments.kazinnik_banks.protocol}/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-matched-weeks.json
+    outs:
+      - data/processed/experiments/kazinnik-matched-weeks
+
+  report_kazinnik_matched_weeks:
+    desc: Compare publisher- and volume-matched bank networks and placebo changes.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-kazinnik-matched-weeks --source data/processed/experiments/kazinnik-matched-weeks
+      --inputs ${experiments.kazinnik_banks.protocol} --output data/research/experiments/kazinnik-matched-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/experiments/kazinnik-matched-weeks
+      - ${experiments.kazinnik_banks.protocol}/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+    outs:
+      - data/research/experiments/kazinnik-matched-weeks
+  project_lopez_titles:
+    desc: Project the captured title of each fixed López-Lira–Tang sample article.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed project-lopez-titles
+      --sample data/processed/experiments/lopez-lira-tang-sample --output data/processed/experiments/lopez-lira-tang-titles
+    deps:
+      - data/processed/experiments/lopez-lira-tang-sample
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/project-lopez-titles.json
+    outs:
+      - data/processed/experiments/lopez-lira-tang-titles
+
+  embed_lopez_gemma_titles:
+    desc: Encode the fixed captured titles with the same GPU worker and model as the bodies.
+    cmd: >-
+      ARTICLE_SOURCE=data/processed/experiments/lopez-lira-tang-titles
+      bash infra/inference/gemma-run.sh data/processed/experiments/lopez-lira-tang-title-gemma
+    deps:
+      - data/processed/experiments/lopez-lira-tang-titles
+      - infra/inference/gemma-run.sh
+      - infra/inference/gemma_embed.py
+    outs:
+      - data/processed/experiments/lopez-lira-tang-title-gemma
+
+  embed_lopez_minilm_titles:
+    desc: Encode the same captured titles with the published MiniLM encoder.
+    cmd: >-
+      bash infra/inference/minilm-run.sh data/processed/experiments/lopez-lira-tang-titles
+      data/processed/experiments/lopez-lira-tang-title-minilm
+    deps:
+      - data/processed/experiments/lopez-lira-tang-titles
+      - infra/inference/minilm-run.sh
+      - infra/inference/minilm-model.sha256
+      - infra/inference/minilm_embed.py
+    outs:
+      - data/processed/experiments/lopez-lira-tang-title-minilm
+
+  report_lopez_title_probes:
+    desc: Compare title and body rolling probes on identical article, security and session support.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      uv run --project src/python --offline --frozen --package ccfinance-pipeline
+      pipeline stages research report-lopez-title-probes
+      --sample data/processed/experiments/lopez-lira-tang-sample
+      --gemma data/processed/experiments/lopez-lira-tang-title-gemma
+      --minilm data/processed/experiments/lopez-lira-tang-title-minilm
+      --output data/research/experiments/lopez-lira-tang-title-probes
+    deps:
+      - src/python/uv.lock
+      - data/processed/experiments/lopez-lira-tang-sample
+      - data/processed/experiments/lopez-lira-tang-title-gemma
+      - data/processed/experiments/lopez-lira-tang-title-minilm
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-title-probes.json
+    outs:
+      - data/research/experiments/lopez-lira-tang-title-probes
+
+  prepare_kazinnik_extended_weeks:
+    desc: Join the common historical bank roster to fourteen earnings weeks.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed
+      prepare-kazinnik-banks --articles data/processed/articles/articles.parquet
+      --links data/processed/company-links/articles --source data/raw/fine-news
+      --issuers data/processed/issuers/issuers.parquet
+      --inputs ${experiments.kazinnik_banks.protocol}/extended --output data/processed/experiments/kazinnik-extended-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/articles/articles.parquet
+      - data/processed/company-links/articles
+      - data/processed/issuers/issuers.parquet
+      - data/raw/fine-news
+      - ${experiments.kazinnik_banks.protocol}/extended/roster.csv
+      - ${experiments.kazinnik_banks.protocol}/extended/crosswalk.csv
+      - ${experiments.kazinnik_banks.protocol}/extended/windows.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-kazinnik-banks.json
+    outs:
+      - data/processed/experiments/kazinnik-extended-weeks
+
+  report_kazinnik_extended_weeks:
+    desc: Estimate the observed change and its rank among six placebo periods.
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages research
+      report-kazinnik-matched-weeks --source data/processed/experiments/kazinnik-extended-weeks
+      --inputs ${experiments.kazinnik_banks.protocol}/extended --output data/research/experiments/kazinnik-extended-weeks
+    params:
+      - experiments.kazinnik_banks.protocol
+    deps:
+      - data/processed/experiments/kazinnik-extended-weeks
+      - ${experiments.kazinnik_banks.protocol}/extended/matched-weeks.csv
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-kazinnik-matched-weeks.json
+    outs:
+      - data/research/experiments/kazinnik-extended-weeks
+
+  report_lopez_drift_costs:
+    cmd: mkdir -p data/research/experiments/lopez-drift-costs && duckdb -bail < src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
+    deps:
+      - src/python/apps/pipeline/src/pipeline/stages/research/experiments/lopez_lira_tang/drift_costs.sql
+      - data/research/experiments/lopez-lira-tang-title-probes/paired_days.csv
+      - data/research/experiments/lopez-lira-tang-title-probes/portfolios.csv
+    outs:
+      - data/research/experiments/lopez-drift-costs
+
+  prepare_lopez_recovered:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python
+      --offline --frozen --package ccfinance-pipeline pipeline stages processed prepare-lopez-recovered
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/processed/prepare-lopez-recovered.json
+      - data/raw/fine-news
+      - data/processed/articles
+      - data/processed/company-links
+      - data/processed/issuers
+      - data/processed/experiments/lopez-lira-tang-events
+      - data/processed/experiments/lopez-lira-tang-sample/sample.parquet
+      - data/raw/experiments/lopez-lira-tang
+      - data/processed/embeddinggemma-embeddings
+    outs:
+      - data/processed/experiments/lopez-recovered-events
+      - data/processed/experiments/lopez-recovered-sample
+
+  report_lopez_recovered:
+    cmd: >-
+      env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      uv run --project src/python --offline --frozen --package ccfinance-pipeline
+      pipeline stages research report-lopez-recovered
+    deps:
+      - .semflow/hashes/entrypoints/pipeline/stages/research/report-lopez-recovered.json
+      - data/processed/experiments/lopez-recovered-events/recovered.parquet
+      - data/processed/experiments/lopez-recovered-sample
+      - data/processed/experiments/lopez-lira-tang-sample
+      - data/research/experiments/lopez-lira-tang-probes
+      - data/research/experiments/lopez-lira-tang/drift.csv
+    outs:
+      - data/research/experiments/lopez-recovered

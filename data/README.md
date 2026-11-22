@@ -22,17 +22,23 @@ float for issuer size lives in `raw/public-float/` and
 `inputs/coverage/README.md`). DVC connects these artifacts; an experimental
 result does not become a release dataset merely by moving it.
 
+The [company-embedding validation protocol](inputs/entity-embeddings/README.md)
+records the held-out entity-focus study and its two appendix experiments.
+
 Stage commands create their output directories when implemented. Git ignores
 large data payloads; track reproducible data with DVC. Keep small input files,
 `.dvc` pointer files and documentation in Git.
 
 ## Backup and restore
 
-The default DVC remote uses the private Hugging Face bucket
+The default DVC remote uses the Hugging Face Storage Bucket
 `marcusinthesky/CCFinance`, under `dvc-store/`. In the pinned devenv shell,
 supply your Hugging Face S3 access key and secret through local DVC settings
 (`access_key_id` and `secret_access_key` on `hf-bucket`) or AWS credentials.
-Raw Fine News shards are already published on HF Datasets. The acquisition
+The frozen Fine News shards reside in a separate restricted staging dataset. The acquisition
 output sets `push: false` so DVC uploads skip that snapshot.
 Use `just dvc push` to back up eligible cached outputs, `just dvc status --cloud` to
 compare them with the bucket, and `just dvc pull` to restore them.
+The bucket can contain text-bearing intermediates. Check its live visibility
+before a transfer. The public metadata dataset has a separate file history and
+is assembled with `just release-metadata`.

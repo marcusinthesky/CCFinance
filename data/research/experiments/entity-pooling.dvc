@@ -1,0 +1,7 @@
+outs:
+- path: entity-pooling
+  hash: md5
+  md5: 6b05ae445a53aaa5d6ea0664dd8d363f.dir
+  size: 130029
+  nfiles: 5
+  push: false

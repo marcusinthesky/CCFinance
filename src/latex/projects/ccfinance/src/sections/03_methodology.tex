@@ -1,0 +1,107 @@
+\section{Methodology}
+\label{sec:method}
+
+To identify the archived copies from which a financial observation can
+be constructed, we begin with the English-language \texttt{eng\_Latn}
+shards of Fine News. We retain a record when its hostname matches an
+entry on our 115-entry publisher list or a dot-delimited subdomain of
+that entry. The list includes general-interest publishers with financial
+coverage. For each match we preserve the article ID, body, source URL
+and available capture and publisher metadata. The upstream revision
+and a separate checksum-verified staging revision identify 14,807,287
+distinct IDs in 168 staged Parquet shards (see Appendix
+Table~\ref{tab:app-source} for the source comparison).
+
+To see how the choice of source affects the yield of this filter, we
+apply the same hostname rule retrospectively to four pinned releases,
+including FineWeb-HQ \citep{messmer2025}. Within each release we make
+four independent draws with replacement, sampling a file uniformly and
+then a row group uniformly within that file. We use inverse-probability
+weights to estimate the publisher-matched and English totals, whose ratio
+gives the estimated publisher yield. The two news collections have the
+higher point estimates (Appendix Table~\ref{tab:app-source}). Because
+the releases differ in their English-language coverage and treatment of
+duplicates, the yields describe physical rows within each release, while
+estimating how many unique stories a source adds would require matching
+records across releases.
+
+Within the chosen release, an article is usable if it is the canonical
+copy and its reported publication date is consistent with capture.
+Although Fine News retains representatives of upstream duplicate clusters,
+the staged records still contain exact-text and normalized-URL repeats.
+We select the earliest capture separately within each text group and
+each normalized-URL group, breaking ties by ID and recording the text
+match when both comparisons identify a duplicate. A copy must win both
+comparisons before it can qualify, even if an earlier copy that takes
+precedence subsequently fails the date check. Because publishers can
+revise the text at the same URL, the canonical ID identifies the
+particular body retained.
+
+For the date check we allow capture up to seven days after reported
+publication or, to accommodate time zones, up to one calendar day before
+it. A page dated Monday and fetched Thursday can therefore count toward
+Monday's news in a day-level corpus, although Thursday is the first
+date on which we observe that version for a trading signal. In the
+frozen corpus, 237,193 of the 11,260,839 usable copies were captured
+between two and seven days after reported publication. There is also
+direct evidence that a later visit can return a different body:
+among 26,897 repeated normalized URLs with observed text hashes,
+23,779 had more than one hash. A change in hash alone does not tell
+us whether a publisher added financially relevant information, but
+it does explain why we retain the capture time of the particular text
+from which the signal is computed.
+
+To determine which firms that version names, we use GLiNER2.5 Small
+\citep{gliner25} to extract candidate company spans, retain their text
+and offsets, and resolve them against a table of dated listings and
+aliases. The table combines SEC registrant identifiers and current and
+former names with listing, alias and subsidiary evidence from Wikidata.
+Where validity dates are known, we evaluate alias evidence as of the
+article date. An exchange ticker or Reuters code can anchor an identity
+and help resolve later mentions within the article, while ambiguous
+candidates are retained and the linker can abstain. In the anchor
+audit, for example, the issuer associated with a ticker
+in an older Sprint story differs from the issuer to which that ticker
+was later assigned.
+
+\citet{schwenkler2020} likewise identify organizations with Stanford
+CoreNLP before linking firms in a news-derived network. To examine
+company recognition before the linking decision, we compare exact
+company spans from GLiNER2.5 Small and Stanza, a separate Stanford
+toolkit, in leads from our publisher-filtered sample (Appendix
+Table~\ref{tab:app-spans}). FiNER-ORD also documents the difficulty of
+transferring named-entity recognition to financial text \citep{shah2024}.
+
+Even when the issuer's identity is clear, its role in a story can vary.
+A dispute involving Gap and a Tapestry brand can concern both firms,
+while an article about Tesla may mention Nvidia in passing. We retain
+each accepted article--issuer pair with the evidence for its link,
+and count the article as focused on an issuer when it contains at least
+three extracted mentions of that issuer, with no further relevance
+threshold. A usable story that names one linked firm three times and
+another once thus counts once in the corpus, toward usable coverage for
+both firms, and toward focused coverage for the first.
+
+To describe the text at each of these levels, GLiNER uses a joint schema
+on 384-word windows with 64 words of overlap, recording article form,
+local relevance and investor-facing sentiment for extracted mentions,
+and event scores for individual windows. For the overnight probe,
+EmbeddingGemma encodes up to 2,048 tokens per story in a fixed
+768-coordinate body vector \citep{embeddinggemma2025}. We check vector
+norms and alignment with the frozen article IDs and examine
+company-specific representations in a separate exploratory retrieval task
+(Appendix Table~\ref{tab:app-vectors}).
+
+The distinction between a body and an issuer also applies to its
+representation. If a story names both parties to a transaction, the
+stored body vector is the same whichever party a researcher queries.
+Conditioning an embedding on the sentences that mention one party
+could help distinguish the two accounts, provided those sentences
+contain different information. The exploratory retrieval task tests
+that condition by asking each company's representation to retrieve
+its own account after the names have been masked. Only 16 held-out
+stories judged eligible by the primary model fit every encoder,
+below the planned minimum of 60, and two companies can still share
+the same selected sentence. We therefore use the body vector for the
+overnight exercise and retain the article--issuer links as a separate
+record of which firms the story concerns or mentions.

@@ -1,5 +1,7 @@
 # Validating GLiNER metadata
 
+The [Stanford comparison](corenlp-comparison/README.md) evaluates sentence sentiment and chain-expanded issuer focus on the frozen confirmation samples.
+
 The extraction benchmark describes model outputs across 10,000 articles. The validation experiment estimates agreement with blinded model judgments in the usable Fine News corpus. Its units are whole articles for journalistic form, extracted company spans for local relevance and investor-facing sentiment, and model input windows for multi-label event families. Overlapping windows represent separate prediction opportunities.
 
 ## Sampling and judging

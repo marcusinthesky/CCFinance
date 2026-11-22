@@ -65,6 +65,13 @@ article_metadata:
 
 # Source comparison: English publisher-filter yield, before research qualification.
 experiments:
+  # Versioned study protocols include windows, roster and calendar definitions.
+  baker_emv:
+    window: data/inputs/baker-emv/window.json
+  kazinnik_banks:
+    protocol: data/inputs/kazinnik-banks
+  lopez_lira_tang:
+    calendar: data/inputs/lopez-lira-tang/sessions.csv
   source_comparison:
     # Four independent file/group draws with replacement; keep duplicate draws.
     seed: 42

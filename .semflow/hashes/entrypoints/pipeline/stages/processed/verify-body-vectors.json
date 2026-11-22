@@ -1,0 +1,19 @@
+{
+  "algorithm": "sha256",
+  "callback": "pipeline.stages.processed.body_vectors:verify_body_vectors",
+  "digest": "sha256:bb78652c9d7b0701de7a00dd5382f27b89d7e8581af8eb346f0ffbb063afe750",
+  "entrypoint": "pipeline stages processed verify-body-vectors",
+  "fallbacks": [
+  ],
+  "members": [
+    {"digest":"sha256:701b162d541e1c9506cca310ef2b8a90b9ce4ab016c5aeb67a529eb0e89c9e8f","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:<binding:Annotated=typing:Annotated>"},
+    {"digest":"sha256:59051b17634cdcb5a576ceb58fdc0a4e5652ed3b60d66667e92ddefd931abeca","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:<binding:Path=pathlib:Path>"},
+    {"digest":"sha256:d8fc3cf7f30b6468160c361f2e9a70b680e5225efaa2198c56aacc1ba85de45b","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:<binding:duckdb=duckdb>"},
+    {"digest":"sha256:211ee42757705c7e350e70e36b762987a737f5e9c268f2a343e2dbfcb8fbea75","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:<binding:json=json>"},
+    {"digest":"sha256:c2aca12beee4fc1aeed3bef753e93eafb76446a37b36add6e610f3c8db452d85","kind":"binding","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:<binding:typer=typer>"},
+    {"digest":"sha256:d93e4bbdd642c688b05781c11a1bb5030625ee2995690c7bc505f083da67101d","kind":"global","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:MODEL"},
+    {"digest":"sha256:f67208e6e38a0be6afa67792596f41ec231bf0085b3d9a93dbcae0160767a379","kind":"function","path":"src/python/apps/pipeline/src/pipeline/stages/processed/body_vectors.py","symbol":"pipeline.stages.processed.body_vectors:verify_body_vectors"}
+  ],
+  "policy": {"ignore_annotations": false, "ignore_docstrings": true, "ignore_type_checking_blocks": true},
+  "schema_version": 2
+}
