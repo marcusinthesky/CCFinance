@@ -24,6 +24,10 @@ Read the draft as a new reader and check its empirical claims against the source
 The [review record](review.md) contains the reverse outline, simulated reader
 assessments, evidence trace and substantive revisions.
 
+The [submission-readiness review](submission-readiness.md) checks the final
+paper against tasks 01–09 and identifies corrections to the issuer population,
+the focus-audit sample and the availability statement.
+
 <!-- insitu:begin sql
 id = "planning-children"
 model = "children"

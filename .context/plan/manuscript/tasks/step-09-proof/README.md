@@ -14,6 +14,10 @@ Prepare a checked manuscript candidate for circulation.
 
 See the [proof and reproduction check](proof.md) for both PDFs, submission limits and remaining access constraints.
 
+The [subsequent submission review](../step-07-review/submission-readiness.md)
+checks the live OpenReview form and anonymous staging access and records the
+substantive corrections needed before submission.
+
 ## Acceptance
 
 - [x] Recheck the current CFP and OpenReview instructions against the rendered FinFM PDF. Verify the selected technical-page limit, anonymity including artifact links, and that the core benchmark evidence can be assessed without supplementary files.
