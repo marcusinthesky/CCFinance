@@ -60,6 +60,13 @@ dvc *args:
 release-metadata output:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --frozen --script src/python/scripts/hub_release/build.py "$1"
 
+# Restore the original DVC artifacts from the pinned Hub datasets.
+restore-source output="data/raw/fine-news":
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python src/python/scripts/hub_release/restore_source.py "$1"
+
+restore-vectors output="data/processed/embeddinggemma-embeddings":
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --frozen --script src/python/scripts/hub_release/restore_vectors.py "$1"
+
 # Validate DVC metadata without fetching data.
 data-check:
     just dvc status

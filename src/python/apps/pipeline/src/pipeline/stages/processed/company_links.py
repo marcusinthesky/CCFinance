@@ -83,7 +83,10 @@ def find_anchors(text: str) -> list[dict[str, object]]:
 
 def _write(con: duckdb.DuckDBPyConnection, query: str, target: Path) -> None:
     temporary = target.with_suffix(".tmp")
-    con.execute(f"COPY ({query}) TO '{temporary}' (FORMAT PARQUET, COMPRESSION ZSTD)")
+    con.execute(
+        f"COPY ({query}) TO '{temporary}' "
+        "(FORMAT PARQUET, COMPRESSION ZSTD, COMPRESSION_LEVEL 12)"
+    )
     os.replace(temporary, target)
 
 

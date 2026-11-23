@@ -37,6 +37,7 @@ stages:
     outs:
       - data/processed/embeddinggemma-embeddings:
           persist: true
+          push: false
 
   verify_body_vectors:
     cmd: >-

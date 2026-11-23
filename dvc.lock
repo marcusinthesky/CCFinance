@@ -577,7 +577,7 @@ stages:
     - path:
         .semflow/hashes/entrypoints/pipeline/stages/processed/link-companies.json
       hash: md5
-      md5: 29a6207f72723001bdea038c5a947341
+      md5: d443f936c7cef968fad40fbf34c0fbb1
       size: 9527
     - path: data/inputs/company-links/publishers.csv
       hash: md5
@@ -608,8 +608,8 @@ stages:
     outs:
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
   sample_company_links:
     cmd: env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project
@@ -705,8 +705,8 @@ stages:
       size: 9053
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/experiments/company-links/labels
       hash: md5
@@ -835,8 +835,8 @@ stages:
       size: 6719
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/experiments/company-links/labels
       hash: md5
@@ -896,8 +896,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/issuers
       hash: md5
@@ -952,8 +952,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/raw/fine-news
       hash: md5
@@ -1034,8 +1034,8 @@ stages:
       size: 7664
     - path: src/latex/justfile
       hash: md5
-      md5: 149e6f35dca12f73d342a4e998965777
-      size: 1320
+      md5: f6a35241fab2031c88f082d6f36a2325
+      size: 3567
     outs:
     - path: data/research/experiments/coverage/report.pdf
       hash: md5
@@ -1215,8 +1215,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/experiments/article-metadata/confirmation.parquet
       hash: md5
@@ -1299,8 +1299,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links/articles
       hash: md5
-      md5: 3dbb2174d4038effff10336b86801a93.dir
-      size: 1013219153
+      md5: 633aaf2a83217809ea2e209ebebfcbff.dir
+      size: 996443790
       nfiles: 984
     - path: data/processed/experiments/company-links/sample
       hash: md5
@@ -1989,8 +1989,8 @@ stages:
       nfiles: 2
     - path: src/latex/justfile
       hash: md5
-      md5: 149e6f35dca12f73d342a4e998965777
-      size: 1320
+      md5: f6a35241fab2031c88f082d6f36a2325
+      size: 3567
     outs:
     - path: data/research/experiments/baker-emv/report
       hash: md5
@@ -2030,8 +2030,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links/articles
       hash: md5
-      md5: 3dbb2174d4038effff10336b86801a93.dir
-      size: 1013219153
+      md5: 633aaf2a83217809ea2e209ebebfcbff.dir
+      size: 996443790
       nfiles: 984
     - path: data/processed/issuers/issuers.parquet
       hash: md5
@@ -2114,8 +2114,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/issuers
       hash: md5
@@ -2230,8 +2230,8 @@ stages:
       nfiles: 2
     - path: src/latex/justfile
       hash: md5
-      md5: 149e6f35dca12f73d342a4e998965777
-      size: 1320
+      md5: f6a35241fab2031c88f082d6f36a2325
+      size: 3567
     outs:
     - path: data/research/experiments/lopez-lira-tang
       hash: md5
@@ -2249,8 +2249,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links/articles
       hash: md5
-      md5: 3dbb2174d4038effff10336b86801a93.dir
-      size: 1013219153
+      md5: 633aaf2a83217809ea2e209ebebfcbff.dir
+      size: 996443790
       nfiles: 984
     - path: data/processed/experiments/lopez-lira-tang-events
       hash: md5
@@ -2341,8 +2341,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links/articles
       hash: md5
-      md5: 3dbb2174d4038effff10336b86801a93.dir
-      size: 1013219153
+      md5: 633aaf2a83217809ea2e209ebebfcbff.dir
+      size: 996443790
       nfiles: 984
     - path: data/processed/issuers/issuers.parquet
       hash: md5
@@ -2541,8 +2541,8 @@ stages:
       size: 490062789
     - path: data/processed/company-links/articles
       hash: md5
-      md5: 3dbb2174d4038effff10336b86801a93.dir
-      size: 1013219153
+      md5: 633aaf2a83217809ea2e209ebebfcbff.dir
+      size: 996443790
       nfiles: 984
     - path: data/processed/issuers/issuers.parquet
       hash: md5
@@ -2635,8 +2635,8 @@ stages:
       nfiles: 2
     - path: data/processed/company-links
       hash: md5
-      md5: aa8f98149cc5143d3e14dbf37bb6e0ab.dir
-      size: 5374769724
+      md5: 366a576a401392ab41ca63a29527c550.dir
+      size: 4960068281
       nfiles: 2954
     - path: data/processed/embeddinggemma-embeddings
       hash: md5

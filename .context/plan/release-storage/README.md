@@ -64,6 +64,33 @@ object counts and sizes and identifies the first benchmark candidates.
 
 ## Acceptance
 
+### Release and storage measurements
+
+The `ccfinance-v1` release pairs Git commit
+`b79d2943a55d264f5c74b9697e71068e0c3fecbc` with public Hub revision
+`524d04acec2ed7dfc5b76cfb09fae9e57850b062`. The original private DVC
+prefix held 10,906 objects totaling 60,291,018,381 logical bytes.
+
+| Artifact | Measurement and disposition |
+| --- | --- |
+| Fine News | The 168 restored shards and original provenance file reproduce `3cd438d50a74f30d54d6eb854642e69b.dir`. Use `just restore-source` with staging access. |
+| EmbeddingGemma | `just restore-vectors` recreates the original 984 Parquet files from the public release. It checks each file against the Git-tracked group manifest. The expected output directory is `68fad30a7cff964595d800d7a7175ff0.dir`, including its empty lock file. |
+| GLiNER | The original DuckDB output uses Zstandard. On five files selected at size deciles 1, 3, 5, 7 and 9, level 12 with 32,768-row groups saved 1.9% on mentions. We kept the existing frozen extraction. |
+| Issuer links | DuckDB Zstandard level 12 with the production row-group setting reduced the complete output from 5,374,769,724 to 4,960,068,281 bytes. All 2,954 files were accounted for, with ordered Arrow values and schemas checked for every Parquet file. The original directory was `aa8f98149cc5143d3e14dbf37bb6e0ab.dir`. The migrated directory is `366a576a401392ab41ca63a29527c550.dir`. |
+
+The migrated pipeline requires 7,428 push-eligible objects totaling
+16,812,460,163 bytes. Keeping the original release recoverable adds the
+earlier link objects. Together the two releases reference 10,382 objects
+and 22,187,562,408 bytes in the private release prefix. These figures measure
+logical file sizes. The storage provider may deduplicate their underlying bytes.
+
+For the original Git release, use the two Hub restore commands from the
+migration revision with explicit paths into the historical checkout. Select
+`s3://CCFinance/dvc-release-v1` for its remaining paper outputs. Historical
+objects used exclusively by earlier development versions are inventoried under
+`dvc-store/`. The private `recovery/ccfinance-v1/` directory contains the Git
+bundle and the compressed data archive for `embedding-studies-v1`.
+
 - [ ] Measured savings and logical equivalence are recorded by artifact family.
 - [ ] The tagged release restores from an empty cache and reproduces the article,
   issuer and embedding checks without another inference run.

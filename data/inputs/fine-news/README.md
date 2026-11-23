@@ -19,9 +19,11 @@ rights and usage restrictions.
 14,807,287 records and 20,100,064,588 bytes. Each shard matches the revision's
 Git LFS SHA256 and size, and `provenance.json` records them. The stage is
 frozen, so `dvc repro` verifies this output rather than re-running acquisition.
-Raw shards come from the pinned Hub snapshot above. DVC skips this output on
-push. Where an older bucket backup exists, run `just dvc pull filter_fine_news` with the private
-bucket credentials to restore the recorded snapshot, including its provenance manifest.
+Run `just restore-source` with an account that can read the private recovery
+bucket and pinned staging repository. It verifies the private manifest against
+its pinned SHA-256 digest, checks all 168 shard sizes and digests, adds the
+original provenance manifest and installs the verified directory at
+`data/raw/fine-news`. DVC excludes this output from pushes.
 
 Unfreezing the stage, or passing `--config` with a local glob and a fresh output
 directory, runs the acquisition itself and refuses to overwrite existing output.
