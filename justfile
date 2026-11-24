@@ -60,6 +60,14 @@ dvc *args:
 release-metadata output:
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --frozen --script src/python/scripts/hub_release/build.py "$1"
 
+# Build the companion release from the CSV of IDs covered for public redistribution.
+release-text approved output:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python src/python/scripts/hub_release/text.py build "$1" "$2"
+
+# Publish the verified companion release using Hub and Git write credentials.
+publish-text release:
+    env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python src/python/scripts/hub_release/text.py publish "$1"
+
 # Restore the original DVC artifacts from the pinned Hub datasets.
 restore-source output="data/raw/fine-news":
     env -u PYTHONPATH -u PYTHONHOME -u VIRTUAL_ENV uv run --project src/python --offline --frozen python src/python/scripts/hub_release/restore_source.py "$1"

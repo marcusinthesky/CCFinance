@@ -55,6 +55,12 @@ build target="arxiv":
       exit 1
     fi
 
+# Build a standalone arXiv source submission and verify the archived files.
+[positional-arguments]
+bundle target="arxiv":
+    @test "$1" = arxiv || { echo 'bundle target must be arxiv' >&2; exit 2; }
+    bash bundle-arxiv.sh {{ project }}
+
 count target="arxiv":
     mkdir -p {{ project }}/build/{{ target }}
     cd {{ project }}/src && texcount -merge -sub=section targets/{{ target }}.tex > ../build/{{ target }}/word-count.txt

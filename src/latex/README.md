@@ -15,6 +15,7 @@ Run from the repository root in the pinned devenv shell.
 ```sh
 just latex::setup        # Prime the TeX cache and install the locked prose linter
 just latex::build arxiv  # Tectonic, single-column preprint
+just latex::bundle arxiv # Create and verify the arXiv source upload
 just latex::build finfm  # pdfLaTeX and BibTeX, anonymous AAAI-27 layout
 just latex::check        # Lint and build both targets
 just latex::prose-lint   # Optional editorial suggestions for the sections
@@ -23,6 +24,11 @@ just latex::prose-lint   # Optional editorial suggestions for the sections
 PDFs are written to `projects/ccfinance/build/<target>/<target>.pdf`
 beneath this directory. The academic-manuscript skill also supports outlines
 and editorial review. Its prose linter accepts individual section paths.
+
+Upload `projects/ccfinance/build/arxiv/arxiv.tar.gz` to arXiv.
+The bundle contains the named-author manuscript, its local style and its
+compiled bibliography. The recipe unpacks the archive and compiles
+`main.tex` with pdfLaTeX before publishing the file locally.
 
 The coverage report uses `coverage.tex`. DVC stages render standalone figures
 with `just latex::render <file>`. The source-comparison stage also produces a

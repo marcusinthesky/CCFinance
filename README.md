@@ -110,3 +110,24 @@ uncertainty for all three studies. The
 counts. The [bank networks](data/inputs/kazinnik-banks/README.md) use dated
 bank co-mentions. The [overnight probes](data/inputs/lopez-lira-tang/README.md)
 use fixed embeddings of article bodies available before the market cutoff.
+
+## Publish a text follow-up
+
+When all frozen article bodies have a documented basis for public
+redistribution on Hugging Face, run
+`just publish-text .runtime/ccfinance-text-release`. A missing output directory
+triggers a full build before upload. An existing release directory is reused.
+
+For a subset, run `just release-text <approved-ids.csv> <fresh-output>` with the frozen
+source and article metadata restored. The private approval input is a
+single-column UTF-8 CSV with header `id`, containing only capture IDs whose
+exact bodies have a documented basis for public redistribution on Hugging
+Face. Keep the underlying rights records outside the upload. The exporter
+verifies the original source and checks each exported body against its
+annotation digest.
+
+After reviewing the coverage, generated card and manifest, run
+`just publish-text <output>` from the pinned environment with write access
+through both the Hub client and Git HTTPS. The staging branch is publicly
+readable, so use the publish command only for the approved release. The
+command prints the public revision after verification.

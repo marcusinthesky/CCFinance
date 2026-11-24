@@ -42,6 +42,9 @@
         ps.epstopdf-pkg
         ps.underscore
         ps.lm
+        # arXiv source submission compiled with pdfLaTeX.
+        ps.geometry
+        ps.hyperref
         # AAAI-27 submission template and bibliography.
         ps.bibtex
         ps.iftex
